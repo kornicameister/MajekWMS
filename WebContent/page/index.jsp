@@ -15,10 +15,12 @@
 		
 	</head>
 	<body>
-		<span style="color: red; text-align: center">
-			This is a test message, that appears only if your browser
-			has disabled support for JavaScript.
-			Refresh after enabling JS support.
-		</span>
+		<noscript>
+			<span style="color: red; text-align: center">
+				This is a test message, that appears only if your browser
+				has disabled support for JavaScript.
+				Refresh after enabling JS support.
+			</span>
+		</noscript>
 	</body>
 </html>
