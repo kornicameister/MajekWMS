@@ -1,0 +1,30 @@
+/*view.toolbar.* */
+.view-toolbar-warehouseButton {
+    background-image: url("../images/view/toolbar/warehousing-icon.png") !important;
+    background-size: 60%
+}
+
+.view-toolbar-unitsButton {
+    background-image: url("../images/view/toolbar/warehousing-unit.png") !important;
+    background-size: 60%;
+}
+
+.view-toolbar-settingsButton {
+    background-image: url("../images/view/toolbar/settings.png") !important;
+    background-size: 60%
+}
+
+.view-toolbar-helpButton {
+    background-image: url("../images/view/toolbar/help.png") !important;
+    background-size: 60%;
+}
+
+.view-toolbar-receiptButton {
+    background-image: url("../images/view/toolbar/invoice.png") !important;
+    background-size: 60%;
+}
+
+.view-toolbar-releaseButton {
+    background-image: url("../images/view/toolbar/invoice.png") !important;
+    background-size: 60%;
+}

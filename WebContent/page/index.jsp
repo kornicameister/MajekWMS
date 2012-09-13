@@ -7,12 +7,12 @@
 		
 		<!-- Library entries -->
 		<script type="text/javascript" src="page/extjs/ext-all-dev.js"></script>
-		<script type="text/javascript" src="page/extjs/ext-neptune-debug-w-comments.js"></script>
 		<link rel="stylesheet" type="text/css" href="page/extjs/resources/css/ext-neptune.css">
 		<link rel="stylesheet" type="text/css" href="page/extjs/resources/css/ext-all.css">
 		
 		<!-- MajekWMS entries -->
-		 <script type="text/javascript" src="page/app/app.js"></script>
+		<link rel="stylesheet" type="text/css" href="page/resources/css/majekwms.css">
+		<script type="text/javascript" src="page/app.js"></script>
 	</head>
 	<body>
 		<noscript>
