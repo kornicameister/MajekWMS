@@ -1,17 +1,9 @@
-/WebContent/.idea/.name
-/WebContent/.idea/compiler.xml
-/WebContent/.idea/copyright/profiles_settings.xml
-/WebContent/.idea/encodings.xml
-/WebContent/.idea/jsLibraryMappings.xml
-/WebContent/.idea/misc.xml
-/WebContent/.idea/modules.xml
-/WebContent/.idea/scopes/scope_settings.xml
-/WebContent/.idea/uiDesigner.xml
-/WebContent/.idea/vcs.xml
-/WebContent/.idea/workspace.xml
 /WebContent/page/.idea/copyright/profiles_settings.xml
 /WebContent/page/.idea/scopes/scope_settings.xml
 /WebContent/page/Page.iml
+/WebContent/.idea/*
+/WebContent/page/.idea/*
+
 # java files
 *.settings/*
 *.class*
