@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="page/extjs/resources/css/ext-all.css">
 		
 		<!-- MajekWMS entries -->
-		
+		 <script type="text/javascript" src="page/app/app.js"></script>
 	</head>
 	<body>
 		<noscript>
