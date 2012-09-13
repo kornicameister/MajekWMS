@@ -28,3 +28,8 @@
     background-image: url("../images/view/toolbar/invoice.png") !important;
     background-size: 60%;
 }
+
+.view-toolbar-inventoryButton {
+    background-image: url("../images/view/toolbar/inventory.png") !important;
+    background-size: 60%;
+}

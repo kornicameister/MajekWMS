@@ -79,6 +79,13 @@ Ext.define('WMS.view.Toolbar', {
                 ]
             }
         },
+        '-',
+        {
+            xtype  : 'button',
+            itemId : 'inventoryButton',
+            text   : 'Inventory',
+            iconCls: 'view-toolbar-inventoryButton'
+        },
         '->',
         {
             xtype  : 'button',
