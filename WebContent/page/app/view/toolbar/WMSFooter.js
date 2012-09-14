@@ -7,9 +7,8 @@
  * Created: 14-09-2012
  */
 
-Ext.define('WMS.view.toolbar.Footer', {
+Ext.define('WMS.view.toolbar.WMSFooter', {
     extend            : 'Ext.ux.StatusBar',
-    alternateClassName: 'WMS.Footer',
     alias             : 'widget.wmsfbar',
     defaultType       : 'button',
     defaults          : {

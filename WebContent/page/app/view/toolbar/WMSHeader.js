@@ -7,9 +7,8 @@
  * Created: 14-09-2012
  */
 
-Ext.define('WMS.view.toolbar.Header', {
+Ext.define('WMS.view.toolbar.WMSHeader', {
     extend            : 'Ext.toolbar.Toolbar',
-    alternateClassName: 'WMS.Header',
     alias             : 'widget.wmstbar',
     defaultType       : 'splitbutton',
     defaults          : {

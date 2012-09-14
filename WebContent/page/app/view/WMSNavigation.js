@@ -8,8 +8,7 @@
  * Created: 14-09-2012
  */
 
-Ext.define('WMS.view.Navigation', {
+Ext.define('WMS.view.WMSNavigation', {
     extend            : 'Ext.panel.Panel',
-    alternateClassName: 'WMS.Navigator',
     alias             : 'widget.wmsnav'
 });
