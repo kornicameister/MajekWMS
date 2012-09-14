@@ -7,9 +7,9 @@
   </welcome-file-list>
   <description>This application comes with simulator that shows WMS capabilities to support inventory management in warehouses.</description>
   <context-param>
-  	<description>The EMAIL address of the administrator to whom questions
+    <description>The EMAIL address of the administrator to whom questions
         and comments about this application should be addressed.</description>
-  	<param-name>webmaster</param-name>
-  	<param-value>kornicameister@gmail.com</param-value>
+    <param-name>webmaster</param-name>
+    <param-value>kornicameister@gmail.com</param-value>
   </context-param>
 </web-app>
