@@ -16,7 +16,8 @@ Ext.define('WMS.view.Viewport', {
     requires: [
         'WMS.view.toolbar.WMSFooter',
         'WMS.view.toolbar.WMSHeader',
-        'WMS.view.WMSNavigation'
+        'WMS.view.WMSNavigation',
+        'WMS.view.WMSView'
     ],
 
     items: {
@@ -40,9 +41,31 @@ Ext.define('WMS.view.Viewport', {
                 region: 'west'
             },
             {
-                xtype : 'panel',
+                xtype : 'wmsview',
                 title : 'WMS - Warehouse',
-                region: 'center'
+                region: 'center',
+                items : [
+                    {
+                        xtype : 'wmsoverviews',
+                        itemId: 'wmsOverview',
+                        title : 'Overview'
+                    },
+                    {
+                        xtype : 'wmsunit',
+                        itemId: 'wmsunit',
+                        title : 'Units'
+                    },
+                    {
+                        xtype : 'wmsstatistics',
+                        itemId: 'wmsstatistics',
+                        title : 'Statistics'
+                    },
+                    {
+                        xtype : 'wmsinventory',
+                        itemId: 'wmsinventory',
+                        title : "Inventory"
+                    }
+                ]
             }
         ],
 

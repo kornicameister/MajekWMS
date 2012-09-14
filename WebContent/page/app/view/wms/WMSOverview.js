@@ -8,3 +8,7 @@
  * Created: 14-09-2012
  */
 
+Ext.define('WMS.view.wms.WMSOverview',{
+    extend: 'Ext.panel.Panel',
+    alias : 'widget.wmsoverviews'
+});

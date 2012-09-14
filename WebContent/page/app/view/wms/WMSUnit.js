@@ -8,3 +8,7 @@
  * Created: 14-09-2012
  */
 
+Ext.define('WMS.view.wms.WMSUnit', {
+    extend: 'Ext.panel.Panel',
+    alias : 'widget.wmsunit'
+});
