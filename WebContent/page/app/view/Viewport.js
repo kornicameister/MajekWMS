@@ -14,7 +14,8 @@ Ext.define('WMS.view.Viewport', {
 
     requires: [
         'WMS.view.toolbar.Footer',
-        'WMS.view.toolbar.Header'
+        'WMS.view.toolbar.Header',
+        'WMS.view.Navigation'
     ],
 
     items: {
@@ -23,19 +24,40 @@ Ext.define('WMS.view.Viewport', {
         layout  : 'border',
         title   : 'WMS Simulator',
         defaults: {
-            split : true,
-            border: false
+            collapsible: true
         },
-        tbar    : {
+
+        items: [
+            {
+                xtype : 'wmsnav',
+                itemId: 'navigator',
+                title : 'WMS - Navigator',
+
+                width    : 200,
+                margins  : {
+                    right: 3
+                },
+                collapsed: false,
+
+                region: 'west'
+            },
+            {
+                xtype : 'panel',
+                title : 'WMS - Warehouse',
+                region: 'center'
+            }
+        ],
+
+        tbar: {
             xtype   : 'wmstbar',
             defaults: {
                 iconAlign: 'left',
                 scale    : 'large'
             }
         },
-        bbar    : {
-            xtype      : 'wmsfbar',
-            defaults   : {
+        bbar: {
+            xtype   : 'wmsfbar',
+            defaults: {
                 iconAlign: 'left',
                 scale    : 'large'
             }
