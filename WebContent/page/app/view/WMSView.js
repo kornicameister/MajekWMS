@@ -27,6 +27,10 @@ Ext.define('WMS.view.WMSView', {
         hideCollapseTool: false
     },
 
+    defaults: {
+        margins: '0 0 0 0'
+    },
+
     requires: [
         'WMS.view.wms.WMSInventory',
         'WMS.view.wms.WMSOverview',

@@ -9,6 +9,7 @@
  */
 
 Ext.define('WMS.view.wms.WMSUnit', {
-    extend: 'Ext.panel.Panel',
-    alias : 'widget.wmsunit'
+    extend : 'Ext.panel.Panel',
+    alias  : 'widget.wmsunit',
+    iconCls: 'view-wms-unit'
 });

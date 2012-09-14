@@ -43,3 +43,24 @@
     background-image: url("../images/view/footer/refresh.png") !important;
     background-size: 60%;
 }
+
+/*view.wms* */
+.view-wms-inventory {
+    background-image: url("../images/view/wms/inventory.png") !important;
+    background-size: 70%;
+}
+
+.view-wms-unit {
+    background-image: url("../images/view/wms/unit.png") !important;
+    background-size: 70%;
+}
+
+.view-wms-statistics {
+    background-image: url("../images/view/wms/statistics.png") !important;
+    background-size: 70%;
+}
+
+.view-wms-overview {
+    background-image: url("../images/view/wms/overview.png") !important;
+    background-size: 70%;
+}

@@ -10,5 +10,6 @@
 
 Ext.define('WMS.view.wms.WMSInventory', {
     extend: 'Ext.panel.Panel',
-    alias : 'widget.wmsinventory'
+    alias : 'widget.wmsinventory',
+    iconCls: 'view-wms-inventory'
 });

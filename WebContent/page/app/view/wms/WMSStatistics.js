@@ -10,5 +10,6 @@
 
 Ext.define('WMS.view.wms.WMSStatistics', {
     extend: 'Ext.panel.Panel',
-    alias : 'widget.wmsstatistics'
+    alias : 'widget.wmsstatistics',
+    iconCls: 'view-wms-statistics'
 });
