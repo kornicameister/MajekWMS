@@ -7,11 +7,12 @@
  * Created: 14-09-2012
  */
 
-Ext.define('WMS.view.Toolbar', {
-    extend     : 'Ext.toolbar.Toolbar',
-    alias      : 'widget.wmstoolbar',
-    defaultType: 'splitbutton',
-    defaults   : {
+Ext.define('WMS.view.toolbar.Header', {
+    extend            : 'Ext.toolbar.Toolbar',
+    alias             : 'widget.wmstoolbar',
+    alternateClassName: 'wms.toolbar.header',
+    defaultType       : 'splitbutton',
+    defaults          : {
         margin: {
             top   : 1,
             left  : 5,
@@ -19,7 +20,7 @@ Ext.define('WMS.view.Toolbar', {
             bottom: 1
         }
     },
-    items      : [
+    items             : [
         {
             xtype  : 'button',
             itemId : 'receiptButton',

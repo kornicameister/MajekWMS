@@ -12,8 +12,9 @@ Ext.define('WMS.view.Viewport', {
     extend: 'Ext.Viewport',
     layout: 'fit',
 
-    requires: [
-        'WMS.view.Toolbar'
+    uses: [
+        'wms.toolbar.footer',
+        'wms.toolbar.header'
     ],
 
     items: {
@@ -26,11 +27,17 @@ Ext.define('WMS.view.Viewport', {
             border: false
         },
         tbar    : {
-            xtype   : 'wmstoolbar',
+            xtype   : 'wms.toolbar.header',
             defaults: {
-                iconAlign : 'left',
-                scale     : 'large',
-                arrowAlign: 'bottom'
+                iconAlign: 'left',
+                scale    : 'large'
+            }
+        },
+        fbar    : {
+            xtype   : 'wms.toolbar.footer',
+            defaults: {
+                iconAlign: 'left',
+                scale    : 'large'
             }
         }
     }
