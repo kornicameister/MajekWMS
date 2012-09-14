@@ -19,25 +19,22 @@ Ext.define('WMS.view.Viewport', {
     ],
 
     items: {
-        id      : 'viewport',
-        xtype   : 'panel',
-        layout  : 'border',
-        title   : 'WMS Simulator',
-        defaults: {
-            collapsible: true
-        },
-
-        items: [
+        id    : 'viewport',
+        xtype : 'panel',
+        layout: 'border',
+        title : 'WMS Simulator',
+        items : [
             {
                 xtype : 'wmsnav',
                 itemId: 'navigator',
                 title : 'WMS - Navigator',
 
-                width    : 200,
-                margins  : {
+                width      : 200,
+                margins    : {
                     right: 3
                 },
-                collapsed: false,
+                collapsible: true,
+                collapsed  : true,
 
                 region: 'west'
             },
