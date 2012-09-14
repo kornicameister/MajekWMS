@@ -41,10 +41,16 @@ Ext.define('WMS.view.Viewport', {
                 region: 'west'
             },
             {
-                xtype : 'wmsview',
-                title : 'WMS - Warehouse',
-                region: 'center',
-                items : [
+                xtype   : 'wmsview',
+                title   : 'WMS - Warehouse',
+                region  : 'center',
+                defaults: {
+                    autoScroll: true,
+                    margins   : {
+                        bottom: 2
+                    }
+                },
+                items   : [
                     {
                         xtype : 'wmsoverviews',
                         itemId: 'wmsOverview',
