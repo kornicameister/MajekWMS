@@ -8,9 +8,9 @@
  */
 
 Ext.define('WMS.view.toolbar.Footer', {
-    extend            : 'Ext.toolbar.Toolbar',
-    alias             : 'widget.wmsfooter',
-    alternateClassName: 'wms.toolbar.footer',
+    extend            : 'Ext.ux.StatusBar',
+    alternateClassName: 'WMS.Footer',
+    alias             : 'widget.wmsfbar',
     defaultType       : 'button',
     defaults          : {
         margin: {
@@ -22,21 +22,20 @@ Ext.define('WMS.view.toolbar.Footer', {
     },
     items             : [
         {
-            itemId : 'statusBar',
-            xtype  : 'textfields',
-            enabled: 'false',
-            text   : 'Application ready...'
-        },
-        {
             itemId : 'saveButton',
             text   : 'Save',
-            iconCls: 'view-toolbar-saveButton'
+            iconCls: 'view-footer-saveButton',
+            width  : 100
         },
         {
             itemId : 'refreshButton',
             text   : 'Refresh',
-            iconCls: 'view-toolbar-settingsButton'
+            iconCls: 'view-footer-refreshButton',
+            width  : 100
         }
-    ]
+    ],
+
+    // values when cleared
+    defaultText       : 'No pending operation...'
 });
 

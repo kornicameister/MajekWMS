@@ -1,35 +1,45 @@
 /*view.toolbar.* */
 .view-toolbar-warehouseButton {
-    background-image: url("../images/view/toolbar/warehousing-icon.png") !important;
+    background-image: url("../images/view/header/warehousing-icon.png") !important;
     background-size: 60%
 }
 
 .view-toolbar-unitsButton {
-    background-image: url("../images/view/toolbar/warehousing-unit.png") !important;
+    background-image: url("../images/view/header/warehousing-unit.png") !important;
     background-size: 60%;
 }
 
 .view-toolbar-settingsButton {
-    background-image: url("../images/view/toolbar/settings.png") !important;
+    background-image: url("../images/view/header/settings.png") !important;
     background-size: 60%
 }
 
 .view-toolbar-helpButton {
-    background-image: url("../images/view/toolbar/help.png") !important;
+    background-image: url("../images/view/header/help.png") !important;
     background-size: 60%;
 }
 
 .view-toolbar-receiptButton {
-    background-image: url("../images/view/toolbar/invoice.png") !important;
+    background-image: url("../images/view/header/invoice.png") !important;
     background-size: 60%;
 }
 
 .view-toolbar-releaseButton {
-    background-image: url("../images/view/toolbar/invoice.png") !important;
+    background-image: url("../images/view/header/invoice.png") !important;
     background-size: 60%;
 }
 
 .view-toolbar-inventoryButton {
-    background-image: url("../images/view/toolbar/inventory.png") !important;
+    background-image: url("../images/view/header/inventory.png") !important;
+    background-size: 60%;
+}
+
+.view-footer-saveButton {
+    background-image: url("../images/view/footer/save.png") !important;
+    background-size: 60%;
+}
+
+.view-footer-refreshButton {
+    background-image: url("../images/view/footer/refresh.png") !important;
     background-size: 60%;
 }

@@ -10,7 +10,10 @@
 // entry point for file
 (function () {
     Ext.Loader.setConfig({
-        enabled: true
+        enabled: true,
+        paths  : {
+            'Ext.ux': 'page/app/ux'
+        }
     });
 
     Ext.application({

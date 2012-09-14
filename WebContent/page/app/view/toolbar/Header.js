@@ -9,8 +9,8 @@
 
 Ext.define('WMS.view.toolbar.Header', {
     extend            : 'Ext.toolbar.Toolbar',
-    alias             : 'widget.wmstoolbar',
-    alternateClassName: 'wms.toolbar.header',
+    alternateClassName: 'WMS.Header',
+    alias             : 'widget.wmstbar',
     defaultType       : 'splitbutton',
     defaults          : {
         margin: {
