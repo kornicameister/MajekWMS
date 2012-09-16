@@ -24,9 +24,13 @@ public class WMSController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		String pageReference = req.getParameter("page");
-		log.log(Level.INFO, "Request for {0} page", pageReference);
+		if (pageReference != null) {
+			log.log(Level.INFO, "Request for {0} page", pageReference);
 
-		res.setContentType("application/json");
-		WMSResponseUtilities.persistenceResponse(pageReference, res);
+			res.setContentType("application/json");
+			WMSResponseUtilities.persistenceResponse(pageReference, res);
+		} else {
+			log.warning("<page> is null param within request body");
+		}
 	}
 }
