@@ -8,18 +8,20 @@
  */
 
 Ext.define('WMS.view.toolbar.WMSFooter', {
-    extend            : 'Ext.ux.StatusBar',
-    alias             : 'widget.wmsfbar',
-    defaultType       : 'button',
-    defaults          : {
-        margin: {
+    extend     : 'Ext.ux.StatusBar',
+    alias      : 'widget.wmsfbar',
+    defaultType: 'button',
+    defaults   : {
+        margin   : {
             top   : 1,
             left  : 5,
             right : 0,
             bottom: 1
-        }
+        },
+        iconAlign: 'left',
+        scale    : 'large'
     },
-    items             : [
+    items      : [
         {
             itemId : 'saveButton',
             text   : 'Save',
@@ -35,6 +37,6 @@ Ext.define('WMS.view.toolbar.WMSFooter', {
     ],
 
     // values when cleared
-    defaultText       : 'No pending operation...'
+    defaultText: 'No pending operation...'
 });
 

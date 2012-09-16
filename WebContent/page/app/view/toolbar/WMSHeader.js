@@ -8,18 +8,21 @@
  */
 
 Ext.define('WMS.view.toolbar.WMSHeader', {
-    extend            : 'Ext.toolbar.Toolbar',
-    alias             : 'widget.wmstbar',
-    defaultType       : 'splitbutton',
-    defaults          : {
-        margin: {
+    extend     : 'Ext.toolbar.Toolbar',
+    alias      : 'widget.wmstbar',
+    defaultType: 'splitbutton',
+    defaults   : {
+        margin    : {
             top   : 1,
             left  : 5,
             right : 0,
             bottom: 1
-        }
+        },
+        iconAlign : 'left',
+        scale     : 'large',
+        arrowAlign: 'bottom'
     },
-    items             : [
+    items      : [
         {
             xtype  : 'button',
             itemId : 'receiptButton',

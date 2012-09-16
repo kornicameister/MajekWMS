@@ -28,66 +28,19 @@ Ext.define('WMS.view.Viewport', {
         items : [
             {
                 xtype : 'wmsnav',
-                itemId: 'navigator',
-                title : 'WMS - Navigator',
-
-                width      : 200,
-                margins    : {
-                    right: 3
-                },
-                collapsible: true,
-                collapsed  : true,
-
                 region: 'west'
             },
             {
                 xtype   : 'wmsview',
-                title   : 'WMS - Warehouse',
-                region  : 'center',
-                defaults: {
-                    autoScroll: true,
-                    margins   : {
-                        bottom: 2
-                    }
-                },
-                items   : [
-                    {
-                        xtype : 'wmsoverviews',
-                        itemId: 'wmsOverview',
-                        title : 'Overview'
-                    },
-                    {
-                        xtype : 'wmsunit',
-                        itemId: 'wmsunit',
-                        title : 'Units'
-                    },
-                    {
-                        xtype : 'wmsstatistics',
-                        itemId: 'wmsstatistics',
-                        title : 'Statistics'
-                    },
-                    {
-                        xtype : 'wmsinventory',
-                        itemId: 'wmsinventory',
-                        title : "Inventory"
-                    }
-                ]
+                region  : 'center'
             }
         ],
 
         tbar: {
-            xtype   : 'wmstbar',
-            defaults: {
-                iconAlign: 'left',
-                scale    : 'large'
-            }
+            xtype   : 'wmstbar'
         },
         bbar: {
-            xtype   : 'wmsfbar',
-            defaults: {
-                iconAlign: 'left',
-                scale    : 'large'
-            }
+            xtype   : 'wmsfbar'
         }
     }
 });

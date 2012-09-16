@@ -9,6 +9,16 @@
  */
 
 Ext.define('WMS.view.WMSNavigation', {
-    extend            : 'Ext.panel.Panel',
-    alias             : 'widget.wmsnav'
+    extend: 'Ext.panel.Panel',
+    alias : 'widget.wmsnav',
+
+    itemId: 'navigator',
+    title : 'WMS - Navigator',
+
+    width      : 200,
+    margins    : {
+        right: 3
+    },
+    collapsible: true,
+    collapsed  : true
 });

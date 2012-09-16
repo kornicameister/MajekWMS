@@ -16,10 +16,24 @@
  * user information such as warehouse diagram etc.
  */
 Ext.define('WMS.view.WMSView', {
-    extend: 'Ext.panel.Panel',
-    alias : 'widget.wmsview',
+    extend  : 'Ext.panel.Panel',
+    alias   : 'widget.wmsview',
+    requires: [
+        'WMS.view.wms.WMSInventory',
+        'WMS.view.wms.WMSOverview',
+        'WMS.view.wms.WMSStatistics',
+        'WMS.view.wms.WMSUnit'
+    ],
 
-    layout: {
+    title   : 'WMS - Warehouse',
+    defaults: {
+        autoScroll: true,
+        margins   : {
+            bottom: 2
+        },
+        margins   : '0 0 0 0'
+    },
+    layout  : {
         type            : 'accordion',
         titleCollapse   : false,
         animate         : true,
@@ -27,14 +41,26 @@ Ext.define('WMS.view.WMSView', {
         hideCollapseTool: false
     },
 
-    defaults: {
-        margins: '0 0 0 0'
-    },
-
-    requires: [
-        'WMS.view.wms.WMSInventory',
-        'WMS.view.wms.WMSOverview',
-        'WMS.view.wms.WMSStatistics',
-        'WMS.view.wms.WMSUnit'
+    items: [
+        {
+            xtype : 'wmsoverviews',
+            itemId: 'wmsOverview',
+            title : 'Overview'
+        },
+        {
+            xtype : 'wmsunit',
+            itemId: 'wmsunit',
+            title : 'Units'
+        },
+        {
+            xtype : 'wmsstatistics',
+            itemId: 'wmsstatistics',
+            title : 'Statistics'
+        },
+        {
+            xtype : 'wmsinventory',
+            itemId: 'wmsinventory',
+            title : "Inventory"
+        }
     ]
 });

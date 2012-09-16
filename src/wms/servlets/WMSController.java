@@ -21,7 +21,7 @@ public class WMSController extends HttpServlet {
 	private static Logger log = Logger.getLogger(WMSController.class.getName());
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse res)
+	protected void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		String pageReference = req.getParameter("page");
 		log.log(Level.INFO, "Request for {0} page", pageReference);
