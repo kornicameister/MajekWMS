@@ -46,11 +46,13 @@ Ext.define('WMS.view.toolbar.WMSHeader', {
                 items      : [
                     {
                         itemId: 'warehouseOverview',
-                        text  : 'Overview'
+                        text  : 'Overview',
+                        hash  : '4b30170a7a926c88b4fa7e10e44bf5fe'
                     }                            ,
                     {
                         itemId: 'warehouseStatistics',
-                        text  : 'Statistics'
+                        text  : 'Statistics',
+                        hash  : '30848088f40ae9bc47c289732597f4e2'
                     }
                 ]
             }

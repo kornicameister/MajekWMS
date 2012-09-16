@@ -25,52 +25,68 @@ Ext.define('WMS.controller.WMSToolbars', {
         }
     ],
 
+    onServerRequestAction: function (menu, item) {
+        Ext.Ajax.request({
+            url    : 'wms',
+            params : {
+                page: item['hash']
+            },
+            method : 'POST',
+            success: function (response, opts) {
+                var obj = Ext.decode(response.responseText);
+                console.dir(obj);
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+    },
+
     init: function () {
         console.log('WMS.controller.WMSToolbars is ready');
         console.log(this);
         this.control({
-            '#receiptButton'  : {
+            '#receiptButton': {
                 'click': function (button) {
                     console.log(button.getItemId() + ' button clicked');
                 }
             },
-            '#releaseButton'  : {
+            '#releaseButton': {
                 'click': function (button) {
                     console.log(button.getItemId() + ' button clicked');
                 }
             },
-            '#warehouseButton': {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
-                }
+
+            '#warehouseButton > menu': {
+                'click': this.onServerRequestAction
             },
-            '#unitsButton'    : {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
-                }
+
+            '#unitsButton > menu': {
+                'click': this.onServerRequestAction
             },
+
             '#inventoryButton': {
                 'click': function (button) {
                     console.log(button.getItemId() + ' button clicked');
                 }
             },
-            '#settingsButton': {
+            '#settingsButton' : {
                 'click': function (button) {
                     console.log(button.getItemId() + ' button clicked');
                 }
             },
-            '#helpButton': {
+            '#helpButton'     : {
                 'click': function (button) {
                     console.log(button.getItemId() + ' button clicked');
                 }
             },
-            '#saveButton' : {
-                'click': function(button){
+            '#saveButton'     : {
+                'click': function (button) {
                     console.log(button.getItemId() + ' button clicked');
                 }
             },
-            '#refreshButton' : {
-                'click': function(button){
+            '#refreshButton'  : {
+                'click': function (button) {
                     console.log(button.getItemId() + ' button clicked');
                 }
             }

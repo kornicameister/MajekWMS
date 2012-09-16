@@ -53,14 +53,14 @@ Ext.define('WMS.view.WMSView', {
             title : 'Units'
         },
         {
-            xtype : 'wmsstatistics',
-            itemId: 'wmsstatistics',
-            title : 'Statistics'
-        },
-        {
             xtype : 'wmsinventory',
             itemId: 'wmsinventory',
             title : "Inventory"
+        },
+        {
+            xtype : 'wmsstatistics',
+            itemId: 'wmsstatistics',
+            title : 'Statistics'
         }
     ]
 });
