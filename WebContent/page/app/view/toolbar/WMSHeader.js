@@ -8,6 +8,7 @@
  */
 
 Ext.define('WMS.view.toolbar.WMSHeader', {
+    itemId     : 'headerToolbar',
     extend     : 'Ext.toolbar.Toolbar',
     alias      : 'widget.wmstbar',
     defaultType: 'splitbutton',
@@ -22,7 +23,8 @@ Ext.define('WMS.view.toolbar.WMSHeader', {
         scale     : 'large',
         arrowAlign: 'bottom'
     },
-    items      : [
+
+    items: [
         {
             xtype  : 'button',
             itemId : 'receiptButton',
@@ -89,14 +91,16 @@ Ext.define('WMS.view.toolbar.WMSHeader', {
             xtype  : 'button',
             itemId : 'inventoryButton',
             text   : 'Inventory',
-            iconCls: 'view-toolbar-inventoryButton'
+            iconCls: 'view-toolbar-inventoryButton',
+            hash   : '59bb3f230d34275e05f63025ec753600'
         },
         '->',
         {
             xtype  : 'button',
             itemId : 'settingsButton',
             text   : 'Settings',
-            iconCls: 'view-toolbar-settingsButton'
+            iconCls: 'view-toolbar-settingsButton',
+            hash   : '59bb3f230d34275e05f63025ec753600'
         } ,
         {
             xtype  : 'button',

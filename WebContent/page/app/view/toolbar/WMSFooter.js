@@ -8,6 +8,7 @@
  */
 
 Ext.define('WMS.view.toolbar.WMSFooter', {
+    itemId     : 'footerToolbar',
     extend     : 'Ext.ux.StatusBar',
     alias      : 'widget.wmsfbar',
     defaultType: 'button',

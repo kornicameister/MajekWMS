@@ -25,16 +25,39 @@ Ext.define('WMS.controller.WMSToolbars', {
         }
     ],
 
-    onServerRequestAction: function (menu, item) {
+    onRequestFailure: function (buttonText, error) {
+        Ext.MessageBox.show({
+            title  : Ext.String.format('Request for {0} failed permanently..', buttonText),
+            msg    : error,
+            width  : 300,
+            buttons: Ext.Msg.OKCANCEL,
+            icon   : Ext.MessageBox.WARNING
+        });
+    },
+
+    onSaveAction: function () {
+        console.log('Save action called, to be implemented');
+    },
+
+    onRefreshAction: function () {
+        console.log('Refresh action called, revert changes, reload from server');
+    },
+
+    onServerRequestAction: function (button) {
+        var me = this;
         Ext.Ajax.request({
             url    : 'wms',
             params : {
-                page: item['hash']
+                page: button['hash']
             },
             method : 'POST',
-            success: function (response, opts) {
-                var obj = Ext.decode(response.responseText);
-                console.dir(obj);
+            success: function (response) {
+                try {
+                    var obj = Ext.decode(response.responseText);
+                    console.dir(obj);
+                } catch (error) {
+                    me.onRequestFailure(button['text'], error);
+                }
             },
             failure: function (response, opts) {
                 console.log('server-side failure with status code ' + response.status);
@@ -44,50 +67,38 @@ Ext.define('WMS.controller.WMSToolbars', {
 
     init: function () {
         console.log('WMS.controller.WMSToolbars is ready');
-        console.log(this);
+        var me = this;
+
+        function onButtonClick(button) {
+            var itemId = button.getItemId();
+            if (Ext.isDefined(button['hash'])) {
+                me.onServerRequestAction(button);
+            } else {
+                if (itemId === 'receiptButton') {
+                    console.log('Receipt button');
+                } else if (itemId == 'releaseButton') {
+                    console.log('Release button');
+                } else if (itemId === 'helpButton') {
+                    console.log('Help button');
+                } else if (itemId === 'saveButton') {
+                    console.log('Save button');
+                } else if (itemId === 'refreshButton') {
+                    console.log('Refresh button');
+                }
+            }
+        }
+
         this.control({
-            '#receiptButton': {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
-                }
+            '#headerToolbar > button'       : {
+                'click': onButtonClick
             },
-            '#releaseButton': {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
-                }
+            '#footerToolbar > button'       : {
+                'click': onButtonClick
             },
-
-            '#warehouseButton > menu': {
-                'click': this.onServerRequestAction
-            },
-
-            '#unitsButton > menu': {
-                'click': this.onServerRequestAction
-            },
-
-            '#inventoryButton': {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
-                }
-            },
-            '#settingsButton' : {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
-                }
-            },
-            '#helpButton'     : {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
-                }
-            },
-            '#saveButton'     : {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
-                }
-            },
-            '#refreshButton'  : {
-                'click': function (button) {
-                    console.log(button.getItemId() + ' button clicked');
+            '#headerToolbar > button > menu': {
+                'click': function (menu, item) {
+                    console.log(Ext.String.format('Menu {0} item clicked', menu['id']));
+                    onButtonClick(item);
                 }
             }
         }, this);

@@ -6,7 +6,7 @@
 		<title>Majek WMS</title>
 		
 		<!-- Library entries -->
-		<script type="text/javascript" src="page/extjs/ext-all-dev.js"></script>
+		<script type="text/javascript" src="page/extjs/ext-all-debug.js"></script>
 		<link rel="stylesheet" type="text/css" href="page/extjs/resources/css/ext-all-debug.css">
 		
 		<!-- MajekWMS entries -->

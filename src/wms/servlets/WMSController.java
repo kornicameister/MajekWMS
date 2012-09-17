@@ -22,8 +22,7 @@ public class WMSController extends HttpServlet {
 	private static Logger log = Logger.getLogger(WMSController.class.getName());
 
 	public void init(ServletConfig config) throws ServletException {
-		log.log(Level.CONFIG, "Controller ready to be used, init value = {0}",
-				config.getInitParameter("page"));
+		log.log(Level.CONFIG, "Controller ready to be used, init value = {0}", config.getInitParameter("page"));
 	}
 
 	@Override
@@ -31,13 +30,17 @@ public class WMSController extends HttpServlet {
 			throws ServletException, IOException {
 		String pageReference = req.getParameter("page");
 		if (pageReference != null) {
-			log.log(Level.INFO, "Request for {0} page", pageReference);
+			if(pageReference.isEmpty()){
+				log.warning("<page> param is empty");
+			}else{
+				log.log(Level.INFO, "Request for {0} page", pageReference);
+			}
 
 			res.setContentType("application/json");
 			PrintWriter out = res.getWriter();
 			out.write("Request for " + pageReference);
 		} else {
-			log.warning("<page> is null param within request body");
+			log.severe("<page> is null param within request body");
 		}
 	}
 }
