@@ -3,7 +3,6 @@ package wms.listeners;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +53,6 @@ public class WMSDatabaseBridgeInitializer implements ServletContextListener {
 		// and loading them.
 		WMSDatabaseBridgeInitializer.log.entering(WMSDatabaseBridgeInitializer.class.getSimpleName(), "contextInitialized");
 		this.connectionManager.openConnection();
-		this.connectionManager.killConnection();
 		WMSDatabaseBridgeInitializer.log.exiting(WMSDatabaseBridgeInitializer.class.getSimpleName(), "contextInitialized");
 	}
 
@@ -69,16 +67,14 @@ public class WMSDatabaseBridgeInitializer implements ServletContextListener {
 	 * @see ServletContextListener#contextDestroyed(ServletContextEvent)
 	 */
 	public void contextDestroyed(ServletContextEvent context) {
-		Enumeration<Driver> drivers = DriverManager.getDrivers();
-        while (drivers.hasMoreElements()) {
-            Driver driver = drivers.nextElement();
-            try {
-                DriverManager.deregisterDriver(driver);
-                log.log(Level.INFO, String.format("deregistering jdbc driver: %s", driver));
-            } catch (SQLException e) {
-                log.log(Level.SEVERE, String.format("Error deregistering driver %s", driver), e);
-            }
-        }
+		this.connectionManager.killConnection();
+         try {
+    		 Driver driver = DriverManager.getDriver("jdbc:mysql://localhost:3306/");
+             DriverManager.deregisterDriver(driver);
+             log.log(Level.INFO, String.format("deregistering jdbc driver: %s", driver));
+         } catch (SQLException e) {
+             log.log(Level.SEVERE, String.format("Error deregistering driver for mysql"), e);
+         }
 	}
 
 }
