@@ -54,7 +54,7 @@ public class Measure {
 
 	@Override
 	public String toString() {
-		return String.format("measure: [%s, %s, %s]", this.id, this.name,
-				this.abbreviation);
+		return String.format("%s: [%s, %s, %s]", this.getClass().getName(),
+				this.id, this.name, this.abbreviation);
 	}
 }

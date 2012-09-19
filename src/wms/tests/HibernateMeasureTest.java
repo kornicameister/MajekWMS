@@ -1,5 +1,6 @@
 package wms.tests;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -22,10 +23,10 @@ public class HibernateMeasureTest {
 	@Before
 	public void setUp() throws Exception {
 		this.hibernateCfg = new File("WebContent/META-INF/hibernate.cfg.xml");
-		if(!this.hibernateCfg.exists()){
+		if (!this.hibernateCfg.exists()) {
 			fail("Cfg file for hibernate not found");
 		}
-		
+
 		this.sessionFactory = new Configuration().configure(this.hibernateCfg)
 				.buildSessionFactory();
 	}
@@ -39,16 +40,28 @@ public class HibernateMeasureTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testMeasure() {
+	public void testMeasureRead() {
 		Session session = this.sessionFactory.openSession();
-		
+
 		session.beginTransaction();
 		List<Measure> result = session.createQuery("from Measure").list();
-		for(Measure m : result){
+		for (Measure m : result) {
+			assertNotNull("Measure object is null, something went wrong...", m);
 			System.out.println(m);
 		}
 		session.getTransaction().commit();
-		
+
+		session.close();
+	}
+
+	@Test
+	public void testMeasureWrite() {
+		Session session = this.sessionFactory.openSession();
+
+		session.beginTransaction();
+		assertNotNull("Save should be ok...", session.save(new Measure("meter", "m")));
+		session.getTransaction().commit();
+
 		session.close();
 	}
 
