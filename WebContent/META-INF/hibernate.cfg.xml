@@ -2,17 +2,25 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
                                          "http://www.jboss.org/dtd/hibernate/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
- <session-factory>
-  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-  <property name="hibernate.connection.password">12345</property>
-  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/majekwms</property>
-  <property name="hibernate.connection.username">majekWMS</property>
-  <property name="hibernate.default_schema">majekwms</property>
-  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-  <property name="hibernate.dialect.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
-  
-  <!-- <property name="hibernate.show_sql">true</property> 
-  <property name="hibernate.format_sql">true</property> -->
-  <mapping class="wms.model.Measure"/>
- </session-factory>
+	<session-factory>
+		<!-- some options -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.password">12345</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/majekwms</property>
+		<property name="hibernate.connection.username">majekWMS</property>
+		<property name="hibernate.default_schema">majekwms</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.dialect.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+		<!-- Classes mapping -->
+		<mapping class="wms.model.Measure" />
+		<mapping class="wms.model.Invoice" />
+		<mapping class="wms.model.Product" />
+		<mapping class="wms.model.Receipt" />
+		<mapping class="wms.model.Release" />
+		<mapping class="wms.model.Unit" />
+		<mapping class="wms.model.UnitProduct" />
+		<mapping class="wms.model.Warehouse" />
+		<mapping class="wms.model.WarehouseUnit" />
+	</session-factory>
 </hibernate-configuration>
