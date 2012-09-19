@@ -1,5 +1,7 @@
 package wms.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "measure")
-public class Measure {
+public class Measure implements Serializable {
+	private static final long serialVersionUID = 8140273816811139591L;
 	private Long id;
 	private String abbreviation;
 	private String name;
@@ -32,10 +35,12 @@ public class Measure {
 		return id;
 	}
 
+	@Column(nullable = false, length = 10)
 	public String getAbbreviation() {
 		return abbreviation;
 	}
 
+	@Column(nullable = false, length = 20, unique = true)
 	public String getName() {
 		return name;
 	}
