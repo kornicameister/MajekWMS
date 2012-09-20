@@ -11,8 +11,10 @@
 		<property name="hibernate.default_schema">majekwms</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.dialect.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+		<property name="hibernate.show_sql">true</property>
 		<!-- Classes mapping -->
 		<mapping class="wms.model.AbstractEntity" />
+		<mapping class="wms.model.AbstractStorageUnit" />
 		<mapping class="wms.model.Measure" />
 
 		<mapping class="wms.model.Invoice" />
