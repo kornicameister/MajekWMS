@@ -18,14 +18,11 @@
 		<mapping class="wms.model.Measure" />
 
 		<mapping class="wms.model.Invoice" />
-		<mapping class="wms.model.InvoiceProduct" />
 		<mapping class="wms.model.Product" />
 		<mapping class="wms.model.Unit" />
-		<mapping class="wms.model.UnitProduct" />
 
 		<mapping class="wms.model.Client" />
 		<mapping class="wms.model.Warehouse" />
-		<mapping class="wms.model.WarehouseUnit" />
 		<mapping class="wms.model.WarehouseType" />
 	</session-factory>
 </hibernate-configuration>
