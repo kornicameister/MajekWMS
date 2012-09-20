@@ -58,21 +58,21 @@ public class MeasureTest {
 		}
 	}
 
-	@Test
-	public void testMeasureDelete() {
-		List<Measure> result = readMeasureRecords();
-		doDelete(result);
+//	@Test
+//	public void testMeasureDelete() {
+//		List<Measure> result = readMeasureRecords();
+//		doDelete(result);
+//
+//		System.out.println("Deleted all records without any problem...");
+//	}
 
-		System.out.println("Deleted all records without any problem...");
-	}
-
-	private void doDelete(List<Measure> result) {
-		session.beginTransaction();
-		for (Measure m : result) {
-			session.delete(m);
-		}
-		session.getTransaction().commit();
-	}
+//	private void doDelete(List<Measure> result) {
+//		session.beginTransaction();
+//		for (Measure m : result) {
+//			session.delete(m);
+//		}
+//		session.getTransaction().commit();
+//	}
 
 	@Test
 	public void testMeasureWrite() {
@@ -83,12 +83,12 @@ public class MeasureTest {
 		id.add(session.save(new Measure("kilogram", "kg")));
 		session.getTransaction().commit();
 
-		session.beginTransaction();
-		for (Serializable s : id) {
-			System.out.println(s);
-			session.delete(session.get(Measure.class, s));
-		}
-		session.getTransaction().commit();
+//		session.beginTransaction();
+//		for (Serializable s : id) {
+//			System.out.println(s);
+//			session.delete(session.get(Measure.class, s));
+//		}
+//		session.getTransaction().commit();
 	}
 
 	@SuppressWarnings("unchecked")
