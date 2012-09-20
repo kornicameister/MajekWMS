@@ -4,9 +4,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "measure")
+@Table(
+			name = "measure", 
+			uniqueConstraints = {
+					@UniqueConstraint(columnNames = {"name"})
+			})
 public class Measure extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = 8140273816811139591L;

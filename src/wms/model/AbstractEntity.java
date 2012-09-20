@@ -47,6 +47,7 @@ public class AbstractEntity implements Serializable {
 
 	public AbstractEntity() {
 		super();
+		this.updatedOn = new Date();
 	}
 
 	public Integer getId() {

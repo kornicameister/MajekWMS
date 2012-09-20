@@ -1,26 +1,34 @@
 package wms.model;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-public class WarehouseType implements Serializable {
+@Entity
+@Table(name = "warehouseType", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = {
+		"name", "abbreviation" }) })
+public class WarehouseType extends AbstractEntity {
 	private static final long serialVersionUID = -7479798313966564213L;
 
-	private Long id;
-	private String abbreviation, description;
+	@Column(name = "abbreviation", length = 6, nullable = false, unique = true, insertable = true, updatable = true)
+	private String abbreviation;
+
+	@Column(name = "description", length = 120, insertable = true, updatable = true)
+	private String description;
+
+	@Column(name = "name", length = 20, nullable = false, unique = true, insertable = true, updatable = true)
+	private String name;
 
 	public WarehouseType() {
 		super(); // hibernate
 	}
 
-	public WarehouseType(Long id, String abbreviation, String description) {
+	public WarehouseType(String name, String abbreviation, String description) {
 		super();
-		this.id = id;
+		this.name = name;
 		this.abbreviation = abbreviation;
 		this.description = description;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	public String getAbbreviation() {
@@ -29,10 +37,6 @@ public class WarehouseType implements Serializable {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public void setAbbreviation(String abbreviation) {
