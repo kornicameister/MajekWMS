@@ -1,23 +1,33 @@
 package wms.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "warehouse")
-public class Warehouse implements Serializable {
+public class Warehouse extends AbstractEntity {
+	@Transient
 	private static final long serialVersionUID = 4557522901223374020L;
-	private Long id;
-	private String name, description;
-	private Integer size, maxSize, type;
-	private Long createdDate, lastUpdated;
+
+	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
+	private String name;
+
+	@Column(name = "description", nullable = true, length = 666)
+	private String description;
+
+	@Column(name = "size", nullable = false)
+	private Integer size;
+
+	@Column(name = "maxSize", nullable = false)
+	private Integer maximumSize;
+
+	@Column(name = "type", nullable = false)
+	private Integer type;
+
+	@Column(name = "createdDate", nullable = false)
+	private Long createdDate;
 
 	public Warehouse() {
 		super(); // for hibernate
@@ -29,22 +39,9 @@ public class Warehouse implements Serializable {
 		this.name = name;
 		this.description = description;
 		this.size = size;
-		this.maxSize = maxSize;
+		this.maximumSize = maxSize;
 		this.type = type;
 		this.createdDate = createdDate;
-		this.lastUpdated = lastUpdated;
-	}
-
-	@Id
-	@Column(name = "idWarehouse")
-	@GeneratedValue(generator = "increment")
-	@GenericGenerator(name = "increment", strategy = "increment")
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	@Column(unique = true, length = 20, nullable = false)
@@ -64,7 +61,7 @@ public class Warehouse implements Serializable {
 
 	@Column(nullable = false)
 	public Integer getMaxSize() {
-		return maxSize;
+		return maximumSize;
 	}
 
 	@Column(nullable = false)
@@ -75,11 +72,6 @@ public class Warehouse implements Serializable {
 	@Column(nullable = false)
 	public Long getCreatedDate() {
 		return createdDate;
-	}
-
-	@Column(nullable = false)
-	public Long getLastUpdated() {
-		return lastUpdated;
 	}
 
 	// Setter part
@@ -96,7 +88,7 @@ public class Warehouse implements Serializable {
 	}
 
 	public void setMaxSize(Integer maxSize) {
-		this.maxSize = maxSize;
+		this.maximumSize = maxSize;
 	}
 
 	public void setType(Integer type) {
@@ -107,8 +99,8 @@ public class Warehouse implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public void setLastUpdated(Long lastUpdated) {
-		this.lastUpdated = lastUpdated;
+	public final Double getRatio() {
+		return this.size / (double) this.maximumSize;
 	}
 
 	public String toString() {
