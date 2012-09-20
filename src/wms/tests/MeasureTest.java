@@ -50,8 +50,6 @@ public class MeasureTest {
 		}
 	}
 
-	
-
 	@Test
 	public void testMeasureRead() {
 		for (Measure m : this.readMeasureRecords()) {
@@ -75,7 +73,7 @@ public class MeasureTest {
 		}
 		session.getTransaction().commit();
 	}
-	
+
 	@Test
 	public void testMeasureWrite() {
 		ArrayList<Serializable> id = new ArrayList<>();

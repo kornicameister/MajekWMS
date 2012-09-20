@@ -3,6 +3,7 @@ package wms.tests;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -12,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import wms.model.Warehouse;
 import wms.model.WarehouseType;
 
 public class RelationshipTest {
@@ -38,40 +40,40 @@ public class RelationshipTest {
 		}
 	}
 
-//	@Test
-//	public void testWarehouseTypeWrite() {
-//		assertTrue(createSomeMockRecords().size() > 0);
-//	}
-//
-//	private ArrayList<Serializable> createSomeMockRecords() {
-//		session = this.sessionFactory.openSession();
-//		ArrayList<Serializable> ids = new ArrayList<>();
-//
-//		session.beginTransaction();
-//		ids.add(session.save("warehouseType", new WarehouseType("Test_1", "t1",
-//				"This is test_1 warehouse type")));
-//		ids.add(session.save("warehouseType", new WarehouseType("Test_2", "t2",
-//				"This is test_2 warehouse type")));
-//		ids.add(session.save("warehouseType", new WarehouseType("Test_3", "t3",
-//				"This is test_3 warehouse type")));
-//		ids.add(session.save("warehouseType", new WarehouseType("Test_4", "t4",
-//				"This is test_4 warehouse type")));
-//		session.getTransaction().commit();
-//		session.close();
-//
-//		return ids;
-//	}
-//
-//	@Test
-//	public void deleteRecords() {
-//		session = this.sessionFactory.openSession();
-//		session.beginTransaction();
-//		for (WarehouseType s : this.readRecords()) {
-//			session.delete(s);
-//		}
-//		session.getTransaction().commit();
-//		session.close();
-//	}
+	// @Test
+	// public void testWarehouseTypeWrite() {
+	// assertTrue(createSomeMockRecords().size() > 0);
+	// }
+	//
+	// private ArrayList<Serializable> createSomeMockRecords() {
+	// session = this.sessionFactory.openSession();
+	// ArrayList<Serializable> ids = new ArrayList<>();
+	//
+	// session.beginTransaction();
+	// ids.add(session.save("warehouseType", new WarehouseType("Test_1", "t1",
+	// "This is test_1 warehouse type")));
+	// ids.add(session.save("warehouseType", new WarehouseType("Test_2", "t2",
+	// "This is test_2 warehouse type")));
+	// ids.add(session.save("warehouseType", new WarehouseType("Test_3", "t3",
+	// "This is test_3 warehouse type")));
+	// ids.add(session.save("warehouseType", new WarehouseType("Test_4", "t4",
+	// "This is test_4 warehouse type")));
+	// session.getTransaction().commit();
+	// session.close();
+	//
+	// return ids;
+	// }
+	//
+	// @Test
+	// public void deleteRecords() {
+	// session = this.sessionFactory.openSession();
+	// session.beginTransaction();
+	// for (WarehouseType s : this.readRecords()) {
+	// session.delete(s);
+	// }
+	// session.getTransaction().commit();
+	// session.close();
+	// }
 
 	@SuppressWarnings("unchecked")
 	private List<WarehouseType> readRecords() {
@@ -93,9 +95,16 @@ public class RelationshipTest {
 	@Test
 	public void testWarehouseWrite() {
 		Session session = this.sessionFactory.openSession();
+		Integer i = 0;
 
 		session.beginTransaction();
-
+		for (WarehouseType s : this.readRecords()) {
+			System.out.println(String.format("Created warehouse[id] = %d",
+					session.save(new Warehouse("warehouse_" + i.toString(),
+							"description_" + i.toString(), i * i, i * i * i, s,
+							new Date()))));
+			i++;
+		}
 		session.getTransaction().commit();
 
 		session.close();
