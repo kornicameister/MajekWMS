@@ -21,7 +21,7 @@ public class WarehouseType extends AbstractEntity {
 	private String name;
 
 	public WarehouseType() {
-		super(); // hibernate
+		super();
 	}
 
 	public WarehouseType(String name, String abbreviation, String description) {

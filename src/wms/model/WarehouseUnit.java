@@ -1,5 +1,6 @@
 package wms.model;
 
-public class WarehouseUnit {
 
+public class WarehouseUnit {
+	
 }
