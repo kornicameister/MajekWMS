@@ -32,12 +32,12 @@ public class Warehouse extends AbstractStorageUnit {
 			cascade = CascadeType.ALL
 			)
 	@JoinTable(
-			name = "unitProduct", 
+			name = "warehouseUnit", 
 			schema = "majekwms", 
-			joinColumns = { @JoinColumn(name = "idWarehouse", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "idUnit", nullable = false, updatable = false) }
+			joinColumns = { @JoinColumn(name = "idUnit", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "idWarehouse", nullable = false, updatable = false) }
 			)
-	private Set<Unit> units = new HashSet<Unit>();
+	private Set<Unit> units = new HashSet<>();
 
 	@Basic
 	@Column(name = "createdDate", nullable = false)
@@ -98,5 +98,9 @@ public class Warehouse extends AbstractStorageUnit {
 
 	public void setUnits(Set<Unit> units) {
 		this.units = units;
+	}
+	
+	public void addUnit(Unit unit){
+		this.units.add(unit);
 	}
 }
