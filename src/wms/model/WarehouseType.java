@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "warehouseType", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = {
+@Table(name = "warehouseType", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"name", "abbreviation" }) })
 public class WarehouseType extends AbstractEntity {
 	private static final long serialVersionUID = -7479798313966564213L;

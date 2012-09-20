@@ -1,5 +1,7 @@
 package wms.model;
 
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,27 +33,30 @@ public class Warehouse extends AbstractEntity {
 	@Basic
 	@Column(name = "maxSize", nullable = false)
 	private Integer maximumSize;
-	
+
 	@Basic
 	@Column(name = "createdDate", nullable = false)
-	private Long createdDate;
-	
-	@OneToOne(cascade = CascadeType.DETACH)
-	@PrimaryKeyJoinColumn
-	private WarehouseType type;
+	private Date createdDate;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn(name = "type", referencedColumnName = "idNumber")
+	private WarehouseType warehouseType;
+
+	@Column(name = "type", unique = true, updatable = true, insertable = true, nullable = false)
+	private Integer type;
 
 	public Warehouse() {
 		super(); // for hibernate
 	}
 
 	public Warehouse(String name, String description, Integer size,
-			Integer maxSize, WarehouseType type, Long createdDate, Long lastUpdated) {
+			Integer maxSize, WarehouseType type, Date createdDate) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.size = size;
 		this.maximumSize = maxSize;
-		this.type = type;
+		this.setType(warehouseType);
 		this.createdDate = createdDate;
 	}
 
@@ -75,12 +80,16 @@ public class Warehouse extends AbstractEntity {
 		return maximumSize;
 	}
 
-	public WarehouseType getType() {
-		return type;
+	public Integer getType() {
+		return warehouseType.getId();
+	}
+
+	public WarehouseType getWarehouseType() {
+		return this.warehouseType;
 	}
 
 	@Column(nullable = false)
-	public Long getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
@@ -102,10 +111,11 @@ public class Warehouse extends AbstractEntity {
 	}
 
 	public void setType(WarehouseType type) {
-		this.type = type;
+		this.type = type.getId();
+		this.warehouseType = type;
 	}
 
-	public void setCreatedDate(Long createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 

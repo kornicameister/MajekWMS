@@ -32,8 +32,8 @@ public class AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 8641451013192983600L;
 
 	@Id
-	@Column(name = "idNumber")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "idNumber", updatable = false, insertable = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
 	protected Integer id;
 
