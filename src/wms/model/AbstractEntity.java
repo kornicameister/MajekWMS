@@ -30,7 +30,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class AbstractEntity implements Serializable {
+abstract public class AbstractEntity implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 8641451013192983600L;
 

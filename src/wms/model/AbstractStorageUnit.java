@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 @MappedSuperclass
-public class AbstractStorageUnit extends AbstractEntity{
+abstract public class AbstractStorageUnit extends AbstractEntity{
 	@Transient
 	private static final long serialVersionUID = -681353835122119325L;
 
