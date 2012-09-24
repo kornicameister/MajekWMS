@@ -1,10 +1,14 @@
 package wms.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -46,6 +50,9 @@ public class Product extends AbstractEntity {
 
 	@Column(name = "measure", unique = false, updatable = true, insertable = true, nullable = false)
 	private Integer idMeasure;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	private Set<InvoiceProduct> invoiceProducts = new HashSet<>();
 
 	public Product() {
 		super(); // hibernate
@@ -82,6 +89,23 @@ public class Product extends AbstractEntity {
 		this.tax = tax;
 		this.setVendor(vendor);
 		this.setMeasure(measure);
+	}
+	
+	public Product(String name, String description, Double quantity,
+			Double price, Float tax, Client vendor, Measure measure, Set<InvoiceProduct> invoiceProducts) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+		this.tax = tax;
+		this.setVendor(vendor);
+		this.setMeasure(measure);
+		this.setInvoiceProducts(invoiceProducts);
+	}
+
+	public final Set<InvoiceProduct> getInvoiceProducts() {
+		return invoiceProducts;
 	}
 
 	public String getName() {
@@ -126,6 +150,10 @@ public class Product extends AbstractEntity {
 
 	public void setTax(Float tax) {
 		this.tax = tax;
+	}
+	
+	public final void setInvoiceProducts(Set<InvoiceProduct> invoiceProducts) {
+		this.invoiceProducts = invoiceProducts;
 	}
 
 	public void setVendor(Client vendor) {

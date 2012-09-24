@@ -4,6 +4,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Invoice extends AbstractEntity {
 	private static final long serialVersionUID = -3204092137188652431L;
 
@@ -12,11 +21,21 @@ public class Invoice extends AbstractEntity {
 	private Date dueDate;
 	private String description;
 	private Client client;
-	private Set<Product> products;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice", cascade = CascadeType.ALL)
+	private Set<InvoiceProduct> invoiceProducts = new HashSet<>();
 
 	public Invoice() {
 		super(); // hibernate
-		this.products = new HashSet<>();
+	}
+
+	public Invoice(String invoiceNumber, Date createdDate, Date dueDate,
+			String description) {
+		super();
+		this.invoiceNumber = invoiceNumber;
+		this.createdDate = createdDate;
+		this.dueDate = dueDate;
+		this.description = description;
 	}
 
 	public Invoice(String invoiceNumber, Date createdDate, Date dueDate,
@@ -27,100 +46,66 @@ public class Invoice extends AbstractEntity {
 		this.dueDate = dueDate;
 		this.description = description;
 		this.client = client;
-		this.products = new HashSet<>();
 	}
 
 	public Invoice(String invoiceNumber, Date createdDate, Date dueDate,
-			String description) {
+			String description, Client client,
+			Set<InvoiceProduct> invoiceProducts) {
 		super();
 		this.invoiceNumber = invoiceNumber;
 		this.createdDate = createdDate;
 		this.dueDate = dueDate;
 		this.description = description;
-		this.products = new HashSet<>();
+		this.client = client;
+		this.invoiceProducts = invoiceProducts;
 	}
 
-	/**
-	 * @return the invoiceNumber
-	 */
 	public final String getInvoiceNumber() {
 		return invoiceNumber;
 	}
 
-	/**
-	 * @return the createdDate
-	 */
 	public final Date getCreatedDate() {
 		return createdDate;
 	}
 
-	/**
-	 * @return the dueDate
-	 */
 	public final Date getDueDate() {
 		return dueDate;
 	}
 
-	/**
-	 * @return the client
-	 */
 	public final Client getClient() {
 		return client;
 	}
 
-	/**
-	 * @return the description
-	 */
 	public final String getDescription() {
 		return description;
 	}
 
-	public Set<Product> getProducts() {
-		return products;
+	public final Set<InvoiceProduct> getInvoiceProducts() {
+		return invoiceProducts;
 	}
 
-	/**
-	 * @param invoiceNumber
-	 *            the invoiceNumber to set
-	 */
 	public final void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
 
-	/**
-	 * @param createdDate
-	 *            the createdDate to set
-	 */
 	public final void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	/**
-	 * @param dueDate
-	 *            the dueDate to set
-	 */
 	public final void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	/**
-	 * @param client
-	 *            the client to set
-	 */
 	public final void setClient(Client client) {
 		this.client = client;
 	}
 
-	/**
-	 * @param description
-	 *            the description to set
-	 */
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+	public final void setInvoiceProducts(Set<InvoiceProduct> invoiceProducts) {
+		this.invoiceProducts = invoiceProducts;
 	}
 
 	@Override
