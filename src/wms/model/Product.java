@@ -4,6 +4,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -32,14 +33,14 @@ public class Product extends AbstractEntity {
 	@Column(name = "tax", nullable = false, insertable = true, updatable = true)
 	private Float tax;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
 	@PrimaryKeyJoinColumn(name = "vendor", referencedColumnName = "idNumber")
 	private Client vendor;
 
 	@Column(name = "vendor", unique = false, updatable = true, insertable = false)
 	private Integer idVendor;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
 	@PrimaryKeyJoinColumn(name = "measure", referencedColumnName = "idNumber")
 	private Measure measure;
 
@@ -132,7 +133,7 @@ public class Product extends AbstractEntity {
 		this.idVendor = vendor.getId();
 	}
 
-	public void setMeasure(Measure measure){
+	public void setMeasure(Measure measure) {
 		this.measure = measure;
 		this.idMeasure = measure.getId();
 	}

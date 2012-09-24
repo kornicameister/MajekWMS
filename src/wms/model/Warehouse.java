@@ -19,24 +19,13 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(
-		name = "warehouse", 
-		uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) }
-		)
+@Table(name = "warehouse", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Warehouse extends AbstractStorageUnit {
 	@Transient
 	private static final long serialVersionUID = 4557522901223374020L;
 
-	@ManyToMany(
-			fetch = FetchType.LAZY, 
-			cascade = CascadeType.ALL
-			)
-	@JoinTable(
-			name = "warehouseUnit", 
-			schema = "majekwms", 
-			joinColumns = { @JoinColumn(name = "idUnit", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "idWarehouse", nullable = false, updatable = false) }
-			)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "warehouseUnit", schema = "majekwms", joinColumns = { @JoinColumn(name = "idUnit", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "idWarehouse", nullable = false, updatable = false) })
 	private Set<Unit> units = new HashSet<>();
 
 	@Basic
@@ -45,10 +34,8 @@ public class Warehouse extends AbstractStorageUnit {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn(name = "type", referencedColumnName = "idNumber")
-	private WarehouseType warehouseType;
-
 	@Column(name = "type", unique = true, updatable = true, insertable = true, nullable = false)
-	private Integer idWarehouseType;
+	private WarehouseType warehouseType;
 
 	public Warehouse() {
 		super(); // for hibernate
@@ -84,7 +71,6 @@ public class Warehouse extends AbstractStorageUnit {
 	}
 
 	public void setType(WarehouseType type) {
-		this.idWarehouseType = type.getId();
 		this.warehouseType = type;
 	}
 
@@ -99,8 +85,8 @@ public class Warehouse extends AbstractStorageUnit {
 	public void setUnits(Set<Unit> units) {
 		this.units = units;
 	}
-	
-	public void addUnit(Unit unit){
+
+	public void addUnit(Unit unit) {
 		this.units.add(unit);
 	}
 }
