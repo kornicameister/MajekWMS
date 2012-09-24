@@ -35,7 +35,7 @@ public class Unit extends AbstractStorageUnit {
 	}
 	
 	public Integer getQuantityOfProduct(Integer productId){
-		return -1;
+		 return -1;
 	}
 	
 	public Integer getQuantityOfProduct(Product product){

@@ -66,8 +66,8 @@ public class Warehouse extends AbstractStorageUnit {
 			Set<Unit> setOfUnits) {
 		super(name, description, size, maxSize);
 		this.setType(type);
-		this.createdDate = createdDate;
-		this.units = setOfUnits;
+		this.setCreatedDate(createdDate);
+		this.setUnits(setOfUnits);
 	}
 
 	public Integer getType() {
