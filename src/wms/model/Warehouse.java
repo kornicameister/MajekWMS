@@ -65,7 +65,6 @@ public class Warehouse extends AbstractStorageUnit {
 		return this.warehouseType;
 	}
 
-	@Column(nullable = false)
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -88,5 +87,24 @@ public class Warehouse extends AbstractStorageUnit {
 
 	public void addUnit(Unit unit) {
 		this.units.add(unit);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		boolean result = super.equals(o);
+		Warehouse that = (Warehouse) o;
+
+		if (result) {
+			return this.name.equals(that.name)
+					&& this.warehouseType.equals(that.warehouseType);
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() * this.createdDate.hashCode()
+				* this.warehouseType.hashCode();
 	}
 }

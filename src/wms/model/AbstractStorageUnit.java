@@ -13,7 +13,7 @@ abstract public class AbstractStorageUnit extends AbstractEntity {
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
-	private String name;
+	protected String name;
 
 	@Column(name = "description", nullable = true, length = 666)
 	private String description;

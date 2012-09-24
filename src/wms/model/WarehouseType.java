@@ -47,4 +47,23 @@ public class WarehouseType extends AbstractEntity {
 		this.description = description;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		boolean result = super.equals(o);
+		WarehouseType that = (WarehouseType) o;
+
+		if (result) {
+			return this.name.equals(that.name)
+					&& this.abbreviation.equals(that.abbreviation);
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() * this.name.hashCode()
+				* this.abbreviation.hashCode();
+	}
+
 }
