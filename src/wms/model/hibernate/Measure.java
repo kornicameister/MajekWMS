@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

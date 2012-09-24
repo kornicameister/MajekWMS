@@ -1,7 +1,0 @@
-<Context>
-	<Resource name="jdbc/majekwms" auth="Container" type="javax.sql.DataSource"
-               maxActive="50" maxIdle="30" maxWait="10000"
-               username="majekWMS" password="12345" 
-               driverClassName="com.mysql.jdbc.Driver"
-               url="jdbc:mysql://localhost:3306/majekwms"/>
-</Context>

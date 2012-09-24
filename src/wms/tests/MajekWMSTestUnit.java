@@ -13,10 +13,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import wms.model.AbstractEntity;
-import wms.model.Measure;
-import wms.model.Warehouse;
-import wms.model.WarehouseType;
+import wms.model.hibernate.AbstractEntity;
+import wms.model.hibernate.Measure;
+import wms.model.hibernate.Warehouse;
+import wms.model.hibernate.WarehouseType;
 
 public class MajekWMSTestUnit {
 	private File hibernateCfg;

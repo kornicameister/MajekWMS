@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.hibernate;
 
 import java.io.Serializable;
 import java.util.Date;
