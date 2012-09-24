@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -41,18 +42,15 @@ public class Product extends AbstractEntity {
 	@PrimaryKeyJoinColumn(name = "vendor", referencedColumnName = "idNumber")
 	private Client vendor;
 
-	@Column(name = "vendor", unique = false, updatable = true, insertable = false)
-	private Integer idVendor;
-
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
 	@PrimaryKeyJoinColumn(name = "measure", referencedColumnName = "idNumber")
 	private Measure measure;
 
-	@Column(name = "measure", unique = false, updatable = true, insertable = true, nullable = false)
-	private Integer idMeasure;
-	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-	private Set<InvoiceProduct> invoiceProducts = new HashSet<>();
+	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
+
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "unit")
+	private Set<Unit> units = new HashSet<>(0);
 
 	public Product() {
 		super(); // hibernate
@@ -90,9 +88,10 @@ public class Product extends AbstractEntity {
 		this.setVendor(vendor);
 		this.setMeasure(measure);
 	}
-	
+
 	public Product(String name, String description, Double quantity,
-			Double price, Float tax, Client vendor, Measure measure, Set<InvoiceProduct> invoiceProducts) {
+			Double price, Float tax, Client vendor, Measure measure,
+			Set<InvoiceProduct> invoiceProducts) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -102,6 +101,21 @@ public class Product extends AbstractEntity {
 		this.setVendor(vendor);
 		this.setMeasure(measure);
 		this.setInvoiceProducts(invoiceProducts);
+	}
+
+	public Product(String name, String description, Double quantity,
+			Double price, Float tax, Client vendor, Measure measure,
+			Set<InvoiceProduct> invoiceProducts, Set<Unit> units) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+		this.tax = tax;
+		this.setVendor(vendor);
+		this.setMeasure(measure);
+		this.setInvoiceProducts(invoiceProducts);
+		this.setUnits(units);
 	}
 
 	public final Set<InvoiceProduct> getInvoiceProducts() {
@@ -131,6 +145,14 @@ public class Product extends AbstractEntity {
 	public Client getVendor() {
 		return vendor;
 	}
+	
+	public Set<Unit> getUnits(){
+		return this.units;
+	}
+	
+	public void setUnits(final Set<Unit> units){
+		this.units = units;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -151,18 +173,42 @@ public class Product extends AbstractEntity {
 	public void setTax(Float tax) {
 		this.tax = tax;
 	}
-	
+
 	public final void setInvoiceProducts(Set<InvoiceProduct> invoiceProducts) {
 		this.invoiceProducts = invoiceProducts;
 	}
 
 	public void setVendor(Client vendor) {
 		this.vendor = vendor;
-		this.idVendor = vendor.getId();
 	}
 
 	public void setMeasure(Measure measure) {
 		this.measure = measure;
-		this.idMeasure = measure.getId();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		boolean result = super.equals(o);
+		Product that = (Product) o;
+		
+		if(result){
+			result = this.vendor.equals(that.vendor);
+		}
+		if(result){
+			result = this.name.equals(that.name);
+		}
+		
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = super.hashCode();
+		
+		hash = hash * this.name.hashCode();
+		hash = hash * this.invoiceProducts.hashCode();
+		hash = hash * this.units.hashCode();
+		
+		return hash;
 	}
 }

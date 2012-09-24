@@ -23,8 +23,8 @@ public class Unit extends AbstractStorageUnit {
 			name = "unitProduct",
 			schema = "majekwms", 
 			joinColumns = { 
-					@JoinColumn(name = "idProduct", nullable = false, updatable = false) }, 
-					inverseJoinColumns = { @JoinColumn(name = "idUnit", nullable = false, updatable = false) 
+					@JoinColumn(name = "idUnit", nullable = false, updatable = false) }, 
+						inverseJoinColumns = { @JoinColumn(name = "idProduct", nullable = false, updatable = false) 
 					}
 			)
 	private HashSet<Product> products = new HashSet<>();
