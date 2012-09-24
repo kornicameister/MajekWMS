@@ -77,13 +77,22 @@ abstract public class AbstractEntity implements Serializable {
 	private void setVersion(final Integer version) {
 		this.version = version;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		} else if (o == null || getClass() != o.getClass()) {
+			return false;
+		} else if (!this.id.equals(((AbstractEntity) o).id)) {
+			return false;
+		}
+
+		return true;
+	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		boolean typeComparision = obj.getClass().getName().equals(this.getClass().getName());
-		if(typeComparision){
-			return this.getId().equals(((AbstractEntity) obj).getId());
-		}
-		return typeComparision;
+	public int hashCode() {
+		return (int) (this.id * (this.version == 0 ? 1 : this.version) * AbstractEntity.serialVersionUID); 
 	}
 }

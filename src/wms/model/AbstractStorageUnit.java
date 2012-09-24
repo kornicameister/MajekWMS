@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 @MappedSuperclass
-abstract public class AbstractStorageUnit extends AbstractEntity{
+abstract public class AbstractStorageUnit extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = -681353835122119325L;
 
@@ -25,16 +25,11 @@ abstract public class AbstractStorageUnit extends AbstractEntity{
 	@Basic
 	@Column(name = "maxSize", nullable = false)
 	private Integer maximumSize;
-	
-	@Column(unique = true, length = 20, nullable = false)
-	public String getName() {
-		return name;
-	}
-	
+
 	public AbstractStorageUnit() {
 		super();
 	}
-	
+
 	public AbstractStorageUnit(String name, String description, Integer size,
 			Integer maximumSize) {
 		super();
@@ -42,6 +37,10 @@ abstract public class AbstractStorageUnit extends AbstractEntity{
 		this.description = description;
 		this.size = size;
 		this.maximumSize = maximumSize;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String getDescription() {
@@ -55,7 +54,7 @@ abstract public class AbstractStorageUnit extends AbstractEntity{
 	public Integer getMaxSize() {
 		return maximumSize;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -71,13 +70,30 @@ abstract public class AbstractStorageUnit extends AbstractEntity{
 	public void setMaxSize(Integer maxSize) {
 		this.maximumSize = maxSize;
 	}
-	
+
 	@Basic(fetch = FetchType.LAZY)
 	public final Double getRatio() {
 		return this.size / (double) this.maximumSize;
 	}
-	
+
 	public String toString() {
-		return String.format("%s :: %s: [%s -> %s]", this.getClass().getName(), this.id, this.name, this.size);
+		return String.format("%s :: %s: [%s -> %s]", this.getClass().getName(),
+				this.id, this.name, this.size);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		boolean results = super.equals(o);
+
+		if (results) {
+			return this.name.equals(((AbstractStorageUnit) o).name);
+		}
+
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode() * this.name.hashCode();
 	}
 }

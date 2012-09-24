@@ -17,28 +17,36 @@ import javax.persistence.UniqueConstraint;
 public class Unit extends AbstractStorageUnit {
 	@Transient
 	private static final long serialVersionUID = 2437063899438647082L;
-	
-	@ManyToMany(
-			fetch = FetchType.LAZY, 
-			cascade = CascadeType.ALL
-			)
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
-			name = "unitProduct", 
+			name = "unitProduct",
 			schema = "majekwms", 
-			joinColumns = { @JoinColumn(name = "idProduct", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "idUnit", nullable = false, updatable = false) }
+			joinColumns = { 
+					@JoinColumn(name = "idProduct", nullable = false, updatable = false) }, 
+					inverseJoinColumns = { @JoinColumn(name = "idUnit", nullable = false, updatable = false) 
+					}
 			)
 	private HashSet<Product> products = new HashSet<>();
+
+	public Unit() {
+		super(); // hibernate
+	}
+
+	public Unit(HashSet<Product> products) {
+		super();
+		this.products = products;
+	}
 
 	public HashSet<Product> getProducts() {
 		return products;
 	}
-	
-	public Integer getQuantityOfProduct(Integer productId){
-		 return -1;
+
+	public Integer getQuantityOfProduct(Integer productId) {
+		return -1;
 	}
-	
-	public Integer getQuantityOfProduct(Product product){
+
+	public Integer getQuantityOfProduct(Product product) {
 		return -1;
 	}
 
@@ -46,9 +54,14 @@ public class Unit extends AbstractStorageUnit {
 		this.products = products;
 		this.setSize(this.products.size());
 	}
-	
-	public void addProduct(Product e){
+
+	public void addProduct(Product e) {
 		this.products.add(e);
 		this.setSize(this.products.size());
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() * this.products.hashCode();
 	}
 }
