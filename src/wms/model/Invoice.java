@@ -1,6 +1,8 @@
 package wms.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Invoice extends AbstractEntity {
 	private static final long serialVersionUID = -3204092137188652431L;
@@ -10,9 +12,11 @@ public class Invoice extends AbstractEntity {
 	private Date dueDate;
 	private String description;
 	private Client client;
+	private Set<Product> products;
 
 	public Invoice() {
-		super(); //hibernate
+		super(); // hibernate
+		this.products = new HashSet<>();
 	}
 
 	public Invoice(String invoiceNumber, Date createdDate, Date dueDate,
@@ -23,6 +27,7 @@ public class Invoice extends AbstractEntity {
 		this.dueDate = dueDate;
 		this.description = description;
 		this.client = client;
+		this.products = new HashSet<>();
 	}
 
 	public Invoice(String invoiceNumber, Date createdDate, Date dueDate,
@@ -32,6 +37,7 @@ public class Invoice extends AbstractEntity {
 		this.createdDate = createdDate;
 		this.dueDate = dueDate;
 		this.description = description;
+		this.products = new HashSet<>();
 	}
 
 	/**
@@ -67,6 +73,10 @@ public class Invoice extends AbstractEntity {
 	 */
 	public final String getDescription() {
 		return description;
+	}
+
+	public Set<Product> getProducts() {
+		return products;
 	}
 
 	/**
@@ -107,6 +117,10 @@ public class Invoice extends AbstractEntity {
 	 */
 	public final void setDescription(String description) {
 		this.description = description;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
 	@Override
