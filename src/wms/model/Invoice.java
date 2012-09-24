@@ -5,24 +5,45 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
-@Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "invoiceNumber" }) })
 public class Invoice extends AbstractEntity {
 	private static final long serialVersionUID = -3204092137188652431L;
 
+	@Id
+	@Column(name = "invoiceNumber", updatable = false, insertable = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "assigned", strategy = "assigned")
 	private String invoiceNumber;
+	
+	@Column(name = "createdDate", nullable = false)
 	private Date createdDate;
+	
+	@Column(name = "dueDate", nullable = false)
 	private Date dueDate;
+	
+	@Column(name = "description", nullable = true, updatable = true, insertable = false, length = 150)
 	private String description;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "vendor", nullable = false)
 	private Client client;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "majekwms.invoice", cascade = CascadeType.ALL)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>();
 
 	public Invoice() {

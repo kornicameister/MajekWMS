@@ -34,7 +34,6 @@ public class Warehouse extends AbstractStorageUnit {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@PrimaryKeyJoinColumn(name = "type", referencedColumnName = "idNumber")
-	@Column(name = "type", unique = true, updatable = true, insertable = true, nullable = false)
 	private WarehouseType warehouseType;
 
 	public Warehouse() {

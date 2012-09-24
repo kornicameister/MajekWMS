@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "unit", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@Table(name = "product", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Product extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;

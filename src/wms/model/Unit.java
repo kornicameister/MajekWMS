@@ -1,6 +1,7 @@
 package wms.model;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,18 +28,18 @@ public class Unit extends AbstractStorageUnit {
 						inverseJoinColumns = { @JoinColumn(name = "idProduct", nullable = false, updatable = false) 
 					}
 			)
-	private HashSet<Product> products = new HashSet<>();
+	private Set<Product> products = new HashSet<>();
 
 	public Unit() {
 		super(); // hibernate
 	}
 
-	public Unit(HashSet<Product> products) {
+	public Unit(Set<Product> products) {
 		super();
 		this.products = products;
 	}
 
-	public HashSet<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 
