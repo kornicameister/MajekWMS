@@ -38,18 +38,18 @@ public class Product extends AbstractEntity {
 	@Column(name = "tax", nullable = false, insertable = true, updatable = true)
 	private Float tax;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn(name = "vendor", referencedColumnName = "idNumber")
 	private Client vendor;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn(name = "measure", referencedColumnName = "idNumber")
 	private Measure measure;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	@OneToMany(fetch = FetchType.LAZY)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "unit")
+	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Unit> units = new HashSet<>(0);
 
 	public Product() {

@@ -20,7 +20,7 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "invoiceNumber" }) })
+@Table(name = "invoice", uniqueConstraints = { @UniqueConstraint(columnNames = { "invoiceNumber" }) })
 public class Invoice extends AbstractEntity {
 	private static final long serialVersionUID = -3204092137188652431L;
 
@@ -29,13 +29,13 @@ public class Invoice extends AbstractEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "assigned", strategy = "assigned")
 	private String invoiceNumber;
-	
+
 	@Column(name = "createdDate", nullable = false)
 	private Date createdDate;
-	
+
 	@Column(name = "dueDate", nullable = false)
 	private Date dueDate;
-	
+
 	@Column(name = "description", nullable = true, updatable = true, insertable = false, length = 150)
 	private String description;
 
@@ -43,7 +43,7 @@ public class Invoice extends AbstractEntity {
 	@JoinColumn(name = "vendor", nullable = false)
 	private Client client;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "majekwms.invoice", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>();
 
 	public Invoice() {
