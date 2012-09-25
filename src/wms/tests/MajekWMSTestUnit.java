@@ -16,7 +16,7 @@ import org.junit.Test;
 import wms.model.hibernate.AbstractEntity;
 import wms.model.hibernate.Measure;
 import wms.model.hibernate.Warehouse;
-import wms.model.hibernate.WarehouseType;
+import wms.model.hibernate.UnitType;
 
 public class MajekWMSTestUnit {
 	private File hibernateCfg;
@@ -26,7 +26,7 @@ public class MajekWMSTestUnit {
 	@SuppressWarnings("deprecation")
 	@Before
 	public void setUp() throws Exception {
-		this.hibernateCfg = new File("WebContent/META-INF/hibernate.cfg.xml");
+		this.hibernateCfg = new File("src/wms/resources/hibernate.cfg.xml");
 		if (!this.hibernateCfg.exists()) {
 			fail("Cfg file for hibernate not found");
 		}
@@ -71,9 +71,9 @@ public class MajekWMSTestUnit {
 	}
 
 	@SuppressWarnings({ "unchecked", "unused" })
-	private List<WarehouseType> readWarehouseTypes() {
+	private List<UnitType> readWarehouseTypes() {
 		session.beginTransaction();
-		List<WarehouseType> result = session.createQuery("from WarehouseType").list();
+		List<UnitType> result = session.createQuery("from WarehouseType").list();
 		session.getTransaction().commit();
 
 		System.out.println(String.format("Read %d warehouseType entitites",result.size()));
