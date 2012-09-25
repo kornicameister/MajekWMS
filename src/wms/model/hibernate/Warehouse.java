@@ -103,7 +103,6 @@ public class Warehouse extends AbstractStorageUnit {
 
 	@Override
 	public int hashCode() {
-		return super.hashCode() * this.createdDate.hashCode()
-				* this.warehouseType.hashCode();
+		return super.hashCode() * this.createdDate.hashCode() * (this.warehouseType == null ? 1 : this.warehouseType.hashCode());
 	}
 }

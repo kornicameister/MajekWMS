@@ -2,6 +2,8 @@ package wms.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,12 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 import wms.model.WMSModelConstants;
+import wms.model.gson.GInitParameters;
+import wms.model.hibernate.Warehouse;
 
 /**
  * {@link WMSInitAgent} acts as a middle-man between server and client in
@@ -26,7 +31,7 @@ import wms.model.WMSModelConstants;
  * This particular servlet must connect itself to database, select all required
  * information, transform them into valid JSON form and return to the client.
  */
-@WebServlet(urlPatterns = { "/wms/start" }, asyncSupported = false, loadOnStartup = 1)
+@WebServlet(urlPatterns = { "/wms/start" }, asyncSupported = true, loadOnStartup = 1, name = "WMSInitAgent")
 public class WMSInitAgent extends HttpServlet implements WMSServerClientAgent {
 	private static final long serialVersionUID = -217845239414591742L;
 	private static Logger logger = Logger.getLogger(WMSInitAgent.class
@@ -48,16 +53,33 @@ public class WMSInitAgent extends HttpServlet implements WMSServerClientAgent {
 			HttpServletResponse response) throws ServletException, IOException {
 		Map<String, String[]> params = request.getParameterMap();
 
-		String _dc = params.get("_dc")[0];
-		String requires[] = params.get("requires");
-		this.loadRequired(requires);
+		GInitParameters init = this.loadRequired(params.get("requires"));
+		init.setGETId(params.get("_dc")[0]);
 
 		PrintWriter out = response.getWriter();
-		out.write("{_dc: " + _dc + "}");
+		out.write(init.toGsonString());
 	}
 	
-	private void loadRequired(String[] requires) {
-		logger.log(Level.INFO, "Required properties count = {0}",requires.length);
+	private GInitParameters loadRequired(String[] param) {
+		GInitParameters initParameters = new GInitParameters();
+		for (String p : param[0].split(",")) {
+			if(p.equals("warehouse")){
+				initParameters.setWarehouses(this.readWarehouse());
+			}
+		}
+		
+		logger.log(Level.INFO, "Required properties count = {0}", param.length);
+		return initParameters;
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<Warehouse> readWarehouse() {
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
+		List<Warehouse> result = session.createQuery("from Warehouse").list();
+		session.getTransaction().commit();
+		
+		return result;
 	}
 
 	protected void doPost(HttpServletRequest request,
