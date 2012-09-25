@@ -9,7 +9,7 @@
   <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/majekwms</property>
   <property name="hibernate.connection.username">majekWMS</property>
   <property name="hibernate.default_schema">majekwms</property>
-  <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
   <property name="hibernate.dialect.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
   <property name="hibernate.show_sql">true</property>
   <property name="hibernate.format_sql">true</property>
