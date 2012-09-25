@@ -15,8 +15,8 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "invoiceProduct", schema = "majekwms")
 @AssociationOverrides({
-		@AssociationOverride(name = "invoice", joinColumns = @JoinColumn(name = "idNumber")),
-		@AssociationOverride(name = "product", joinColumns = @JoinColumn(name = "idNumber")) })
+		@AssociationOverride(name = "idInvoice", joinColumns = @JoinColumn(name = "idNumber")),
+		@AssociationOverride(name = "idProduct", joinColumns = @JoinColumn(name = "idNumber")) })
 public class InvoiceProduct implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1269575448414133565L;

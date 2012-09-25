@@ -4,9 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -30,6 +34,14 @@ public class Client extends AbstractEntity {
 	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(
+			name = "productClient", 
+			schema = "majekwms", 
+			joinColumns = { @JoinColumn(name = "idProduct", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "idClient", nullable = false, updatable = false) })
+	private Set<Product> products = new HashSet<>(0);
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
 	private Set<Invoice> invoices = new HashSet<>(0);
 
@@ -52,35 +64,53 @@ public class Client extends AbstractEntity {
 		this.invoices = invoices;
 	}
 
-	public String getName() {
+	public Client(String name, String company, String description,
+			Set<Product> products, Set<Invoice> invoices) {
+		super();
+		this.name = name;
+		this.company = company;
+		this.description = description;
+		this.products = products;
+		this.invoices = invoices;
+	}
+
+	public final String getName() {
 		return name;
 	}
 
-	public String getCompany() {
+	public final String getCompany() {
 		return company;
 	}
 
-	public Set<Invoice> getInvoices() {
-		return invoices;
-	}
-
-	public String getDescription() {
+	public final String getDescription() {
 		return description;
 	}
 
-	public void setName(String name) {
+	public final Set<Product> getProducts() {
+		return products;
+	}
+
+	public final Set<Invoice> getInvoices() {
+		return invoices;
+	}
+
+	public final void setName(String name) {
 		this.name = name;
 	}
 
-	public void setCompany(String company) {
+	public final void setCompany(String company) {
 		this.company = company;
 	}
 
-	public void setDescription(String description) {
+	public final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public void setInvoices(Set<Invoice> invoices) {
+	public final void setProducts(Set<Product> products) {
+		this.products = products;
+	}
+
+	public final void setInvoices(Set<Invoice> invoices) {
 		this.invoices = invoices;
 	}
 

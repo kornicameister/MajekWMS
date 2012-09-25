@@ -40,11 +40,15 @@ public class Invoice extends AbstractEntity {
 	private String description;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "vendor", nullable = false)
+	@JoinColumn(name = "idClient", nullable = false)
 	private Client client;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>();
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idInvoiceType", nullable = false)
+	private InvoiceType invoiceType;
 
 	public Invoice() {
 		super(); // hibernate
@@ -81,6 +85,19 @@ public class Invoice extends AbstractEntity {
 		this.invoiceProducts = invoiceProducts;
 	}
 
+	public Invoice(String invoiceNumber, Date createdDate, Date dueDate,
+			String description, Client client,
+			Set<InvoiceProduct> invoiceProducts, InvoiceType invoiceType) {
+		super();
+		this.invoiceNumber = invoiceNumber;
+		this.createdDate = createdDate;
+		this.dueDate = dueDate;
+		this.description = description;
+		this.client = client;
+		this.invoiceProducts = invoiceProducts;
+		this.invoiceType = invoiceType;
+	}
+
 	public final String getInvoiceNumber() {
 		return invoiceNumber;
 	}
@@ -93,16 +110,20 @@ public class Invoice extends AbstractEntity {
 		return dueDate;
 	}
 
-	public final Client getClient() {
-		return client;
-	}
-
 	public final String getDescription() {
 		return description;
 	}
 
+	public final Client getClient() {
+		return client;
+	}
+
 	public final Set<InvoiceProduct> getInvoiceProducts() {
 		return invoiceProducts;
+	}
+
+	public final InvoiceType getInvoiceType() {
+		return invoiceType;
 	}
 
 	public final void setInvoiceNumber(String invoiceNumber) {
@@ -117,16 +138,20 @@ public class Invoice extends AbstractEntity {
 		this.dueDate = dueDate;
 	}
 
-	public final void setClient(Client client) {
-		this.client = client;
-	}
-
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
+	public final void setClient(Client client) {
+		this.client = client;
+	}
+
 	public final void setInvoiceProducts(Set<InvoiceProduct> invoiceProducts) {
 		this.invoiceProducts = invoiceProducts;
+	}
+
+	public final void setInvoiceType(InvoiceType invoiceType) {
+		this.invoiceType = invoiceType;
 	}
 
 	@Override

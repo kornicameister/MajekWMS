@@ -1,20 +1,22 @@
 package wms.model.hibernate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(
-			name = "measure", 
-			uniqueConstraints = {
-					@UniqueConstraint(columnNames = {"name"})
-			})
+@Table(name = "measure", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Measure extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = 8140273816811139591L;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+	private Product product;
 
 	@Column(nullable = false, length = 10)
 	private String abbreviation;
@@ -29,6 +31,29 @@ public class Measure extends AbstractEntity {
 	public Measure(String name, String abbr) {
 		this.name = name;
 		this.abbreviation = abbr;
+	}
+
+	public Measure(Product product, String abbreviation, String name) {
+		super();
+		this.product = product;
+		this.abbreviation = abbreviation;
+		this.name = name;
+	}
+
+	public final Product getProduct() {
+		return product;
+	}
+
+	public final String getName() {
+		return name;
+	}
+
+	public final void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public final void setName(String name) {
+		this.name = name;
 	}
 
 	public String getAbbreviation() {
