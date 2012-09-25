@@ -1,6 +1,8 @@
 package wms.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,18 +26,13 @@ import wms.model.WMSModelConstants;
  * This particular servlet must connect itself to database, select all required
  * information, transform them into valid JSON form and return to the client.
  */
-@WebServlet(urlPatterns = { "/wms/start" }, asyncSupported = true, loadOnStartup = 1)
+@WebServlet(urlPatterns = { "/wms/start" }, asyncSupported = false, loadOnStartup = 1)
 public class WMSInitAgent extends HttpServlet implements WMSServerClientAgent {
 	private static final long serialVersionUID = -217845239414591742L;
-	private static Logger logger = Logger.getLogger(WMSInitAgent.class.getName());
+	private static Logger logger = Logger.getLogger(WMSInitAgent.class
+			.getName());
 	private SessionFactory sessionFactory;
 
-	/**
-	 * Dispatches some actions prior to moment when this servlet is called for
-	 * the first time
-	 * 
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public WMSInitAgent() {
 		super();
 		this.openHibernateConnection();
@@ -47,40 +44,39 @@ public class WMSInitAgent extends HttpServlet implements WMSServerClientAgent {
 		this.closeHibernateConnection();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		logger.log(Level.WARNING, WMSInitAgent.class.getName()+ " does not support GET");
-		throw new ServletException(WMSInitAgent.class.getName()+ " does not support GET");
+		Map<String, String[]> params = request.getParameterMap();
+
+		String _dc = params.get("_dc")[0];
+		String requires[] = params.get("requires");
+		this.loadRequired(requires);
+
+		PrintWriter out = response.getWriter();
+		out.write("{_dc: " + _dc + "}");
+	}
+	
+	private void loadRequired(String[] requires) {
+		logger.log(Level.INFO, "Required properties count = {0}",requires.length);
 	}
 
-	/**
-	 * Method handler POST request. Please remember that post carries parameters
-	 * that indicates which values client requires;
-	 * 
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String requires = request.getParameter("requires");
-		if (requires == null) {
-			logger.log(Level.CONFIG, "No requires param in POST");
-		}
 	}
 
 	@Override
 	public void openHibernateConnection() {
 		Configuration configuration = new Configuration();
-		configuration = configuration.configure(WMSModelConstants.HIBERNATE_CFG.toString());
-		
+		configuration = configuration.configure(WMSModelConstants.HIBERNATE_CFG
+				.toString());
+
 		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
 				.applySettings(configuration.getProperties())
 				.buildServiceRegistry();
-		this.sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+		this.sessionFactory = configuration
+				.buildSessionFactory(serviceRegistry);
+		logger.info(String.format("Session for %s active", this.getClass()
+				.getName()));
 	}
 
 	@Override

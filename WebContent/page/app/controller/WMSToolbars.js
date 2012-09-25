@@ -25,6 +25,9 @@ Ext.define('WMS.controller.WMSToolbars', {
         }
     ],
 
+    //tmp here
+    stores: ['WMS.store.WMSConfiguration'],
+
     onRequestFailure: function (buttonText, error) {
         Ext.MessageBox.show({
             title  : Ext.String.format('Request for {0} failed permanently..', buttonText),
@@ -66,7 +69,6 @@ Ext.define('WMS.controller.WMSToolbars', {
     },
 
     init: function () {
-        console.log('WMS.controller.WMSToolbars is ready');
         var me = this;
 
         function onButtonClick(button) {
@@ -103,4 +105,6 @@ Ext.define('WMS.controller.WMSToolbars', {
             }
         }, this);
     }
+}, function(){
+    console.log('WMS.controller.WMSToolbars successfully defined');
 });
