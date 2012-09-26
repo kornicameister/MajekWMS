@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn(name="storageType", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "storageType", discriminatorType = DiscriminatorType.STRING)
 abstract public class AbstractStorageUnit extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = -681353835122119325L;
@@ -82,24 +82,49 @@ abstract public class AbstractStorageUnit extends AbstractEntity {
 		return this.size / (double) this.maximumSize;
 	}
 
-	public String toString() {
-		return String.format("%s :: %s: [%s -> %s]", this.getClass().getName(),
-				this.id, this.name, this.size);
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result
+				+ ((maximumSize == null) ? 0 : maximumSize.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		return result;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		boolean results = super.equals(o);
-
-		if (results) {
-			return this.name.equals(((AbstractStorageUnit) o).name);
-		}
-
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof AbstractStorageUnit))
+			return false;
+		AbstractStorageUnit other = (AbstractStorageUnit) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (maximumSize == null) {
+			if (other.maximumSize != null)
+				return false;
+		} else if (!maximumSize.equals(other.maximumSize))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (size == null) {
+			if (other.size != null)
+				return false;
+		} else if (!size.equals(other.size))
+			return false;
 		return true;
 	}
 
-	@Override
-	public int hashCode() {
-		return super.hashCode() * this.name.hashCode();
-	}
 }

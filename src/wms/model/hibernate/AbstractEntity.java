@@ -6,9 +6,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
@@ -16,8 +13,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
-
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * This is a base class for all entities defined in MajekWMS that are known to
@@ -32,16 +27,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn(name="entity", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "entity", discriminatorType = DiscriminatorType.STRING)
 abstract public class AbstractEntity implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 8641451013192983600L;
-
-	@Id
-	@Column(name = "idNumber", updatable = false, insertable = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer id;
 
 	@Version
 	@Column(name = "version")
@@ -54,14 +43,6 @@ abstract public class AbstractEntity implements Serializable {
 	public AbstractEntity() {
 		super();
 		this.updatedOn = new Date();
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Date getUpdatedOn() {
@@ -82,20 +63,25 @@ abstract public class AbstractEntity implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((updatedOn == null) ? 0 : updatedOn.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		} else if (o == null || getClass() != o.getClass()) {
+		if (obj == null)
 			return false;
-		} else if (!this.id.equals(((AbstractEntity) o).id)) {
+		if (!(obj instanceof AbstractEntity))
 			return false;
-		}
 
 		return true;
 	}
-	
-	@Override
-	public int hashCode() {
-		return (int) (this.id * (this.version == 0 ? 1 : this.version) * AbstractEntity.serialVersionUID); 
-	}
+
 }

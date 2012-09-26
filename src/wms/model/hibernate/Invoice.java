@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -24,7 +23,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "invoice", uniqueConstraints = { @UniqueConstraint(columnNames = { "invoiceNumber" }) })
 @DiscriminatorValue("Invoice")
-@AttributeOverride (name = "idInvoice", column = @Column(name = "idNumber"))
 public class Invoice extends AbstractEntity {
 	private static final long serialVersionUID = -3204092137188652431L;
 

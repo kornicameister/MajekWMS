@@ -89,23 +89,86 @@ public class InvoiceProduct implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o)
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
+		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result
+				+ ((quantity == null) ? 0 : quantity.hashCode());
+		result = prime * result + ((tax == null) ? 0 : tax.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (obj == null)
 			return false;
-
-		InvoiceProduct that = (InvoiceProduct) o;
-
-		if (this.getPk() != null ? !this.getPk().equals(that.getPk()) : that
-				.getPk() != null)
+		if (getClass() != obj.getClass())
 			return false;
-
+		InvoiceProduct other = (InvoiceProduct) obj;
+		if (comment == null) {
+			if (other.comment != null)
+				return false;
+		} else if (!comment.equals(other.comment))
+			return false;
+		if (pk == null) {
+			if (other.pk != null)
+				return false;
+		} else if (!pk.equals(other.pk))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
+		if (quantity == null) {
+			if (other.quantity != null)
+				return false;
+		} else if (!quantity.equals(other.quantity))
+			return false;
+		if (tax == null) {
+			if (other.tax != null)
+				return false;
+		} else if (!tax.equals(other.tax))
+			return false;
 		return true;
 	}
 
 	@Override
-	public int hashCode() {
-		return (this.getPk() != null ? this.getPk().hashCode() : 0);
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("InvoiceProduct [");
+		if (pk != null) {
+			builder.append("pk=");
+			builder.append(pk);
+			builder.append(", ");
+		}
+		if (quantity != null) {
+			builder.append("quantity=");
+			builder.append(quantity);
+			builder.append(", ");
+		}
+		if (price != null) {
+			builder.append("price=");
+			builder.append(price);
+			builder.append(", ");
+		}
+		if (tax != null) {
+			builder.append("tax=");
+			builder.append(tax);
+			builder.append(", ");
+		}
+		if (comment != null) {
+			builder.append("comment=");
+			builder.append(comment);
+		}
+		builder.append("]");
+		return builder.toString();
 	}
+	
+	
 }

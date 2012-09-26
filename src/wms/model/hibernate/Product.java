@@ -3,7 +3,6 @@ package wms.model.hibernate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +10,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -24,15 +24,17 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "product", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "name" })
-		}
-)
+@Table(name = "product", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 @DiscriminatorValue("Product")
-@AttributeOverride (name = "idProduct", column = @Column(name = "idNumber"))
 public class Product extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;
+
+	@Id
+	@Column(name = "idProduct", updatable = false, insertable = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "increment", strategy = "increment")
+	protected Integer idProduct;
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
@@ -63,11 +65,7 @@ public class Product extends AbstractEntity {
 	@OneToMany(fetch = FetchType.LAZY)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
-	@ManyToMany(
-	        cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-	        mappedBy = "productsInUnit",
-	        targetEntity = Unit.class
-	    )
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "productsInUnit", targetEntity = Unit.class)
 	private Set<Unit> units = new HashSet<>(0);
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "idNumber", targetEntity = Client.class)
@@ -77,25 +75,12 @@ public class Product extends AbstractEntity {
 		super();
 	}
 
-	public Product(String name, String description, Double quantity,
-			Double price, Float tax, Measure measure,
-			Set<InvoiceProduct> invoiceProducts, Set<Unit> units) {
+	public Product(Integer idProduct, String name, String description,
+			Double quantity, Double price, Float tax, Integer measureId,
+			Measure measure, Set<InvoiceProduct> invoiceProducts,
+			Set<Unit> units, Set<Client> client) {
 		super();
-		this.name = name;
-		this.description = description;
-		this.quantity = quantity;
-		this.price = price;
-		this.tax = tax;
-		this.measure = measure;
-		this.invoiceProducts = invoiceProducts;
-		this.units = units;
-	}
-
-	public Product(String name, String description, Double quantity,
-			Double price, Float tax, Integer measureId, Measure measure,
-			Set<InvoiceProduct> invoiceProducts, Set<Unit> units,
-			Set<Client> client) {
-		super();
+		this.idProduct = idProduct;
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
@@ -106,6 +91,10 @@ public class Product extends AbstractEntity {
 		this.invoiceProducts = invoiceProducts;
 		this.units = units;
 		this.client = client;
+	}
+
+	public final Integer getIdProduct() {
+		return idProduct;
 	}
 
 	public final String getName() {
@@ -144,6 +133,14 @@ public class Product extends AbstractEntity {
 		return units;
 	}
 
+	public final Set<Client> getClient() {
+		return client;
+	}
+
+	public final void setIdProduct(Integer idProduct) {
+		this.idProduct = idProduct;
+	}
+
 	public final void setName(String name) {
 		this.name = name;
 	}
@@ -178,10 +175,6 @@ public class Product extends AbstractEntity {
 
 	public final void setUnits(Set<Unit> units) {
 		this.units = units;
-	}
-
-	public final Set<Client> getClient() {
-		return client;
 	}
 
 	public final void setClient(Set<Client> client) {
