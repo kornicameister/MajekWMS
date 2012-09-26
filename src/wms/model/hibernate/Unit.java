@@ -24,8 +24,9 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "unit", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "name" }),
-		@UniqueConstraint(columnNames = { "idNumber" }) })
+		@UniqueConstraint(columnNames = { "name" })
+		}
+)
 public class Unit extends AbstractStorageUnit {
 	@Transient
 	private static final long serialVersionUID = 2437063899438647082L;
@@ -47,10 +48,10 @@ public class Unit extends AbstractStorageUnit {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "unitProduct", 
-			schema = "majekwms", 
-			joinColumns = { @JoinColumn(name = "idUnit", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "idProduct", nullable = false, updatable = false) })
-	private Set<Product> products = new HashSet<>();
+			joinColumns = { @JoinColumn(name = "idUnit", referencedColumnName = "idNumber") }, 
+			inverseJoinColumns = { @JoinColumn(name = "idProduct", referencedColumnName = "idNumber") }
+			)
+	private Set<Product> productsInUnit = new HashSet<>();
 
 	public Unit() {
 		super(); // hibernate
@@ -59,14 +60,14 @@ public class Unit extends AbstractStorageUnit {
 	public Unit(UnitType unitType, Set<Product> products) {
 		super();
 		this.unitType = unitType;
-		this.products = products;
+		this.productsInUnit = products;
 	}
 
 	public Unit(Warehouse warehouse, UnitType unitType, Set<Product> products) {
 		super();
 		this.warehouse = warehouse;
 		this.unitType = unitType;
-		this.products = products;
+		this.productsInUnit = products;
 	}
 	
 	public final Warehouse getWarehouse() {
@@ -78,16 +79,16 @@ public class Unit extends AbstractStorageUnit {
 	}
 	
 	public final void setProducts(Set<Product> products) {
-		this.products = products;
+		this.productsInUnit = products;
 	}
 
 	public Set<Product> getProducts() {
-		return products;
+		return productsInUnit;
 	}
 
 	public void setProducts(HashSet<Product> products) {
-		this.products = products;
-		this.setSize(this.products.size());
+		this.productsInUnit = products;
+		this.setSize(this.productsInUnit.size());
 	}
 
 	public UnitType getUnitType() {
@@ -108,6 +109,6 @@ public class Unit extends AbstractStorageUnit {
 
 	@Override
 	public int hashCode() {
-		return super.hashCode() * this.products.hashCode();
+		return super.hashCode() * this.productsInUnit.hashCode();
 	}
 }

@@ -23,8 +23,9 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "product", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "name" }),
-		@UniqueConstraint(columnNames = { "idNumber" }) })
+		@UniqueConstraint(columnNames = { "name" })
+		}
+)
 public class Product extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;
@@ -45,10 +46,6 @@ public class Product extends AbstractEntity {
 	@Column(name = "tax", nullable = false, insertable = true, updatable = true)
 	private Float tax;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn(name = "vendor", referencedColumnName = "idNumber")
-	private Client vendor;
-
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "measure"))
 	@Id
 	@GeneratedValue(generator = "generator")
@@ -62,10 +59,10 @@ public class Product extends AbstractEntity {
 	@OneToMany(fetch = FetchType.LAZY)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "idNumber", targetEntity = Unit.class)
 	private Set<Unit> units = new HashSet<>(0);
-	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
+
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "idNumber", targetEntity = Client.class)
 	private Set<Client> client = new HashSet<>(0);
 
 	public Product() {
@@ -73,7 +70,7 @@ public class Product extends AbstractEntity {
 	}
 
 	public Product(String name, String description, Double quantity,
-			Double price, Float tax, Client vendor, Measure measure,
+			Double price, Float tax, Measure measure,
 			Set<InvoiceProduct> invoiceProducts, Set<Unit> units) {
 		super();
 		this.name = name;
@@ -81,10 +78,26 @@ public class Product extends AbstractEntity {
 		this.quantity = quantity;
 		this.price = price;
 		this.tax = tax;
-		this.vendor = vendor;
 		this.measure = measure;
 		this.invoiceProducts = invoiceProducts;
 		this.units = units;
+	}
+
+	public Product(String name, String description, Double quantity,
+			Double price, Float tax, Integer measureId, Measure measure,
+			Set<InvoiceProduct> invoiceProducts, Set<Unit> units,
+			Set<Client> client) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+		this.tax = tax;
+		this.measureId = measureId;
+		this.measure = measure;
+		this.invoiceProducts = invoiceProducts;
+		this.units = units;
+		this.client = client;
 	}
 
 	public final String getName() {
@@ -105,10 +118,6 @@ public class Product extends AbstractEntity {
 
 	public final Float getTax() {
 		return tax;
-	}
-
-	public final Client getVendor() {
-		return vendor;
 	}
 
 	public final Integer getMeasureId() {
@@ -147,10 +156,6 @@ public class Product extends AbstractEntity {
 		this.tax = tax;
 	}
 
-	public final void setVendor(Client vendor) {
-		this.vendor = vendor;
-	}
-
 	public final void setMeasureId(Integer measureId) {
 		this.measureId = measureId;
 	}
@@ -167,14 +172,19 @@ public class Product extends AbstractEntity {
 		this.units = units;
 	}
 
+	public final Set<Client> getClient() {
+		return client;
+	}
+
+	public final void setClient(Set<Client> client) {
+		this.client = client;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		boolean result = super.equals(o);
 		Product that = (Product) o;
 
-		if (result) {
-			result = this.vendor.equals(that.vendor);
-		}
 		if (result) {
 			result = this.name.equals(that.name);
 		}
