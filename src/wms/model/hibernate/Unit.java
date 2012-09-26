@@ -1,10 +1,13 @@
 package wms.model.hibernate;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +30,8 @@ import org.hibernate.annotations.Parameter;
 		@UniqueConstraint(columnNames = { "name" })
 		}
 )
+@DiscriminatorValue("Unit")
+@AttributeOverride (name = "idUnit", column = @Column(name = "idNumber"))
 public class Unit extends AbstractStorageUnit {
 	@Transient
 	private static final long serialVersionUID = 2437063899438647082L;
@@ -45,13 +50,20 @@ public class Unit extends AbstractStorageUnit {
 	@PrimaryKeyJoinColumn
 	private UnitType unitType;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(
+			fetch = FetchType.LAZY, 
+			cascade = {
+					CascadeType.PERSIST,
+					CascadeType.MERGE
+			},
+			targetEntity = Product.class
+			)
 	@JoinTable(
 			name = "unitProduct", 
-			joinColumns = { @JoinColumn(name = "idUnit", referencedColumnName = "idNumber") }, 
-			inverseJoinColumns = { @JoinColumn(name = "idProduct", referencedColumnName = "idNumber") }
+			joinColumns = @JoinColumn(name = "idUnit", referencedColumnName = "unit.idNumber") , 
+			inverseJoinColumns = @JoinColumn(name = "idProduct", referencedColumnName = "product.idNumber")
 			)
-	private Set<Product> productsInUnit = new HashSet<>();
+	private Collection<Product> productsInUnit = new HashSet<>();
 
 	public Unit() {
 		super(); // hibernate
@@ -82,7 +94,7 @@ public class Unit extends AbstractStorageUnit {
 		this.productsInUnit = products;
 	}
 
-	public Set<Product> getProducts() {
+	public Collection<Product> getProducts() {
 		return productsInUnit;
 	}
 

@@ -1,7 +1,9 @@
 package wms.model.hibernate;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -11,6 +13,8 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "measure", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@DiscriminatorValue("Measure")
+@AttributeOverride (name = "idMeasure", column = @Column(name = "idNumber"))
 public class Measure extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = 8140273816811139591L;

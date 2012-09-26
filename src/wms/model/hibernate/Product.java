@@ -3,9 +3,11 @@ package wms.model.hibernate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +28,8 @@ import org.hibernate.annotations.Parameter;
 		@UniqueConstraint(columnNames = { "name" })
 		}
 )
+@DiscriminatorValue("Product")
+@AttributeOverride (name = "idProduct", column = @Column(name = "idNumber"))
 public class Product extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;
@@ -46,7 +50,7 @@ public class Product extends AbstractEntity {
 	@Column(name = "tax", nullable = false, insertable = true, updatable = true)
 	private Float tax;
 
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "measure"))
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "idMeasure"))
 	@Id
 	@GeneratedValue(generator = "generator")
 	@Column(name = "idMeasure", unique = true, nullable = false)
@@ -59,7 +63,11 @@ public class Product extends AbstractEntity {
 	@OneToMany(fetch = FetchType.LAZY)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "idNumber", targetEntity = Unit.class)
+	@ManyToMany(
+	        cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+	        mappedBy = "productsInUnit",
+	        targetEntity = Unit.class
+	    )
 	private Set<Unit> units = new HashSet<>(0);
 
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "idNumber", targetEntity = Client.class)

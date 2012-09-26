@@ -1,7 +1,9 @@
 package wms.model.hibernate;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -12,6 +14,8 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "warehouseType", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"name", "abbreviation" }) })
+@DiscriminatorValue("UnitType")
+@AttributeOverride (name = "idUnitType", column = @Column(name = "idNumber"))
 public class UnitType extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = -7479798313966564213L;

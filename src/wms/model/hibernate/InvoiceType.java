@@ -3,8 +3,10 @@ package wms.model.hibernate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -13,6 +15,8 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "invoiceType", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@DiscriminatorValue("InvoiceType")
+@AttributeOverride (name = "idInvoiceType", column = @Column(name = "idNumber"))
 public class InvoiceType extends AbstractEntity {
 	private static final long serialVersionUID = -7345851338532573657L;
 

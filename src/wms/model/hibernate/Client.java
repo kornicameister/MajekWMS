@@ -3,9 +3,11 @@ package wms.model.hibernate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -18,6 +20,8 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "client", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@DiscriminatorValue("Client")
+@AttributeOverride (name = "idClient", column = @Column(name = "idNumber"))
 public class Client extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = 1283426340575080285L;

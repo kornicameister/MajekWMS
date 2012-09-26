@@ -4,9 +4,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -20,6 +22,8 @@ import javax.persistence.UniqueConstraint;
 		uniqueConstraints = { 
 				@UniqueConstraint(columnNames = { "name" }) 
 		})
+@DiscriminatorValue("Warehouse")
+@AttributeOverride (name = "idWarehouse", column = @Column(name = "idNumber"))
 public class Warehouse extends AbstractStorageUnit {
 	@Transient
 	private static final long serialVersionUID = 4557522901223374020L;

@@ -2,11 +2,17 @@ package wms.model.hibernate;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 @MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorColumn(name="storageType", discriminatorType=DiscriminatorType.STRING)
 abstract public class AbstractStorageUnit extends AbstractEntity {
 	@Transient
 	private static final long serialVersionUID = -681353835122119325L;
@@ -91,7 +97,7 @@ abstract public class AbstractStorageUnit extends AbstractEntity {
 
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return super.hashCode() * this.name.hashCode();
