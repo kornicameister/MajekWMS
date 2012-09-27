@@ -3,26 +3,23 @@ package wms.model.hibernate;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "measure", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Measure extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 8140273816811139591L;
-
-	@Id
-	@Column(name = "idMeasure", updatable = false, insertable = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer idMeasure;
 
 	@Basic
 	@Column(nullable = false, length = 10)
@@ -32,27 +29,33 @@ public class Measure extends BaseEntity {
 	@Column(name = "name", nullable = false, unique = true, length = 30)
 	private String name;
 
-	private Product product;
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	private Product measuredProduct;
+
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "product"))
+	@Id
+	@GeneratedValue(generator = "generator")
+	@Column(name = "idProduct", unique = true, nullable = false)
+	private Integer productId;
 
 	public Measure() {
 		super();
 	}
 
-	public Measure(Integer idMeasure, Product product, String abbreviation,
-			String name) {
+	public Measure(String abbreviation, String name) {
 		super();
-		this.idMeasure = idMeasure;
-		this.product = product;
 		this.abbreviation = abbreviation;
 		this.name = name;
 	}
 
-	public final Integer getIdMeasure() {
-		return idMeasure;
-	}
-
-	public final Product getProduct() {
-		return product;
+	public Measure(String abbreviation, String name, Product measuredProduct,
+			Integer productId) {
+		super();
+		this.abbreviation = abbreviation;
+		this.name = name;
+		this.measuredProduct = measuredProduct;
+		this.productId = productId;
 	}
 
 	public final String getAbbreviation() {
@@ -63,12 +66,12 @@ public class Measure extends BaseEntity {
 		return name;
 	}
 
-	public final void setIdMeasure(Integer idMeasure) {
-		this.idMeasure = idMeasure;
+	public final Product getMeasuredProduct() {
+		return measuredProduct;
 	}
 
-	public final void setProduct(Product product) {
-		this.product = product;
+	public final Integer getProductId() {
+		return productId;
 	}
 
 	public final void setAbbreviation(String abbreviation) {
@@ -79,6 +82,14 @@ public class Measure extends BaseEntity {
 		this.name = name;
 	}
 
+	public final void setMeasuredProduct(Product measuredProduct) {
+		this.measuredProduct = measuredProduct;
+	}
+
+	public final void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -86,9 +97,10 @@ public class Measure extends BaseEntity {
 		result = prime * result
 				+ ((abbreviation == null) ? 0 : abbreviation.hashCode());
 		result = prime * result
-				+ ((idMeasure == null) ? 0 : idMeasure.hashCode());
+				+ ((measuredProduct == null) ? 0 : measuredProduct.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		result = prime * result
+				+ ((productId == null) ? 0 : productId.hashCode());
 		return result;
 	}
 
@@ -106,20 +118,20 @@ public class Measure extends BaseEntity {
 				return false;
 		} else if (!abbreviation.equals(other.abbreviation))
 			return false;
-		if (idMeasure == null) {
-			if (other.idMeasure != null)
+		if (measuredProduct == null) {
+			if (other.measuredProduct != null)
 				return false;
-		} else if (!idMeasure.equals(other.idMeasure))
+		} else if (!measuredProduct.equals(other.measuredProduct))
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
-		if (product == null) {
-			if (other.product != null)
+		if (productId == null) {
+			if (other.productId != null)
 				return false;
-		} else if (!product.equals(other.product))
+		} else if (!productId.equals(other.productId))
 			return false;
 		return true;
 	}
@@ -128,25 +140,28 @@ public class Measure extends BaseEntity {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Measure [");
-		if (idMeasure != null) {
-			builder.append("idMeasure=");
-			builder.append(idMeasure);
+		if (getAbbreviation() != null) {
+			builder.append("getAbbreviation()=");
+			builder.append(getAbbreviation());
 			builder.append(", ");
 		}
-		if (product != null) {
-			builder.append("product=");
-			builder.append(product);
+		if (getName() != null) {
+			builder.append("getName()=");
+			builder.append(getName());
 			builder.append(", ");
 		}
-		if (abbreviation != null) {
-			builder.append("abbreviation=");
-			builder.append(abbreviation);
+		if (getMeasuredProduct() != null) {
+			builder.append("getMeasuredProduct()=");
+			builder.append(getMeasuredProduct());
 			builder.append(", ");
 		}
-		if (name != null) {
-			builder.append("name=");
-			builder.append(name);
+		if (getProductId() != null) {
+			builder.append("getProductId()=");
+			builder.append(getProductId());
+			builder.append(", ");
 		}
+		builder.append("getVersion()=");
+		builder.append(getVersion());
 		builder.append("]");
 		return builder.toString();
 	}

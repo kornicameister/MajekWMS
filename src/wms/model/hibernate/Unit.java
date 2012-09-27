@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -30,7 +32,7 @@ public class Unit extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
 	protected Long idUnit;
-	
+
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
 	protected String name;
@@ -47,16 +49,14 @@ public class Unit extends BaseEntity {
 	private Integer maximumSize;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pkWarehouse", referencedColumnName="idWarehouse")
+	@JoinColumn(name = "pkWarehouse", referencedColumnName = "idWarehouse")
 	private Warehouse masterWarehouse;
 
 	@ManyToMany
-	@JoinTable(name = "unitProduct",
-			joinColumns = {@JoinColumn(name = "fkUnit", referencedColumnName = "idunit")},
-			inverseJoinColumns = {@JoinColumn(name = "fkProduct", referencedColumnName = "idProduct")})
+	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "fkUnit", referencedColumnName = "idunit") }, inverseJoinColumns = { @JoinColumn(name = "fkProduct", referencedColumnName = "idProduct") })
 	private Set<Product> unitsProducts = new HashSet<>();
-	
-	private Integer unitTypeId;
+
+	@OneToOne(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private UnitType unitType;
 
 	public Unit() {
@@ -73,39 +73,22 @@ public class Unit extends BaseEntity {
 		this.maximumSize = maximumSize;
 	}
 
-	public Unit(Long idUnit, Warehouse warehouse, Integer unitTypeId,
-			UnitType unitType, Set<Product> productsInUnit, String name,
-			String description, Integer size, Integer maximumSize) {
+	public Unit(Long idUnit, String name, String description, Integer size,
+			Integer maximumSize, Warehouse masterWarehouse,
+			Set<Product> unitsProducts, UnitType unitType) {
 		super();
 		this.idUnit = idUnit;
-		this.masterWarehouse = warehouse;
-		this.unitTypeId = unitTypeId;
-		this.unitType = unitType;
-		this.unitsProducts = productsInUnit;
 		this.name = name;
 		this.description = description;
 		this.size = size;
 		this.maximumSize = maximumSize;
+		this.masterWarehouse = masterWarehouse;
+		this.unitsProducts = unitsProducts;
+		this.unitType = unitType;
 	}
 
 	public final Long getIdUnit() {
 		return idUnit;
-	}
-
-	public final Warehouse getWarehouse() {
-		return masterWarehouse;
-	}
-
-	public final Integer getUnitTypeId() {
-		return unitTypeId;
-	}
-
-	public final UnitType getUnitType() {
-		return unitType;
-	}
-
-	public final Set<Product> getProductsInUnit() {
-		return unitsProducts;
 	}
 
 	public final String getName() {
@@ -124,24 +107,20 @@ public class Unit extends BaseEntity {
 		return maximumSize;
 	}
 
+	public final Warehouse getMasterWarehouse() {
+		return masterWarehouse;
+	}
+
+	public final Set<Product> getUnitsProducts() {
+		return unitsProducts;
+	}
+
+	public final UnitType getUnitType() {
+		return unitType;
+	}
+
 	public final void setIdUnit(Long idUnit) {
 		this.idUnit = idUnit;
-	}
-
-	public final void setWarehouse(Warehouse warehouse) {
-		this.masterWarehouse = warehouse;
-	}
-
-	public final void setUnitTypeId(Integer unitTypeId) {
-		this.unitTypeId = unitTypeId;
-	}
-
-	public final void setUnitType(UnitType unitType) {
-		this.unitType = unitType;
-	}
-
-	public final void setProductsInUnit(Set<Product> productsInUnit) {
-		this.unitsProducts = productsInUnit;
 	}
 
 	public final void setName(String name) {
@@ -160,16 +139,35 @@ public class Unit extends BaseEntity {
 		this.maximumSize = maximumSize;
 	}
 
+	public final void setMasterWarehouse(Warehouse masterWarehouse) {
+		this.masterWarehouse = masterWarehouse;
+	}
+
+	public final void setUnitsProducts(Set<Product> unitsProducts) {
+		this.unitsProducts = unitsProducts;
+	}
+
+	public final void setUnitType(UnitType unitType) {
+		this.unitType = unitType;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((idUnit == null) ? 0 : idUnit.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
-				+ ((unitTypeId == null) ? 0 : unitTypeId.hashCode());
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((idUnit == null) ? 0 : idUnit.hashCode());
 		result = prime * result
 				+ ((masterWarehouse == null) ? 0 : masterWarehouse.hashCode());
+		result = prime * result
+				+ ((maximumSize == null) ? 0 : maximumSize.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		result = prime * result
+				+ ((unitType == null) ? 0 : unitType.hashCode());
+		result = prime * result
+				+ ((unitsProducts == null) ? 0 : unitsProducts.hashCode());
 		return result;
 	}
 
@@ -182,27 +180,97 @@ public class Unit extends BaseEntity {
 		if (!(obj instanceof Unit))
 			return false;
 		Unit other = (Unit) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
 		if (idUnit == null) {
 			if (other.idUnit != null)
 				return false;
 		} else if (!idUnit.equals(other.idUnit))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (unitTypeId == null) {
-			if (other.unitTypeId != null)
-				return false;
-		} else if (!unitTypeId.equals(other.unitTypeId))
 			return false;
 		if (masterWarehouse == null) {
 			if (other.masterWarehouse != null)
 				return false;
 		} else if (!masterWarehouse.equals(other.masterWarehouse))
 			return false;
+		if (maximumSize == null) {
+			if (other.maximumSize != null)
+				return false;
+		} else if (!maximumSize.equals(other.maximumSize))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (size == null) {
+			if (other.size != null)
+				return false;
+		} else if (!size.equals(other.size))
+			return false;
+		if (unitType == null) {
+			if (other.unitType != null)
+				return false;
+		} else if (!unitType.equals(other.unitType))
+			return false;
+		if (unitsProducts == null) {
+			if (other.unitsProducts != null)
+				return false;
+		} else if (!unitsProducts.equals(other.unitsProducts))
+			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Unit [");
+		if (getIdUnit() != null) {
+			builder.append("getIdUnit()=");
+			builder.append(getIdUnit());
+			builder.append(", ");
+		}
+		if (getName() != null) {
+			builder.append("getName()=");
+			builder.append(getName());
+			builder.append(", ");
+		}
+		if (getDescription() != null) {
+			builder.append("getDescription()=");
+			builder.append(getDescription());
+			builder.append(", ");
+		}
+		if (getSize() != null) {
+			builder.append("getSize()=");
+			builder.append(getSize());
+			builder.append(", ");
+		}
+		if (getMaximumSize() != null) {
+			builder.append("getMaximumSize()=");
+			builder.append(getMaximumSize());
+			builder.append(", ");
+		}
+		if (getMasterWarehouse() != null) {
+			builder.append("getMasterWarehouse()=");
+			builder.append(getMasterWarehouse());
+			builder.append(", ");
+		}
+		if (getUnitsProducts() != null) {
+			builder.append("getUnitsProducts()=");
+			builder.append(getUnitsProducts());
+			builder.append(", ");
+		}
+		if (getUnitType() != null) {
+			builder.append("getUnitType()=");
+			builder.append(getUnitType());
+			builder.append(", ");
+		}
+		builder.append("getVersion()=");
+		builder.append(getVersion());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

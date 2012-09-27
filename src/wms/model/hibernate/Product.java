@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -58,8 +59,8 @@ public class Product extends BaseEntity {
 
 	@ManyToMany(mappedBy = "unitsProducts")
 	private Set<Unit> units = new HashSet<>(0);
-	
-	private Integer measureId;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "measuredProduct")
 	private Measure measure;
 
 	public Product() {
@@ -67,9 +68,7 @@ public class Product extends BaseEntity {
 	}
 
 	public Product(Integer idProduct, String name, String description,
-			Double quantity, Double price, Float tax, Integer measureId,
-			Measure measure, Set<InvoiceProduct> invoiceProducts,
-			Set<Unit> units, Set<Client> client) {
+			Double quantity, Double price, Float tax) {
 		super();
 		this.idProduct = idProduct;
 		this.name = name;
@@ -77,11 +76,66 @@ public class Product extends BaseEntity {
 		this.quantity = quantity;
 		this.price = price;
 		this.tax = tax;
-		this.measureId = measureId;
-		this.measure = measure;
+	}
+
+	public Product(Integer idProduct, String name, String description,
+			Double quantity, Double price, Float tax,
+			Set<InvoiceProduct> invoiceProducts) {
+		super();
+		this.idProduct = idProduct;
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+		this.tax = tax;
 		this.invoiceProducts = invoiceProducts;
-		this.units = units;
+	}
+
+	public Product(Integer idProduct, String name, String description,
+			Double quantity, Double price, Float tax,
+			Set<InvoiceProduct> invoiceProducts, Set<Client> client) {
+		super();
+		this.idProduct = idProduct;
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+		this.tax = tax;
+		this.invoiceProducts = invoiceProducts;
 		this.client = client;
+	}
+
+	public Product(Integer idProduct, String name, String description,
+			Double quantity, Double price, Float tax,
+			Set<InvoiceProduct> invoiceProducts, Set<Client> client,
+			Set<Unit> units) {
+		super();
+		this.idProduct = idProduct;
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+		this.tax = tax;
+		this.invoiceProducts = invoiceProducts;
+		this.client = client;
+		this.units = units;
+	}
+
+	public Product(Integer idProduct, String name, String description,
+			Double quantity, Double price, Float tax,
+			Set<InvoiceProduct> invoiceProducts, Set<Client> client,
+			Set<Unit> units, Measure measure) {
+		super();
+		this.idProduct = idProduct;
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+		this.tax = tax;
+		this.invoiceProducts = invoiceProducts;
+		this.client = client;
+		this.units = units;
+		this.measure = measure;
 	}
 
 	public final Integer getIdProduct() {
@@ -108,24 +162,20 @@ public class Product extends BaseEntity {
 		return tax;
 	}
 
-	public final Integer getMeasureId() {
-		return measureId;
-	}
-
-	public final Measure getMeasure() {
-		return measure;
-	}
-
 	public final Set<InvoiceProduct> getInvoiceProducts() {
 		return invoiceProducts;
+	}
+
+	public final Set<Client> getClient() {
+		return client;
 	}
 
 	public final Set<Unit> getUnits() {
 		return units;
 	}
 
-	public final Set<Client> getClient() {
-		return client;
+	public final Measure getMeasure() {
+		return measure;
 	}
 
 	public final void setIdProduct(Integer idProduct) {
@@ -152,47 +202,163 @@ public class Product extends BaseEntity {
 		this.tax = tax;
 	}
 
-	public final void setMeasureId(Integer measureId) {
-		this.measureId = measureId;
-	}
-
-	public final void setMeasure(Measure measure) {
-		this.measure = measure;
-	}
-
-	public final void setInvoiceProducts(
-			Set<InvoiceProduct> invoiceProducts) {
+	public final void setInvoiceProducts(Set<InvoiceProduct> invoiceProducts) {
 		this.invoiceProducts = invoiceProducts;
-	}
-
-	public final void setUnits(Set<Unit> units) {
-		this.units = units;
 	}
 
 	public final void setClient(Set<Client> client) {
 		this.client = client;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		boolean result = super.equals(o);
-		Product that = (Product) o;
+	public final void setUnits(Set<Unit> units) {
+		this.units = units;
+	}
 
-		if (result) {
-			result = this.name.equals(that.name);
-		}
-
-		return true;
+	public final void setMeasure(Measure measure) {
+		this.measure = measure;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = super.hashCode();
-
-		hash = hash * this.name.hashCode();
-		hash = hash * this.invoiceProducts.hashCode();
-		hash = hash * this.units.hashCode();
-
-		return hash;
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result
+				+ ((idProduct == null) ? 0 : idProduct.hashCode());
+		result = prime * result
+				+ ((invoiceProducts == null) ? 0 : invoiceProducts.hashCode());
+		result = prime * result + ((measure == null) ? 0 : measure.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((price == null) ? 0 : price.hashCode());
+		result = prime * result
+				+ ((quantity == null) ? 0 : quantity.hashCode());
+		result = prime * result + ((tax == null) ? 0 : tax.hashCode());
+		result = prime * result + ((units == null) ? 0 : units.hashCode());
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Product))
+			return false;
+		Product other = (Product) obj;
+		if (client == null) {
+			if (other.client != null)
+				return false;
+		} else if (!client.equals(other.client))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (idProduct == null) {
+			if (other.idProduct != null)
+				return false;
+		} else if (!idProduct.equals(other.idProduct))
+			return false;
+		if (invoiceProducts == null) {
+			if (other.invoiceProducts != null)
+				return false;
+		} else if (!invoiceProducts.equals(other.invoiceProducts))
+			return false;
+		if (measure == null) {
+			if (other.measure != null)
+				return false;
+		} else if (!measure.equals(other.measure))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (price == null) {
+			if (other.price != null)
+				return false;
+		} else if (!price.equals(other.price))
+			return false;
+		if (quantity == null) {
+			if (other.quantity != null)
+				return false;
+		} else if (!quantity.equals(other.quantity))
+			return false;
+		if (tax == null) {
+			if (other.tax != null)
+				return false;
+		} else if (!tax.equals(other.tax))
+			return false;
+		if (units == null) {
+			if (other.units != null)
+				return false;
+		} else if (!units.equals(other.units))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Product [");
+		if (getIdProduct() != null) {
+			builder.append("getIdProduct()=");
+			builder.append(getIdProduct());
+			builder.append(", ");
+		}
+		if (getName() != null) {
+			builder.append("getName()=");
+			builder.append(getName());
+			builder.append(", ");
+		}
+		if (getDescription() != null) {
+			builder.append("getDescription()=");
+			builder.append(getDescription());
+			builder.append(", ");
+		}
+		if (getQuantity() != null) {
+			builder.append("getQuantity()=");
+			builder.append(getQuantity());
+			builder.append(", ");
+		}
+		if (getPrice() != null) {
+			builder.append("getPrice()=");
+			builder.append(getPrice());
+			builder.append(", ");
+		}
+		if (getTax() != null) {
+			builder.append("getTax()=");
+			builder.append(getTax());
+			builder.append(", ");
+		}
+		if (getInvoiceProducts() != null) {
+			builder.append("getInvoiceProducts()=");
+			builder.append(getInvoiceProducts());
+			builder.append(", ");
+		}
+		if (getClient() != null) {
+			builder.append("getClient()=");
+			builder.append(getClient());
+			builder.append(", ");
+		}
+		if (getUnits() != null) {
+			builder.append("getUnits()=");
+			builder.append(getUnits());
+			builder.append(", ");
+		}
+		if (getMeasure() != null) {
+			builder.append("getMeasure()=");
+			builder.append(getMeasure());
+			builder.append(", ");
+		}
+		builder.append("getVersion()=");
+		builder.append(getVersion());
+		builder.append("]");
+		return builder.toString();
+	}
+
 }
