@@ -5,9 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,8 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "warehouse", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@DiscriminatorValue("Warehouse")
-public class Warehouse extends AbstractStorageUnit {
+public class Warehouse extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 4557522901223374020L;
 
@@ -33,29 +30,54 @@ public class Warehouse extends AbstractStorageUnit {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	protected Integer idWarehouse;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Unit> units = new HashSet<>();
-
 	@Basic
 	@Column(name = "createdDate", nullable = false)
 	private Date createdDate;
+
+	@Basic
+	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
+	protected String name;
+
+	@Column(name = "description", nullable = true, length = 666)
+	private String description;
+
+	@Basic
+	@Column(name = "size", nullable = false)
+	private Integer size;
+
+	@Basic
+	@Column(name = "maxSize", nullable = false)
+	private Integer maximumSize;
+
+	@OneToMany(mappedBy = "masterWarehouse", fetch = FetchType.LAZY)
+	private Set<Unit> units = new HashSet<>();
 
 	public Warehouse() {
 		super(); // for hibernate
 	}
 
-	public Warehouse(String name, String description, Integer size,
-			Integer maximumSize) {
-		super(name, description, size, maximumSize);
+	public Warehouse(Integer idWarehouse, Date createdDate, String name,
+			String description, Integer size, Integer maximumSize) {
+		super();
+		this.idWarehouse = idWarehouse;
+		this.createdDate = createdDate;
+		this.name = name;
+		this.description = description;
+		this.size = size;
+		this.maximumSize = maximumSize;
 	}
 
-	public Warehouse(String name, String description, Integer size,
-			Integer maximumSize, Integer idWarehouse, Set<Unit> units,
-			Date createdDate) {
-		super(name, description, size, maximumSize);
+	public Warehouse(Integer idWarehouse, Set<Unit> units,
+			Date createdDate, String name, String description, Integer size,
+			Integer maximumSize) {
+		super();
 		this.idWarehouse = idWarehouse;
 		this.units = units;
 		this.createdDate = createdDate;
+		this.name = name;
+		this.description = description;
+		this.size = size;
+		this.maximumSize = maximumSize;
 	}
 
 	public final Integer getIdWarehouse() {
@@ -70,6 +92,22 @@ public class Warehouse extends AbstractStorageUnit {
 		return createdDate;
 	}
 
+	public final String getName() {
+		return name;
+	}
+
+	public final String getDescription() {
+		return description;
+	}
+
+	public final Integer getSize() {
+		return size;
+	}
+
+	public final Integer getMaximumSize() {
+		return maximumSize;
+	}
+
 	public final void setIdWarehouse(Integer idWarehouse) {
 		this.idWarehouse = idWarehouse;
 	}
@@ -82,6 +120,22 @@ public class Warehouse extends AbstractStorageUnit {
 		this.createdDate = createdDate;
 	}
 
+	public final void setName(String name) {
+		this.name = name;
+	}
+
+	public final void setDescription(String description) {
+		this.description = description;
+	}
+
+	public final void setSize(Integer size) {
+		this.size = size;
+	}
+
+	public final void setMaximumSize(Integer maximumSize) {
+		this.maximumSize = maximumSize;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -90,7 +144,7 @@ public class Warehouse extends AbstractStorageUnit {
 				+ ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result
 				+ ((idWarehouse == null) ? 0 : idWarehouse.hashCode());
-		result = prime * result + ((units == null) ? 0 : units.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -113,12 +167,12 @@ public class Warehouse extends AbstractStorageUnit {
 				return false;
 		} else if (!idWarehouse.equals(other.idWarehouse))
 			return false;
-		if (units == null) {
-			if (other.units != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!units.equals(other.units))
+		} else if (!name.equals(other.name))
 			return false;
-		return true && super.equals(obj);
+		return true;
 	}
 
 }

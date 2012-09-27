@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class InvoiceProductId implements Serializable {
+public class InvoiceProductIdentifier implements Serializable {
 	private static final long serialVersionUID = -614537106939514217L;
 
 	@ManyToOne
@@ -45,9 +45,9 @@ public class InvoiceProductId implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof InvoiceProductId))
+		if (!(obj instanceof InvoiceProductIdentifier))
 			return false;
-		InvoiceProductId other = (InvoiceProductId) obj;
+		InvoiceProductIdentifier other = (InvoiceProductIdentifier) obj;
 		if (invoice == null) {
 			if (other.invoice != null)
 				return false;

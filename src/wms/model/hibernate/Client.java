@@ -4,9 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,8 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "client", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@DiscriminatorValue("Client")
-public class Client extends AbstractEntity {
+public class Client extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 1283426340575080285L;
 
@@ -47,12 +44,14 @@ public class Client extends AbstractEntity {
 	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "productClient", schema = "majekwms", joinColumns = { @JoinColumn(name = "idProduct", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "idClient", nullable = false, updatable = false) })
-	private Set<Product> products = new HashSet<>(0);
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+	@OneToMany(mappedBy = "invoiceClient", fetch = FetchType.LAZY)
 	private Set<Invoice> invoices = new HashSet<>(0);
+	
+	@ManyToMany
+	@JoinTable(name = "productClient",
+			joinColumns = {@JoinColumn(name = "fkClient", referencedColumnName="idClient")},
+			inverseJoinColumns = {@JoinColumn(name = "fkProduct", referencedColumnName="idProduct")})
+	private Set<Product> clientsProducts = new HashSet<>(0);
 
 	public Client() {
 		super(); // hibernate
@@ -80,7 +79,7 @@ public class Client extends AbstractEntity {
 		this.name = name;
 		this.company = company;
 		this.description = description;
-		this.products = products;
+		this.clientsProducts = products;
 		this.invoices = invoices;
 	}
 
@@ -91,7 +90,7 @@ public class Client extends AbstractEntity {
 		this.name = name;
 		this.company = company;
 		this.description = description;
-		this.products = products;
+		this.clientsProducts = products;
 		this.invoices = invoices;
 	}
 
@@ -116,7 +115,7 @@ public class Client extends AbstractEntity {
 	}
 
 	public final Set<Product> getProducts() {
-		return products;
+		return clientsProducts;
 	}
 
 	public final Set<Invoice> getInvoices() {
@@ -136,7 +135,7 @@ public class Client extends AbstractEntity {
 	}
 
 	public final void setProducts(Set<Product> products) {
-		this.products = products;
+		this.clientsProducts = products;
 	}
 
 	public final void setInvoices(Set<Invoice> invoices) {

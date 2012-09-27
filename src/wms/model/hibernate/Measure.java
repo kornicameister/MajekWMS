@@ -1,14 +1,11 @@
 package wms.model.hibernate;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -17,8 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "measure", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@DiscriminatorValue("Measure")
-public class Measure extends AbstractEntity {
+public class Measure extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 8140273816811139591L;
 
@@ -28,14 +24,15 @@ public class Measure extends AbstractEntity {
 	@GenericGenerator(name = "increment", strategy = "increment")
 	protected Integer idMeasure;
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-	private Product product;
-
+	@Basic
 	@Column(nullable = false, length = 10)
 	private String abbreviation;
 
+	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 30)
 	private String name;
+
+	private Product product;
 
 	public Measure() {
 		super();
@@ -47,6 +44,38 @@ public class Measure extends AbstractEntity {
 		this.idMeasure = idMeasure;
 		this.product = product;
 		this.abbreviation = abbreviation;
+		this.name = name;
+	}
+
+	public final Integer getIdMeasure() {
+		return idMeasure;
+	}
+
+	public final Product getProduct() {
+		return product;
+	}
+
+	public final String getAbbreviation() {
+		return abbreviation;
+	}
+
+	public final String getName() {
+		return name;
+	}
+
+	public final void setIdMeasure(Integer idMeasure) {
+		this.idMeasure = idMeasure;
+	}
+
+	public final void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public final void setAbbreviation(String abbreviation) {
+		this.abbreviation = abbreviation;
+	}
+
+	public final void setName(String name) {
 		this.name = name;
 	}
 

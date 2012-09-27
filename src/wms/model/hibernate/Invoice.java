@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,15 +15,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "invoice", uniqueConstraints = { @UniqueConstraint(columnNames = { "invoiceNumber" }) })
-@DiscriminatorValue("Invoice")
-public class Invoice extends AbstractEntity {
+@Table(
+		name = "invoice",
+		schema = "majekwms",
+		uniqueConstraints = { 
+				@UniqueConstraint(columnNames = { "invoiceNumber" }) 
+				}
+		)
+public class Invoice extends BaseEntity {
+	@Transient
 	private static final long serialVersionUID = -3204092137188652431L;
 
 	@Id
@@ -32,24 +40,26 @@ public class Invoice extends AbstractEntity {
 	@GenericGenerator(name = "assigned", strategy = "assigned")
 	private String invoiceNumber;
 
+	@Basic
 	@Column(name = "createdDate", nullable = false)
 	private Date createdDate;
 
+	@Basic
 	@Column(name = "dueDate", nullable = false)
 	private Date dueDate;
 
+	@Basic
 	@Column(name = "description", nullable = true, updatable = true, insertable = false, length = 150)
 	private String description;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idClient", nullable = false)
-	private Client client;
-
+	@JoinColumn(name = "fkClient", referencedColumnName = "idClient")
+	private Client invoiceClient;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<InvoiceProduct> invoiceProducts = new HashSet<>();
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idInvoiceType", nullable = false)
+	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
+	
+	@OneToOne(mappedBy = "masterInvoice", fetch = FetchType.LAZY)
 	private InvoiceType invoiceType;
 
 	public Invoice() {
@@ -72,7 +82,7 @@ public class Invoice extends AbstractEntity {
 		this.createdDate = createdDate;
 		this.dueDate = dueDate;
 		this.description = description;
-		this.client = client;
+		this.invoiceClient = client;
 	}
 
 	public Invoice(String invoiceNumber, Date createdDate, Date dueDate,
@@ -83,7 +93,7 @@ public class Invoice extends AbstractEntity {
 		this.createdDate = createdDate;
 		this.dueDate = dueDate;
 		this.description = description;
-		this.client = client;
+		this.invoiceClient = client;
 		this.invoiceProducts = invoiceProducts;
 	}
 
@@ -95,7 +105,7 @@ public class Invoice extends AbstractEntity {
 		this.createdDate = createdDate;
 		this.dueDate = dueDate;
 		this.description = description;
-		this.client = client;
+		this.invoiceClient = client;
 		this.invoiceProducts = invoiceProducts;
 		this.invoiceType = invoiceType;
 	}
@@ -117,7 +127,7 @@ public class Invoice extends AbstractEntity {
 	}
 
 	public final Client getClient() {
-		return client;
+		return invoiceClient;
 	}
 
 	public final Set<InvoiceProduct> getInvoiceProducts() {
@@ -145,7 +155,7 @@ public class Invoice extends AbstractEntity {
 	}
 
 	public final void setClient(Client client) {
-		this.client = client;
+		this.invoiceClient = client;
 	}
 
 	public final void setInvoiceProducts(Set<InvoiceProduct> invoiceProducts) {

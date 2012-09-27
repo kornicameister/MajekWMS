@@ -1,26 +1,24 @@
 package wms.model.hibernate;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "invoiceType", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@DiscriminatorValue("InvoiceType")
-public class InvoiceType extends AbstractEntity {
+public class InvoiceType extends BaseEntity {
+	@Transient
 	private static final long serialVersionUID = -7345851338532573657L;
 
 	@Id
@@ -33,18 +31,20 @@ public class InvoiceType extends AbstractEntity {
 	@Column(name = "name", length = 10, insertable = true, updatable = true)
 	private String name;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "invoiceType")
-	private Set<Invoice> invoices = new HashSet<>();
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idInvoiceType", referencedColumnName = "fkInvoiceType", insertable = false, updatable = false)
+	private Invoice masterInvoice;
 
 	public InvoiceType() {
 		super();
 	}
 
-	public InvoiceType(Integer idInvoiceType, String name, Set<Invoice> invoices) {
+	public InvoiceType(Integer idInvoiceType, String name,
+			Invoice masterInvoice) {
 		super();
 		this.idInvoiceType = idInvoiceType;
 		this.name = name;
-		this.invoices = invoices;
+		this.masterInvoice = masterInvoice;
 	}
 
 	public final Integer getIdInvoiceType() {
@@ -55,8 +55,8 @@ public class InvoiceType extends AbstractEntity {
 		return name;
 	}
 
-	public final Set<Invoice> getInvoices() {
-		return invoices;
+	public final Invoice getMasterInvoice() {
+		return masterInvoice;
 	}
 
 	public final void setIdInvoiceType(Integer idInvoiceType) {
@@ -67,8 +67,8 @@ public class InvoiceType extends AbstractEntity {
 		this.name = name;
 	}
 
-	public final void setInvoices(Set<Invoice> invoices) {
-		this.invoices = invoices;
+	public final void setMasterInvoice(Invoice masterInvoice) {
+		this.masterInvoice = masterInvoice;
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class InvoiceType extends AbstractEntity {
 		result = prime * result
 				+ ((idInvoiceType == null) ? 0 : idInvoiceType.hashCode());
 		result = prime * result
-				+ ((invoices == null) ? 0 : invoices.hashCode());
+				+ ((masterInvoice == null) ? 0 : masterInvoice.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -89,7 +89,7 @@ public class InvoiceType extends AbstractEntity {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof InvoiceType))
 			return false;
 		InvoiceType other = (InvoiceType) obj;
 		if (idInvoiceType == null) {
@@ -97,10 +97,10 @@ public class InvoiceType extends AbstractEntity {
 				return false;
 		} else if (!idInvoiceType.equals(other.idInvoiceType))
 			return false;
-		if (invoices == null) {
-			if (other.invoices != null)
+		if (masterInvoice == null) {
+			if (other.masterInvoice != null)
 				return false;
-		} else if (!invoices.equals(other.invoices))
+		} else if (!masterInvoice.equals(other.masterInvoice))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -108,6 +108,31 @@ public class InvoiceType extends AbstractEntity {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("InvoiceType [");
+		if (getIdInvoiceType() != null) {
+			builder.append("getIdInvoiceType()=");
+			builder.append(getIdInvoiceType());
+			builder.append(", ");
+		}
+		if (getName() != null) {
+			builder.append("getName()=");
+			builder.append(getName());
+			builder.append(", ");
+		}
+		if (getMasterInvoice() != null) {
+			builder.append("getMasterInvoice()=");
+			builder.append(getMasterInvoice());
+			builder.append(", ");
+		}
+		builder.append("getVersion()=");
+		builder.append(getVersion());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

@@ -8,21 +8,32 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "invoiceProduct", schema = "majekwms")
 @AssociationOverrides({
-		@AssociationOverride(name = "idInvoice", joinColumns = @JoinColumn(name = "idNumber")),
-		@AssociationOverride(name = "idProduct", joinColumns = @JoinColumn(name = "idNumber")) })
+		@AssociationOverride(name = "idInvoice", joinColumns = @JoinColumn(name = "fkInvoice")),
+		@AssociationOverride(name = "idProduct", joinColumns = @JoinColumn(name = "fkProduct")) })
 public class InvoiceProduct implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1269575448414133565L;
 
 	@EmbeddedId
-	private InvoiceProductId pk = new InvoiceProductId();
+	private InvoiceProductIdentifier invoiceProductFK = new InvoiceProductIdentifier();
+
+	@Id
+	@Column(name = "idInvoiceProduct", updatable = false, insertable = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "assigned", strategy = "assigned")
+	private Integer id;
 
 	@Basic
 	@Column(name = "quantity", insertable = true, nullable = false, updatable = true)
@@ -44,32 +55,62 @@ public class InvoiceProduct implements Serializable {
 		super(); // hibernate
 	}
 
-	public final InvoiceProductId getPk() {
-		return pk;
+	public InvoiceProduct(Integer id, Double quantity, Float price,
+			Integer tax, String comment) {
+		super();
+		this.id = id;
+		this.quantity = quantity;
+		this.price = price;
+		this.tax = tax;
+		this.comment = comment;
 	}
 
-	@Transient
+	public Integer getId() {
+		return id;
+	}
+
+	public final InvoiceProductIdentifier getPk() {
+		return invoiceProductFK;
+	}
+
+	public Invoice getInvoiceEntity() {
+		return this.getPk().getInvoice();
+	}
+
+	public Product getProductEntity() {
+		return this.getPk().getProduct();
+	}
+
 	public final Double getQuantity() {
 		return quantity;
 	}
 
-	@Transient
 	public final Float getPrice() {
 		return price;
 	}
 
-	@Transient
 	public final Integer getTax() {
 		return tax;
 	}
 
-	@Transient
 	public final String getComment() {
 		return comment;
 	}
 
-	public final void setPk(InvoiceProductId pk) {
-		this.pk = pk;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public final void setPk(InvoiceProductIdentifier pk) {
+		this.invoiceProductFK = pk;
+	}
+
+	public final void setProductEntity(Product product) {
+		this.getPk().setProduct(product);
+	}
+
+	public final void setInvoiceEntity(Invoice invoice) {
+		this.getPk().setInvoice(invoice);
 	}
 
 	public final void setQuantity(Double quantity) {
@@ -93,7 +134,9 @@ public class InvoiceProduct implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
-		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
+		result = prime
+				* result
+				+ ((invoiceProductFK == null) ? 0 : invoiceProductFK.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result
 				+ ((quantity == null) ? 0 : quantity.hashCode());
@@ -115,10 +158,10 @@ public class InvoiceProduct implements Serializable {
 				return false;
 		} else if (!comment.equals(other.comment))
 			return false;
-		if (pk == null) {
-			if (other.pk != null)
+		if (invoiceProductFK == null) {
+			if (other.invoiceProductFK != null)
 				return false;
-		} else if (!pk.equals(other.pk))
+		} else if (!invoiceProductFK.equals(other.invoiceProductFK))
 			return false;
 		if (price == null) {
 			if (other.price != null)
@@ -142,9 +185,9 @@ public class InvoiceProduct implements Serializable {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("InvoiceProduct [");
-		if (pk != null) {
+		if (invoiceProductFK != null) {
 			builder.append("pk=");
-			builder.append(pk);
+			builder.append(invoiceProductFK);
 			builder.append(", ");
 		}
 		if (quantity != null) {
@@ -169,6 +212,4 @@ public class InvoiceProduct implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
 }

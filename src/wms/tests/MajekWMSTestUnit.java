@@ -3,7 +3,6 @@ package wms.tests;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -13,10 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import wms.model.hibernate.AbstractEntity;
 import wms.model.hibernate.Measure;
-import wms.model.hibernate.Warehouse;
 import wms.model.hibernate.UnitType;
+import wms.model.hibernate.Warehouse;
 
 public class MajekWMSTestUnit {
 	private File hibernateCfg;
@@ -85,9 +83,9 @@ public class MajekWMSTestUnit {
 		Integer readId = null;
 		session.beginTransaction();
 		for (Measure measure : readMeasures) {
-			readId = measure.getId();
+//			readId = measure.getId();
 
-			measure.setAbbreviation(Integer.valueOf(readId * measure.hashCode()).toString());
+//			measure.setAbbreviation(Integer.valueOf(readId * measure.hashCode()).toString());
 			session.update(measure);
 		}
 		session.getTransaction().commit();
@@ -99,18 +97,18 @@ public class MajekWMSTestUnit {
 		session.beginTransaction();
 		id++;
 		for (Integer i = id; i < id + 4; i++) {
-			Serializable m = session.save(new Measure(i.toString(), i.toString()));
-			System.out.println(String.format("Saved %s with id = %d",Measure.class.getSimpleName(), m));
+//			Serializable m = session.save(new Measure(i.toString(), i.toString()));
+//			System.out.println(String.format("Saved %s with id = %d",Measure.class.getSimpleName(), m));
 		}
 		session.getTransaction().commit();
 	}
 
-	@SuppressWarnings("unused")
-	private Integer getHigherId(List<?> data) {
-		AbstractEntity ae = (AbstractEntity) data.get(data.size() - 1);
-		System.out.println(String.format("Last entity of %s has id = %d", ae.getClass().getSimpleName(), ae.getId()));
-		return ae.getId();
-	}
+//	@SuppressWarnings("unused")
+//	private Integer getHigherId(List<?> data) {
+//		BaseEntity ae = (BaseEntity) data.get(data.size() - 1);
+//		System.out.println(String.format("Last entity of %s has id = %d", ae.getClass().getSimpleName(), ae.getId()));
+//		return ae.getId();
+//	}
 
 	@SuppressWarnings("unchecked")
 	private List<Measure> testReadMeasures() {

@@ -1,14 +1,11 @@
 package wms.model.hibernate;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -16,30 +13,31 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table(name = "warehouseType", uniqueConstraints = { @UniqueConstraint(columnNames = {
+@Table(name = "unitType", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"name", "abbreviation" }) })
-@DiscriminatorValue("UnitType")
-public class UnitType extends AbstractEntity {
+public class UnitType extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = -7479798313966564213L;
 
 	@Id
-	@Column(name = "idUnitType", updatable = false, insertable = true, nullable = false)
+	@Column(updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
 	protected Integer idUnitType;
-
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "unit", cascade = CascadeType.ALL)
-	private Unit unit;
-
+	
+	@Basic
 	@Column(name = "abbreviation", length = 6, nullable = false, unique = true, insertable = true, updatable = true)
 	private String abbreviation;
 
+	@Basic
 	@Column(name = "description", length = 120, insertable = true, updatable = true)
 	private String description;
 
+	@Basic
 	@Column(name = "name", length = 20, nullable = false, unique = true, insertable = true, updatable = true)
 	private String name;
+
+	private Unit unit;
 
 	public UnitType() {
 		super();

@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,15 +16,13 @@ import javax.persistence.Version;
  * 
  * @author kornicameister
  * @created 20-09-2012
- * @file AbstractEntity.java for project MajekWMS
- * @type AbstractEntity
+ * @file BaseEntity.java for project MajekWMS
+ * @type BaseEntity
  * 
  */
 
 @MappedSuperclass
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn(name = "entity", discriminatorType = DiscriminatorType.STRING)
-abstract public class AbstractEntity implements Serializable {
+abstract public class BaseEntity implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 8641451013192983600L;
 
@@ -40,7 +34,7 @@ abstract public class AbstractEntity implements Serializable {
 	@Column(name = "updatedOn")
 	private Date updatedOn;
 
-	public AbstractEntity() {
+	public BaseEntity() {
 		super();
 		this.updatedOn = new Date();
 	}
@@ -78,7 +72,7 @@ abstract public class AbstractEntity implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof AbstractEntity))
+		if (!(obj instanceof BaseEntity))
 			return false;
 
 		return true;

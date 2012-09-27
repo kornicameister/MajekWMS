@@ -1,11 +1,10 @@
 package wms.model.hibernate;
 
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,79 +14,86 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "unit", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@DiscriminatorValue("Unit")
-public class Unit extends AbstractStorageUnit {
+@Table(name = "unit")
+public class Unit extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 2437063899438647082L;
 
 	@Id
-	@Column(name = "idUnit", updatable = false, insertable = true, nullable = false)
+	@Column(updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer idUnit;
+	protected Long idUnit;
+	
+	@Basic
+	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
+	protected String name;
+
+	@Column(name = "description", nullable = true, length = 666)
+	private String description;
+
+	@Basic
+	@Column(name = "size", nullable = false)
+	private Integer size;
+
+	@Basic
+	@Column(name = "maxSize", nullable = false)
+	private Integer maximumSize;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idWarehouse", nullable = false, updatable = true)
-	private Warehouse warehouse;
+	@JoinColumn(name = "pkWarehouse", referencedColumnName="idWarehouse")
+	private Warehouse masterWarehouse;
 
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "unit"))
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "idUnitType", unique = true, nullable = false)
+	@ManyToMany
+	@JoinTable(name = "unitProduct",
+			joinColumns = {@JoinColumn(name = "fkUnit", referencedColumnName = "idunit")},
+			inverseJoinColumns = {@JoinColumn(name = "fkProduct", referencedColumnName = "idProduct")})
+	private Set<Product> unitsProducts = new HashSet<>();
+	
 	private Integer unitTypeId;
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn
 	private UnitType unitType;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE }, targetEntity = Product.class)
-	@JoinTable(name = "unitProduct", joinColumns = @JoinColumn(name = "idUnit", referencedColumnName = "idUnit"), inverseJoinColumns = @JoinColumn(name = "idProduct", referencedColumnName = "idProduct"))
-	private Collection<Product> productsInUnit = new HashSet<>();
-
 	public Unit() {
-		super(); // hibernate
+		super();
 	}
 
-	public Unit(Integer idUnit, Warehouse warehouse, Integer unitTypeId,
-			UnitType unitType, Collection<Product> productsInUnit) {
+	public Unit(Long idUnit, String name, String description, Integer size,
+			Integer maximumSize) {
 		super();
 		this.idUnit = idUnit;
-		this.warehouse = warehouse;
-		this.unitTypeId = unitTypeId;
-		this.unitType = unitType;
-		this.productsInUnit = productsInUnit;
+		this.name = name;
+		this.description = description;
+		this.size = size;
+		this.maximumSize = maximumSize;
 	}
 
-	public Unit(String name, String description, Integer size,
-			Integer maximumSize, Integer idUnit, Warehouse warehouse,
-			Integer unitTypeId, UnitType unitType,
-			Collection<Product> productsInUnit) {
-		super(name, description, size, maximumSize);
+	public Unit(Long idUnit, Warehouse warehouse, Integer unitTypeId,
+			UnitType unitType, Set<Product> productsInUnit, String name,
+			String description, Integer size, Integer maximumSize) {
+		super();
 		this.idUnit = idUnit;
-		this.warehouse = warehouse;
+		this.masterWarehouse = warehouse;
 		this.unitTypeId = unitTypeId;
 		this.unitType = unitType;
-		this.productsInUnit = productsInUnit;
+		this.unitsProducts = productsInUnit;
+		this.name = name;
+		this.description = description;
+		this.size = size;
+		this.maximumSize = maximumSize;
 	}
 
-	public final Integer getIdUnit() {
+	public final Long getIdUnit() {
 		return idUnit;
 	}
 
 	public final Warehouse getWarehouse() {
-		return warehouse;
+		return masterWarehouse;
 	}
 
 	public final Integer getUnitTypeId() {
@@ -98,16 +104,32 @@ public class Unit extends AbstractStorageUnit {
 		return unitType;
 	}
 
-	public final Collection<Product> getProductsInUnit() {
-		return productsInUnit;
+	public final Set<Product> getProductsInUnit() {
+		return unitsProducts;
 	}
 
-	public final void setIdUnit(Integer idUnit) {
+	public final String getName() {
+		return name;
+	}
+
+	public final String getDescription() {
+		return description;
+	}
+
+	public final Integer getSize() {
+		return size;
+	}
+
+	public final Integer getMaximumSize() {
+		return maximumSize;
+	}
+
+	public final void setIdUnit(Long idUnit) {
 		this.idUnit = idUnit;
 	}
 
 	public final void setWarehouse(Warehouse warehouse) {
-		this.warehouse = warehouse;
+		this.masterWarehouse = warehouse;
 	}
 
 	public final void setUnitTypeId(Integer unitTypeId) {
@@ -118,8 +140,24 @@ public class Unit extends AbstractStorageUnit {
 		this.unitType = unitType;
 	}
 
-	public final void setProductsInUnit(Collection<Product> productsInUnit) {
-		this.productsInUnit = productsInUnit;
+	public final void setProductsInUnit(Set<Product> productsInUnit) {
+		this.unitsProducts = productsInUnit;
+	}
+
+	public final void setName(String name) {
+		this.name = name;
+	}
+
+	public final void setDescription(String description) {
+		this.description = description;
+	}
+
+	public final void setSize(Integer size) {
+		this.size = size;
+	}
+
+	public final void setMaximumSize(Integer maximumSize) {
+		this.maximumSize = maximumSize;
 	}
 
 	@Override
@@ -127,14 +165,11 @@ public class Unit extends AbstractStorageUnit {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((idUnit == null) ? 0 : idUnit.hashCode());
-		result = prime * result
-				+ ((productsInUnit == null) ? 0 : productsInUnit.hashCode());
-		result = prime * result
-				+ ((unitType == null) ? 0 : unitType.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((unitTypeId == null) ? 0 : unitTypeId.hashCode());
 		result = prime * result
-				+ ((warehouse == null) ? 0 : warehouse.hashCode());
+				+ ((masterWarehouse == null) ? 0 : masterWarehouse.hashCode());
 		return result;
 	}
 
@@ -144,7 +179,7 @@ public class Unit extends AbstractStorageUnit {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Unit))
 			return false;
 		Unit other = (Unit) obj;
 		if (idUnit == null) {
@@ -152,44 +187,22 @@ public class Unit extends AbstractStorageUnit {
 				return false;
 		} else if (!idUnit.equals(other.idUnit))
 			return false;
-		if (productsInUnit == null) {
-			if (other.productsInUnit != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!productsInUnit.equals(other.productsInUnit))
-			return false;
-		if (unitType == null) {
-			if (other.unitType != null)
-				return false;
-		} else if (!unitType.equals(other.unitType))
+		} else if (!name.equals(other.name))
 			return false;
 		if (unitTypeId == null) {
 			if (other.unitTypeId != null)
 				return false;
 		} else if (!unitTypeId.equals(other.unitTypeId))
 			return false;
-		if (warehouse == null) {
-			if (other.warehouse != null)
+		if (masterWarehouse == null) {
+			if (other.masterWarehouse != null)
 				return false;
-		} else if (!warehouse.equals(other.warehouse))
+		} else if (!masterWarehouse.equals(other.masterWarehouse))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Unit [idUnit=" + idUnit + ", warehouse=" + warehouse
-				+ ", unitTypeId=" + unitTypeId + ", unitType=" + unitType
-				+ ", productsInUnit=" + productsInUnit + ", name=" + name
-				+ ", getIdUnit()=" + getIdUnit() + ", getWarehouse()="
-				+ getWarehouse() + ", getUnitTypeId()=" + getUnitTypeId()
-				+ ", getUnitType()=" + getUnitType() + ", getProductsInUnit()="
-				+ getProductsInUnit() + ", hashCode()=" + hashCode()
-				+ ", getName()=" + getName() + ", getDescription()="
-				+ getDescription() + ", getSize()=" + getSize()
-				+ ", getMaxSize()=" + getMaxSize() + ", getRatio()="
-				+ getRatio() + ", getUpdatedOn()=" + getUpdatedOn()
-				+ ", getVersion()=" + getVersion() + ", getClass()="
-				+ getClass() + ", toString()=" + super.toString() + "]";
 	}
 
 }

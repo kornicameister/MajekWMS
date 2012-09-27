@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,19 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "product", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@DiscriminatorValue("Product")
-public class Product extends AbstractEntity {
+@Table(name = "product")
+public class Product extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;
 
@@ -40,36 +34,33 @@ public class Product extends AbstractEntity {
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
 	private String name;
 
+	@Basic
 	@Column(name = "description", nullable = true, length = 250)
 	private String description;
 
+	@Basic
 	@Column(name = "quantity", nullable = false, insertable = true, updatable = true)
 	private Double quantity;
 
+	@Basic
 	@Column(name = "price", nullable = false, insertable = true, updatable = true)
 	private Double price;
 
+	@Basic
 	@Column(name = "tax", nullable = false, insertable = true, updatable = true)
 	private Float tax;
 
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "idMeasure"))
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "idMeasure", unique = true, nullable = false)
-	private Integer measureId;
-
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name = "idMeasure", referencedColumnName = "idNumber")
-	private Measure measure;
-
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "productsInUnit", targetEntity = Unit.class)
-	private Set<Unit> units = new HashSet<>(0);
-
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "idNumber", targetEntity = Client.class)
+	@ManyToMany(mappedBy = "clientsProducts")
 	private Set<Client> client = new HashSet<>(0);
+
+	@ManyToMany(mappedBy = "unitsProducts")
+	private Set<Unit> units = new HashSet<>(0);
+	
+	private Integer measureId;
+	private Measure measure;
 
 	public Product() {
 		super();
@@ -169,7 +160,8 @@ public class Product extends AbstractEntity {
 		this.measure = measure;
 	}
 
-	public final void setInvoiceProducts(Set<InvoiceProduct> invoiceProducts) {
+	public final void setInvoiceProducts(
+			Set<InvoiceProduct> invoiceProducts) {
 		this.invoiceProducts = invoiceProducts;
 	}
 
