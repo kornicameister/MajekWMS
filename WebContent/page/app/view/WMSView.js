@@ -19,10 +19,10 @@ Ext.define('WMS.view.WMSView', {
     extend  : 'Ext.panel.Panel',
     alias   : 'widget.wmsview',
     requires: [
-        'WMS.view.wms.WMSInventory',
-        'WMS.view.wms.WMSOverview',
-        'WMS.view.wms.WMSStatistics',
-        'WMS.view.wms.WMSUnit'
+        'WMS.view.wms.Inventory',
+        'WMS.view.wms.Overview',
+        'WMS.view.wms.Statistics',
+        'WMS.view.wms.Unit'
     ],
 
     title   : 'WMS - Warehouse',
@@ -49,17 +49,17 @@ Ext.define('WMS.view.WMSView', {
         },
         {
             xtype : 'wmsunit',
-            itemId: 'wmsunit',
+            itemId: 'wmsUnit',
             title : 'Units'
         },
         {
             xtype : 'wmsinventory',
-            itemId: 'wmsinventory',
+            itemId: 'wmsInventory',
             title : "Inventory"
         },
         {
             xtype : 'wmsstatistics',
-            itemId: 'wmsstatistics',
+            itemId: 'wmsStatistics',
             title : 'Statistics'
         }
     ]
