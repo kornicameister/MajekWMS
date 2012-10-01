@@ -8,9 +8,9 @@
  * Created: 24-09-2012
  */
 
-Ext.define('WMS.store.InitialStore', {
+Ext.define('WMS.store.Initial', {
     extend: 'Ext.data.Store',
-    model : 'WMS.model.InitialModel',
+    model : 'WMS.model.initial.Initial',
 
     autoLoad: true,
     autoSync: true,

@@ -13,8 +13,8 @@ Ext.define('WMS.model.initial.Initial', {
     ],
 
     associations: [
-        {name: 'warehouses', type: 'hasMany', model: 'entity.Warehouse'},
-        {name: 'unitTypes', type: 'hasMany', model: 'entity.UnitTypeSimple'}
+        {name: 'warehouses', type: 'hasMany', model: 'WMS.model.entity.Warehouse'},
+        {name: 'unitTypes', type: 'hasMany', model: 'WMS.model.entity.UnitTypeSimple'}
     ],
 
     proxy: {
