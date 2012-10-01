@@ -9,6 +9,11 @@
 
 // entry point for file
 (function () {
+
+    console.init = function (str) {
+        console.log('INIT :: ' + str);
+    };
+
     Ext.Loader.setConfig({
         enabled: true,
         paths  : {
@@ -23,7 +28,9 @@
         autoCreateViewport: true,
 
         controllers: [
-            'WMSToolbars'
+            'Viewport',
+            'Configuration',
+            'Toolbars'
         ]
     });
 }());

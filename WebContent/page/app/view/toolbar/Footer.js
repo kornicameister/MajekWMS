@@ -7,7 +7,7 @@
  * Created: 14-09-2012
  */
 
-Ext.define('WMS.view.toolbar.WMSFooter', {
+Ext.define('WMS.view.toolbar.Footer', {
     itemId     : 'footerToolbar',
     extend     : 'Ext.ux.StatusBar',
     alias      : 'widget.wmsfbar',

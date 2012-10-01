@@ -7,7 +7,7 @@
  * Created: 14-09-2012
  */
 
-Ext.define('WMS.view.toolbar.WMSHeader', {
+Ext.define('WMS.view.toolbar.Header', {
     itemId     : 'headerToolbar',
     extend     : 'Ext.toolbar.Toolbar',
     alias      : 'widget.wmstbar',

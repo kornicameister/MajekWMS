@@ -10,13 +10,12 @@
 // entry point for file
 Ext.define('WMS.view.Viewport', {
     extend            : 'Ext.Viewport',
-    alternateClassName: 'WMS.view.Viewport',
     layout            : 'fit',
 
     requires: [
-        'WMS.view.toolbar.WMSFooter',
-        'WMS.view.toolbar.WMSHeader',
-        'WMS.view.WMSNavigation',
+        'WMS.view.toolbar.Footer',
+        'WMS.view.toolbar.Header',
+        'WMS.view.Navigation',
         'WMS.view.WMSView'
     ],
 
@@ -31,16 +30,16 @@ Ext.define('WMS.view.Viewport', {
                 region: 'west'
             },
             {
-                xtype   : 'wmsview',
-                region  : 'center'
+                xtype : 'wmsview',
+                region: 'center'
             }
         ],
 
         tbar: {
-            xtype   : 'wmstbar'
+            xtype: 'wmstbar'
         },
         bbar: {
-            xtype   : 'wmsfbar'
+            xtype: 'wmsfbar'
         }
     }
 });

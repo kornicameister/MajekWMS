@@ -8,18 +8,20 @@
  * Created: 28-09-2012
  */
 
-Ext.define('WMS.controller.WMSConfiguration', {
-    extend: 'Ext.app.Controller',
-
-    stores: [
-        'WMSConfiguration'
+Ext.define('WMS.controller.Configuration', {
+    extend  : 'Ext.app.Controller',
+    requires: [
+        'WMS.model.entity.UnitTypeSimple'
+    ],
+    stores  : [
+        'Initial'
     ],
 
     init: function () {
-        console.init('WMS.controller.WMWConfiguration initializing...');
+        console.init('WMS.controller.Configuration initializing...');
         var me = this;
 
-        me.getWMSConfigurationStore().addListener('load', function (confStore) {
+        me.getInitialStore().addListener('load', function (confStore) {
             var warehouses = confStore.getWarehouses();
             if (warehouses.length === 0) {
                 Ext.MessageBox.show({
@@ -33,7 +35,25 @@ Ext.define('WMS.controller.WMSConfiguration', {
                     icon         : Ext.MessageBox.QUESTION,
                     scope        : me
                 });
+            } else {
+                me.openWarehouseSelector();
             }
+        });
+        me.getInitialStore().addListener('update', me.onConfigurationUpdate, me);
+    },
+
+    onConfigurationUpdate: function (store) {
+        var warehouse = store.getWarehouses()[0];
+        Ext.MessageBox.show({
+            title        : 'Warehouse created',
+            msg          : 'MajekWMS created warehouse ' + warehouse['name'],
+            buttons      : Ext.MessageBox.OK,
+            animateTarget: Ext.getBody(),
+            fn           : function () {
+                this.wizard.close();
+            },
+            icon         : Ext.MessageBox.INFO,
+            scope        : this
         });
     },
 
@@ -43,11 +63,28 @@ Ext.define('WMS.controller.WMSConfiguration', {
      * @param answer
      */
     openWarehouseWizard: function (answer) {
+        var me = this;
         if (answer === 'yes') {
-            var wWizard = Ext.create('WMS.view.wizard.Warehouse', {
-                autoShow: true
-            });
-            console.log(wWizard);
+            me.wizard = Ext.create('WMS.view.wizard.Warehouse');
+            var submitButton = Ext.getCmp('warehouseSubmitButton');
+            submitButton.on('click', me.onWarehouseSubmit, me);
+            me.wizard.show();
+        }
+    },
+
+    /**
+     * Method called if MajekWMS found valid warehouse.
+     * User is allowed to choose one of them to operate on.
+     */
+    openWarehouseSelector: function () {
+        var me = this;
+    },
+
+    onWarehouseSubmit: function (button) {
+        var form = button.up('form').getForm(),
+            me = this;
+        if (form.isValid()) {
+            me.getInitialStore().addWarehouse(form.getValues());
         }
     }
 });

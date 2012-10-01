@@ -8,11 +8,11 @@
  * Created: 15-09-2012
  */
 
-Ext.define('WMS.controller.WMSToolbars', {
+Ext.define('WMS.controller.Toolbars', {
     extend: 'Ext.app.Controller',
     views : [
-        'toolbar.WMSHeader',
-        'toolbar.WMSFooter'
+        'toolbar.Header',
+        'toolbar.Footer'
     ],
     refs  : [
         {
@@ -68,7 +68,7 @@ Ext.define('WMS.controller.WMSToolbars', {
     init: function () {
         var me = this;
 
-        console.init('WMS.controller.WMSToolbars initializing...');
+        console.init('WMS.controller.Toolbars initializing...');
 
         function onButtonClick(button) {
             var itemId = button.getItemId();

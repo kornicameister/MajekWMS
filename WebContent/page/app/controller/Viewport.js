@@ -6,19 +6,15 @@
  */
 
 Ext.define('WMS.controller.Viewport', {
-    extend:'Ext.app.Controller',
+    extend: 'Ext.app.Controller',
 
-    requires:[
-        'WMS.controller.WMSConfiguration',
-        'WMS.controller.WMSToolbars'
+    views: [
+        'Viewport'
     ],
 
-
-    init: function(){
-        console.log('controller.Viewport initializing...');
+    init: function () {
+        console.init('WMS.controller.Viewport initializing...');
     }
 
 
-}, function () {
-    console.log('WMS.controller.ViewportController successfully defined');
 });

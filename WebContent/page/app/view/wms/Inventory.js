@@ -8,7 +8,7 @@
  * Created: 14-09-2012
  */
 
-Ext.define('WMS.view.wms.WMSInventory', {
+Ext.define('WMS.view.wms.Inventory', {
     extend: 'Ext.panel.Panel',
     alias : 'widget.wmsinventory',
     iconCls: 'view-wms-inventory'
