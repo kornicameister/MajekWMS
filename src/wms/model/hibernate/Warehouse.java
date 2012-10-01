@@ -42,7 +42,7 @@ public class Warehouse extends BaseEntity {
 	private String description;
 
 	@Basic
-	@Column(name = "size", nullable = false)
+	@Column(name = "size", nullable = true)
 	private Integer size;
 
 	@Basic

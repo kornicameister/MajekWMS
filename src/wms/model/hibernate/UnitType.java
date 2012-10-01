@@ -34,6 +34,10 @@ public class UnitType extends BaseEntity {
 	@Column(name = "name", length = 20, nullable = false, unique = true, insertable = true, updatable = true)
 	private String name;
 
+	@Basic
+	@Column(name = "parentType", nullable = true, unique = false, insertable = true, updatable = true)
+	private Integer parentType;
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private Unit unit;
@@ -56,11 +60,12 @@ public class UnitType extends BaseEntity {
 	}
 
 	public UnitType(String abbreviation, String description, String name,
-			Unit unit, Integer idUnit) {
+			Integer parentType, Unit unit, Integer idUnit) {
 		super();
 		this.abbreviation = abbreviation;
 		this.description = description;
 		this.name = name;
+		this.parentType = parentType;
 		this.unit = unit;
 		this.idUnit = idUnit;
 	}
@@ -75,6 +80,10 @@ public class UnitType extends BaseEntity {
 
 	public final String getName() {
 		return name;
+	}
+
+	public final Integer getParentType() {
+		return parentType;
 	}
 
 	public final Unit getUnit() {
@@ -97,6 +106,10 @@ public class UnitType extends BaseEntity {
 		this.name = name;
 	}
 
+	public final void setParentType(Integer parentType) {
+		this.parentType = parentType;
+	}
+
 	public final void setUnit(Unit unit) {
 		this.unit = unit;
 	}
@@ -115,6 +128,8 @@ public class UnitType extends BaseEntity {
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((idUnit == null) ? 0 : idUnit.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((parentType == null) ? 0 : parentType.hashCode());
 		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
 		return result;
 	}
@@ -148,6 +163,11 @@ public class UnitType extends BaseEntity {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (parentType == null) {
+			if (other.parentType != null)
+				return false;
+		} else if (!parentType.equals(other.parentType))
+			return false;
 		if (unit == null) {
 			if (other.unit != null)
 				return false;
@@ -175,6 +195,11 @@ public class UnitType extends BaseEntity {
 			builder.append(getName());
 			builder.append(", ");
 		}
+		if (getParentType() != null) {
+			builder.append("getParentType()=");
+			builder.append(getParentType());
+			builder.append(", ");
+		}
 		if (getUnit() != null) {
 			builder.append("getUnit()=");
 			builder.append(getUnit());
@@ -185,7 +210,9 @@ public class UnitType extends BaseEntity {
 			builder.append(getIdUnit());
 			builder.append(", ");
 		}
-		builder.append("getVersion()=");
+		builder.append("hashCode()=");
+		builder.append(hashCode());
+		builder.append(", getVersion()=");
 		builder.append(getVersion());
 		builder.append("]");
 		return builder.toString();

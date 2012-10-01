@@ -31,7 +31,7 @@ public class Unit extends BaseEntity {
 	@Column(updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Long idUnit;
+	protected Integer idUnit;
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
@@ -49,7 +49,7 @@ public class Unit extends BaseEntity {
 	private Integer maximumSize;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pkWarehouse", referencedColumnName = "idWarehouse")
+	@JoinColumn(name = "fkWarehouse", referencedColumnName = "idWarehouse")
 	private Warehouse masterWarehouse;
 
 	@ManyToMany
@@ -63,7 +63,7 @@ public class Unit extends BaseEntity {
 		super();
 	}
 
-	public Unit(Long idUnit, String name, String description, Integer size,
+	public Unit(Integer idUnit, String name, String description, Integer size,
 			Integer maximumSize) {
 		super();
 		this.idUnit = idUnit;
@@ -73,7 +73,7 @@ public class Unit extends BaseEntity {
 		this.maximumSize = maximumSize;
 	}
 
-	public Unit(Long idUnit, String name, String description, Integer size,
+	public Unit(Integer idUnit, String name, String description, Integer size,
 			Integer maximumSize, Warehouse masterWarehouse,
 			Set<Product> unitsProducts, UnitType unitType) {
 		super();
@@ -87,7 +87,7 @@ public class Unit extends BaseEntity {
 		this.unitType = unitType;
 	}
 
-	public final Long getIdUnit() {
+	public final Integer getIdUnit() {
 		return idUnit;
 	}
 
@@ -119,7 +119,7 @@ public class Unit extends BaseEntity {
 		return unitType;
 	}
 
-	public final void setIdUnit(Long idUnit) {
+	public final void setIdUnit(Integer idUnit) {
 		this.idUnit = idUnit;
 	}
 
