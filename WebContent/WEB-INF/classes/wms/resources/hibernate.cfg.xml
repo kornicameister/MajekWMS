@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-                                         "http://www.jboss.org/dtd/hibernate/hibernate-configuration-3.0.dtd">
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory name="majekWMSFactory">
 		<!-- some options -->
@@ -17,15 +17,14 @@
 		<property name="hibernate.order_inserts">true</property>
 		<property name="hibernate.order_updates">true</property>
 		<!-- mapping -->
-		<mapping class="wms.model.hibernate.AbstractEntity" />
-		<mapping class="wms.model.hibernate.AbstractStorageUnit" />
+		<mapping class="wms.model.hibernate.BaseEntity" />
 		<mapping class="wms.model.hibernate.Client" />
 		<mapping class="wms.model.hibernate.Invoice" />
+		<mapping class="wms.model.hibernate.Product" />
 		<mapping class="wms.model.hibernate.InvoiceProduct" />
-		<mapping class="wms.model.hibernate.InvoiceProductId" />
+		<mapping class="wms.model.hibernate.InvoiceProductIdentifier" />
 		<mapping class="wms.model.hibernate.InvoiceType" />
 		<mapping class="wms.model.hibernate.Measure" />
-		<mapping class="wms.model.hibernate.Product" />
 		<mapping class="wms.model.hibernate.Unit" />
 		<mapping class="wms.model.hibernate.UnitType" />
 		<mapping class="wms.model.hibernate.Warehouse" />

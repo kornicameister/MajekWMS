@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC
-"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory name="majekWMSFactory">
 		<!-- some options -->
@@ -21,12 +19,10 @@
 		<!-- mapping -->
 		<mapping class="wms.model.hibernate.BaseEntity" />
 		<mapping class="wms.model.hibernate.Client" />
-
 		<mapping class="wms.model.hibernate.Invoice" />
 		<mapping class="wms.model.hibernate.Product" />
 		<mapping class="wms.model.hibernate.InvoiceProduct" />
 		<mapping class="wms.model.hibernate.InvoiceProductIdentifier" />
-
 		<mapping class="wms.model.hibernate.InvoiceType" />
 		<mapping class="wms.model.hibernate.Measure" />
 		<mapping class="wms.model.hibernate.Unit" />
