@@ -88,6 +88,7 @@ Ext.define('WMS.view.wizard.Warehouse', {
             {
                 itemId  : 'submitButton', // make it valid, instead of id property
                 text    : 'Submit',
+                iconCls : 'view-wizard-submit',
                 formBind: true, //only enabled once the form is valid
                 disabled: true
             }

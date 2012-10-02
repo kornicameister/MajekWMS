@@ -64,3 +64,14 @@
     background-image: url("../images/view/wms/overview.png") !important;
     background-size: 70%;
 }
+
+/*view.wizard*/
+.view-wizard-submit {
+    background-image: url("../images/view/wizard/save-button.png") !important;
+    background-size: 70%;
+}
+
+.view-wizard-reset {
+    background-image: url("../images/view/wizard/reset-icon.png") !important;
+    background-size: 70%;
+}

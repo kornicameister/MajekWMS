@@ -14,6 +14,7 @@ Ext.define('WMS.controller.Viewport', {
 
     init: function () {
         console.init('WMS.controller.Viewport initializing...');
+        console.log(this.getStore('Warehouses'));
     }
 
 

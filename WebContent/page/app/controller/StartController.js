@@ -30,7 +30,8 @@ Ext.define('WMS.controller.StartController', {
         });
 
         me.getWarehousesStore().addListener('load', function (store) {
-            if (store.getWarehouses().length === 0) {
+            var warehouses = store.getWarehouses();
+            if (warehouses.length === 0) {
                 console.log("StartController:: Found no warehouses, commencing loading warehouse wizard");
 
                 Ext.MessageBox.show({
@@ -42,9 +43,18 @@ Ext.define('WMS.controller.StartController', {
                     icon         : Ext.MessageBox.WARNING,
                     scope        : me
                 });
+            } else {
+                Ext.getCmp('statusBar').setStatus({
+                    text : 'Warehouse ' + store.getLastWarehouse().get('name') + ' up and running...',
+                    clear: {
+                        wait       : 10000,
+                        anim       : true,
+                        useDefaults: false
+                    }
+                });
             }
         });
-        me.getWarehousesStore().addListener('update', me.onWarehouseCreated, me);
+        me.getWarehousesStore().addListener('create', me.onWarehouseCreated, me);
     },
 
     onWarehouseCreated: function (store) {
