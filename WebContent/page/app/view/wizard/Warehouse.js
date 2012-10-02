@@ -9,11 +9,11 @@
  */
 
 Ext.define('WMS.view.wizard.Warehouse', {
-    extend  : 'Ext.window.Window',
-    alias   : 'widget.wizardwarehouse',
-    itemId  : 'newWarehouseWizard',
-    title   : 'New warehouse wizard',
-    width   : 440,
+    extend: 'Ext.window.Window',
+    alias : 'widget.wizardwarehouse',
+    title : 'New warehouse wizard',
+    width : 440,
+
     defaults: {
         border: false,
         frame : false
@@ -21,9 +21,8 @@ Ext.define('WMS.view.wizard.Warehouse', {
     layout  : 'fit',
 
     items: {
-        xtype : 'form',
-        itemId: 'warehouseWizardForm',
-        url   : 'wms/warehouse/save',
+        xtype: 'form',
+        url  : 'wms/warehouse/save',
 
         bodyPadding  : 5,
         waitMsgTarget: true,
@@ -42,25 +41,16 @@ Ext.define('WMS.view.wizard.Warehouse', {
                         fieldLabel: 'Name',
                         name      : 'name',
                         allowBlank: false,
-                        emptyText : 'Provide warehouse name'
-                    },
-                    {
-                        xtype       : 'combobox',
-                        fieldLabel  : 'Default type',
-                        name        : 'warehouseDefaultType',
-                        store       : Ext.StoreManager.lookup('SimpleUnitTypes'),
-                        valueField  : 'id',
-                        displayField: 'name',
-                        typeAhead   : true,
-                        queryMode   : 'local',
-                        emptyText   : 'Description of the warehouse'
+                        emptyText : 'Provide warehouse name',
+                        maxLength : 20
                     },
                     {
                         xtype     : 'textarea',
                         fieldLabel: 'Description',
                         name      : 'description',
                         allowBlank: false,
-                        emptyText : 'Select a default type for underlying units...'
+                        emptyText : 'Select a default type for underlying units...',
+                        maxLength : 666
                     },
                     {
                         xtype     : 'datefield',
@@ -82,14 +72,13 @@ Ext.define('WMS.view.wizard.Warehouse', {
                     value            : 100,
                     minValue         : 1,
                     maxValue         : Number.MAX_VALUE,
-                    step             : 20,
+                    step             : 200,
                     keyNavEnabled    : true,
                     mouseWheelEnabled: true
                 }
             }
         ],
-
-        buttons: [
+        buttons    : [
             {
                 text   : 'Reset',
                 handler: function () {
@@ -97,13 +86,11 @@ Ext.define('WMS.view.wizard.Warehouse', {
                 }
             },
             {
-                id      : 'warehouseSubmitButton',
-                itemId  : 'warehouseSubmit', // make it valid, instead of id property
+                itemId  : 'submitButton', // make it valid, instead of id property
                 text    : 'Submit',
                 formBind: true, //only enabled once the form is valid
                 disabled: true
             }
         ]
     }
-
 });

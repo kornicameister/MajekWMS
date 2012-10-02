@@ -23,16 +23,16 @@ Ext.define('WMS.store.Warehouses', {
         return this['data'];
     },
 
+    getLastWarehouse: function () {
+        var records = this.getRange(),
+            l = records.length;
+        return records[l - 1];
+    },
+
     addWarehouse: function (model) {
-        var configuration = this.getAt(0);
         model = Ext.apply({
             size: 0
         }, model);
-
-        configuration.beginEdit();
-        configuration.set('warehouses', [model]);
-        configuration.endEdit(false);
-
-        console.log(model, this);
+        this.add([model]);
     }
 });

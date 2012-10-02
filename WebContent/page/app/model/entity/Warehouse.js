@@ -12,25 +12,22 @@ Ext.define('WMS.model.entity.Warehouse', {
     extend: 'Ext.data.Model',
 
     fields      : [
+        { name: 'idWarehouse', type: 'int', defaultValue: -1, mapping: 'id'},
         { name: 'name', type: 'string', defaultValue: '', persist: true},
         { name: 'maximumSize', type: 'int', defaultValue: 0, persist: true},
         { name: 'size', type: 'int', defaultValue: 0, persist: false},
         { name: 'description', type: 'string', defaultValue: 'Warehouse...'},
-        { name: 'createdDate', type: 'date'}
+        { name: 'createdDate', type: 'date', serialize: serializeDate}
     ],
     associations: [
         {name: 'units', type: 'hasMany', model: 'WMS.model.entity.Unit'}
-    ],
-    validations : [
-        { name: 'length', field: 'name', min: 5, max: 20},
-        { name: 'length', field: 'description', min: 1, max: 666}
     ],
 
     proxy: {
         type     : 'rest',
         api      : {
             read  : 'wms/agent/warehouse/read',
-            update: 'wms/agent/warehouse/update'
+            create: 'wms/agent/warehouse/create'
         },
         reader   : {
             type           : 'json',
@@ -38,9 +35,9 @@ Ext.define('WMS.model.entity.Warehouse', {
             successProperty: 'success'
         },
         writer   : {
-            type          : 'json',
-            writeAllFields: false,
-            root          : 'warehouses'
+            type       : 'json',
+            root       : 'warehouses',
+            allowSingle: false
         },
         listeners: {
             exception: function (proxy, response, operation) {
@@ -54,3 +51,7 @@ Ext.define('WMS.model.entity.Warehouse', {
         }
     }
 });
+
+function serializeDate(value) {
+    return Ext.Date.format(new Date(value), 'Y-m-d');
+}

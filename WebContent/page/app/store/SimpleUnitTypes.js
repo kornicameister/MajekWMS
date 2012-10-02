@@ -16,9 +16,5 @@ Ext.define('WMS.store.SimpleUnitTypes', {
     model : 'WMS.model.entity.UnitTypeSimple',
 
     autoLoad: true,
-    autoSync: false,
-
-    sync: function () {
-        throw new Ext.Error('This method is forbidden in this store');
-    }
+    autoSync: false
 });
