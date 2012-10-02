@@ -1,4 +1,4 @@
-package wms.model.hibernate;
+package wms.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -56,7 +55,8 @@ public class Unit extends BaseEntity {
 	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "fkUnit", referencedColumnName = "idunit") }, inverseJoinColumns = { @JoinColumn(name = "fkProduct", referencedColumnName = "idProduct") })
 	private Set<Product> unitsProducts = new HashSet<>();
 
-	@OneToOne(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "fkUnitType", referencedColumnName = "idUnitType")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private UnitType unitType;
 
 	public Unit() {

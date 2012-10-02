@@ -1,19 +1,20 @@
-package wms.model.hibernate;
+package wms.model;
+
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "unitType", uniqueConstraints = { @UniqueConstraint(columnNames = {
@@ -21,6 +22,12 @@ import org.hibernate.annotations.Parameter;
 public class UnitType extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = -7479798313966564213L;
+
+	@Id
+	@Column(updatable = false, insertable = true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GenericGenerator(name = "increment", strategy = "increment")
+	private Integer idUnitType;
 
 	@Basic
 	@Column(name = "abbreviation", length = 6, nullable = false, unique = true, insertable = true, updatable = true)
@@ -38,84 +45,80 @@ public class UnitType extends BaseEntity {
 	@Column(name = "parentType", nullable = true, unique = false, insertable = true, updatable = true)
 	private Integer parentType;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn
-	private Unit unit;
-
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "unit"))
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "idUnit", unique = true, nullable = false)
-	private Integer idUnit;
+	@OneToMany(mappedBy = "unitType", fetch = FetchType.LAZY)
+	private Set<Unit> units;
 
 	public UnitType() {
 		super();
 	}
 
-	public UnitType(String abbreviation, String description, String name) {
+	public UnitType(Integer idUnitType, String abbreviation,
+			String description, String name, Integer parentType) {
 		super();
-		this.abbreviation = abbreviation;
-		this.description = description;
-		this.name = name;
-	}
-
-	public UnitType(String abbreviation, String description, String name,
-			Integer parentType, Unit unit, Integer idUnit) {
-		super();
+		this.idUnitType = idUnitType;
 		this.abbreviation = abbreviation;
 		this.description = description;
 		this.name = name;
 		this.parentType = parentType;
-		this.unit = unit;
-		this.idUnit = idUnit;
+	}
+
+	public UnitType(Integer idUnitType, String abbreviation,
+			String description, String name, Integer parentType, Set<Unit> units) {
+		super();
+		this.idUnitType = idUnitType;
+		this.abbreviation = abbreviation;
+		this.description = description;
+		this.name = name;
+		this.parentType = parentType;
+		this.units = units;
+	}
+
+	public final Integer getIdUnitType() {
+		return idUnitType;
+	}
+
+	public final void setIdUnitType(Integer idUnitType) {
+		this.idUnitType = idUnitType;
 	}
 
 	public final String getAbbreviation() {
 		return abbreviation;
 	}
 
-	public final String getDescription() {
-		return description;
-	}
-
-	public final String getName() {
-		return name;
-	}
-
-	public final Integer getParentType() {
-		return parentType;
-	}
-
-	public final Unit getUnit() {
-		return unit;
-	}
-
-	public final Integer getIdUnit() {
-		return idUnit;
-	}
-
 	public final void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
+	}
+
+	public final String getDescription() {
+		return description;
 	}
 
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
+	public final String getName() {
+		return name;
+	}
+
 	public final void setName(String name) {
 		this.name = name;
+	}
+
+	public final Integer getParentType() {
+		return parentType;
 	}
 
 	public final void setParentType(Integer parentType) {
 		this.parentType = parentType;
 	}
 
-	public final void setUnit(Unit unit) {
-		this.unit = unit;
+	public final Set<Unit> getUnits() {
+		return units;
 	}
 
-	public final void setIdUnit(Integer idUnit) {
-		this.idUnit = idUnit;
+	public final void setUnits(Set<Unit> units) {
+		this.units = units;
 	}
 
 	@Override
@@ -126,11 +129,12 @@ public class UnitType extends BaseEntity {
 				+ ((abbreviation == null) ? 0 : abbreviation.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((idUnit == null) ? 0 : idUnit.hashCode());
+		result = prime * result
+				+ ((idUnitType == null) ? 0 : idUnitType.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((parentType == null) ? 0 : parentType.hashCode());
-		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+		result = prime * result + ((units == null) ? 0 : units.hashCode());
 		return result;
 	}
 
@@ -153,10 +157,10 @@ public class UnitType extends BaseEntity {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (idUnit == null) {
-			if (other.idUnit != null)
+		if (idUnitType == null) {
+			if (other.idUnitType != null)
 				return false;
-		} else if (!idUnit.equals(other.idUnit))
+		} else if (!idUnitType.equals(other.idUnitType))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -168,10 +172,10 @@ public class UnitType extends BaseEntity {
 				return false;
 		} else if (!parentType.equals(other.parentType))
 			return false;
-		if (unit == null) {
-			if (other.unit != null)
+		if (units == null) {
+			if (other.units != null)
 				return false;
-		} else if (!unit.equals(other.unit))
+		} else if (!units.equals(other.units))
 			return false;
 		return true;
 	}
@@ -180,6 +184,11 @@ public class UnitType extends BaseEntity {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("UnitType [");
+		if (getIdUnitType() != null) {
+			builder.append("getIdUnitType()=");
+			builder.append(getIdUnitType());
+			builder.append(", ");
+		}
 		if (getAbbreviation() != null) {
 			builder.append("getAbbreviation()=");
 			builder.append(getAbbreviation());
@@ -200,19 +209,20 @@ public class UnitType extends BaseEntity {
 			builder.append(getParentType());
 			builder.append(", ");
 		}
-		if (getUnit() != null) {
-			builder.append("getUnit()=");
-			builder.append(getUnit());
-			builder.append(", ");
-		}
-		if (getIdUnit() != null) {
-			builder.append("getIdUnit()=");
-			builder.append(getIdUnit());
+		if (getUnits() != null) {
+			builder.append("getUnits()=");
+			builder.append(getUnits());
 			builder.append(", ");
 		}
 		builder.append("hashCode()=");
 		builder.append(hashCode());
-		builder.append(", getVersion()=");
+		builder.append(", ");
+		if (getUpdatedOn() != null) {
+			builder.append("getUpdatedOn()=");
+			builder.append(getUpdatedOn());
+			builder.append(", ");
+		}
+		builder.append("getVersion()=");
 		builder.append(getVersion());
 		builder.append("]");
 		return builder.toString();

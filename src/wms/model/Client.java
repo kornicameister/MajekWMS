@@ -1,4 +1,4 @@
-package wms.model.hibernate;
+package wms.model;
 
 import java.util.HashSet;
 import java.util.Set;
