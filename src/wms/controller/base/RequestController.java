@@ -1,5 +1,7 @@
 package wms.controller.base;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -32,13 +34,16 @@ public abstract class RequestController implements Controller {
 	protected Collection<? extends BaseEntity> lastRead;
 	protected Gson jsonForm;
 	protected long processTime = 0l;
-	protected final static Logger logger = Logger
+	protected ArrayList<Serializable> createdIDS;
+	protected final String payload;
+	private final static Logger logger = Logger
 			.getLogger(RequestController.class.getName());;
 
 	public RequestController(String action, String read) {
 		this.action = CRUD.valueOf(action.toUpperCase());
 		this.readStatement = read;
 		this.params = new HashMap<>(0);
+		this.payload = "";
 	}
 
 	public RequestController(String action, String readStatement,
@@ -47,6 +52,15 @@ public abstract class RequestController implements Controller {
 		this.action = CRUD.valueOf(action.toUpperCase());
 		this.readStatement = readStatement;
 		this.params = params;
+		this.payload = "";
+	}
+
+	public RequestController(String action, String readStatement,
+			Map<String, String[]> params, String payload) {
+		this.action = CRUD.valueOf(action.toUpperCase());
+		this.readStatement = readStatement;
+		this.params = params;
+		this.payload = payload;
 	}
 
 	/**
@@ -84,6 +98,31 @@ public abstract class RequestController implements Controller {
 		return (List<? extends BaseEntity>) lastRead;
 	}
 
+	@Override
+	public String buildResponse() {
+		switch (this.action) {
+		case READ:
+			return this.buildReadResponse();
+		case CREATE:
+			return this.buildCreateResponse();
+		case DELETE:
+			return this.buildDeleteResponse();
+		case UPDATE:
+			return this.buildUpdateResponse();
+		}
+		RequestController.logger
+				.warning("No CRUD action found, will respond with empty JSON");
+		return "{}";
+	}
+
+	protected abstract String buildReadResponse();
+
+	protected abstract String buildCreateResponse();
+
+	protected abstract String buildUpdateResponse();
+
+	protected abstract String buildDeleteResponse();
+
 	public final CRUD getAction() {
 		return action;
 	}
@@ -106,6 +145,10 @@ public abstract class RequestController implements Controller {
 
 	public long getProcessTime() {
 		return processTime;
+	}
+
+	public String getPayload() {
+		return this.payload;
 	}
 
 	public final void setLastRead(Collection<? extends BaseEntity> lastRead) {
