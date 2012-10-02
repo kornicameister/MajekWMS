@@ -8,20 +8,16 @@
  * Created: 28-09-2012
  */
 
-Ext.define('WMS.controller.Configuration', {
-    extend  : 'Ext.app.Controller',
-    requires: [
-        'WMS.model.entity.UnitTypeSimple'
-    ],
-    stores  : [
-        'Initial'
-    ],
+Ext.define('WMS.controller.WarehouseWizard', {
+    extend: 'Ext.app.Controller',
+
+    stores: ['SimpleUnitTypes', 'Warehouses'],
 
     init: function () {
         console.init('WMS.controller.Configuration initializing...');
         var me = this;
 
-        me.getInitialStore().addListener('load', function (confStore) {
+        me.getWarehousesStore().addListener('load', function (confStore) {
             var warehouses = confStore.getWarehouses();
             if (warehouses.length === 0) {
                 Ext.MessageBox.show({
@@ -39,7 +35,7 @@ Ext.define('WMS.controller.Configuration', {
                 me.openWarehouseSelector();
             }
         });
-        me.getInitialStore().addListener('update', me.onConfigurationUpdate, me);
+        me.getWarehousesStore().addListener('update', me.onConfigurationUpdate, me);
     },
 
     onConfigurationUpdate: function (store) {
@@ -84,7 +80,7 @@ Ext.define('WMS.controller.Configuration', {
         var form = button.up('form').getForm(),
             me = this;
         if (form.isValid()) {
-            me.getInitialStore().addWarehouse(form.getValues());
+            me.getWarehousesStore().addWarehouse(form.getValues());
         }
     }
 });
