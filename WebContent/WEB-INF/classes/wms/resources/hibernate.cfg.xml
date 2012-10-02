@@ -17,17 +17,17 @@
 		<property name="hibernate.order_inserts">true</property>
 		<property name="hibernate.order_updates">true</property>
 		<!-- mapping -->
-		<mapping class="wms.model.hibernate.BaseEntity" />
-		<mapping class="wms.model.hibernate.Client" />
-		<mapping class="wms.model.hibernate.Invoice" />
-		<mapping class="wms.model.hibernate.Product" />
-		<mapping class="wms.model.hibernate.InvoiceProduct" />
-		<mapping class="wms.model.hibernate.InvoiceProductIdentifier" />
-		<mapping class="wms.model.hibernate.InvoiceType" />
-		<mapping class="wms.model.hibernate.Measure" />
-		<mapping class="wms.model.hibernate.Unit" />
-		<mapping class="wms.model.hibernate.UnitType" />
-		<mapping class="wms.model.hibernate.Warehouse" />
+		<mapping class="wms.model.BaseEntity" />
+		<mapping class="wms.model.Client" />
+		<mapping class="wms.model.Invoice" />
+		<mapping class="wms.model.Product" />
+		<mapping class="wms.model.InvoiceProduct" />
+		<mapping class="wms.model.InvoiceProductIdentifier" />
+		<mapping class="wms.model.InvoiceType" />
+		<mapping class="wms.model.Measure" />
+		<mapping class="wms.model.Unit" />
+		<mapping class="wms.model.UnitType" />
+		<mapping class="wms.model.Warehouse" />
 		<!-- events -->
 		<event type="auto-flush" />
 	</session-factory>
