@@ -48,11 +48,7 @@ Ext.define('WMS.view.wizard.Warehouse', {
                         xtype       : 'combobox',
                         fieldLabel  : 'Default type',
                         name        : 'warehouseDefaultType',
-                        store       : Ext.create('Ext.data.JsonStore', {
-                            autoDestroy: true,
-                            model      : 'WMS.model.entity.UnitTypeSimple',
-                            data       : Ext.StoreManager.lookup('Initial').getUnitTypes()
-                        }),
+                        store       : Ext.StoreManager.lookup('SimpleUnitTypes'),
                         valueField  : 'id',
                         displayField: 'name',
                         typeAhead   : true,

@@ -8,15 +8,19 @@
  * Created: 24-09-2012
  */
 
-Ext.define('WMS.store.Initial', {
+/**
+ * @class WMS.store.Warehouses
+ * @description Store to hold next records of WMS.model.entity.Warehouse type
+ */
+Ext.define('WMS.store.Warehouses', {
     extend: 'Ext.data.Store',
-    model : 'WMS.model.initial.Initial',
+    model : 'WMS.model.entity.Warehouse',
 
     autoLoad: true,
     autoSync: true,
 
     getWarehouses: function () {
-        return this.getAt(0).get('warehouses');
+        return this['data'];
     },
 
     addWarehouse: function (model) {
@@ -30,9 +34,5 @@ Ext.define('WMS.store.Initial', {
         configuration.endEdit(false);
 
         console.log(model, this);
-    },
-
-    getUnitTypes: function () {
-        return this.getAt(0).get('unitTypes');
     }
 });

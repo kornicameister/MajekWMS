@@ -28,8 +28,8 @@
         autoCreateViewport: true,
 
         controllers: [
+            'StartController',
             'Viewport',
-            'Configuration',
             'Toolbars'
         ]
     });

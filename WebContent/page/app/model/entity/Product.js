@@ -19,10 +19,10 @@ Ext.define('WMS.model.entity.Product', {
         { name: 'tax', type: 'int', defaultValue: 22}
     ],
     associations: [
-        {name: 'units', type: 'belongsTo', model: 'entity.Unit'},
-        {name: 'invoiceProducts', type: 'belongsTo', model: 'entity.InvoiceProduct'},
-        {name: 'measure', type: 'hasOne', model: 'entity.Measure'},
-        {name: 'vendor', type: 'hasOne', model: 'entity.Client'},
+        {name: 'units', type: 'belongsTo', model: 'WMS.model.entity.Unit'},
+        {name: 'invoiceProducts', type: 'belongsTo', model: 'WMS.model.entity.InvoiceProduct'},
+        {name: 'measure', type: 'hasOne', model: 'WMS.model.entity.Measure'},
+        {name: 'vendor', type: 'hasOne', model: 'WMS.model.entity.Client'}
     ],
     validations : [
         { name: 'lenght', field: 'name', min: 5, max: 45},

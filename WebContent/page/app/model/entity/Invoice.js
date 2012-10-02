@@ -18,12 +18,39 @@ Ext.define('WMS.model.entity.Invoice', {
         { name: 'description', type: 'string', defaultValue: 'Unit...'}
     ],
     associations: [
-        {name: 'warehouse', type: 'belongsTo', model: 'entity.Warehouse'},
-        {name: 'products', type: 'hasMany', model: 'entity.Product'}
+        {name: 'invoiceProducts', type: 'belongsTo', model: 'WMS.model.entity.InvoiceProduct'}
     ],
     validations : [
-        { name: 'lenght', field: 'name', min: 5, max: 45},
-        { name: 'lenght', field: 'description', min: 1, max: 250}
-    ]
+        { name: 'length', field: 'name', min: 5, max: 45},
+        { name: 'length', field: 'description', min: 1, max: 250}
+    ],
+
+    proxy: {
+        type     : 'rest',
+        api      : {
+            read  : 'wms/agent/invoice/read',
+            update: 'wms/agent/invoice/update'
+        },
+        reader   : {
+            type           : 'json',
+            root           : 'warehouses',
+            successProperty: 'success'
+        },
+        writer   : {
+            type          : 'json',
+            writeAllFields: false,
+            root          : 'warehouses'
+        },
+        listeners: {
+            exception: function (proxy, response, operation) {
+                Ext.MessageBox.show({
+                    title  : 'REMOTE EXCEPTION',
+                    msg    : operation.getError(),
+                    icon   : Ext.MessageBox.ERROR,
+                    buttons: Ext.Msg.OK
+                });
+            }
+        }
+    }
 
 });

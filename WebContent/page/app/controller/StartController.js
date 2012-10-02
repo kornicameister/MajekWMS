@@ -8,17 +8,17 @@
  * Created: 28-09-2012
  */
 
-Ext.define('WMS.controller.WarehouseWizard', {
+Ext.define('WMS.controller.StartController', {
     extend: 'Ext.app.Controller',
 
     stores: ['SimpleUnitTypes', 'Warehouses'],
 
     init: function () {
-        console.init('WMS.controller.Configuration initializing...');
+        console.init('WMS.controller.StartController initializing...');
         var me = this;
 
-        me.getWarehousesStore().addListener('load', function (confStore) {
-            var warehouses = confStore.getWarehouses();
+        me.getWarehousesStore().addListener('load', function (store) {
+            var warehouses = store.getWarehouses();
             if (warehouses.length === 0) {
                 Ext.MessageBox.show({
                     title        : 'No warehouse found...',
@@ -34,6 +34,9 @@ Ext.define('WMS.controller.WarehouseWizard', {
             } else {
                 me.openWarehouseSelector();
             }
+        });
+        me.getSimpleUnitTypesStore().addListener('load', function(store){
+            console.log(store);
         });
         me.getWarehousesStore().addListener('update', me.onConfigurationUpdate, me);
     },
