@@ -12,9 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import wms.model.hibernate.Measure;
-import wms.model.hibernate.UnitType;
-import wms.model.hibernate.Warehouse;
+import wms.model.Measure;
+import wms.model.UnitType;
+import wms.model.Warehouse;
 
 public class MajekWMSTestUnit {
 	private File hibernateCfg;
@@ -97,7 +97,7 @@ public class MajekWMSTestUnit {
 		session.beginTransaction();
 		id++;
 		for (Integer i = id; i < id + 4; i++) {
-//			Serializable m = session.save(new Measure(i.toString(), i.toString()));
+//			Serializable m = sessionFactory.save(new Measure(i.toString(), i.toString()));
 //			System.out.println(String.format("Saved %s with id = %d",Measure.class.getSimpleName(), m));
 		}
 		session.getTransaction().commit();

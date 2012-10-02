@@ -21,8 +21,11 @@ public class WMSController extends HttpServlet {
 	private static final long serialVersionUID = 7938319981003758746L;
 	private static Logger log = Logger.getLogger(WMSController.class.getName());
 
+	@Override
 	public void init(ServletConfig config) throws ServletException {
-		log.log(Level.CONFIG, "Controller ready to be used, init value = {0}", config.getInitParameter("page"));
+		log.config(String.format(
+				"Controller ready to be used, init value = %d",
+				config.getInitParameter("page")));
 	}
 
 	@Override
@@ -30,9 +33,9 @@ public class WMSController extends HttpServlet {
 			throws ServletException, IOException {
 		String pageReference = req.getParameter("page");
 		if (pageReference != null) {
-			if(pageReference.isEmpty()){
+			if (pageReference.isEmpty()) {
 				log.warning("<page> param is empty");
-			}else{
+			} else {
 				log.log(Level.INFO, "Request for {0} page", pageReference);
 			}
 
