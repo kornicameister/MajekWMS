@@ -19,7 +19,6 @@ Ext.define('WMS.view.wms.Overview', {
 
     layout: {
         type   : 'hbox',
-        padding: '5',
         align  : 'stretch',
         pack   : 'center'
     },
@@ -30,7 +29,6 @@ Ext.define('WMS.view.wms.Overview', {
             flex    : 1,
             layout  : {
                 type   : 'vbox',
-                padding: 2,
                 align  : 'stretch',
                 pack   : 'bottom'
             },

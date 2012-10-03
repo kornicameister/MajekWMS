@@ -21,10 +21,7 @@ Ext.define('WMS.view.MasterView', {
 
     title   : 'WMS - Warehouse',
     defaults: {
-        autoScroll: true,
-        margins   : {
-            bottom: 2
-        }
+        autoScroll: true
     },
     layout  : {
         type            : 'accordion',

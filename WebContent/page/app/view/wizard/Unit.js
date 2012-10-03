@@ -26,6 +26,7 @@ Ext.define('WMS.view.wizard.Unit', {
                 name      : 'type',
 
                 store       : Ext.create('WMS.store.UnitTypes', {
+                    storeId    : 'UnitTypes',
                     autoDestroy: true
                 }),
                 valueField  : 'id',
@@ -66,7 +67,7 @@ Ext.define('WMS.view.wizard.Unit', {
                 }
             },
             {
-                itemId  : 'submitButton', // make it valid, instead of id property
+                itemId  : 'submitUnit', // make it valid, instead of id property
                 text    : 'Create',
                 iconCls : 'view-wizard-submit',
                 formBind: true, //only enabled once the form is valid
