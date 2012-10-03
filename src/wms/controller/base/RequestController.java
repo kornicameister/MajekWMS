@@ -5,17 +5,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
-import wms.controller.UnitController;
-import wms.controller.UnitTypeController;
-import wms.controller.WarehouseController;
-import wms.controller.base.format.request.RequestCreateUnitFormat;
-import wms.controller.base.format.request.RequestCreateUnitTypeFormat;
-import wms.controller.base.format.request.RequestCreateWarehouseFormat;
 import wms.controller.base.format.response.ResponseCreateFormat;
 import wms.controller.base.format.response.ResponseReadFormat;
 import wms.controller.hibernate.HibernateBridge;
@@ -46,17 +44,20 @@ public abstract class RequestController implements Controller {
 	protected ArrayList<Integer> createdIDS = new ArrayList<>();
 	protected ArrayList<BaseEntity> lastRead = new ArrayList<>();
 	protected final String payload, controller, readStatement;
+	private final Class<? extends BaseEntity> conversionModel;
 	private final static Logger logger = Logger
 			.getLogger(RequestController.class.getName());
 
 	public RequestController(CRUD action, Map<String, String[]> params,
-			String payload, String controller, String readStatement) {
+			String payload, String controller, String readStatement,
+			Class<? extends BaseEntity> convertType) {
 		super();
 		this.action = action;
 		this.params = params;
 		this.readStatement = readStatement;
 		this.payload = payload;
 		this.controller = controller;
+		this.conversionModel = convertType;
 	}
 
 	/**
@@ -99,15 +100,20 @@ public abstract class RequestController implements Controller {
 	public void create() {
 		logger.entering(this.getClass().getName(), "create");
 		Serializable savedID = null;
+		Collection<? extends BaseEntity> data = this.extractFromPayload();
+		
+		// saving
 		Session session = this.sessionFactory.openSession();
 		session.beginTransaction();
-		for (Object saveable : this.extractFromPayload()) {
+		for (Object saveable : data) {
 			savedID = session.save(saveable);
 			if (savedID != null) {
 				this.createdIDS.add((Integer) savedID);
 			}
 		}
 		session.getTransaction().commit();
+		// saving
+		
 		logger.exiting(this.getClass().getName(), "create");
 	}
 
@@ -136,27 +142,32 @@ public abstract class RequestController implements Controller {
 	}
 
 	protected Collection<? extends BaseEntity> extractFromPayload() {
-		Gson gson = new GsonBuilder().setDateFormat("y-M-d")
-				.setPrettyPrinting().create();
-		List<? extends BaseEntity> data = null;
-		if (this.controller.equals(UnitController.class.getName())) {
-			logger.info("Extracting " + UnitController.class.getName());
-			data = gson.fromJson(this.payload, RequestCreateUnitFormat.class)
-					.getData();
-		} else if (this.controller.equals(UnitTypeController.class.getName())) {
-			logger.info("Extracting " + UnitTypeController.class.getName());
-			data = gson.fromJson(this.payload,
-					RequestCreateUnitTypeFormat.class).getData();
-		} else if (this.controller.equals(WarehouseController.class.getName())) {
-			logger.info("Extracting " + WarehouseController.class.getName());
-			data = gson.fromJson(this.payload,
-					RequestCreateWarehouseFormat.class).getData();
+		Gson gson = new GsonBuilder()
+				.setDateFormat("y-M-d")
+				.setPrettyPrinting()
+				.create();
+		List<BaseEntity> data = new ArrayList<>();
+
+		JSONObject payloadData = (JSONObject) JSONValue.parse(this.payload), dataElement = null;
+		BaseEntity convertedElement = null;
+
+		try {
+			JSONArray ddata = (JSONArray) payloadData.get("data");
+			for (short i = 0; i < ddata.size(); i++) {
+				dataElement = (JSONObject) ddata.get(i);
+				convertedElement = (BaseEntity) gson.fromJson(dataElement.toJSONString(), Class.forName(this.conversionModel.getName()));
+				if (convertedElement != null) {
+					data.add(this.updateMissingDependencies(convertedElement, dataElement));
+				}
+			}
+		} catch (Exception e) {
+			logger.log(Level.SEVERE,
+					"Something went wrong when decoding [CREATE] request", e);
 		}
+
 		return data;
 	}
-
-	public final CRUD getAction() {
-		return action;
-	}
+	
+	protected abstract BaseEntity updateMissingDependencies(BaseEntity b, JSONObject payloadedData);
 
 }

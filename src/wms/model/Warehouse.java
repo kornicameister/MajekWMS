@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,7 +50,7 @@ public class Warehouse extends BaseEntity {
 	@Column(name = "maxSize", nullable = false)
 	private Integer maximumSize;
 
-	@OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Unit> units = new HashSet<>();
 
 	public Warehouse() {

@@ -5,7 +5,6 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,7 +44,7 @@ public class UnitType extends BaseEntity {
 	@Column(name = "parentType", nullable = true, unique = false, insertable = true, updatable = true)
 	private Integer parentType;
 
-	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "type")
 	private Set<Unit> units;
 
 	public UnitType() {
