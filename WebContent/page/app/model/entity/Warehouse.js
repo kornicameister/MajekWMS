@@ -20,7 +20,12 @@ Ext.define('WMS.model.entity.Warehouse', {
         { name: 'createdDate', type: 'date', serialize: serializeDate}
     ],
     associations: [
-        {name: 'units', type: 'hasMany', model: 'WMS.model.entity.Unit'}
+        {
+            name      : 'units',
+            type      : 'hasMany',
+            model     : 'WMS.model.entity.Unit',
+            foreignKey: 'fkWarehouse'
+        }
     ],
 
     proxy: {

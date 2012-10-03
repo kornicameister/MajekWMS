@@ -16,10 +16,7 @@ Ext.define('WMS.model.entity.UnitType', {
         'name' ,
         'abbreviation',
         'description',
-        { name: 'parentType', type: 'int'}
-    ],
-    associations: [
-        {name: 'units', type: 'belongsTo', model: 'WMS.model.entity.Unit'}
+        'parentType'
     ],
     validations : [
         { name: 'length', field: 'name', min: 5, max: 20},

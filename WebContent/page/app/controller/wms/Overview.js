@@ -16,7 +16,7 @@ Ext.define('WMS.controller.wms.Overview', {
         var me = this;
 
         me.control({
-            '#submitButton': {
+            '#submitUnit': {
                 click: me.onUnitSubmit
             }
         });
@@ -24,7 +24,8 @@ Ext.define('WMS.controller.wms.Overview', {
 
     onUnitSubmit: function (button) {
         var form = button.up('form').getForm(),
-            me = this;
+            me = this,
+            unit = undefined;
 
         Ext.getCmp('statusBar').showBusy();
         if (form.isValid()) {

@@ -54,7 +54,7 @@ Ext.define('WMS.controller.Master', {
                 });
             }
         });
-        me.getWarehousesStore().addListener('create', me.onWarehouseCreated, me);
+        me.getWarehousesStore().addListener('update', me.onWarehouseCreated, me);
     },
 
     onWarehouseCreated: function (store) {

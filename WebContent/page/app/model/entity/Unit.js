@@ -15,15 +15,25 @@ Ext.define('WMS.model.entity.Unit', {
         'id',
         'name',
         'description',
-        'warehouse',
-        'type',
+        'fkUnitType',
+        'fkWarehouse',
         { name: 'size', type: 'int', defaultValue: 0},
         { name: 'maximumSize', type: 'int', defaultValue: 0}
     ],
     associations: [
-        {name: 'type', type: 'hasOne', model: 'WMS.model.entity.UnitType'},
-        {name: 'warehouse', type: 'belongsTo', model: 'WMS.model.entity.Warehouse'},
-        {name: 'products', type: 'hasMany', model: 'WMS.model.entity.Product'}
+        {
+            name      : 'unitType',
+            type      : 'hasOne',
+            model     : 'WMS.model.entity.UnitType',
+            getterName: 'getUnitType',
+            setterName: 'setUnitType',
+            foreignKey: 'fkUnitType'
+        },
+        {
+            name : 'products',
+            type : 'hasMany',
+            model: 'WMS.model.entity.Product'
+        }
     ],
 
     //TODO validations
