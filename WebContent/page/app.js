@@ -21,16 +21,29 @@
         }
     });
 
-    Ext.application({
-        name              : 'WMS',
-        appFolder         : 'page/app',
-        enableQuickTips   : true,
-        autoCreateViewport: true,
+    Ext.Loader.loadScript({
+        url   : 'page/app/ux/WMSProxy.js',
+        onLoad: function () {
+            Ext.application({
+                name              : 'WMS',
+                appFolder         : 'page/app',
+                enableQuickTips   : true,
+                autoCreateViewport: true,
 
-        controllers: [
-            'StartController',
-            'Viewport',
-            'Toolbars'
-        ]
+                controllers: [
+                    // viewport WMSView underlying controller
+                    'wms.Inventory',
+                    'wms.Overview',
+                    'wms.Statistics',
+                    'wms.Unit',
+
+                    'Toolbars',
+                    'Navigation',
+                    'Master',
+                    'Viewport'
+                ]
+            });
+        }
     });
+
 }());

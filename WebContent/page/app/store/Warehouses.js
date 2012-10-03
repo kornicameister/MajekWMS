@@ -34,5 +34,14 @@ Ext.define('WMS.store.Warehouses', {
             size: 0
         }, model);
         this.add([model]);
+    },
+
+    addUnit: function (model) {
+        var w = this.getLastWarehouse(),
+            unit = Ext.create('WMS.model.entity.Unit', model);
+        unit.set('type', model['type']);
+
+        w.units().add(unit);
+        w.sync();
     }
 });

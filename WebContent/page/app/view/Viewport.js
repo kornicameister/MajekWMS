@@ -12,13 +12,6 @@ Ext.define('WMS.view.Viewport', {
     extend            : 'Ext.Viewport',
     layout            : 'fit',
 
-    requires: [
-        'WMS.view.toolbar.Footer',
-        'WMS.view.toolbar.Header',
-        'WMS.view.Navigation',
-        'WMS.view.WMSView'
-    ],
-
     items: {
         id    : 'viewport',
         xtype : 'panel',
@@ -26,20 +19,20 @@ Ext.define('WMS.view.Viewport', {
         title : 'WMS Simulator',
         items : [
             {
-                xtype : 'wmsnav',
+                xtype : 'navigation',
                 region: 'west'
             },
             {
-                xtype : 'wmsview',
+                xtype : 'masterview',
                 region: 'center'
             }
         ],
 
         tbar: {
-            xtype: 'wmstbar'
+            xtype: 'headbar'
         },
         bbar: {
-            xtype: 'wmsfbar'
+            xtype: 'footbar'
         }
     }
 });

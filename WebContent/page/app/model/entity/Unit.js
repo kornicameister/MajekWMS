@@ -12,19 +12,24 @@ Ext.define('WMS.model.entity.Unit', {
     extend: 'Ext.data.Model',
 
     fields      : [
-        { name: 'name', type: 'string', defaultValue: '', persist: true},
+        'id',
+        'name',
+        'description',
+        'warehouse',
+        'type',
         { name: 'size', type: 'int', defaultValue: 0},
-        { name: 'maxSize', type: 'int', defaultValue: 0, persist: true},
-        { name: 'description', type: 'string', defaultValue: 'Unit...'}
+        { name: 'maximumSize', type: 'int', defaultValue: 0}
     ],
     associations: [
-        {name: 'type', type: 'hasOne', model: 'entity.UnitType'},
-        {name: 'warehouse', type: 'belongsTo', model: 'entity.Warehouse'},
-        {name: 'products', type: 'hasMany', model: 'entity.Product'}
+        {name: 'type', type: 'hasOne', model: 'WMS.model.entity.UnitType'},
+        {name: 'warehouse', type: 'belongsTo', model: 'WMS.model.entity.Warehouse'},
+        {name: 'products', type: 'hasMany', model: 'WMS.model.entity.Product'}
     ],
-    validations : [
-        { name: 'length', field: 'name', min: 5, max: 45},
-        { name: 'length', field: 'description', min: 1, max: 250}
-    ]
 
+    //TODO validations
+
+    proxy: {
+        type: 'wms',
+        url : 'wms/agent/unit'
+    }
 });

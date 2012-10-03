@@ -12,45 +12,23 @@ Ext.define('WMS.model.entity.Invoice', {
     extend: 'Ext.data.Model',
 
     fields      : [
-        { name: 'invoiceNumber', type: 'string'},
+        'id', 'invoiceNumber', 'description',
         { name: 'createdDate', type: 'date'},
-        { name: 'dueDate', type: 'date'},
-        { name: 'description', type: 'string', defaultValue: 'Unit...'}
+        { name: 'dueDate', type: 'date'}
     ],
     associations: [
-        {name: 'invoiceProducts', type: 'belongsTo', model: 'WMS.model.entity.InvoiceProduct'}
+        {name: 'invoiceProducts', type: 'belongsTo', model: 'WMS.model.entity.InvoiceProduct'},
+        {name: 'invoiceType', type: 'hasOne', model: 'WMS.model.entity.InvoiceType'},
+        {name: 'invoiceClient', type: 'hasOne', model: 'WMS.model.entity.Client'}
     ],
     validations : [
-        { name: 'length', field: 'name', min: 5, max: 45},
+        { name: 'length', field: 'invoiceNumber', min: 5, max: 30},
         { name: 'length', field: 'description', min: 1, max: 250}
     ],
 
     proxy: {
-        type     : 'rest',
-        api      : {
-            read  : 'wms/agent/invoice/read',
-            update: 'wms/agent/invoice/update'
-        },
-        reader   : {
-            type           : 'json',
-            root           : 'warehouses',
-            successProperty: 'success'
-        },
-        writer   : {
-            type          : 'json',
-            writeAllFields: false,
-            root          : 'warehouses'
-        },
-        listeners: {
-            exception: function (proxy, response, operation) {
-                Ext.MessageBox.show({
-                    title  : 'REMOTE EXCEPTION',
-                    msg    : operation.getError(),
-                    icon   : Ext.MessageBox.ERROR,
-                    buttons: Ext.Msg.OK
-                });
-            }
-        }
+        type: 'wms',
+        url : 'wms/agent/invoice'
     }
 
 });

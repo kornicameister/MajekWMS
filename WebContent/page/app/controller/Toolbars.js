@@ -17,11 +17,11 @@ Ext.define('WMS.controller.Toolbars', {
     refs  : [
         {
             ref     : 'tBar',
-            selector: 'wmstbar'
+            selector: 'headbar'
         }                    ,
         {
             ref     : 'fBar',
-            selector: 'wmsfbar'
+            selector: 'footbar'
         }
     ],
 

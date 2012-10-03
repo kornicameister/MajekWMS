@@ -15,23 +15,16 @@
  * Class represents top-level container for panels located underneath which presents
  * user information such as warehouse diagram etc.
  */
-Ext.define('WMS.view.WMSView', {
+Ext.define('WMS.view.MasterView', {
     extend  : 'Ext.panel.Panel',
-    alias   : 'widget.wmsview',
-    requires: [
-        'WMS.view.wms.Inventory',
-        'WMS.view.wms.Overview',
-        'WMS.view.wms.Statistics',
-        'WMS.view.wms.Unit'
-    ],
+    alias   : 'widget.masterview',
 
     title   : 'WMS - Warehouse',
     defaults: {
         autoScroll: true,
         margins   : {
             bottom: 2
-        },
-        margins   : '0 0 0 0'
+        }
     },
     layout  : {
         type            : 'accordion',

@@ -8,20 +8,20 @@
  * Created: 28-09-2012
  */
 
-Ext.define('WMS.controller.StartController', {
+Ext.define('WMS.controller.Master', {
     extend: 'Ext.app.Controller',
 
     stores: ['Warehouses'],
-    views : ['wizard.Warehouse'],
+    views : ['MasterView','wizard.Warehouse'],
 
     init: function () {
-        console.init('WMS.controller.StartController initializing...');
+        console.init('WMS.controller.Master initializing...');
         var me = this;
 
         me.control({
             'wizardwarehouse': {
                 show: function () {
-                    console.log('StartController:: WarehouseWizard is visible')
+                    console.log('Master:: WarehouseWizard is visible')
                 }
             },
             '#submitButton'  : {
@@ -32,7 +32,7 @@ Ext.define('WMS.controller.StartController', {
         me.getWarehousesStore().addListener('load', function (store) {
             var warehouses = store.getWarehouses();
             if (warehouses.length === 0) {
-                console.log("StartController:: Found no warehouses, commencing loading warehouse wizard");
+                console.log("Master:: Found no warehouses, commencing loading warehouse wizard");
 
                 Ext.MessageBox.show({
                     title        : 'No warehouse found...',
@@ -99,7 +99,7 @@ Ext.define('WMS.controller.StartController', {
 
         Ext.getCmp('statusBar').showBusy();
         if (form.isValid()) {
-            console.log('StartController:: Added ', me.getWarehousesStore().addWarehouse(form.getValues()));
+            me.getWarehousesStore().addWarehouse(form.getValues());
         }
         Ext.getCmp('statusBar').clearStatus();
     }

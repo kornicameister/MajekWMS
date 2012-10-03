@@ -10,7 +10,7 @@
 
 Ext.define('WMS.view.Navigation', {
     extend: 'Ext.panel.Panel',
-    alias : 'widget.wmsnav',
+    alias : 'widget.navigation',
 
     itemId: 'navigator',
     title : 'WMS - Navigator',

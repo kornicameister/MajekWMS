@@ -12,8 +12,7 @@ Ext.define('WMS.model.entity.Product', {
     extend: 'Ext.data.Model',
 
     fields      : [
-        { name: 'name', type: 'string', defaultValue: '', persist: true},
-        { name: 'description', type: 'string', defaultValue: 'Product...'},
+        'id', 'name', 'description',
         { name: 'quantity', type: 'float', defaultValue: 0.0},
         { name: 'price', type: 'float', defaultValue: 0.0},
         { name: 'tax', type: 'int', defaultValue: 22}
@@ -25,8 +24,12 @@ Ext.define('WMS.model.entity.Product', {
         {name: 'vendor', type: 'hasOne', model: 'WMS.model.entity.Client'}
     ],
     validations : [
-        { name: 'lenght', field: 'name', min: 5, max: 45},
-        { name: 'lenght', field: 'description', min: 1, max: 250}
-    ]
+        { name: 'length', field: 'name', min: 5, max: 45},
+        { name: 'length', field: 'description', min: 1, max: 250}
+    ],
 
+    proxy: {
+        type: 'wms',
+        url : 'wms/agent/product'
+    }
 });

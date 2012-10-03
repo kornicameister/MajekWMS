@@ -12,14 +12,14 @@ Ext.define('WMS.model.entity.UnitType', {
     extend: 'Ext.data.Model',
 
     fields      : [
-        { name: 'name', type: 'string', defaultValue: '', persist: true},
-        { name: 'abbreviation', type: 'string', defaultValue: '', persist: true},
-        { name: 'description', type: 'string', defaultValue: 'Warehouse...'},
-        { name: 'createdDate', type: 'date'},
-        { name: 'parentType'}
+        'id',
+        'name' ,
+        'abbreviation',
+        'description',
+        { name: 'parentType', type: 'int'}
     ],
     associations: [
-        {name: 'unitType', type: 'belongsTo', model: 'WMS.model.entity.Unit'}
+        {name: 'units', type: 'belongsTo', model: 'WMS.model.entity.Unit'}
     ],
     validations : [
         { name: 'length', field: 'name', min: 5, max: 20},
@@ -28,31 +28,8 @@ Ext.define('WMS.model.entity.UnitType', {
     ],
 
     proxy: {
-        type     : 'rest',
-        api      : {
-            read  : 'wms/agent/unittype/read',
-            update: 'wms/agent/unittype/update'
-        },
-        reader   : {
-            type           : 'json',
-            root           : 'warehouses',
-            successProperty: 'success'
-        },
-        writer   : {
-            type          : 'json',
-            writeAllFields: false,
-            root          : 'warehouses'
-        },
-        listeners: {
-            exception: function (proxy, response, operation) {
-                Ext.MessageBox.show({
-                    title  : 'REMOTE EXCEPTION',
-                    msg    : operation.getError(),
-                    icon   : Ext.MessageBox.ERROR,
-                    buttons: Ext.Msg.OK
-                });
-            }
-        }
+        type: 'wms',
+        url : 'wms/agent/unittype'
     }
 
 });
