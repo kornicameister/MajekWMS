@@ -104,8 +104,8 @@ public class MajekWMSTestUnit {
 	}
 
 //	@SuppressWarnings("unused")
-//	private Integer getHigherId(List<?> data) {
-//		BaseEntity ae = (BaseEntity) data.get(data.size() - 1);
+//	private Integer getHigherId(List<?> read) {
+//		BaseEntity ae = (BaseEntity) read.get(read.size() - 1);
 //		System.out.println(String.format("Last entity of %s has id = %d", ae.getClass().getSimpleName(), ae.getId()));
 //		return ae.getId();
 //	}

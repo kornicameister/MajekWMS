@@ -24,10 +24,10 @@ public class UnitType extends BaseEntity {
 	private static final long serialVersionUID = -7479798313966564213L;
 
 	@Id
-	@Column(updatable = false, insertable = true, nullable = false)
+	@Column(name = "idUnitType", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	private Integer idUnitType;
+	private Integer id;
 
 	@Basic
 	@Column(name = "abbreviation", length = 6, nullable = false, unique = true, insertable = true, updatable = true)
@@ -45,7 +45,7 @@ public class UnitType extends BaseEntity {
 	@Column(name = "parentType", nullable = true, unique = false, insertable = true, updatable = true)
 	private Integer parentType;
 
-	@OneToMany(mappedBy = "unitType", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
 	private Set<Unit> units;
 
 	public UnitType() {
@@ -55,7 +55,7 @@ public class UnitType extends BaseEntity {
 	public UnitType(Integer idUnitType, String abbreviation,
 			String description, String name, Integer parentType) {
 		super();
-		this.idUnitType = idUnitType;
+		this.id = idUnitType;
 		this.abbreviation = abbreviation;
 		this.description = description;
 		this.name = name;
@@ -65,7 +65,7 @@ public class UnitType extends BaseEntity {
 	public UnitType(Integer idUnitType, String abbreviation,
 			String description, String name, Integer parentType, Set<Unit> units) {
 		super();
-		this.idUnitType = idUnitType;
+		this.id = idUnitType;
 		this.abbreviation = abbreviation;
 		this.description = description;
 		this.name = name;
@@ -74,11 +74,11 @@ public class UnitType extends BaseEntity {
 	}
 
 	public final Integer getIdUnitType() {
-		return idUnitType;
+		return id;
 	}
 
 	public final void setIdUnitType(Integer idUnitType) {
-		this.idUnitType = idUnitType;
+		this.id = idUnitType;
 	}
 
 	public final String getAbbreviation() {
@@ -130,7 +130,7 @@ public class UnitType extends BaseEntity {
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result
-				+ ((idUnitType == null) ? 0 : idUnitType.hashCode());
+				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((parentType == null) ? 0 : parentType.hashCode());
@@ -157,10 +157,10 @@ public class UnitType extends BaseEntity {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (idUnitType == null) {
-			if (other.idUnitType != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idUnitType.equals(other.idUnitType))
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)

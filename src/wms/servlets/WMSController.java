@@ -36,12 +36,12 @@ public class WMSController extends HttpServlet {
 			if (pageReference.isEmpty()) {
 				log.warning("<page> param is empty");
 			} else {
-				log.log(Level.INFO, "Request for {0} page", pageReference);
+				log.log(Level.INFO, "ResponseReadFormat for {0} page", pageReference);
 			}
 
 			res.setContentType("application/json");
 			PrintWriter out = res.getWriter();
-			out.write("Request for " + pageReference);
+			out.write("ResponseReadFormat for " + pageReference);
 		} else {
 			log.severe("<page> is null param within request body");
 		}

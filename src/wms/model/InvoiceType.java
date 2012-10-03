@@ -25,7 +25,7 @@ public class InvoiceType extends BaseEntity {
 	@Column(name = "idInvoiceType", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer idInvoiceType;
+	protected Integer id;
 
 	@Basic
 	@Column(name = "name", length = 10, insertable = true, updatable = true)
@@ -33,7 +33,7 @@ public class InvoiceType extends BaseEntity {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idInvoiceType", referencedColumnName = "fkInvoiceType", insertable = false, updatable = false)
-	private Invoice masterInvoice;
+	private Invoice invoice;
 
 	public InvoiceType() {
 		super();
@@ -42,13 +42,13 @@ public class InvoiceType extends BaseEntity {
 	public InvoiceType(Integer idInvoiceType, String name,
 			Invoice masterInvoice) {
 		super();
-		this.idInvoiceType = idInvoiceType;
+		this.id = idInvoiceType;
 		this.name = name;
-		this.masterInvoice = masterInvoice;
+		this.invoice = masterInvoice;
 	}
 
 	public final Integer getIdInvoiceType() {
-		return idInvoiceType;
+		return id;
 	}
 
 	public final String getName() {
@@ -56,11 +56,11 @@ public class InvoiceType extends BaseEntity {
 	}
 
 	public final Invoice getMasterInvoice() {
-		return masterInvoice;
+		return invoice;
 	}
 
 	public final void setIdInvoiceType(Integer idInvoiceType) {
-		this.idInvoiceType = idInvoiceType;
+		this.id = idInvoiceType;
 	}
 
 	public final void setName(String name) {
@@ -68,7 +68,7 @@ public class InvoiceType extends BaseEntity {
 	}
 
 	public final void setMasterInvoice(Invoice masterInvoice) {
-		this.masterInvoice = masterInvoice;
+		this.invoice = masterInvoice;
 	}
 
 	@Override
@@ -76,9 +76,9 @@ public class InvoiceType extends BaseEntity {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
-				+ ((idInvoiceType == null) ? 0 : idInvoiceType.hashCode());
+				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result
-				+ ((masterInvoice == null) ? 0 : masterInvoice.hashCode());
+				+ ((invoice == null) ? 0 : invoice.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -92,15 +92,15 @@ public class InvoiceType extends BaseEntity {
 		if (!(obj instanceof InvoiceType))
 			return false;
 		InvoiceType other = (InvoiceType) obj;
-		if (idInvoiceType == null) {
-			if (other.idInvoiceType != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idInvoiceType.equals(other.idInvoiceType))
+		} else if (!id.equals(other.id))
 			return false;
-		if (masterInvoice == null) {
-			if (other.masterInvoice != null)
+		if (invoice == null) {
+			if (other.invoice != null)
 				return false;
-		} else if (!masterInvoice.equals(other.masterInvoice))
+		} else if (!invoice.equals(other.invoice))
 			return false;
 		if (name == null) {
 			if (other.name != null)

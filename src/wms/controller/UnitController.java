@@ -5,11 +5,11 @@ import java.util.Map;
 import wms.controller.base.CRUD;
 import wms.controller.base.RequestController;
 
-public class WarehouseController extends RequestController {
-	public WarehouseController(CRUD action, Map<String, String[]> params,
+public class UnitController extends RequestController {
+	public UnitController(CRUD action, Map<String, String[]> params,
 			String payload) {
-		super(action, params, payload, WarehouseController.class.getName(),
-				"from Warehouse");
+		super(action, params, payload, UnitController.class.getName(),
+				"from Unit");
 	}
 
 	@Override
@@ -19,4 +19,5 @@ public class WarehouseController extends RequestController {
 	@Override
 	public void delete() {
 	}
+
 }

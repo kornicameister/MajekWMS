@@ -27,10 +27,10 @@ public class Unit extends BaseEntity {
 	private static final long serialVersionUID = 2437063899438647082L;
 
 	@Id
-	@Column(updatable = false, insertable = true, nullable = false)
+	@Column(name = "idUnit", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer idUnit;
+	protected Integer id;
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
@@ -49,15 +49,15 @@ public class Unit extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fkWarehouse", referencedColumnName = "idWarehouse")
-	private Warehouse masterWarehouse;
+	private Warehouse warehouse;
 
 	@ManyToMany
 	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "fkUnit", referencedColumnName = "idunit") }, inverseJoinColumns = { @JoinColumn(name = "fkProduct", referencedColumnName = "idProduct") })
-	private Set<Product> unitsProducts = new HashSet<>();
+	private Set<Product> products = new HashSet<>();
 
 	@JoinColumn(name = "fkUnitType", referencedColumnName = "idUnitType")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private UnitType unitType;
+	private UnitType type;
 
 	public Unit() {
 		super();
@@ -66,7 +66,7 @@ public class Unit extends BaseEntity {
 	public Unit(Integer idUnit, String name, String description, Integer size,
 			Integer maximumSize) {
 		super();
-		this.idUnit = idUnit;
+		this.id = idUnit;
 		this.name = name;
 		this.description = description;
 		this.size = size;
@@ -77,18 +77,18 @@ public class Unit extends BaseEntity {
 			Integer maximumSize, Warehouse masterWarehouse,
 			Set<Product> unitsProducts, UnitType unitType) {
 		super();
-		this.idUnit = idUnit;
+		this.id = idUnit;
 		this.name = name;
 		this.description = description;
 		this.size = size;
 		this.maximumSize = maximumSize;
-		this.masterWarehouse = masterWarehouse;
-		this.unitsProducts = unitsProducts;
-		this.unitType = unitType;
+		this.warehouse = masterWarehouse;
+		this.products = unitsProducts;
+		this.type = unitType;
 	}
 
 	public final Integer getIdUnit() {
-		return idUnit;
+		return id;
 	}
 
 	public final String getName() {
@@ -108,19 +108,19 @@ public class Unit extends BaseEntity {
 	}
 
 	public final Warehouse getMasterWarehouse() {
-		return masterWarehouse;
+		return warehouse;
 	}
 
 	public final Set<Product> getUnitsProducts() {
-		return unitsProducts;
+		return products;
 	}
 
 	public final UnitType getUnitType() {
-		return unitType;
+		return type;
 	}
 
 	public final void setIdUnit(Integer idUnit) {
-		this.idUnit = idUnit;
+		this.id = idUnit;
 	}
 
 	public final void setName(String name) {
@@ -140,15 +140,15 @@ public class Unit extends BaseEntity {
 	}
 
 	public final void setMasterWarehouse(Warehouse masterWarehouse) {
-		this.masterWarehouse = masterWarehouse;
+		this.warehouse = masterWarehouse;
 	}
 
 	public final void setUnitsProducts(Set<Product> unitsProducts) {
-		this.unitsProducts = unitsProducts;
+		this.products = unitsProducts;
 	}
 
 	public final void setUnitType(UnitType unitType) {
-		this.unitType = unitType;
+		this.type = unitType;
 	}
 
 	@Override
@@ -157,17 +157,17 @@ public class Unit extends BaseEntity {
 		int result = super.hashCode();
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((idUnit == null) ? 0 : idUnit.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
-				+ ((masterWarehouse == null) ? 0 : masterWarehouse.hashCode());
+				+ ((warehouse == null) ? 0 : warehouse.hashCode());
 		result = prime * result
 				+ ((maximumSize == null) ? 0 : maximumSize.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
 		result = prime * result
-				+ ((unitType == null) ? 0 : unitType.hashCode());
+				+ ((type == null) ? 0 : type.hashCode());
 		result = prime * result
-				+ ((unitsProducts == null) ? 0 : unitsProducts.hashCode());
+				+ ((products == null) ? 0 : products.hashCode());
 		return result;
 	}
 
@@ -185,15 +185,15 @@ public class Unit extends BaseEntity {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (idUnit == null) {
-			if (other.idUnit != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idUnit.equals(other.idUnit))
+		} else if (!id.equals(other.id))
 			return false;
-		if (masterWarehouse == null) {
-			if (other.masterWarehouse != null)
+		if (warehouse == null) {
+			if (other.warehouse != null)
 				return false;
-		} else if (!masterWarehouse.equals(other.masterWarehouse))
+		} else if (!warehouse.equals(other.warehouse))
 			return false;
 		if (maximumSize == null) {
 			if (other.maximumSize != null)
@@ -210,15 +210,15 @@ public class Unit extends BaseEntity {
 				return false;
 		} else if (!size.equals(other.size))
 			return false;
-		if (unitType == null) {
-			if (other.unitType != null)
+		if (type == null) {
+			if (other.type != null)
 				return false;
-		} else if (!unitType.equals(other.unitType))
+		} else if (!type.equals(other.type))
 			return false;
-		if (unitsProducts == null) {
-			if (other.unitsProducts != null)
+		if (products == null) {
+			if (other.products != null)
 				return false;
-		} else if (!unitsProducts.equals(other.unitsProducts))
+		} else if (!products.equals(other.products))
 			return false;
 		return true;
 	}

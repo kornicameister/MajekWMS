@@ -30,7 +30,7 @@ public class Product extends BaseEntity {
 	@Column(name = "idProduct", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer idProduct;
+	protected Integer id;
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
@@ -56,14 +56,14 @@ public class Product extends BaseEntity {
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
 	@ManyToMany(mappedBy = "clientsProducts")
-	private Set<Client> client = new HashSet<>(0);
+	private Set<Client> vendor = new HashSet<>(0);
 
-	@ManyToMany(mappedBy = "unitsProducts")
+	@ManyToMany(mappedBy = "products")
 	private Set<Unit> units = new HashSet<>(0);
 
 	@JoinColumn(name = "fkMeasure", referencedColumnName = "idMeasure")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Measure productMeasure;
+	private Measure measure;
 
 	public Product() {
 		super();
@@ -72,7 +72,7 @@ public class Product extends BaseEntity {
 	public Product(Integer idProduct, String name, String description,
 			Double quantity, Double price, Float tax) {
 		super();
-		this.idProduct = idProduct;
+		this.id = idProduct;
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
@@ -84,7 +84,7 @@ public class Product extends BaseEntity {
 			Double quantity, Double price, Float tax,
 			Set<InvoiceProduct> invoiceProducts) {
 		super();
-		this.idProduct = idProduct;
+		this.id = idProduct;
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
@@ -97,14 +97,14 @@ public class Product extends BaseEntity {
 			Double quantity, Double price, Float tax,
 			Set<InvoiceProduct> invoiceProducts, Set<Client> client) {
 		super();
-		this.idProduct = idProduct;
+		this.id = idProduct;
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
 		this.price = price;
 		this.tax = tax;
 		this.invoiceProducts = invoiceProducts;
-		this.client = client;
+		this.vendor = client;
 	}
 
 	public Product(Integer idProduct, String name, String description,
@@ -112,14 +112,14 @@ public class Product extends BaseEntity {
 			Set<InvoiceProduct> invoiceProducts, Set<Client> client,
 			Set<Unit> units) {
 		super();
-		this.idProduct = idProduct;
+		this.id = idProduct;
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
 		this.price = price;
 		this.tax = tax;
 		this.invoiceProducts = invoiceProducts;
-		this.client = client;
+		this.vendor = client;
 		this.units = units;
 	}
 
@@ -128,24 +128,24 @@ public class Product extends BaseEntity {
 			Set<InvoiceProduct> invoiceProducts, Set<Client> client,
 			Set<Unit> units, Measure productMeasure) {
 		super();
-		this.idProduct = idProduct;
+		this.id = idProduct;
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
 		this.price = price;
 		this.tax = tax;
 		this.invoiceProducts = invoiceProducts;
-		this.client = client;
+		this.vendor = client;
 		this.units = units;
-		this.productMeasure = productMeasure;
+		this.measure = productMeasure;
 	}
 
 	public final Integer getIdProduct() {
-		return idProduct;
+		return id;
 	}
 
 	public final void setIdProduct(Integer idProduct) {
-		this.idProduct = idProduct;
+		this.id = idProduct;
 	}
 
 	public final String getName() {
@@ -196,12 +196,12 @@ public class Product extends BaseEntity {
 		this.invoiceProducts = invoiceProducts;
 	}
 
-	public final Set<Client> getClient() {
-		return client;
+	public final Set<Client> getVendor() {
+		return vendor;
 	}
 
-	public final void setClient(Set<Client> client) {
-		this.client = client;
+	public final void setVendor(Set<Client> vendor) {
+		this.vendor = vendor;
 	}
 
 	public final Set<Unit> getUnits() {
@@ -213,28 +213,28 @@ public class Product extends BaseEntity {
 	}
 
 	public final Measure getProductMeasure() {
-		return productMeasure;
+		return measure;
 	}
 
 	public final void setProductMeasure(Measure productMeasure) {
-		this.productMeasure = productMeasure;
+		this.measure = productMeasure;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((client == null) ? 0 : client.hashCode());
+		result = prime * result + ((vendor == null) ? 0 : vendor.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result
-				+ ((idProduct == null) ? 0 : idProduct.hashCode());
+				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((invoiceProducts == null) ? 0 : invoiceProducts.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result
-				+ ((productMeasure == null) ? 0 : productMeasure.hashCode());
+				+ ((measure == null) ? 0 : measure.hashCode());
 		result = prime * result
 				+ ((quantity == null) ? 0 : quantity.hashCode());
 		result = prime * result + ((tax == null) ? 0 : tax.hashCode());
@@ -251,20 +251,20 @@ public class Product extends BaseEntity {
 		if (!(obj instanceof Product))
 			return false;
 		Product other = (Product) obj;
-		if (client == null) {
-			if (other.client != null)
+		if (vendor == null) {
+			if (other.vendor != null)
 				return false;
-		} else if (!client.equals(other.client))
+		} else if (!vendor.equals(other.vendor))
 			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (idProduct == null) {
-			if (other.idProduct != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idProduct.equals(other.idProduct))
+		} else if (!id.equals(other.id))
 			return false;
 		if (invoiceProducts == null) {
 			if (other.invoiceProducts != null)
@@ -281,10 +281,10 @@ public class Product extends BaseEntity {
 				return false;
 		} else if (!price.equals(other.price))
 			return false;
-		if (productMeasure == null) {
-			if (other.productMeasure != null)
+		if (measure == null) {
+			if (other.measure != null)
 				return false;
-		} else if (!productMeasure.equals(other.productMeasure))
+		} else if (!measure.equals(other.measure))
 			return false;
 		if (quantity == null) {
 			if (other.quantity != null)
@@ -343,9 +343,9 @@ public class Product extends BaseEntity {
 			builder.append(getInvoiceProducts());
 			builder.append(", ");
 		}
-		if (getClient() != null) {
+		if (getVendor() != null) {
 			builder.append("getClient()=");
-			builder.append(getClient());
+			builder.append(getVendor());
 			builder.append(", ");
 		}
 		if (getUnits() != null) {

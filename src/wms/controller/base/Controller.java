@@ -1,8 +1,5 @@
 package wms.controller.base;
 
-import java.util.List;
-
-import wms.model.BaseEntity;
 
 /**
  * Interface for classes implementing CRUD controllers.
@@ -16,7 +13,7 @@ import wms.model.BaseEntity;
  */
 public interface Controller {
 	// CRUD
-	List<? extends BaseEntity> read();
+	void read();
 	void update();
 	void delete();
 	void create();

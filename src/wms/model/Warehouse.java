@@ -28,7 +28,7 @@ public class Warehouse extends BaseEntity {
 	@Column(name = "idWarehouse", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer idWarehouse;
+	protected Integer id;
 
 	@Basic
 	@Column(name = "createdDate", nullable = false)
@@ -49,7 +49,7 @@ public class Warehouse extends BaseEntity {
 	@Column(name = "maxSize", nullable = false)
 	private Integer maximumSize;
 
-	@OneToMany(mappedBy = "masterWarehouse", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY)
 	private Set<Unit> units = new HashSet<>();
 
 	public Warehouse() {
@@ -59,7 +59,7 @@ public class Warehouse extends BaseEntity {
 	public Warehouse(Integer idWarehouse, Date createdDate, String name,
 			String description, Integer size, Integer maximumSize) {
 		super();
-		this.idWarehouse = idWarehouse;
+		this.id = idWarehouse;
 		this.createdDate = createdDate;
 		this.name = name;
 		this.description = description;
@@ -71,7 +71,7 @@ public class Warehouse extends BaseEntity {
 			Date createdDate, String name, String description, Integer size,
 			Integer maximumSize) {
 		super();
-		this.idWarehouse = idWarehouse;
+		this.id = idWarehouse;
 		this.units = units;
 		this.createdDate = createdDate;
 		this.name = name;
@@ -81,7 +81,7 @@ public class Warehouse extends BaseEntity {
 	}
 
 	public final Integer getIdWarehouse() {
-		return idWarehouse;
+		return id;
 	}
 
 	public final Set<Unit> getUnits() {
@@ -109,7 +109,7 @@ public class Warehouse extends BaseEntity {
 	}
 
 	public final void setIdWarehouse(Integer idWarehouse) {
-		this.idWarehouse = idWarehouse;
+		this.id = idWarehouse;
 	}
 
 	public final void setUnits(Set<Unit> units) {
@@ -143,7 +143,7 @@ public class Warehouse extends BaseEntity {
 		result = prime * result
 				+ ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result
-				+ ((idWarehouse == null) ? 0 : idWarehouse.hashCode());
+				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -162,10 +162,10 @@ public class Warehouse extends BaseEntity {
 				return false;
 		} else if (!createdDate.equals(other.createdDate))
 			return false;
-		if (idWarehouse == null) {
-			if (other.idWarehouse != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idWarehouse.equals(other.idWarehouse))
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)

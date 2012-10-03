@@ -26,7 +26,7 @@ public class Measure extends BaseEntity {
 	@Column(name = "idMeasure", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer idMeasure;
+	protected Integer id;
 
 	@Basic
 	@Column(nullable = false, length = 10)
@@ -36,7 +36,7 @@ public class Measure extends BaseEntity {
 	@Column(name = "name", nullable = false, unique = true, length = 30)
 	private String name;
 
-	@OneToMany(mappedBy = "productMeasure", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "measure", fetch = FetchType.LAZY)
 	private Set<Product> products;
 
 	public Measure() {
@@ -52,18 +52,18 @@ public class Measure extends BaseEntity {
 	public Measure(Integer idMeasure, String abbreviation, String name,
 			Set<Product> products) {
 		super();
-		this.idMeasure = idMeasure;
+		this.id = idMeasure;
 		this.abbreviation = abbreviation;
 		this.name = name;
 		this.products = products;
 	}
 
 	public final Integer getIdMeasure() {
-		return idMeasure;
+		return id;
 	}
 
 	public final void setIdMeasure(Integer idMeasure) {
-		this.idMeasure = idMeasure;
+		this.id = idMeasure;
 	}
 
 	public final String getAbbreviation() {
@@ -134,7 +134,7 @@ public class Measure extends BaseEntity {
 		result = prime * result
 				+ ((abbreviation == null) ? 0 : abbreviation.hashCode());
 		result = prime * result
-				+ ((idMeasure == null) ? 0 : idMeasure.hashCode());
+				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((products == null) ? 0 : products.hashCode());
@@ -155,10 +155,10 @@ public class Measure extends BaseEntity {
 				return false;
 		} else if (!abbreviation.equals(other.abbreviation))
 			return false;
-		if (idMeasure == null) {
-			if (other.idMeasure != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idMeasure.equals(other.idMeasure))
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)

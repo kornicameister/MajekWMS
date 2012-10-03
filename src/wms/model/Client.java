@@ -30,7 +30,7 @@ public class Client extends BaseEntity {
 	@Column(name = "idClient", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer idClient;
+	protected Integer id;
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 45, updatable = true)
@@ -86,7 +86,7 @@ public class Client extends BaseEntity {
 	public Client(Integer idClient, String name, String company,
 			String description, Set<Product> products, Set<Invoice> invoices) {
 		super();
-		this.idClient = idClient;
+		this.id = idClient;
 		this.name = name;
 		this.company = company;
 		this.description = description;
@@ -95,11 +95,11 @@ public class Client extends BaseEntity {
 	}
 
 	public final Integer getIdClient() {
-		return idClient;
+		return id;
 	}
 
 	public final void setIdClient(Integer idClient) {
-		this.idClient = idClient;
+		this.id = idClient;
 	}
 
 	public final String getName() {

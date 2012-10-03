@@ -3,7 +3,6 @@ package wms.controller.base;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -11,13 +10,23 @@ import java.util.logging.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import wms.controller.UnitController;
+import wms.controller.UnitTypeController;
+import wms.controller.WarehouseController;
+import wms.controller.base.format.request.RequestCreateUnitFormat;
+import wms.controller.base.format.request.RequestCreateUnitTypeFormat;
+import wms.controller.base.format.request.RequestCreateWarehouseFormat;
+import wms.controller.base.format.response.ResponseCreateFormat;
+import wms.controller.base.format.response.ResponseReadFormat;
+import wms.controller.hibernate.HibernateBridge;
 import wms.model.BaseEntity;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * This is base class for Controller, that implements all base-level method. And
- * provides ground level data controller and logging.
+ * provides ground level read controller and logging.
  * 
  * @author kornicameister
  * @created 01-10-2012
@@ -26,41 +35,28 @@ import com.google.gson.Gson;
  * 
  */
 public abstract class RequestController implements Controller {
+	// TODO change variables to private, there is a possibility that CRUD method
+	// impl may disappear in Entities' controllers
 	protected final CRUD action;
 	protected final SessionFactory sessionFactory = HibernateBridge
 			.getSessionFactory();
-	protected final String readStatement;
-	protected final Map<String, String[]> params;
-	protected Collection<? extends BaseEntity> lastRead;
 	protected Gson jsonForm;
 	protected long processTime = 0l;
-	protected ArrayList<Serializable> createdIDS;
-	protected final String payload;
+	protected final Map<String, String[]> params;
+	protected ArrayList<Integer> createdIDS = new ArrayList<>();
+	protected ArrayList<BaseEntity> lastRead = new ArrayList<>();
+	protected final String payload, controller, readStatement;
 	private final static Logger logger = Logger
-			.getLogger(RequestController.class.getName());;
+			.getLogger(RequestController.class.getName());
 
-	public RequestController(String action, String read) {
-		this.action = CRUD.valueOf(action.toUpperCase());
-		this.readStatement = read;
-		this.params = new HashMap<>(0);
-		this.payload = "";
-	}
-
-	public RequestController(String action, String readStatement,
-			Map<String, String[]> params) {
+	public RequestController(CRUD action, Map<String, String[]> params,
+			String payload, String controller, String readStatement) {
 		super();
-		this.action = CRUD.valueOf(action.toUpperCase());
-		this.readStatement = readStatement;
+		this.action = action;
 		this.params = params;
-		this.payload = "";
-	}
-
-	public RequestController(String action, String readStatement,
-			Map<String, String[]> params, String payload) {
-		this.action = CRUD.valueOf(action.toUpperCase());
 		this.readStatement = readStatement;
-		this.params = params;
 		this.payload = payload;
+		this.controller = controller;
 	}
 
 	/**
@@ -89,78 +85,78 @@ public abstract class RequestController implements Controller {
 		this.processTime = System.nanoTime() - startTime;
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<? extends BaseEntity> read() {
+	// CRUD
+	public void read() {
 		Session session = this.sessionFactory.openSession();
 		session.beginTransaction();
-		lastRead = session.createQuery(this.readStatement).list();
+		List<?> data = session.createQuery(this.readStatement).list();
 		session.getTransaction().commit();
-		return (List<? extends BaseEntity>) lastRead;
+		for (Object o : data) {
+			this.lastRead.add((BaseEntity) o);
+		}
 	}
+
+	public void create() {
+		logger.entering(this.getClass().getName(), "create");
+		Serializable savedID = null;
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
+		for (Object saveable : this.extractFromPayload()) {
+			savedID = session.save(saveable);
+			if (savedID != null) {
+				this.createdIDS.add((Integer) savedID);
+			}
+		}
+		session.getTransaction().commit();
+		logger.exiting(this.getClass().getName(), "create");
+	}
+
+	// CRUD
 
 	@Override
 	public String buildResponse() {
+		Gson g = new GsonBuilder().setPrettyPrinting().setDateFormat("m-D-y")
+				.create();
+		StringBuilder response = new StringBuilder();
 		switch (this.action) {
-		case READ:
-			return this.buildReadResponse();
 		case CREATE:
-			return this.buildCreateResponse();
-		case DELETE:
-			return this.buildDeleteResponse();
-		case UPDATE:
-			return this.buildUpdateResponse();
+			response.append(g.toJson(new ResponseCreateFormat(this.processTime,
+					this.controller, this.createdIDS),
+					ResponseCreateFormat.class));
+			break;
+		case READ:
+			response.append(g.toJson(new ResponseReadFormat(this.processTime,
+					this.controller, this.lastRead), ResponseReadFormat.class));
+			break;
+		default:
+			logger.warning("UPDATE/DELETE are currently not supported");
+			break;
 		}
-		RequestController.logger
-				.warning("No CRUD action found, will respond with empty JSON");
-		return "{}";
+		return response.toString();
 	}
 
-	protected abstract String buildReadResponse();
-
-	protected abstract String buildCreateResponse();
-
-	protected abstract String buildUpdateResponse();
-
-	protected abstract String buildDeleteResponse();
+	protected Collection<? extends BaseEntity> extractFromPayload() {
+		Gson gson = new GsonBuilder().setDateFormat("y-M-d")
+				.setPrettyPrinting().create();
+		List<? extends BaseEntity> data = null;
+		if (this.controller.equals(UnitController.class.getName())) {
+			logger.info("Extracting " + UnitController.class.getName());
+			data = gson.fromJson(this.payload, RequestCreateUnitFormat.class)
+					.getData();
+		} else if (this.controller.equals(UnitTypeController.class.getName())) {
+			logger.info("Extracting " + UnitTypeController.class.getName());
+			data = gson.fromJson(this.payload,
+					RequestCreateUnitTypeFormat.class).getData();
+		} else if (this.controller.equals(WarehouseController.class.getName())) {
+			logger.info("Extracting " + WarehouseController.class.getName());
+			data = gson.fromJson(this.payload,
+					RequestCreateWarehouseFormat.class).getData();
+		}
+		return data;
+	}
 
 	public final CRUD getAction() {
 		return action;
-	}
-
-	public final String getReadStatement() {
-		return readStatement;
-	}
-
-	public final Map<String, String[]> getParams() {
-		return params;
-	}
-
-	public final Collection<? extends BaseEntity> getLastRead() {
-		return lastRead;
-	}
-
-	public final Gson getJsonForm() {
-		return jsonForm;
-	}
-
-	public long getProcessTime() {
-		return processTime;
-	}
-
-	public String getPayload() {
-		return this.payload;
-	}
-
-	public final void setLastRead(Collection<? extends BaseEntity> lastRead) {
-		this.lastRead = lastRead;
-	}
-
-	public final void setJsonForm(Gson jsonForm) {
-		this.jsonForm = jsonForm;
-	}
-
-	public void setProcessTime(long processTime) {
-		this.processTime = processTime;
 	}
 
 }
