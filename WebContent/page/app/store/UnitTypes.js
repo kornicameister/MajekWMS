@@ -15,5 +15,5 @@ Ext.define('WMS.store.UnitTypes', {
     model : 'WMS.model.entity.UnitType',
 
     autoLoad: true,
-    autoSync: true
+    autoSync: false
 });
