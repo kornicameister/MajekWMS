@@ -79,6 +79,9 @@ Ext.define('WMS.controller.Master', {
         var me = this,
             warehouse = me.getWarehousesStore().getActive();
 
+        // loading units
+        warehouse.units();
+
         Ext.getCmp('statusBar').setStatus({
             text : Ext.String.format('Selected {0} warehouse.', warehouse.get('name')),
             clear: {

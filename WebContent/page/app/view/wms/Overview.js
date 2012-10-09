@@ -21,23 +21,13 @@ Ext.define('WMS.view.wms.Overview', {
 
     items: [
         {
-            xtype   : 'panel',
-            flex    : 1,
-            layout  : {
-                type : 'vbox',
-                align: 'stretch',
-                pack : 'bottom'
+            xtype : 'panel',
+            flex  : 1,
+            layout: {
+                type: 'fit'
             },
-            defaults: {
-                collapsible: true
-            },
-            items   : [
-                {
-                    xtype : 'panel',
-                    itemId: 'warehouseDescription',
-                    title : 'Warehouse'
-                }
-            ]
+            itemId: 'warehouseDescription',
+            title : 'Warehouse'
         },
         {
             xtype: 'splitter'
@@ -46,7 +36,9 @@ Ext.define('WMS.view.wms.Overview', {
             xtype      : 'grid',
             itemId     : 'unitsGrid',
             plugins    : [
-                Ext.create('Ext.grid.plugin.RowEditing')
+                Ext.create('Ext.grid.plugin.RowEditing', {
+                    pluginId: 'unitRowEditor'
+                })
             ],
             flex       : 3,
             store      : 'Units',
@@ -122,6 +114,31 @@ Ext.define('WMS.view.wms.Overview', {
                         allowBlank: false,
                         maxLength : 250
                     }
+                }
+            ],
+            dockedItems: [
+                {
+                    xtype   : 'toolbar',
+                    layout  : {
+                        type: 'hbox',
+                        pack: 'center'
+                    },
+                    defaults: {
+                        width: 150
+                    },
+                    items   : [
+                        {
+                            text   : 'Add',
+                            itemId : 'add',
+                            iconCls: 'icon-add'
+                        },
+                        {
+                            itemId  : 'delete',
+                            text    : 'Delete',
+                            iconCls : 'icon-delete',
+                            disabled: true
+                        }
+                    ]
                 }
             ]
         }
