@@ -12,7 +12,8 @@ Ext.define('WMS.controller.Master', {
     extend: 'Ext.app.Controller',
 
     stores: ['Warehouses'],
-    views : ['MasterView','wizard.Warehouse'],
+    // TODO add warehouse.selector
+    views : ['MasterView', 'wizard.Warehouse'],
 
     init: function () {
         console.init('WMS.controller.Master initializing...');
@@ -44,21 +45,15 @@ Ext.define('WMS.controller.Master', {
                     scope        : me
                 });
             } else {
-                Ext.getCmp('statusBar').setStatus({
-                    text : 'Warehouse ' + store.getLastWarehouse().get('name') + ' up and running...',
-                    clear: {
-                        wait       : 10000,
-                        anim       : true,
-                        useDefaults: false
-                    }
-                });
+                console.log(String.format('Master:: Located warehouses at count [{0}]', warehouses.length));
+                me.openWarehouseSelector(warehouses);
             }
         });
         me.getWarehousesStore().addListener('update', me.onWarehouseCreated, me);
     },
 
     onWarehouseCreated: function (store) {
-        var warehouse = store.getLastWarehouse(),
+        var warehouse = store.getActive(),
             me = this;
         Ext.MessageBox.show({
             title        : 'Warehouse created',
@@ -93,13 +88,38 @@ Ext.define('WMS.controller.Master', {
         me.wizardwarehouse.show();
     },
 
+    openWarehouseSelector: function (warehouses) {
+//        Ext.getCmp('statusBar').setStatus({
+//            text : 'Warehouse ' + store.getLastWarehouse().get('name') + ' up and running...',
+//            clear: {
+//                wait       : 10000,
+//                anim       : true,
+//                useDefaults: false
+//            }
+//        });
+    },
+
+    /**
+     * Method called in response to click
+     * on submit button, that commence chain
+     * reaction that results in
+     * creating new warehouse
+     * @param button
+     */
     onWarehouseSubmit: function (button) {
         var form = button.up('form').getForm(),
             me = this;
 
         Ext.getCmp('statusBar').showBusy();
         if (form.isValid()) {
-            me.getWarehousesStore().addWarehouse(form.getValues());
+            var w = me
+                .getWarehousesStore()
+                .addWarehouse(form.getValues())[0];
+            if (Ext.isDefined(w)) {
+                me.getWarehousesStore().setActive(
+                    w.getId() ? w.getId() : w
+                );
+            }
         }
         Ext.getCmp('statusBar').clearStatus();
     }

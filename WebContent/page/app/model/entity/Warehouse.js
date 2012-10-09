@@ -21,10 +21,12 @@ Ext.define('WMS.model.entity.Warehouse', {
     ],
     associations: [
         {
-            name      : 'units',
-            type      : 'hasMany',
-            model     : 'WMS.model.entity.Unit',
-            foreignKey: 'fkWarehouse'
+            type       : 'hasMany',
+            model      : 'WMS.model.entity.Unit',
+            name       : 'units',
+            getterName : 'getUnits',
+            storeConfig: Ext.create('WMS.store.Units'),
+            autoLoad   : true
         }
     ],
 

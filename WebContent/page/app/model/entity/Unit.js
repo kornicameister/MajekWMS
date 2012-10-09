@@ -22,18 +22,22 @@ Ext.define('WMS.model.entity.Unit', {
     ],
     associations: [
         {
-            name      : 'unitType',
-            type      : 'hasOne',
-            model     : 'WMS.model.entity.UnitType',
-            getterName: 'getUnitType',
-            setterName: 'setUnitType',
-            foreignKey: 'fkUnitType'
+            associatedName: 'type',
+            type          : 'hasOne',
+            model         : 'WMS.model.entity.UnitType',
+            getterName    : 'getType',
+            setterName    : 'setType',
+            foreignKey    : 'fkUnitType'
         },
         {
-            name : 'products',
-            type : 'hasMany',
-            model: 'WMS.model.entity.Product'
+            associatedName: 'warehouse',
+            type          : 'belongsTo',
+            model         : 'WMS.model.entity.Warehouse',
+            getterName    : 'getWarehouse',
+            setterName    : 'setWarehouse',
+            foreignKey    : 'fkWarehouse'
         }
+        // TODO add products mapping
     ],
 
     //TODO validations

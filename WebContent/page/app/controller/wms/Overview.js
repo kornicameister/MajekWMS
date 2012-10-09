@@ -9,28 +9,17 @@ Ext.define('WMS.controller.wms.Overview', {
     extend: 'Ext.app.Controller',
 
     stores: ['Units'],
-    views : ['wizard.Unit', 'wms.Overview'],
+    views : ['wms.Overview'],
+    refs  : [
+        {ref: 'unitsGrid', name: 'UnitsGrid'}
+    ],
 
     init: function () {
         console.init('WMS.controller.wms.Overview initializing...');
         var me = this;
 
-        me.control({
-            '#submitUnit': {
-                click: me.onUnitSubmit
-            }
+        me.getUnitsStore().addListener('load', function () {
+            console.log('WMS.controller.wms.Overview:: Loaded units store');
         });
-    },
-
-    onUnitSubmit: function (button) {
-        var form = button.up('form').getForm(),
-            me = this,
-            unit = undefined;
-
-        Ext.getCmp('statusBar').showBusy();
-        if (form.isValid()) {
-            me.getStore('Warehouses').addUnit(form.getValues());
-        }
-        Ext.getCmp('statusBar').clearStatus();
     }
 });

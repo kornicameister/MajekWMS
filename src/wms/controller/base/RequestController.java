@@ -1,6 +1,7 @@
 package wms.controller.base;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.logging.Logger;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.proxy.HibernateProxy;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -21,6 +23,9 @@ import wms.model.BaseEntity;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 /**
  * This is base class for Controller, that implements all base-level method. And
@@ -66,8 +71,8 @@ public abstract class RequestController implements Controller {
 	 * @return NANO time that processing took
 	 */
 	public void process() {
-		logger.info(String.format("Processing [ %s ] request, started",
-				this.action.toString()));
+		logger.info(String.format("Processing [ %s ][ %s ] request, started",
+				this.action.toString(), this.controller));
 		Long startTime = System.nanoTime();
 		switch (this.action) {
 		case CREATE:
@@ -87,6 +92,7 @@ public abstract class RequestController implements Controller {
 	}
 
 	// CRUD
+	@Override
 	public void read() {
 		Session session = this.sessionFactory.openSession();
 		session.beginTransaction();
@@ -97,11 +103,12 @@ public abstract class RequestController implements Controller {
 		}
 	}
 
+	@Override
 	public void create() {
 		logger.entering(this.getClass().getName(), "create");
 		Serializable savedID = null;
 		Collection<? extends BaseEntity> data = this.extractFromPayload();
-		
+
 		// saving
 		Session session = this.sessionFactory.openSession();
 		session.beginTransaction();
@@ -113,7 +120,7 @@ public abstract class RequestController implements Controller {
 		}
 		session.getTransaction().commit();
 		// saving
-		
+
 		logger.exiting(this.getClass().getName(), "create");
 	}
 
@@ -121,8 +128,11 @@ public abstract class RequestController implements Controller {
 
 	@Override
 	public String buildResponse() {
-		Gson g = new GsonBuilder().setPrettyPrinting().setDateFormat("m-D-y")
-				.create();
+		Gson g = new GsonBuilder()
+				.setPrettyPrinting()
+				.setDateFormat("m-D-y")
+				.registerTypeHierarchyAdapter(HibernateProxy.class,
+						new HibernateProxySerializer()).create();
 		StringBuilder response = new StringBuilder();
 		switch (this.action) {
 		case CREATE:
@@ -142,10 +152,8 @@ public abstract class RequestController implements Controller {
 	}
 
 	protected Collection<? extends BaseEntity> extractFromPayload() {
-		Gson gson = new GsonBuilder()
-				.setDateFormat("y-M-d")
-				.setPrettyPrinting()
-				.create();
+		Gson gson = new GsonBuilder().setDateFormat("y-M-d")
+				.setPrettyPrinting().create();
 		List<BaseEntity> data = new ArrayList<>();
 
 		JSONObject payloadData = (JSONObject) JSONValue.parse(this.payload), dataElement = null;
@@ -155,9 +163,12 @@ public abstract class RequestController implements Controller {
 			JSONArray ddata = (JSONArray) payloadData.get("data");
 			for (short i = 0; i < ddata.size(); i++) {
 				dataElement = (JSONObject) ddata.get(i);
-				convertedElement = (BaseEntity) gson.fromJson(dataElement.toJSONString(), Class.forName(this.conversionModel.getName()));
+				convertedElement = (BaseEntity) gson.fromJson(
+						dataElement.toJSONString(),
+						Class.forName(this.conversionModel.getName()));
 				if (convertedElement != null) {
-					data.add(this.updateMissingDependencies(convertedElement, dataElement));
+					data.add(this.updateMissingDependencies(convertedElement,
+							dataElement));
 				}
 			}
 		} catch (Exception e) {
@@ -167,7 +178,26 @@ public abstract class RequestController implements Controller {
 
 		return data;
 	}
-	
-	protected abstract BaseEntity updateMissingDependencies(BaseEntity b, JSONObject payloadedData);
 
+	protected abstract BaseEntity updateMissingDependencies(BaseEntity b,
+			JSONObject payloadedData);
+
+	public class HibernateProxySerializer implements
+			JsonSerializer<HibernateProxy> {
+		@Override
+		public JsonElement serialize(HibernateProxy src, Type typeOfSrc,
+				JsonSerializationContext context) {
+			try {
+				GsonBuilder gsonBuilder = new GsonBuilder();
+				// below ensures deep deproxied serialization
+				gsonBuilder.registerTypeHierarchyAdapter(HibernateProxy.class,
+						new HibernateProxySerializer());
+				Object deProxied = src.getHibernateLazyInitializer()
+						.getImplementation();
+				return gsonBuilder.create().toJsonTree(deProxied);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
 }

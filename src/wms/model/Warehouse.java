@@ -1,18 +1,14 @@
 package wms.model;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -50,9 +46,6 @@ public class Warehouse extends BaseEntity {
 	@Column(name = "maxSize", nullable = false)
 	private Integer maximumSize;
 
-	@OneToMany(mappedBy = "warehouse", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Unit> units = new HashSet<>();
-
 	public Warehouse() {
 		super(); // for hibernate
 	}
@@ -73,7 +66,6 @@ public class Warehouse extends BaseEntity {
 			Integer maximumSize) {
 		super();
 		this.id = idWarehouse;
-		this.units = units;
 		this.createdDate = createdDate;
 		this.name = name;
 		this.description = description;
@@ -83,10 +75,6 @@ public class Warehouse extends BaseEntity {
 
 	public final Integer getIdWarehouse() {
 		return id;
-	}
-
-	public final Set<Unit> getUnits() {
-		return units;
 	}
 
 	public final Date getCreatedDate() {
@@ -111,10 +99,6 @@ public class Warehouse extends BaseEntity {
 
 	public final void setIdWarehouse(Integer idWarehouse) {
 		this.id = idWarehouse;
-	}
-
-	public final void setUnits(Set<Unit> units) {
-		this.units = units;
 	}
 
 	public final void setCreatedDate(Date createdDate) {

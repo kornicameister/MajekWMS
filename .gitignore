@@ -15,3 +15,5 @@
 *.ear
 
 # idea files
+/nbproject/private/
+/build/

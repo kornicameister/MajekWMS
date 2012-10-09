@@ -1,14 +1,11 @@
 package wms.model;
 
-import java.util.Set;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -44,9 +41,6 @@ public class UnitType extends BaseEntity {
 	@Column(name = "parentType", nullable = true, unique = false, insertable = true, updatable = true)
 	private Integer parentType;
 
-	@OneToMany(mappedBy = "type")
-	private Set<Unit> units;
-
 	public UnitType() {
 		super();
 	}
@@ -60,18 +54,7 @@ public class UnitType extends BaseEntity {
 		this.name = name;
 		this.parentType = parentType;
 	}
-
-	public UnitType(Integer idUnitType, String abbreviation,
-			String description, String name, Integer parentType, Set<Unit> units) {
-		super();
-		this.id = idUnitType;
-		this.abbreviation = abbreviation;
-		this.description = description;
-		this.name = name;
-		this.parentType = parentType;
-		this.units = units;
-	}
-
+	
 	public final Integer getIdUnitType() {
 		return id;
 	}
@@ -112,14 +95,6 @@ public class UnitType extends BaseEntity {
 		this.parentType = parentType;
 	}
 
-	public final Set<Unit> getUnits() {
-		return units;
-	}
-
-	public final void setUnits(Set<Unit> units) {
-		this.units = units;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,7 +108,6 @@ public class UnitType extends BaseEntity {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((parentType == null) ? 0 : parentType.hashCode());
-		result = prime * result + ((units == null) ? 0 : units.hashCode());
 		return result;
 	}
 
@@ -171,11 +145,6 @@ public class UnitType extends BaseEntity {
 				return false;
 		} else if (!parentType.equals(other.parentType))
 			return false;
-		if (units == null) {
-			if (other.units != null)
-				return false;
-		} else if (!units.equals(other.units))
-			return false;
 		return true;
 	}
 
@@ -206,11 +175,6 @@ public class UnitType extends BaseEntity {
 		if (getParentType() != null) {
 			builder.append("getParentType()=");
 			builder.append(getParentType());
-			builder.append(", ");
-		}
-		if (getUnits() != null) {
-			builder.append("getUnits()=");
-			builder.append(getUnits());
 			builder.append(", ");
 		}
 		builder.append("hashCode()=");

@@ -19,29 +19,28 @@ Ext.define('WMS.store.Warehouses', {
     autoLoad: true,
     autoSync: true,
 
+    activeWarehouse: undefined,
+
     getWarehouses: function () {
         return this['data'];
     },
 
-    getLastWarehouse: function () {
-        var records = this.getRange(),
-            l = records.length;
-        return records[l - 1];
+    setActive: function (wId) {
+        if (Ext.isNumber(wId)) {
+            this.activeWarehouse = this.getById(wId);
+        }else{
+            this.activeWarehouse = wId;
+        }
+    },
+
+    getActive: function () {
+        return this.activeWarehouse;
     },
 
     addWarehouse: function (model) {
         model = Ext.apply({
             size: 0
         }, model);
-        this.add([model]);
-    },
-
-    addUnit: function (model) {
-        var unit = Ext.create('WMS.model.entity.Unit',model),
-            lastWarehouse = this.getLastWarehouse();
-
-        unit.setUnitType(model['type']);
-        lastWarehouse.units().add(unit);
-        lastWarehouse.units().sync();
+        return this.add([model]);
     }
 });

@@ -7,7 +7,7 @@
 		
 		<!-- Library entries -->
 		<script type="text/javascript" src="page/extjs/ext-all-debug.js"></script>
-		<link rel="stylesheet" type="text/css" href="page/extjs/resources/css/ext-all-debug.css">
+		<link rel="stylesheet" type="text/css" href="page/extjs/resources/css/ext-all-gray-debug.css">
 		
 		<!-- MajekWMS entries -->
 		<link rel="stylesheet" type="text/css" href="page/resources/css/majekwms.css">

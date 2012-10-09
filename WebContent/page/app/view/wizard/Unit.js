@@ -34,9 +34,7 @@ Ext.define('WMS.view.wizard.Unit', {
 
                 typeAhead     : true,
                 forceSelection: true,
-                allowBlank    : false,
-
-                emptyText: 'Description of the warehouse'
+                allowBlank    : false
             },
             {
                 xtype     : 'textarea',

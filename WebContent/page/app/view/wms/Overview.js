@@ -18,9 +18,9 @@ Ext.define('WMS.view.wms.Overview', {
     ],
 
     layout: {
-        type   : 'hbox',
-        align  : 'stretch',
-        pack   : 'center'
+        type : 'hbox',
+        align: 'stretch',
+        pack : 'center'
     },
 
     items: [
@@ -28,9 +28,9 @@ Ext.define('WMS.view.wms.Overview', {
             xtype   : 'panel',
             flex    : 1,
             layout  : {
-                type   : 'vbox',
-                align  : 'stretch',
-                pack   : 'bottom'
+                type : 'vbox',
+                align: 'stretch',
+                pack : 'bottom'
             },
             defaults: {
                 collapsible: true
@@ -38,11 +38,13 @@ Ext.define('WMS.view.wms.Overview', {
             items   : [
                 {
                     xtype : 'panel',
-                    itemId: 'warehouseDescription'
+                    itemId: 'warehouseDescription',
+                    title : 'Warehouse'
                 },
                 {
                     xtype    : 'wizardunit',
                     itemId   : 'unitWizardForm',
+                    title    : 'New unit wizard',
                     collapsed: true
                 }
             ]
@@ -51,15 +53,88 @@ Ext.define('WMS.view.wms.Overview', {
             xtype: 'splitter'
         },
         {
-            xtype  : 'grid',
-            itemId : 'unitsGrid',
-            flex   : 3,
-            store  : Ext.getStore('Units'),
-            columns: [
-                {header: 'Name', dataIndex: 'name'},
-                {header: 'Size', dataIndex: 'size'},
-                {header: 'Maximum size', dataIndex: 'maxSize'},
-                {header: 'Description', dataIndex: 'description'}
+            xtype      : 'grid',
+            itemId     : 'unitsGrid',
+            plugins    : [
+                Ext.create('Ext.grid.plugin.RowEditing')
+            ],
+            flex       : 3,
+            store      : Ext.create('WMS.store.Units', {
+                storeId: 'Units'
+            }),
+            columnWidth: 120,
+            viewConfig : {
+                forceFit: true
+            },
+            columns    : [
+                {
+                    header   : 'ID',
+                    dataIndex: 'id',
+                    hidden   : true,
+                    width    : 20
+                },
+                {
+                    header   : 'Name',
+                    dataIndex: 'name',
+                    field    : {
+                        xtype     : 'textfield',
+                        name      : 'name',
+                        allowBlank: false
+                    }
+                },
+                {
+                    header   : 'Size',
+                    dataIndex: 'size',
+                    field    : {
+                        xtype  : 'numberfield',
+                        enabled: false,
+                        value  : 0
+                    }
+                },
+                {
+                    header   : 'Maximum size',
+                    dataIndex: 'maximumSize',
+                    field    : {
+                        xtype            : 'numberfield',
+                        name             : 'maximumSize',
+                        allowBlank       : false,
+                        value            : 100,
+                        minValue         : 1,
+                        maxValue         : Number.MAX_VALUE,
+                        step             : 200,
+                        keyNavEnabled    : true,
+                        mouseWheelEnabled: true
+                    }
+                },
+                {
+                    header: 'Type',
+                    field : {
+                        xtype: 'combo',
+                        name : 'type',
+
+                        store       : Ext.create('WMS.store.UnitTypes', {
+                            storeId    : 'UnitTypes',
+                            autoDestroy: true
+                        }),
+                        valueField  : 'id',
+                        displayField: 'name',
+
+                        typeAhead     : true,
+                        forceSelection: true,
+                        allowBlank    : false
+                    }
+                },
+                {
+                    header   : 'Description',
+                    dataIndex: 'description',
+                    flex     : 3,
+                    field    : {
+                        xtype     : 'textarea',
+                        name      : 'description',
+                        allowBlank: false,
+                        maxLength : 250
+                    }
+                }
             ]
         }
     ]

@@ -23,10 +23,8 @@ Ext.define('WMS.model.entity.Product', {
         {name: 'measure', type: 'hasOne', model: 'WMS.model.entity.Measure'},
         {name: 'vendor', type: 'hasOne', model: 'WMS.model.entity.Client'}
     ],
-    validations : [
-        { name: 'length', field: 'name', min: 5, max: 45},
-        { name: 'length', field: 'description', min: 1, max: 250}
-    ],
+
+    // TODO validations
 
     proxy: {
         type: 'wms',
