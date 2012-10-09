@@ -8,17 +8,10 @@
  * Created: 28-09-2012
  */
 
-Ext.define('WMS.view.wizard.Warehouse', {
+Ext.define('WMS.view.dialog.Warehouse', {
     extend: 'Ext.window.Window',
     alias : 'widget.wizardwarehouse',
     title : 'New warehouse wizard',
-    width : 440,
-
-    defaults: {
-        border: false,
-        frame : false
-    },
-    layout  : 'fit',
 
     items: {
         xtype: 'form',

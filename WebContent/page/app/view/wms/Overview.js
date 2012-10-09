@@ -13,10 +13,6 @@ Ext.define('WMS.view.wms.Overview', {
     alias  : 'widget.wmsoverviews',
     iconCls: 'view-wms-overview',
 
-    requires: [
-        'WMS.view.wizard.Unit'
-    ],
-
     layout: {
         type : 'hbox',
         align: 'stretch',
@@ -40,12 +36,6 @@ Ext.define('WMS.view.wms.Overview', {
                     xtype : 'panel',
                     itemId: 'warehouseDescription',
                     title : 'Warehouse'
-                },
-                {
-                    xtype    : 'wizardunit',
-                    itemId   : 'unitWizardForm',
-                    title    : 'New unit wizard',
-                    collapsed: true
                 }
             ]
         },
@@ -59,9 +49,7 @@ Ext.define('WMS.view.wms.Overview', {
                 Ext.create('Ext.grid.plugin.RowEditing')
             ],
             flex       : 3,
-            store      : Ext.create('WMS.store.Units', {
-                storeId: 'Units'
-            }),
+            store      : 'Units',
             columnWidth: 120,
             viewConfig : {
                 forceFit: true

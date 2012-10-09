@@ -13,28 +13,51 @@ Ext.define('WMS.controller.Master', {
 
     stores: ['Warehouses'],
     // TODO add warehouse.selector
-    views : ['MasterView', 'wizard.Warehouse'],
+    views : [
+        'MasterView',
+        'dialog.Warehouse',
+        'dialog.WarehouseSelector'
+    ],
 
     init: function () {
         console.init('WMS.controller.Master initializing...');
-        var me = this;
+        var me = this,
+            warehousesStore = me.getWarehousesStore(),
+            warehouses = undefined;
 
         me.control({
-            'wizardwarehouse': {
+            'wizardwarehouse'             : {
                 show: function () {
                     console.log('Master:: WarehouseWizard is visible')
                 }
             },
-            '#submitButton'  : {
+            '#submitButton'               : {
                 click: me.onWarehouseSubmit
+            },
+            '#warehouseSelectorOpenButton': {
+                click: me.onWarehouseSelected
+            },
+            'grid'                        : {
+                selectionchange: function (grid, selected) {
+                    selected = selected[0];
+                    console.log('Master:: Warehouse ' + Ext.String.format('{0} marked as active', selected.get('name')));
+                    Ext.getCmp('statusBar').setStatus({
+                        text : Ext.String.format('Selected {0} warehouse.', selected.get('name')),
+                        clear: {
+                            wait       : 10000,
+                            anim       : true,
+                            useDefaults: false
+                        }
+                    });
+                    warehousesStore.setActive(selected);
+                }
             }
         });
 
         me.getWarehousesStore().addListener('load', function (store) {
-            var warehouses = store.getWarehouses();
+            warehouses = store.getWarehouses();
             if (warehouses.length === 0) {
                 console.log("Master:: Found no warehouses, commencing loading warehouse wizard");
-
                 Ext.MessageBox.show({
                     title        : 'No warehouse found...',
                     msg          : 'MajekWMS detected that there is no warehouse defined',
@@ -45,11 +68,27 @@ Ext.define('WMS.controller.Master', {
                     scope        : me
                 });
             } else {
-                console.log(String.format('Master:: Located warehouses at count [{0}]', warehouses.length));
+                console.log(Ext.String.format('Master:: Located warehouses at count [{0}]', warehouses.length));
                 me.openWarehouseSelector(warehouses);
             }
         });
-        me.getWarehousesStore().addListener('update', me.onWarehouseCreated, me);
+        warehousesStore.addListener('update', me.onWarehouseCreated, me);
+    },
+
+    onWarehouseSelected: function () {
+        var me = this,
+            warehouse = me.getWarehousesStore().getActive();
+
+        Ext.getCmp('statusBar').setStatus({
+            text : Ext.String.format('Selected {0} warehouse.', warehouse.get('name')),
+            clear: {
+                wait       : 10000,
+                anim       : true,
+                useDefaults: false
+            }
+        });
+
+        me.warehouseselector.close();
     },
 
     onWarehouseCreated: function (store) {
@@ -84,19 +123,14 @@ Ext.define('WMS.controller.Master', {
             }
         });
 
-        me.wizardwarehouse = me.getView('wizard.Warehouse').create();
+        me.wizardwarehouse = me.getView('dialog.Warehouse').create();
         me.wizardwarehouse.show();
     },
 
     openWarehouseSelector: function (warehouses) {
-//        Ext.getCmp('statusBar').setStatus({
-//            text : 'Warehouse ' + store.getLastWarehouse().get('name') + ' up and running...',
-//            clear: {
-//                wait       : 10000,
-//                anim       : true,
-//                useDefaults: false
-//            }
-//        });
+        var me = this;
+        me.warehouseselector = me.getView('dialog.WarehouseSelector').create();
+        me.warehouseselector.show();
     },
 
     /**
