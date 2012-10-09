@@ -39,7 +39,9 @@ Ext.define('WMS.model.entity.Unit', {
         }
         // TODO add products mapping
     ],
-
+    sorters     : [
+        'id', 'name'
+    ],
     //TODO validations
 
     proxy: {

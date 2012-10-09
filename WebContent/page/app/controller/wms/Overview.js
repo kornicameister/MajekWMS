@@ -20,17 +20,25 @@ Ext.define('WMS.controller.wms.Overview', {
             unitsStore = me.getUnitsStore();
 
         me.control({
-            '#add'   : {
+            'wmsoverviews #add'      : {
                 click: me.onNewUnit
             },
-            '#delete': {
+            'wmsoverviews #delete'   : {
                 click: me.onUnitDelete
+            },
+            'wmsoverviews #unitsGrid': {
+                'selectionchange': me.onUnitSelectionChanged
             }
         });
 
         unitsStore.addListener('load', function () {
             console.log('WMS.controller.wms.Overview:: Loaded units store');
         });
+    },
+
+    onUnitSelectionChanged: function (selModel, selections) {
+        var grid = this.getUnitsGrid();
+        grid.down('#delete').setDisabled(selections.length === 0);
     },
 
     onNewUnit: function () {
@@ -40,16 +48,35 @@ Ext.define('WMS.controller.wms.Overview', {
 
         store.insert(0, new WMS.model.entity.Unit());
         grid.getPlugin('unitRowEditor').startEdit(0, 0);
+
+        Ext.getCmp('statusBar').setStatus({
+            text : 'You\'ve just added new unit...',
+            clear: {
+                wait       : 10000,
+                anim       : true,
+                useDefaults: false
+            }
+        });
     },
 
     onUnitDelete: function () {
         var me = this,
             store = me.getUnitsStore(),
-            grid = me.getUnitsGrid();
+            grid = me.getUnitsGrid(),
+            selection = grid.getView().getSelectionModel().getSelection();
 
-        var selection = grid.getView().getSelectionModel().getSelection()[0];
         if (selection) {
             store.remove(selection);
+            Ext.getCmp('statusBar').setStatus({
+                text : Ext.String.format('You\'ve just deleted {0} {1}',
+                    selection.length,
+                    selection.length > 0 ? 'units' : 'unit'),
+                clear: {
+                    wait       : 10000,
+                    anim       : true,
+                    useDefaults: false
+                }
+            });
         }
     }
 });

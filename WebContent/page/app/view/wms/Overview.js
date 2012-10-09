@@ -35,16 +35,13 @@ Ext.define('WMS.view.wms.Overview', {
         {
             xtype      : 'grid',
             itemId     : 'unitsGrid',
-            plugins    : [
-                Ext.create('Ext.grid.plugin.RowEditing', {
-                    pluginId: 'unitRowEditor'
-                })
-            ],
-            flex       : 3,
             store      : 'Units',
+            emptyText  : 'No units for selected warehouse',
+            flex       : 3,
             columnWidth: 120,
-            viewConfig : {
-                forceFit: true
+            selModel   : {
+                xtype: 'rowmodel',
+                mode : 'MULTI'
             },
             columns    : [
                 {
@@ -66,9 +63,10 @@ Ext.define('WMS.view.wms.Overview', {
                     header   : 'Size',
                     dataIndex: 'size',
                     field    : {
-                        xtype  : 'numberfield',
-                        enabled: false,
-                        value  : 0
+                        xtype   : 'numberfield',
+                        enabled : false,
+                        editable: false,
+                        value   : 0
                     }
                 },
                 {
@@ -143,6 +141,11 @@ Ext.define('WMS.view.wms.Overview', {
                         }
                     ]
                 }
+            ],
+            plugins    : [
+                Ext.create('Ext.grid.plugin.RowEditing', {
+                    pluginId: 'unitRowEditor'
+                })
             ]
         }
     ]
