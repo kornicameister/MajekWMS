@@ -50,7 +50,7 @@ Ext.define('WMS.view.wms.Overview', {
                 {
                     header   : 'ID',
                     dataIndex: 'id',
-                    hidden   : true,
+                    editable : false,
                     width    : 20
                 },
                 {
@@ -87,11 +87,10 @@ Ext.define('WMS.view.wms.Overview', {
                     }
                 },
                 {
-                    header: 'Type',
-                    field : {
-                        xtype: 'combo',
-                        name : 'type',
-
+                    header   : 'Type',
+                    dataIndex: 'type',
+                    editor   : {
+                        xtype       : 'combo',
                         store       : Ext.create('WMS.store.UnitTypes', {
                             storeId    : 'UnitTypes',
                             autoDestroy: true
@@ -99,9 +98,13 @@ Ext.define('WMS.view.wms.Overview', {
                         valueField  : 'id',
                         displayField: 'name',
 
-                        typeAhead     : true,
-                        forceSelection: true,
-                        allowBlank    : false
+                        typeAhead    : true,
+                        triggerAction: 'all',
+                        selectOnTab  : true,
+                        lazyRender   : true,
+                        listClass    : 'x-combo-list-small',
+
+                        allowBlank: false
                     }
                 },
                 {

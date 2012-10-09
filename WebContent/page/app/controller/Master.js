@@ -37,7 +37,7 @@ Ext.define('WMS.controller.Master', {
             '#warehouseSelectorOpenButton': {
                 click: me.onWarehouseSelected
             },
-            'grid'                        : {
+            'warehouseselector grid'      : {
                 selectionchange: function (grid, selected) {
                     selected = selected[0];
                     console.log('Master:: Warehouse ' + Ext.String.format('{0} marked as active', selected.get('name')));
