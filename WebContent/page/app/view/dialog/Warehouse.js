@@ -12,6 +12,7 @@ Ext.define('WMS.view.dialog.Warehouse', {
     extend: 'Ext.window.Window',
     alias : 'widget.wizardwarehouse',
     title : 'New warehouse wizard',
+    width : 440,
 
     items: {
         xtype: 'form',

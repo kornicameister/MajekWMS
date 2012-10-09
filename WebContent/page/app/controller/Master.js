@@ -41,14 +41,6 @@ Ext.define('WMS.controller.Master', {
                 selectionchange: function (grid, selected) {
                     selected = selected[0];
                     console.log('Master:: Warehouse ' + Ext.String.format('{0} marked as active', selected.get('name')));
-                    Ext.getCmp('statusBar').setStatus({
-                        text : Ext.String.format('Selected {0} warehouse.', selected.get('name')),
-                        clear: {
-                            wait       : 10000,
-                            anim       : true,
-                            useDefaults: false
-                        }
-                    });
                     warehousesStore.setActive(selected);
                 }
             }
@@ -72,42 +64,19 @@ Ext.define('WMS.controller.Master', {
                 me.openWarehouseSelector(warehouses);
             }
         });
-        warehousesStore.addListener('update', me.onWarehouseCreated, me);
+        warehousesStore.addListener('update', me.openViewport, me);
     },
 
     onWarehouseSelected: function () {
         var me = this,
             warehouse = me.getWarehousesStore().getActive();
-
-        // loading units
         warehouse.units();
-
-        Ext.getCmp('statusBar').setStatus({
-            text : Ext.String.format('Selected {0} warehouse.', warehouse.get('name')),
-            clear: {
-                wait       : 10000,
-                anim       : true,
-                useDefaults: false
-            }
-        });
-
         me.warehouseselector.close();
+        me.openViewport();
     },
 
-    onWarehouseCreated: function (store) {
-        var warehouse = store.getActive(),
-            me = this;
-        Ext.MessageBox.show({
-            title        : 'Warehouse created',
-            msg          : 'MajekWMS created warehouse ' + warehouse.get('name'),
-            buttons      : Ext.MessageBox.OK,
-            animateTarget: Ext.getBody(),
-            fn           : function () {
-                me.wizardwarehouse.close();
-            },
-            icon         : Ext.MessageBox.INFO,
-            scope        : this
-        });
+    openViewport: function () {
+        Ext.create('WMS.view.Viewport');
     },
 
     /**
@@ -116,21 +85,11 @@ Ext.define('WMS.controller.Master', {
      */
     openWarehouseWizard: function () {
         var me = this;
-
-        Ext.getCmp('statusBar').setStatus({
-            text : 'No warehouses found, opening Warehouse wizard',
-            clear: {
-                wait       : 10000,
-                anim       : true,
-                useDefaults: false
-            }
-        });
-
         me.wizardwarehouse = me.getView('dialog.Warehouse').create();
         me.wizardwarehouse.show();
     },
 
-    openWarehouseSelector: function (warehouses) {
+    openWarehouseSelector: function () {
         var me = this;
         me.warehouseselector = me.getView('dialog.WarehouseSelector').create();
         me.warehouseselector.show();
@@ -147,7 +106,6 @@ Ext.define('WMS.controller.Master', {
         var form = button.up('form').getForm(),
             me = this;
 
-        Ext.getCmp('statusBar').showBusy();
         if (form.isValid()) {
             var w = me
                 .getWarehousesStore()
@@ -156,8 +114,8 @@ Ext.define('WMS.controller.Master', {
                 me.getWarehousesStore().setActive(
                     w.getId() ? w.getId() : w
                 );
+                me.openViewport();
             }
         }
-        Ext.getCmp('statusBar').clearStatus();
     }
 });

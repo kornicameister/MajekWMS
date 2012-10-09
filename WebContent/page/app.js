@@ -28,7 +28,7 @@
                 name              : 'WMS',
                 appFolder         : 'page/app',
                 enableQuickTips   : true,
-                autoCreateViewport: true,
+                autoCreateViewport: false,
 
                 controllers: [
                     // viewport WMSView underlying controller

@@ -26,8 +26,11 @@ Ext.define('WMS.view.wms.Overview', {
             layout: {
                 type: 'fit'
             },
-            itemId: 'warehouseDescription',
-            title : 'Warehouse'
+            itemId: 'description',
+            title : 'Warehouse',
+            tpl   : new Ext.XTemplate(
+                '<p>Name: <strong>{name}</strong></p>'
+            )
         },
         {
             xtype: 'splitter'

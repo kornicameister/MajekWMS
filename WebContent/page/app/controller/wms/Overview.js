@@ -11,13 +11,15 @@ Ext.define('WMS.controller.wms.Overview', {
     stores: ['Units'],
     views : ['wms.Overview'],
     refs  : [
-        {ref: 'unitsGrid', selector: 'grid'}
+        {ref: 'unitsGrid', selector: 'grid'},
+        {ref: 'warehouseDescription', selector: 'panel'}
     ],
 
     init: function () {
         console.init('WMS.controller.wms.Overview initializing...');
         var me = this,
-            unitsStore = me.getUnitsStore();
+            unitsStore = me.getUnitsStore(),
+            warehouses = me.getController('Master').getWarehousesStore();
 
         me.control({
             'wmsoverviews #add'      : {
@@ -32,7 +34,14 @@ Ext.define('WMS.controller.wms.Overview', {
         });
 
         unitsStore.addListener('load', function () {
-            console.log('WMS.controller.wms.Overview:: Loaded units store');
+            console.log('Overview:: Loaded units store');
+        });
+        warehouses.addListener('activechanged', function (store, activeWarehouse) {
+            var wd = me.getWarehouseDescription();
+            if (Ext.isDefined(wd)) {
+                console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
+                wd.update(activeWarehouse.getData());
+            }
         });
     },
 

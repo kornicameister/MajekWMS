@@ -6,9 +6,10 @@
  */
 
 Ext.define('WMS.view.dialog.WarehouseSelector', {
-    extend: 'WMS.view.dialog.BaseDialog',
-    alias : 'widget.warehouseselector',
-    title : 'Choose Warehouse',
+    extend   : 'WMS.view.dialog.BaseDialog',
+    alias    : 'widget.warehouseselector',
+    title    : 'Choose Warehouse',
+    width    : 666,
 
     items: {
         xtype   : 'panel',
@@ -21,6 +22,16 @@ Ext.define('WMS.view.dialog.WarehouseSelector', {
             flex: 1
         },
         items   : [
+            ,
+            {
+                xtype: 'panel',
+                title: 'Welcome',
+                // todo, load it from hardcoded json file
+                html : 'Welcome at MajekWMS. Application has detected' +
+                    ' that you have already defined some warehouses to be used' +
+                    ' therefore you are allowed to pick one from the list on the' +
+                    ' right side, and we can have some fun.'
+            },
             {
                 xtype : 'grid',
                 itemId: 'warehouseSelectorGrid',

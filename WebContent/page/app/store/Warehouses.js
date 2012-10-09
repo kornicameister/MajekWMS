@@ -21,6 +21,22 @@ Ext.define('WMS.store.Warehouses', {
 
     activeWarehouse: undefined,
 
+    constructor: function (config) {
+        config = Ext.Object.merge({}, config);
+
+        this.addEvents(
+            /**
+             * @event activechanged
+             * @description fires for every active warehouse change
+             * @param warehousesStore
+             * @param activeWarehouse
+             */
+            'activechanged'
+        );
+
+        this.callParent([config])
+    },
+
     getWarehouses: function () {
         return this['data'];
     },
@@ -28,9 +44,10 @@ Ext.define('WMS.store.Warehouses', {
     setActive: function (wId) {
         if (Ext.isNumber(wId)) {
             this.activeWarehouse = this.getById(wId);
-        }else{
+        } else {
             this.activeWarehouse = wId;
         }
+        this.fireEvent('activechanged', this, this.activeWarehouse);
     },
 
     getActive: function () {
