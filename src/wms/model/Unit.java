@@ -48,15 +48,15 @@ public class Unit extends BaseEntity {
 	private Integer maximumSize;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "fkWarehouse", referencedColumnName = "idWarehouse")
+	@JoinColumn(name = "warehouse_id", referencedColumnName = "idWarehouse")
 	private Warehouse warehouse;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "fkUnitType", referencedColumnName = "idUnitType")
+	@JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
 	private UnitType type;
 
 	@ManyToMany
-	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "fkUnit", referencedColumnName = "idunit") }, inverseJoinColumns = { @JoinColumn(name = "fkProduct", referencedColumnName = "idProduct") })
+	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "unit_id", referencedColumnName = "idUnit") }, inverseJoinColumns = { @JoinColumn(name = "fkProduct", referencedColumnName = "idProduct") })
 	private Set<Product> products = new HashSet<>();
 	
 

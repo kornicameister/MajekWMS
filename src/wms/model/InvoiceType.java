@@ -32,7 +32,7 @@ public class InvoiceType extends BaseEntity {
 	private String name;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idInvoiceType", referencedColumnName = "fkInvoiceType", insertable = false, updatable = false)
+	@JoinColumn(name = "idInvoiceType", referencedColumnName = "invoicetype_id", insertable = false, updatable = false)
 	private Invoice invoice;
 
 	public InvoiceType() {

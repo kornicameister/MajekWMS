@@ -20,8 +20,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "invoiceProduct", schema = "majekwms")
 @AssociationOverrides({
-		@AssociationOverride(name = "idInvoice", joinColumns = @JoinColumn(name = "fkInvoice")),
-		@AssociationOverride(name = "idProduct", joinColumns = @JoinColumn(name = "fkProduct")) })
+		@AssociationOverride(name = "idInvoice", joinColumns = @JoinColumn(name = "invoice_id")),
+		@AssociationOverride(name = "idProduct", joinColumns = @JoinColumn(name = "product_id")) })
 public class InvoiceProduct implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1269575448414133565L;

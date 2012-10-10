@@ -50,7 +50,7 @@ public class Invoice extends BaseEntity {
 	private String description;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fkClient", referencedColumnName = "idClient")
+	@JoinColumn(name = "client_id", referencedColumnName = "idClient")
 	private Client invoiceClient;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

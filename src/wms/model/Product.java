@@ -55,13 +55,13 @@ public class Product extends BaseEntity {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
-	@ManyToMany(mappedBy = "clientsProducts")
+	@ManyToMany(mappedBy = "products")
 	private Set<Client> vendor = new HashSet<>(0);
 
 	@ManyToMany(mappedBy = "products")
 	private Set<Unit> units = new HashSet<>(0);
 
-	@JoinColumn(name = "fkMeasure", referencedColumnName = "idMeasure")
+	@JoinColumn(name = "measure_id", referencedColumnName = "idMeasure")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Measure measure;
 

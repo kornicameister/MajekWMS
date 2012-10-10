@@ -49,9 +49,9 @@ public class Client extends BaseEntity {
 	
 	@ManyToMany
 	@JoinTable(name = "productClient",
-			joinColumns = {@JoinColumn(name = "fkClient", referencedColumnName="idClient")},
-			inverseJoinColumns = {@JoinColumn(name = "fkProduct", referencedColumnName="idProduct")})
-	private Set<Product> clientsProducts = new HashSet<>(0);
+			joinColumns = {@JoinColumn(name = "client_id", referencedColumnName="idClient")},
+			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName="idProduct")})
+	private Set<Product> products = new HashSet<>(0);
 
 	public Client() {
 		super(); // hibernate
@@ -79,7 +79,7 @@ public class Client extends BaseEntity {
 		this.name = name;
 		this.company = company;
 		this.description = description;
-		this.clientsProducts = products;
+		this.products = products;
 		this.invoices = invoices;
 	}
 
@@ -90,7 +90,7 @@ public class Client extends BaseEntity {
 		this.name = name;
 		this.company = company;
 		this.description = description;
-		this.clientsProducts = products;
+		this.products = products;
 		this.invoices = invoices;
 	}
 
@@ -115,7 +115,7 @@ public class Client extends BaseEntity {
 	}
 
 	public final Set<Product> getProducts() {
-		return clientsProducts;
+		return products;
 	}
 
 	public final Set<Invoice> getInvoices() {
@@ -135,7 +135,7 @@ public class Client extends BaseEntity {
 	}
 
 	public final void setProducts(Set<Product> products) {
-		this.clientsProducts = products;
+		this.products = products;
 	}
 
 	public final void setInvoices(Set<Invoice> invoices) {
