@@ -11,35 +11,44 @@
 Ext.define('WMS.model.entity.Unit', {
     extend: 'Ext.data.Model',
 
-    fields      : [
-        'id',
+    requires: [
+        'WMS.model.entity.Product'
+    ],
+
+    fields: [
         'name',
         'description',
-        'fkUnitType',
-        'fkWarehouse',
+        'unittype_id',
+        'warehouse_id',
         { name: 'size', type: 'int', defaultValue: 0},
         { name: 'maximumSize', type: 'int', defaultValue: 0}
     ],
+
     associations: [
         {
-            associatedName: 'type',
-            type          : 'hasOne',
-            model         : 'WMS.model.entity.UnitType',
-            getterName    : 'getType',
-            setterName    : 'setType',
-            foreignKey    : 'fkUnitType'
-        },
-        {
-            associatedName: 'warehouse',
             type          : 'belongsTo',
+            associationKey: 'warehouse',
             model         : 'WMS.model.entity.Warehouse',
             getterName    : 'getWarehouse',
             setterName    : 'setWarehouse',
-            foreignKey    : 'fkWarehouse'
+            foreignKey    : 'warehouse_id'
+        },
+        {
+            type          : 'hasOne',
+            associationKey: 'type',
+            model         : 'WMS.model.entity.UnitType',
+            getterName    : 'getType',
+            setterName    : 'setType',
+            foreignKey    : 'unittype_id'
+        },
+        {
+            type          : 'hasMany',
+            associationKey: 'products',
+            model         : 'WMS.model.entity.Product'
         }
-        // TODO add products mapping
     ],
-    sorters     : [
+
+    sorters: [
         'id', 'name'
     ],
     //TODO validations

@@ -9,10 +9,12 @@
  */
 
 Ext.define('WMS.model.entity.Warehouse', {
-    extend: 'Ext.data.Model',
+    extend  : 'Ext.data.Model',
+    requires: [
+        'WMS.model.entity.Unit'
+    ],
 
     fields      : [
-        'id',
         'name',
         'description',
         { name: 'maximumSize', type: 'int', defaultValue: 0},
@@ -22,11 +24,12 @@ Ext.define('WMS.model.entity.Warehouse', {
     associations: [
         {
             type       : 'hasMany',
+            foreignKey : 'warehouse_id',
+            name       : 'getUnits',
             model      : 'WMS.model.entity.Unit',
-            name       : 'units',
-            getterName : 'getUnits',
-            storeConfig: Ext.create('WMS.store.Units'),
-            autoLoad   : true
+            storeConfig: {
+                storeId: 'Units'
+            }
         }
     ],
 

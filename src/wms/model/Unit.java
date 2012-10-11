@@ -50,15 +50,22 @@ public class Unit extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "warehouse_id", referencedColumnName = "idWarehouse")
 	private Warehouse warehouse;
-	
+
+	@Basic
+	@Column(name = "warehouse_id", insertable = false, updatable = false)
+	private Integer warehouse_id;
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
 	private UnitType type;
 
+	@Basic
+	@Column(name = "unittype_id", insertable = false, updatable = false)
+	private Integer unittype_id;
+
 	@ManyToMany
-	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "unit_id", referencedColumnName = "idUnit") }, inverseJoinColumns = { @JoinColumn(name = "fkProduct", referencedColumnName = "idProduct") })
+	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "unit_id", referencedColumnName = "idUnit") }, inverseJoinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "idProduct") })
 	private Set<Product> products = new HashSet<>();
-	
 
 	public Unit() {
 		super();
@@ -74,82 +81,92 @@ public class Unit extends BaseEntity {
 		this.maximumSize = maximumSize;
 	}
 
-	public Unit(Integer idUnit, String name, String description, Integer size,
-			Integer maximumSize, Warehouse masterWarehouse,
-			Set<Product> unitsProducts, UnitType unitType) {
+	public Unit(Integer id, String name, String description, Integer size,
+			Integer maximumSize, Warehouse warehouse, UnitType type,
+			Set<Product> products) {
 		super();
-		this.id = idUnit;
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.size = size;
 		this.maximumSize = maximumSize;
-		this.warehouse = masterWarehouse;
-		this.products = unitsProducts;
-		this.type = unitType;
+		this.setWarehouse(warehouse);
+		this.setType(type);
+		this.products = products;
 	}
 
-	public final Integer getIdUnit() {
+	public final Integer getId() {
 		return id;
+	}
+
+	public final void setId(Integer id) {
+		this.id = id;
 	}
 
 	public final String getName() {
 		return name;
 	}
 
-	public final String getDescription() {
-		return description;
-	}
-
-	public final Integer getSize() {
-		return size;
-	}
-
-	public final Integer getMaximumSize() {
-		return maximumSize;
-	}
-
-	public final Warehouse getMasterWarehouse() {
-		return warehouse;
-	}
-
-	public final Set<Product> getUnitsProducts() {
-		return products;
-	}
-
-	public final UnitType getUnitType() {
-		return type;
-	}
-
-	public final void setIdUnit(Integer idUnit) {
-		this.id = idUnit;
-	}
-
 	public final void setName(String name) {
 		this.name = name;
+	}
+
+	public final String getDescription() {
+		return description;
 	}
 
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
+	public final Integer getSize() {
+		return size;
+	}
+
 	public final void setSize(Integer size) {
 		this.size = size;
+	}
+
+	public final Integer getMaximumSize() {
+		return maximumSize;
 	}
 
 	public final void setMaximumSize(Integer maximumSize) {
 		this.maximumSize = maximumSize;
 	}
 
-	public final void setMasterWarehouse(Warehouse masterWarehouse) {
-		this.warehouse = masterWarehouse;
+	public final Warehouse getWarehouse() {
+		return warehouse;
 	}
 
-	public final void setUnitsProducts(Set<Product> unitsProducts) {
-		this.products = unitsProducts;
+	public final void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
+		this.warehouse_id = warehouse.getIdWarehouse();
 	}
 
-	public final void setUnitType(UnitType unitType) {
-		this.type = unitType;
+	public final Integer getWarehousId() {
+		return warehouse_id;
+	}
+
+	public final UnitType getType() {
+		return type;
+	}
+
+	public final void setType(UnitType type) {
+		this.type = type;
+		this.unittype_id = type.getIdUnitType();
+	}
+
+	public final Integer getUnitTypeId() {
+		return unittype_id;
+	}
+
+	public final Set<Product> getProducts() {
+		return products;
+	}
+
+	public final void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
 	@Override
@@ -160,15 +177,18 @@ public class Unit extends BaseEntity {
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
-				+ ((warehouse == null) ? 0 : warehouse.hashCode());
-		result = prime * result
 				+ ((maximumSize == null) ? 0 : maximumSize.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((size == null) ? 0 : size.hashCode());
-		result = prime * result
-				+ ((type == null) ? 0 : type.hashCode());
 		result = prime * result
 				+ ((products == null) ? 0 : products.hashCode());
+		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result
+				+ ((unittype_id == null) ? 0 : unittype_id.hashCode());
+		result = prime * result
+				+ ((warehouse == null) ? 0 : warehouse.hashCode());
+		result = prime * result
+				+ ((warehouse_id == null) ? 0 : warehouse_id.hashCode());
 		return result;
 	}
 
@@ -178,7 +198,7 @@ public class Unit extends BaseEntity {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (!(obj instanceof Unit))
+		if (getClass() != obj.getClass())
 			return false;
 		Unit other = (Unit) obj;
 		if (description == null) {
@@ -191,11 +211,6 @@ public class Unit extends BaseEntity {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (warehouse == null) {
-			if (other.warehouse != null)
-				return false;
-		} else if (!warehouse.equals(other.warehouse))
-			return false;
 		if (maximumSize == null) {
 			if (other.maximumSize != null)
 				return false;
@@ -205,6 +220,11 @@ public class Unit extends BaseEntity {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (products == null) {
+			if (other.products != null)
+				return false;
+		} else if (!products.equals(other.products))
 			return false;
 		if (size == null) {
 			if (other.size != null)
@@ -216,62 +236,33 @@ public class Unit extends BaseEntity {
 				return false;
 		} else if (!type.equals(other.type))
 			return false;
-		if (products == null) {
-			if (other.products != null)
+		if (unittype_id == null) {
+			if (other.unittype_id != null)
 				return false;
-		} else if (!products.equals(other.products))
+		} else if (!unittype_id.equals(other.unittype_id))
+			return false;
+		if (warehouse == null) {
+			if (other.warehouse != null)
+				return false;
+		} else if (!warehouse.equals(other.warehouse))
+			return false;
+		if (warehouse_id == null) {
+			if (other.warehouse_id != null)
+				return false;
+		} else if (!warehouse_id.equals(other.warehouse_id))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Unit [");
-		if (getIdUnit() != null) {
-			builder.append("getIdUnit()=");
-			builder.append(getIdUnit());
-			builder.append(", ");
-		}
-		if (getName() != null) {
-			builder.append("getName()=");
-			builder.append(getName());
-			builder.append(", ");
-		}
-		if (getDescription() != null) {
-			builder.append("getDescription()=");
-			builder.append(getDescription());
-			builder.append(", ");
-		}
-		if (getSize() != null) {
-			builder.append("getSize()=");
-			builder.append(getSize());
-			builder.append(", ");
-		}
-		if (getMaximumSize() != null) {
-			builder.append("getMaximumSize()=");
-			builder.append(getMaximumSize());
-			builder.append(", ");
-		}
-		if (getMasterWarehouse() != null) {
-			builder.append("getMasterWarehouse()=");
-			builder.append(getMasterWarehouse());
-			builder.append(", ");
-		}
-		if (getUnitsProducts() != null) {
-			builder.append("getUnitsProducts()=");
-			builder.append(getUnitsProducts());
-			builder.append(", ");
-		}
-		if (getUnitType() != null) {
-			builder.append("getUnitType()=");
-			builder.append(getUnitType());
-			builder.append(", ");
-		}
-		builder.append("getVersion()=");
-		builder.append(getVersion());
-		builder.append("]");
-		return builder.toString();
+		return "Unit [getId()=" + getId() + ", getName()=" + getName()
+				+ ", getDescription()=" + getDescription() + ", getSize()="
+				+ getSize() + ", getMaximumSize()=" + getMaximumSize()
+				+ ", getWarehouse()=" + getWarehouse() + ", getType()="
+				+ getType() + ", getProducts()=" + getProducts()
+				+ ", hashCode()=" + hashCode() + ", getVersion()="
+				+ getVersion() + "]";
 	}
 
 }
