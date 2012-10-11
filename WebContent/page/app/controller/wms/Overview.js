@@ -8,8 +8,12 @@
 Ext.define('WMS.controller.wms.Overview', {
     extend: 'Ext.app.Controller',
 
-    stores: ['Units'],
-    views : ['wms.Overview'],
+    stores: [
+        'UnitTypes'
+    ],
+    views : [
+        'wms.Overview'
+    ],
     refs  : [
         {ref: 'unitsGrid', selector: 'grid'},
         {ref: 'warehouseDescription', selector: 'panel'}
@@ -18,7 +22,6 @@ Ext.define('WMS.controller.wms.Overview', {
     init: function () {
         console.init('WMS.controller.wms.Overview initializing...');
         var me = this,
-            unitsStore = me.getUnitsStore(),
             warehouses = me.getController('Master').getWarehousesStore();
 
         me.control({
@@ -33,14 +36,16 @@ Ext.define('WMS.controller.wms.Overview', {
             }
         });
 
-        unitsStore.addListener('load', function () {
-            console.log('Overview:: Loaded units store');
-        });
         warehouses.addListener('activechanged', function (store, activeWarehouse) {
             var wd = me.getWarehouseDescription();
             if (Ext.isDefined(wd)) {
                 console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
                 wd.update(activeWarehouse.getData());
+
+                activeWarehouse.getUnits().addListener('load', function(store){
+                    console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
+                    me.getUnitsGrid().reconfigure(store);
+                });
             }
         });
     },
@@ -52,10 +57,10 @@ Ext.define('WMS.controller.wms.Overview', {
 
     onNewUnit: function () {
         var me = this,
-            store = me.getUnitsStore(),
+            store = me.getStore('Warehouses').getActive().getUnits(),
             grid = me.getUnitsGrid();
 
-        store.insert(0, new WMS.model.entity.Unit());
+        store.add(Ext.create('WMS.model.entity.Unit'));
         grid.getPlugin('unitRowEditor').startEdit(0, 0);
 
         Ext.getCmp('statusBar').setStatus({
@@ -70,7 +75,7 @@ Ext.define('WMS.controller.wms.Overview', {
 
     onUnitDelete: function () {
         var me = this,
-            store = me.getUnitsStore(),
+            store = me.getStore('Warehouses').getActive().getUnits(),
             grid = me.getUnitsGrid(),
             selection = grid.getView().getSelectionModel().getSelection();
 

@@ -12,7 +12,6 @@ Ext.define('WMS.controller.Master', {
     extend: 'Ext.app.Controller',
 
     stores: ['Warehouses'],
-    // TODO add warehouse.selector
     views : [
         'MasterView',
         'dialog.Warehouse',
@@ -64,19 +63,20 @@ Ext.define('WMS.controller.Master', {
                 me.openWarehouseSelector(warehouses);
             }
         });
-        warehousesStore.addListener('update', me.openViewport, me);
+        warehousesStore.addListener('update', me.enableViewport, me);
     },
 
     onWarehouseSelected: function () {
         var me = this,
             warehouse = me.getWarehousesStore().getActive();
-        warehouse.units();
+        warehouse.getUnits().load({
+            callback: function (records) {
+                console.log("Master :: Successfully loaded "
+                    + records.length + ' records for Warehouse ['
+                    + warehouse.get('name') + ']');
+            }
+        });
         me.warehouseselector.close();
-        me.openViewport();
-    },
-
-    openViewport: function () {
-        Ext.create('WMS.view.Viewport');
     },
 
     /**
@@ -114,7 +114,6 @@ Ext.define('WMS.controller.Master', {
                 me.getWarehousesStore().setActive(
                     w.getId() ? w.getId() : w
                 );
-                me.openViewport();
             }
         }
     }

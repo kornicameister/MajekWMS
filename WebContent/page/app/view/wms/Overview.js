@@ -27,10 +27,7 @@ Ext.define('WMS.view.wms.Overview', {
                 type: 'fit'
             },
             itemId: 'description',
-            title : 'Warehouse',
-            tpl   : new Ext.XTemplate(
-                '<p>Name: <strong>{name}</strong></p>'
-            )
+            title : 'Warehouse'
         },
         {
             xtype: 'splitter'
@@ -38,7 +35,6 @@ Ext.define('WMS.view.wms.Overview', {
         {
             xtype      : 'grid',
             itemId     : 'unitsGrid',
-            store      : 'Units',
             emptyText  : 'No units for selected warehouse',
             flex       : 3,
             columnWidth: 120,
@@ -89,13 +85,13 @@ Ext.define('WMS.view.wms.Overview', {
                 },
                 {
                     header   : 'Type',
-                    dataIndex: 'type',
+                    dataIndex: 'unittype_id',
+                    renderer   : function (unittype_id) {
+                        return Ext.getStore('UnitTypes').getById(unittype_id).get('name')
+                    },
                     editor   : {
                         xtype       : 'combo',
-                        store       : Ext.create('WMS.store.UnitTypes', {
-                            storeId    : 'UnitTypes',
-                            autoDestroy: true
-                        }),
+                        store       : 'UnitTypes',
                         valueField  : 'id',
                         displayField: 'name',
 
@@ -104,6 +100,18 @@ Ext.define('WMS.view.wms.Overview', {
                         selectOnTab  : true,
                         lazyRender   : true,
                         listClass    : 'x-combo-list-small',
+
+                        tpl       : Ext.create('Ext.XTemplate',
+                            '<tpl for=".">',
+                            '<div class="x-boundlist-item">{abbreviation} - {name}</div>',
+                            '</tpl>'
+                        ),
+                        // template for the content inside text field
+                        displayTpl: Ext.create('Ext.XTemplate',
+                            '<tpl for=".">',
+                            '{abbreviation} - {name}',
+                            '</tpl>'
+                        ),
 
                         allowBlank: false
                     }
