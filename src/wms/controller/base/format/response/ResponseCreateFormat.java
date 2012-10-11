@@ -7,9 +7,9 @@ import wms.controller.base.format.BaseFormat;
 public class ResponseCreateFormat extends BaseFormat {
 	final ArrayList<Integer> created;
 
-	public ResponseCreateFormat(Long time, String handler,
+	public ResponseCreateFormat(boolean success, Long time, String handler,
 			ArrayList<Integer> affectedIDS) {
-		super(time, handler);
+		super(success, time, handler);
 		this.created = affectedIDS;
 	}
 

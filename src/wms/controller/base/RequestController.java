@@ -50,6 +50,7 @@ public abstract class RequestController implements Controller {
 	protected ArrayList<BaseEntity> lastRead = new ArrayList<>();
 	protected final String payload, controller, readStatement;
 	private final Class<? extends BaseEntity> conversionModel;
+	private Integer updateCount = new Integer(0);
 	private final static Logger logger = Logger
 			.getLogger(RequestController.class.getName());
 
@@ -124,6 +125,24 @@ public abstract class RequestController implements Controller {
 		logger.exiting(this.getClass().getName(), "create");
 	}
 
+	@Override
+	public void update() {
+		logger.entering(this.getClass().getName(), "update");
+		Collection<? extends BaseEntity> data = this.extractFromPayload();
+
+		// savingOrUpdating
+		Session session = this.sessionFactory.openSession();
+		session.beginTransaction();
+		for (Object saveable : data) {
+			session.update(saveable);
+			this.updateCount++;
+		}
+		session.getTransaction().commit();
+		// savingOrUpdating
+
+		logger.exiting(this.getClass().getName(), "update");
+	}
+
 	// CRUD
 
 	@Override
@@ -133,16 +152,31 @@ public abstract class RequestController implements Controller {
 				.setDateFormat("m-D-y")
 				.registerTypeHierarchyAdapter(HibernateProxy.class,
 						new HibernateProxySerializer()).create();
+		return this.createResponseString(g);
+	}
+
+	/**
+	 * Method makes the job with creating response to the client side
+	 * 
+	 * @param g
+	 *            gson
+	 * @return one of the CRUD responses
+	 */
+	private String createResponseString(Gson g) {
 		StringBuilder response = new StringBuilder();
 		switch (this.action) {
 		case CREATE:
-			response.append(g.toJson(new ResponseCreateFormat(this.processTime,
-					this.controller, this.createdIDS),
+			response.append(g.toJson(new ResponseCreateFormat(true,
+					this.processTime, this.controller, this.createdIDS),
 					ResponseCreateFormat.class));
 			break;
 		case READ:
-			response.append(g.toJson(new ResponseReadFormat(this.processTime,
-					this.controller, this.lastRead), ResponseReadFormat.class));
+			response.append(g.toJson(new ResponseReadFormat(true,
+					this.processTime, this.controller, this.lastRead),
+					ResponseReadFormat.class));
+			break;
+		case UPDATE:
+			response.append("{updated: " + this.updateCount + "}");
 			break;
 		default:
 			logger.warning("UPDATE/DELETE are currently not supported");

@@ -3,9 +3,11 @@ package wms.controller.base.format;
 public class BaseFormat {
 	final Long time;
 	final String handler;
+	final Boolean success;
 
-	public BaseFormat(Long time, String handler) {
+	public BaseFormat(boolean success, Long time, String handler) {
 		super();
+		this.success = success;
 		this.time = time;
 		this.handler = handler;
 	}

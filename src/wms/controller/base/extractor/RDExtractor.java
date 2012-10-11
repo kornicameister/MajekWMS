@@ -26,7 +26,16 @@ public final class RDExtractor {
 	 * @return
 	 */
 	public static String getModuleAction(String[] uri) {
-		return uri[uri.length - 1];
+		String module = uri[uri.length - 1];
+
+		try {
+			Integer.valueOf(module);
+			module = uri[uri.length - 2];
+		} catch (Exception e) {
+			return module;
+		}
+
+		return module;
 	}
 
 	/**
