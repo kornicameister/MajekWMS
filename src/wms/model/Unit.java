@@ -51,17 +51,9 @@ public class Unit extends BaseEntity {
 	@JoinColumn(name = "warehouse_id", referencedColumnName = "idWarehouse")
 	private Warehouse warehouse;
 
-	@Basic
-	@Column(name = "warehouse_id", insertable = false, updatable = false)
-	private Integer warehouse_id;
-
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
 	private UnitType type;
-
-	@Basic
-	@Column(name = "unittype_id", insertable = false, updatable = false)
-	private Integer unittype_id;
 
 	@ManyToMany
 	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "unit_id", referencedColumnName = "idUnit") }, inverseJoinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "idProduct") })
@@ -141,11 +133,6 @@ public class Unit extends BaseEntity {
 
 	public final void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
-		this.warehouse_id = warehouse.getIdWarehouse();
-	}
-
-	public final Integer getWarehousId() {
-		return warehouse_id;
 	}
 
 	public final UnitType getType() {
@@ -154,11 +141,6 @@ public class Unit extends BaseEntity {
 
 	public final void setType(UnitType type) {
 		this.type = type;
-		this.unittype_id = type.getIdUnitType();
-	}
-
-	public final Integer getUnitTypeId() {
-		return unittype_id;
 	}
 
 	public final Set<Product> getProducts() {
@@ -184,11 +166,7 @@ public class Unit extends BaseEntity {
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		result = prime * result
-				+ ((unittype_id == null) ? 0 : unittype_id.hashCode());
-		result = prime * result
 				+ ((warehouse == null) ? 0 : warehouse.hashCode());
-		result = prime * result
-				+ ((warehouse_id == null) ? 0 : warehouse_id.hashCode());
 		return result;
 	}
 
@@ -236,20 +214,10 @@ public class Unit extends BaseEntity {
 				return false;
 		} else if (!type.equals(other.type))
 			return false;
-		if (unittype_id == null) {
-			if (other.unittype_id != null)
-				return false;
-		} else if (!unittype_id.equals(other.unittype_id))
-			return false;
 		if (warehouse == null) {
 			if (other.warehouse != null)
 				return false;
 		} else if (!warehouse.equals(other.warehouse))
-			return false;
-		if (warehouse_id == null) {
-			if (other.warehouse_id != null)
-				return false;
-		} else if (!warehouse_id.equals(other.warehouse_id))
 			return false;
 		return true;
 	}
