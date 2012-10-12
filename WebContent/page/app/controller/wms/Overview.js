@@ -19,6 +19,8 @@ Ext.define('WMS.controller.wms.Overview', {
         {ref: 'warehouseDescription', selector: 'panel'}
     ],
 
+    gridLoadingMask: undefined,
+
     init: function () {
         console.init('WMS.controller.wms.Overview initializing...');
         var me = this,
@@ -32,7 +34,15 @@ Ext.define('WMS.controller.wms.Overview', {
                 click: me.onUnitDelete
             },
             'wmsoverviews #unitsGrid': {
-                'selectionchange': me.onUnitSelectionChanged
+                selectionchange: me.onUnitSelectionChanged,
+                afterrender    : function () {
+                    me.gridLoadingMask = new Ext.LoadMask(
+                        me.getUnitsGrid(), {
+                            msg: 'Loading content...'
+                        }
+                    );
+                    me.gridLoadingMask.show();
+                }
             }
         });
 
@@ -42,9 +52,20 @@ Ext.define('WMS.controller.wms.Overview', {
                 console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
                 wd.update(activeWarehouse.getData());
 
-                activeWarehouse.getUnits().addListener('load', function(store){
+                activeWarehouse.getUnits().addListener('load', function (store) {
                     console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
                     me.getUnitsGrid().reconfigure(store);
+                    me.gridLoadingMask.hide();
+                });
+                activeWarehouse.getUnits().addListener('update', function (store,records,operation) {
+                    Ext.getCmp('statusBar').setStatus({
+                        text : 'You\'ve successfully saved ' + records.length + ' units...',
+                        clear: {
+                            wait       : 10000,
+                            anim       : true,
+                            useDefaults: false
+                        }
+                    });
                 });
             }
         });
@@ -58,10 +79,14 @@ Ext.define('WMS.controller.wms.Overview', {
     onNewUnit: function () {
         var me = this,
             store = me.getStore('Warehouses').getActive().getUnits(),
-            grid = me.getUnitsGrid();
+            grid = me.getUnitsGrid(),
+            record = store.add(Ext.create('WMS.model.entity.Unit'));
 
-        store.add(Ext.create('WMS.model.entity.Unit'));
-        grid.getPlugin('unitRowEditor').startEdit(0, 0);
+        if (!Ext.isDefined(record)) {
+            console.error('Overview :: Failed to add new unit when row edition enabled');
+        }
+
+        grid.getPlugin('unitRowEditor').startEdit(store.getTotalCount() + 1, 0);
 
         Ext.getCmp('statusBar').setStatus({
             text : 'You\'ve just added new unit...',
