@@ -66,9 +66,8 @@ Ext.define('WMS.controller.Toolbars', {
     },
 
     init: function () {
-        var me = this;
-
         console.init('WMS.controller.Toolbars initializing...');
+        var me = this;
 
         function onButtonClick(button) {
             var itemId = button.getItemId();
@@ -82,7 +81,12 @@ Ext.define('WMS.controller.Toolbars', {
                 } else if (itemId === 'helpButton') {
                     console.log('Help button');
                 } else if (itemId === 'saveButton') {
-                    console.log('Save button');
+                    console.log('Toolbars :: Save button');
+                    Ext.StoreManager.each(function(store){
+                        if(store['autoSync'] !== true){
+                            store.sync();
+                        }
+                    });
                 } else if (itemId === 'refreshButton') {
                     console.log('Refresh button');
                 }

@@ -16,10 +16,23 @@ Ext.define('WMS.model.entity.Unit', {
     ],
 
     fields: [
+        {
+            name   : 'id',
+            type   : 'int',
+            persist: true
+        },
         'name',
         'description',
-        'unittype_id',
-        'warehouse_id',
+        {
+            name   : 'warehouse_id',
+            type   : 'int',
+            mapping: 'warehouse.id'
+        },
+        {
+            name   : 'unittype_id',
+            type   : 'int',
+            mapping: 'type.id'
+        },
         { name: 'size', type: 'int', defaultValue: 0},
         { name: 'maximumSize', type: 'int', defaultValue: 0}
     ],
