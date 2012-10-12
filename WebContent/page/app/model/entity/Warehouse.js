@@ -28,7 +28,7 @@ Ext.define('WMS.model.entity.Warehouse', {
             name       : 'getUnits',
             model      : 'WMS.model.entity.Unit',
             storeConfig: {
-                storeId: 'Units'
+                storeId : 'Units'
             }
         }
     ],

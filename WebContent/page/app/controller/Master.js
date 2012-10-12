@@ -27,7 +27,7 @@ Ext.define('WMS.controller.Master', {
         me.control({
             'wizardwarehouse'             : {
                 show: function () {
-                    console.log('Master:: WarehouseWizard is visible')
+                    console.log('Master:: WarehouseWizard is visible');
                 }
             },
             '#submitButton'               : {
