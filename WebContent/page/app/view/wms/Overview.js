@@ -86,14 +86,30 @@ Ext.define('WMS.view.wms.Overview', {
                 {
                     header   : 'Type',
                     dataIndex: 'unittype_id',
-                    renderer   : function (unittype_id) {
-                        return Ext.getStore('UnitTypes').getById(unittype_id).get('name')
+                    renderer : function (unittype_id) {
+
+                        if (!Ext.isNumber(unittype_id)) {
+                            return 'unknown';
+                        } else if (Ext.isString(unittype_id)) {
+                            unittype_id = parseInt(unittype_id);
+                        }
+
+                        if (unittype_id > 0) {
+                            return Ext.getStore('UnitTypes').getById(unittype_id).get('name')
+                        } else if (unittype_id === 0) {
+                            return 'undefined';
+                        }
+
+                        console.error("OverviewView :: Failed to recognize unittype_id");
+                        return '';
                     },
                     editor   : {
                         xtype       : 'combo',
                         store       : 'UnitTypes',
                         valueField  : 'id',
                         displayField: 'name',
+
+                        width: 200,
 
                         typeAhead    : true,
                         triggerAction: 'all',
@@ -103,10 +119,9 @@ Ext.define('WMS.view.wms.Overview', {
 
                         tpl       : Ext.create('Ext.XTemplate',
                             '<tpl for=".">',
-                            '<div class="x-boundlist-item">{abbreviation} - {name}</div>',
+                            '<div class="x-boundlist-item">{abbreviation} - {description}</div>',
                             '</tpl>'
                         ),
-                        // template for the content inside text field
                         displayTpl: Ext.create('Ext.XTemplate',
                             '<tpl for=".">',
                             '{abbreviation} - {name}',

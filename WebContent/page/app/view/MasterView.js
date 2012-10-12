@@ -16,41 +16,41 @@
  * user information such as warehouse diagram etc.
  */
 Ext.define('WMS.view.MasterView', {
-    extend  : 'Ext.panel.Panel',
-    alias   : 'widget.masterview',
+    extend: 'Ext.panel.Panel',
+    alias : 'widget.masterview',
 
     title   : 'WMS - Warehouse',
     defaults: {
         autoScroll: true
     },
     layout  : {
-        type            : 'accordion',
-        titleCollapse   : false,
-        animate         : true,
-        activeOnTop     : true,
-        hideCollapseTool: false
+        type            : 'fit'
     },
 
-    items: [
-        {
-            xtype : 'wmsoverviews',
-            itemId: 'wmsOverview',
-            title : 'Overview'
-        },
-        {
-            xtype : 'wmsunit',
-            itemId: 'wmsUnit',
-            title : 'Units'
-        },
-        {
-            xtype : 'wmsinventory',
-            itemId: 'wmsInventory',
-            title : "Inventory"
-        },
-        {
-            xtype : 'wmsstatistics',
-            itemId: 'wmsStatistics',
-            title : 'Statistics'
-        }
-    ]
+    items: {
+        xtype : 'tabpanel',
+        itemId: 'masterTabPanel',
+        items : [
+            {
+                xtype : 'wmsoverviews',
+                itemId: 'wmsOverview',
+                title : 'Overview'
+            },
+            {
+                xtype : 'wmsunit',
+                itemId: 'wmsUnit',
+                title : 'Units'
+            },
+            {
+                xtype : 'wmsinventory',
+                itemId: 'wmsInventory',
+                title : "Inventory"
+            },
+            {
+                xtype : 'wmsstatistics',
+                itemId: 'wmsStatistics',
+                title : 'Statistics'
+            }
+        ]
+    }
 });
