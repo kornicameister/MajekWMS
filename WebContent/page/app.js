@@ -36,6 +36,7 @@
                     'wms.Overview',
                     'wms.Statistics',
                     'wms.Unit',
+                    'wms.UnitPlacement',
 
                     'Toolbars',
                     'Navigation',

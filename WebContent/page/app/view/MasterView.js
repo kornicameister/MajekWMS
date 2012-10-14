@@ -45,7 +45,7 @@ Ext.define('WMS.view.MasterView', {
                 },
                 items : [
                     {
-                        xtype : 'panel',
+                        xtype : 'wmsunitplacement',
                         itemId: 'wmsUnitSchema',
                         title : 'Unit\'s placement'
                     },

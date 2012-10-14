@@ -63,6 +63,11 @@
     background-size: 70%;
 }
 
+.view-wms-unit-placement {
+    background-image: url("../images/view/wms/units/place.png") !important;
+    background-size: 70%;
+}
+
 .view-wms-statistics {
     background-image: url("../images/view/wms/statistics.png") !important;
     background-size: 70%;
