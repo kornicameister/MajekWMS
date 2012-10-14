@@ -24,7 +24,7 @@ Ext.define('WMS.view.MasterView', {
         autoScroll: true
     },
     layout  : {
-        type            : 'fit'
+        type: 'fit'
     },
 
     items: {
@@ -39,12 +39,22 @@ Ext.define('WMS.view.MasterView', {
             {
                 xtype : 'wmsunit',
                 itemId: 'wmsUnit',
-                title : 'Units'
-            },
-            {
-                xtype : 'wmsinventory',
-                itemId: 'wmsInventory',
-                title : "Inventory"
+                title : 'Units',
+                layout: {
+                    type: 'accordion'
+                },
+                items : [
+                    {
+                        xtype : 'panel',
+                        itemId: 'wmsUnitSchema',
+                        title : 'Unit\'s placement'
+                    },
+                    {
+                        xtype : 'wmsinventory',
+                        itemId: 'wmsInventory',
+                        title : "Inventory"
+                    }
+                ]
             },
             {
                 xtype : 'wmsstatistics',
