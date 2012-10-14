@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import wms.controller.base.format.BaseFormat;
 
 public class ResponseCreateFormat extends BaseFormat {
-	final ArrayList<Integer> created;
+	final ArrayList<Long> created;
 
 	public ResponseCreateFormat(boolean success, Long time, String handler,
-			ArrayList<Integer> affectedIDS) {
+			ArrayList<Long> createdIDS) {
 		super(success, time, handler);
-		this.created = affectedIDS;
+		this.created = createdIDS;
 	}
 
-	public final ArrayList<Integer> getAffectedIDS() {
+	public final ArrayList<Long> getAffectedIDS() {
 		return created;
 	}
 }

@@ -1,25 +1,31 @@
 package wms.controller.base;
 
 import java.io.Serializable;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.proxy.HibernateProxy;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
+import wms.controller.UnitController;
+import wms.controller.UnitTypeController;
+import wms.controller.base.extractor.Entity;
+import wms.controller.base.extractor.RData;
 import wms.controller.base.format.response.ResponseCreateFormat;
 import wms.controller.base.format.response.ResponseReadFormat;
 import wms.controller.hibernate.HibernateBridge;
 import wms.model.BaseEntity;
+import wms.model.Warehouse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,30 +46,21 @@ import com.google.gson.JsonSerializer;
 public abstract class RequestController implements Controller {
 	// TODO change variables to private, there is a possibility that CRUD method
 	// impl may disappear in Entities' controllers
-	protected final CRUD action;
 	protected final SessionFactory sessionFactory = HibernateBridge
 			.getSessionFactory();
+	protected Session session;
 	protected Gson jsonForm;
 	protected long processTime = 0l;
-	protected final Map<String, String[]> params;
-	protected ArrayList<Integer> createdIDS = new ArrayList<>();
+	protected ArrayList<Long> createdIDS = new ArrayList<>();
 	protected ArrayList<BaseEntity> lastRead = new ArrayList<>();
-	protected final String payload, controller, readStatement;
-	private final Class<? extends BaseEntity> conversionModel;
 	private Integer updateCount = new Integer(0);
+	protected final RData rdata;
 	private final static Logger logger = Logger
 			.getLogger(RequestController.class.getName());
 
-	public RequestController(CRUD action, Map<String, String[]> params,
-			String payload, String controller, String readStatement,
-			Class<? extends BaseEntity> convertType) {
+	public RequestController(RData data) {
 		super();
-		this.action = action;
-		this.params = params;
-		this.readStatement = readStatement;
-		this.payload = payload;
-		this.controller = controller;
-		this.conversionModel = convertType;
+		this.rdata = data;
 	}
 
 	/**
@@ -73,9 +70,10 @@ public abstract class RequestController implements Controller {
 	 */
 	public void process() {
 		logger.info(String.format("Processing [ %s ][ %s ] request, started",
-				this.action.toString(), this.controller));
+				this.rdata.getAction().toString(), this.rdata.getController()));
 		Long startTime = System.nanoTime();
-		switch (this.action) {
+		this.session = this.sessionFactory.openSession();
+		switch (this.rdata.getAction()) {
 		case CREATE:
 			this.create();
 			break;
@@ -95,10 +93,10 @@ public abstract class RequestController implements Controller {
 	// CRUD
 	@Override
 	public void read() {
-		Session session = this.sessionFactory.openSession();
-		session.beginTransaction();
-		List<?> data = session.createQuery(this.readStatement).list();
-		session.getTransaction().commit();
+		this.session.beginTransaction();
+		List<?> data = this.session.createQuery(this.rdata.getReadQuery())
+				.list();
+		this.session.getTransaction().commit();
 		for (Object o : data) {
 			this.lastRead.add((BaseEntity) o);
 		}
@@ -111,15 +109,14 @@ public abstract class RequestController implements Controller {
 		Collection<? extends BaseEntity> data = this.extractFromPayload();
 
 		// saving
-		Session session = this.sessionFactory.openSession();
-		session.beginTransaction();
+		this.session.beginTransaction();
 		for (Object saveable : data) {
-			savedID = session.save(saveable);
+			savedID = this.session.save(saveable);
 			if (savedID != null) {
-				this.createdIDS.add((Integer) savedID);
+				this.createdIDS.add((Long) savedID);
 			}
 		}
-		session.getTransaction().commit();
+		this.session.getTransaction().commit();
 		// saving
 
 		logger.exiting(this.getClass().getName(), "create");
@@ -128,19 +125,29 @@ public abstract class RequestController implements Controller {
 	@Override
 	public void update() {
 		logger.entering(this.getClass().getName(), "update");
-		Collection<? extends BaseEntity> data = this.extractFromPayload();
 
-		// savingOrUpdating
-		Session session = this.sessionFactory.openSession();
-		session.beginTransaction();
-		for (Object saveable : data) {
-			session.update(saveable);
+		Transaction t = this.session.beginTransaction();
+		this.session.flush();
+		for (Object saveable : this.extractFromPayload()) {
+			this.session.update(saveable);
 			this.updateCount++;
 		}
-		session.getTransaction().commit();
-		// savingOrUpdating
+		t.commit();
 
 		logger.exiting(this.getClass().getName(), "update");
+	}
+
+	@Override
+	public void delete() {
+		Transaction t = this.session.beginTransaction();
+		try {
+			for (Object obj : this.extractFromPayload()) {
+				this.session.delete(obj);
+			}
+		} catch (Exception e) {
+			System.out.println("Something went wrong...");
+		}
+		t.commit();
 	}
 
 	// CRUD
@@ -164,45 +171,76 @@ public abstract class RequestController implements Controller {
 	 */
 	private String createResponseString(Gson g) {
 		StringBuilder response = new StringBuilder();
-		switch (this.action) {
+		String controller = this.rdata.getController();
+
+		switch (this.rdata.getAction()) {
 		case CREATE:
 			response.append(g.toJson(new ResponseCreateFormat(true,
-					this.processTime, this.controller, this.createdIDS),
+					this.processTime, controller, this.createdIDS),
 					ResponseCreateFormat.class));
 			break;
 		case READ:
 			response.append(g.toJson(new ResponseReadFormat(true,
-					this.processTime, this.controller, this.lastRead),
+					this.processTime, controller, this.lastRead),
 					ResponseReadFormat.class));
 			break;
 		case UPDATE:
 			response.append("{updated: " + this.updateCount + "}");
 			break;
-		default:
-			logger.warning("UPDATE/DELETE are currently not supported");
+		case DELETE:
+			response.append("");
 			break;
 		}
+
+		this.session.flush();
+		this.session.close();
+		this.session = null;
+
 		return response.toString();
 	}
 
+	/**
+	 * Quite handy method that processes {@link RData} payload property being in
+	 * fact {@link JSONObject} containing some important data to be
+	 * inserted/read to/from database
+	 * 
+	 * @return
+	 */
 	protected Collection<? extends BaseEntity> extractFromPayload() {
 		Gson gson = new GsonBuilder().setDateFormat("y-M-d")
 				.setPrettyPrinting().create();
 		List<BaseEntity> data = new ArrayList<>();
 
-		JSONObject payloadData = (JSONObject) JSONValue.parse(this.payload), dataElement = null;
-		BaseEntity convertedElement = null;
+		JSONObject dataElement = null;
+		BaseEntity entity = null;
 
 		try {
-			JSONArray ddata = (JSONArray) payloadData.get("data");
+			JSONArray ddata = (JSONArray) this.rdata.getPayload().get("data");
 			for (short i = 0; i < ddata.size(); i++) {
 				dataElement = (JSONObject) ddata.get(i);
-				convertedElement = (BaseEntity) gson.fromJson(
-						dataElement.toJSONString(),
-						Class.forName(this.conversionModel.getName()));
-				if (convertedElement != null) {
-					data.add(this.updateMissingDependencies(convertedElement,
-							dataElement));
+
+				if (this.rdata.getAction() != CRUD.DELETE) {
+					entity = (BaseEntity) gson.fromJson(dataElement
+							.toJSONString(), this.rdata.getModule()
+							.getEntityClass());
+				}
+
+				switch (this.rdata.getAction()) {
+				case UPDATE:
+					entity = this.preUpdate(entity, dataElement);
+					break;
+				case CREATE:
+					entity = this.preCreate(entity, dataElement);
+					break;
+				case DELETE:
+					entity = this.preDelete(dataElement);
+					break;
+				default:
+					break;
+				}
+
+				if (entity != null) {
+					data.add(entity);
 				}
 			}
 		} catch (Exception e) {
@@ -213,9 +251,90 @@ public abstract class RequestController implements Controller {
 		return data;
 	}
 
-	protected abstract BaseEntity updateMissingDependencies(BaseEntity b,
+	/**
+	 * Method that all derived controllers must implement in order to ensure
+	 * that models with fields marked as being in associations were set not
+	 * null.
+	 * 
+	 * @param b
+	 * @param payloadedData
+	 * @return valid object if entity indeed differs from passed copy or null if
+	 *         entity was not modified
+	 */
+	protected abstract BaseEntity preUpdate(BaseEntity b,
 			JSONObject payloadedData);
 
+	/**
+	 * Method for implementing controllers that is called when inserting new
+	 * entity. It is called to update missing dependencies such as associations.
+	 * 
+	 * @param b
+	 * @param payloadedData
+	 * @return
+	 */
+	protected abstract BaseEntity preCreate(BaseEntity b,
+			JSONObject payloadedData);
+
+	/**
+	 * Method for implementing controllers that extends this one. Allows to
+	 * obtain basic database entity instead of entity extracted from
+	 * client-side-json.
+	 * 
+	 * Entity that is further returned by this method is marked to be deleted.
+	 * 
+	 * @param payloadedData
+	 * @return
+	 */
+	protected abstract BaseEntity preDelete(JSONObject payloadedData);
+
+	public static String buildErrorResponse() {
+		return null;
+	}
+
+	/**
+	 * This method determines Controller type on provided {@link RData}.
+	 * {@link Entity} object that contains {@link Class} informations about
+	 * module class corresponds to request.
+	 * 
+	 * @param respData
+	 * @return valid instance of the {@link RequestController} derived class
+	 * 
+	 * @see UnitController
+	 * @see Warehouse
+	 * @see UnitTypeController
+	 */
+	public static RequestController pickController(RData respData) {
+		RequestController controller = null;
+		Class<? extends RequestController> controllerClass = respData
+				.getModule().getEntityControllerClass();
+
+		try {
+			Class<?>[] types = { RData.class };
+			Constructor<? extends RequestController> constructor = controllerClass
+					.getConstructor(types);
+			controller = constructor.newInstance(respData);
+			logger.info(String.format(
+					"Successfully loaded controller for name [ %s ]", respData
+							.getModule().toString()));
+		} catch (InstantiationException | IllegalAccessException
+				| NoSuchMethodException | SecurityException
+				| IllegalArgumentException | InvocationTargetException e) {
+			logger.log(Level.SEVERE, String.format(
+					"Failed to load controller class for name = [%s]", respData
+							.getModule().toString()), e);
+		}
+
+		return controller;
+	}
+
+	/**
+	 * This class implements functionality that can be easily described as
+	 * allowing to GSON library to serialize Hibernate entities that contains
+	 * many-to-[one,many] associations.
+	 * 
+	 * @author kornicameister
+	 * @see JsonSerializer
+	 */
 	public class HibernateProxySerializer implements
 			JsonSerializer<HibernateProxy> {
 		@Override

@@ -1,17 +1,13 @@
 package wms.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
-import wms.controller.base.CRUD;
 import wms.controller.base.RequestController;
+import wms.controller.base.extractor.RData;
 import wms.model.BaseEntity;
 import wms.model.Unit;
 import wms.model.UnitType;
@@ -20,42 +16,35 @@ import wms.utilities.Pair;
 
 public class UnitController extends RequestController {
 	private static final String WHERE_S_WFK = " where %s = :wfk";
-	private Pair<String, Integer> warehouseId;
 
-	public UnitController(CRUD action, Map<String, String[]> params,
-			String payload) {
-		super(action, params, payload, UnitController.class.getName(),
-				"from Unit", Unit.class);
+	private class ActionData {
+		Long fkUnitType, fkWarehouse, idUnit;
+		Unit newUnit;
 
-		// extract warehouse foreign key
-		if (this.params.containsKey("filter")) {
-			this.getWarehouseFK();
+		ActionData(Long fkUnitType, Long fkWarehouse, Long idUnit, Unit newUnit) {
+			super();
+			this.fkUnitType = fkUnitType;
+			this.fkWarehouse = fkWarehouse;
+			this.idUnit = idUnit;
+			this.newUnit = newUnit;
 		}
 	}
 
-	private void getWarehouseFK() {
-		String[] filterStr = this.params.get("filter");
-		JSONArray obj = (JSONArray) JSONValue.parse(filterStr[0]);
-		JSONObject filter = (JSONObject) obj.get(0);
-
-		String property = (String) filter.get("property");
-		Long longVal = (Long) filter.get("value");
-		Integer value = Integer.decode(longVal.toString());
-
-		this.warehouseId = new Pair<String, Integer>(property, value);
+	public UnitController(RData data) {
+		super(data);
 	}
 
 	@Override
 	public void read() {
-		if (this.warehouseId == null) {
+		Pair<String, Integer> queryKey = this.rdata.getQueryKey();
+		if (queryKey == null) {
 			super.read();
 		} else {
-			Session session = this.sessionFactory.openSession();
-			Transaction transaction = session.beginTransaction();
-
-			Query query = session.createQuery((this.readStatement + String
-					.format(WHERE_S_WFK, this.warehouseId.getFirst())));
-			query.setParameter("wfk", this.warehouseId.getSecond());
+			Transaction transaction = this.session.beginTransaction();
+			Query query = this.session
+					.createQuery((this.rdata.getReadQuery() + String.format(
+							WHERE_S_WFK, queryKey.getFirst())));
+			query.setParameter("wfk", queryKey.getSecond());
 			List<?> data = query.list();
 
 			transaction.commit();
@@ -64,34 +53,47 @@ public class UnitController extends RequestController {
 			}
 		}
 	}
-
+	
 	@Override
-	public void delete() {
+	protected BaseEntity preUpdate(BaseEntity b, JSONObject payloadedData) {
+		ActionData ad = extractActionData(b, payloadedData);
+		Unit oldUnit = (Unit) this.session.get(Unit.class, ad.idUnit);
+
+		if (!oldUnit.equals(ad.newUnit)) {
+			oldUnit.setType((UnitType) this.session.byId(UnitType.class)
+					.getReference(ad.fkUnitType));
+			oldUnit.setWarehouse((Warehouse) this.session.byId(Warehouse.class)
+					.getReference(ad.fkWarehouse));
+			oldUnit.setDescription((String) payloadedData.get("description"));
+			oldUnit.setMaximumSize((Long) payloadedData.get("maximumSize"));
+			oldUnit.setName((String) payloadedData.get("name"));
+			oldUnit.setSize((Long) payloadedData.get("size"));
+		} else {
+			return null;
+		}
+		return oldUnit;
 	}
 
 	@Override
-	protected BaseEntity updateMissingDependencies(BaseEntity b,
-			JSONObject payloadedData) {
-		Long fkUnitType = (Long) payloadedData.get("unittype_id"), fkWarehouse = (Long) payloadedData
-				.get("warehouse_id");
+	protected BaseEntity preCreate(BaseEntity b, JSONObject payloadedData) {
+		ActionData ad = extractActionData(b, payloadedData);
 
-		Unit unit = (Unit) b;
-		UnitType unitType = null;
-		Warehouse warehouse = null;
+		ad.newUnit.setType((UnitType) this.session.byId(UnitType.class).getReference(ad.fkUnitType));
+		ad.newUnit.setWarehouse((Warehouse) this.session.byId(Warehouse.class).getReference(ad.fkWarehouse));
 
-		Session session = this.sessionFactory.openSession();
-		session.beginTransaction();
-		unitType = (UnitType) session.get(UnitType.class,
-				Integer.valueOf(fkUnitType.toString()));
-		warehouse = (Warehouse) session.get(Warehouse.class,
-				Integer.valueOf(fkWarehouse.toString()));
-		session.getTransaction().commit();
-		session.close();
-
-		unit.setType(unitType);
-		unit.setWarehouse(warehouse);
-
-		return unit;
+		return ad.newUnit;
+	}
+	
+	@Override
+	protected BaseEntity preDelete(JSONObject payloadedData) {
+		ActionData ad = extractActionData(null, payloadedData);
+		return (BaseEntity) this.session.byId(Unit.class).load(ad.idUnit);
 	}
 
+	private ActionData extractActionData(BaseEntity b, JSONObject payloadedData) {
+		ActionData ad = new ActionData((Long) payloadedData.get("unittype_id"),
+				(Long) payloadedData.get("warehouse_id"),
+				(Long) payloadedData.get("id"), (Unit) b);
+		return ad;
+	}
 }

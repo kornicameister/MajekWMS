@@ -1,31 +1,28 @@
 package wms.controller;
 
-import java.util.Map;
-
 import org.json.simple.JSONObject;
 
-import wms.controller.base.CRUD;
 import wms.controller.base.RequestController;
+import wms.controller.base.extractor.RData;
 import wms.model.BaseEntity;
-import wms.model.Warehouse;
 
 public class WarehouseController extends RequestController {
-	public WarehouseController(CRUD action, Map<String, String[]> params,
-			String payload) {
-		super(action, params, payload, WarehouseController.class.getName(),
-				"from Warehouse", Warehouse.class);
+	public WarehouseController(RData d) {
+		super(d);
 	}
 
 	@Override
-	public void update() {
-	}
-
-	@Override
-	public void delete() {
-	}
-
-	@Override
-	protected BaseEntity updateMissingDependencies(BaseEntity b, JSONObject payloadedData) {
+	protected BaseEntity preUpdate(BaseEntity b, JSONObject payloadedData) {
 		return b;
+	}
+
+	@Override
+	protected BaseEntity preCreate(BaseEntity b, JSONObject payloadedData) {
+		return b;
+	}
+
+	@Override
+	protected BaseEntity preDelete(JSONObject payloadedData) {
+		return null;
 	}
 }

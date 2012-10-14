@@ -2,7 +2,6 @@ package wms.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import wms.controller.UnitController;
-import wms.controller.UnitTypeController;
-import wms.controller.WarehouseController;
 import wms.controller.base.CRUD;
 import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RDExtractor;
@@ -60,27 +56,22 @@ public class WMSDataAgent extends HttpServlet {
 		super.destroy();
 	}
 
-	private void processRequest(HttpServletRequest request,
-			HttpServletResponse response, CRUD action) throws IOException {
-		String uri[] = request.getRequestURI().split("/");
-		String module = RDExtractor.getModuleAction(uri);
-		Map<String, String[]> params = RDExtractor.getParameter(request);
-		String payload = RDExtractor.getPayload(request);
-		RequestController controller = null;
-		PrintWriter out = response.getWriter();
+	private void processRequest(HttpServletRequest req,
+			HttpServletResponse resp, CRUD action) throws IOException {
+		PrintWriter out = resp.getWriter();
+		RequestController controller = RequestController
+				.pickController(RDExtractor.parse(req, action));
 
-		if (module.equals("warehouse")) {
-			controller = new WarehouseController(action, params, payload);
-		} else if (module.equals("unittype")) {
-			controller = new UnitTypeController(action, params, payload);
-		} else if (module.equals("unit")) {
-			controller = new UnitController(action, params, payload);
+		if (controller == null) {
+			logger.warning(String.format(
+					"Module not recognized, tried extract from URI=[%s]",
+					req.getRequestURI()));
+			out.write(RequestController.buildErrorResponse());
 		} else {
-			logger.warning(String.format("Unrecognized module [ %s ]", module));
+			controller.process();
+			out.write(controller.buildResponse());
 		}
 
-		controller.process();
-		out.write(controller.buildResponse());
 	}
 
 	@Override
@@ -100,7 +91,7 @@ public class WMSDataAgent extends HttpServlet {
 			throws ServletException, IOException {
 		this.processRequest(req, resp, CRUD.UPDATE);
 	}
-	
+
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {

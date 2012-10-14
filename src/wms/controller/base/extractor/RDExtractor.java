@@ -8,6 +8,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.ParseException;
+
+import wms.controller.base.CRUD;
+import wms.utilities.Pair;
+
 /**
  * RequestDataExtractor. Class with static method to utilize extracting required
  * parameters of {@link HttpServletRequest}
@@ -19,23 +27,61 @@ import javax.servlet.http.HttpServletRequest;
  * 
  */
 public final class RDExtractor {
+
+	public static RData parse(HttpServletRequest req, CRUD action)
+			throws IOException {
+		RData data = new RData();
+
+		data.uri = RDExtractor.getURI(req);
+		data.parameter = RDExtractor.getParameter(req);
+		data.module = RDExtractor.getModuleAction(data.uri);
+		data.payload = RDExtractor.getPayload(req);
+		if (data.parameter.containsKey("filter")) {
+			data.queryKey = RDExtractor.getQueryKey(data.parameter);
+		}
+		data.action = action;
+
+		return data;
+	}
+
+	private static String[] getURI(HttpServletRequest req) {
+		return req.getRequestURI().split("/");
+	}
+
+	private static Pair<String, Integer> getQueryKey(
+			Map<String, String[]> params) {
+		if (params.containsKey("filter")) {
+			String[] filterStr = params.get("filter");
+			JSONArray obj = (JSONArray) JSONValue.parse(filterStr[0]);
+			JSONObject filter = (JSONObject) obj.get(0);
+
+			String property = (String) filter.get("property");
+			Long longVal = (Long) filter.get("value");
+			Integer value = Integer.decode(longVal.toString());
+
+			return new Pair<String, Integer>(property, value);
+		}
+		return null;
+	}
+
 	/**
 	 * Extract module which CRUD action concerns
 	 * 
 	 * @param uri
 	 * @return
 	 */
-	public static String getModuleAction(String[] uri) {
+	public static Entity getModuleAction(String[] uri) {
 		String module = uri[uri.length - 1];
+		Entity moduleE = null;
 
 		try {
 			Integer.valueOf(module);
 			module = uri[uri.length - 2];
+			moduleE = Entity.valueOf(module);
 		} catch (Exception e) {
-			return module;
+			moduleE = Entity.valueOf(module.toUpperCase());
 		}
-
-		return module;
+		return moduleE;
 	}
 
 	/**
@@ -57,7 +103,7 @@ public final class RDExtractor {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String getPayload(HttpServletRequest request)
+	public static JSONObject getPayload(HttpServletRequest request)
 			throws IOException {
 		StringBuilder payloadBuilder = new StringBuilder();
 		BufferedReader bufferedReader = null;
@@ -85,6 +131,17 @@ public final class RDExtractor {
 				}
 			}
 		}
-		return payloadBuilder.toString();
+		String payload = payloadBuilder.toString();
+		if (payload.isEmpty()) {
+			payload = "{}";
+		}
+
+		JSONObject payloadJSON = null;
+		try {
+			payloadJSON = (JSONObject) JSONValue.parseWithException(payload);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return payloadJSON;
 	}
 }
