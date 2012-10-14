@@ -25,7 +25,7 @@ public class InvoiceType extends BaseEntity {
 	@Column(name = "idInvoiceType", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer id;
+	protected Long id;
 
 	@Basic
 	@Column(name = "name", length = 10, insertable = true, updatable = true)
@@ -39,7 +39,7 @@ public class InvoiceType extends BaseEntity {
 		super();
 	}
 
-	public InvoiceType(Integer idInvoiceType, String name,
+	public InvoiceType(Long idInvoiceType, String name,
 			Invoice masterInvoice) {
 		super();
 		this.id = idInvoiceType;
@@ -47,7 +47,7 @@ public class InvoiceType extends BaseEntity {
 		this.invoice = masterInvoice;
 	}
 
-	public final Integer getIdInvoiceType() {
+	public final Long getIdInvoiceType() {
 		return id;
 	}
 
@@ -59,7 +59,7 @@ public class InvoiceType extends BaseEntity {
 		return invoice;
 	}
 
-	public final void setIdInvoiceType(Integer idInvoiceType) {
+	public final void setIdInvoiceType(Long idInvoiceType) {
 		this.id = idInvoiceType;
 	}
 

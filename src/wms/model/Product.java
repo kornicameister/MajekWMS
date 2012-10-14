@@ -30,7 +30,7 @@ public class Product extends BaseEntity {
 	@Column(name = "idProduct", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer id;
+	protected Long id;
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
@@ -69,7 +69,7 @@ public class Product extends BaseEntity {
 		super();
 	}
 
-	public Product(Integer idProduct, String name, String description,
+	public Product(Long idProduct, String name, String description,
 			Double quantity, Double price, Float tax) {
 		super();
 		this.id = idProduct;
@@ -80,7 +80,7 @@ public class Product extends BaseEntity {
 		this.tax = tax;
 	}
 
-	public Product(Integer idProduct, String name, String description,
+	public Product(Long idProduct, String name, String description,
 			Double quantity, Double price, Float tax,
 			Set<InvoiceProduct> invoiceProducts) {
 		super();
@@ -93,7 +93,7 @@ public class Product extends BaseEntity {
 		this.invoiceProducts = invoiceProducts;
 	}
 
-	public Product(Integer idProduct, String name, String description,
+	public Product(Long idProduct, String name, String description,
 			Double quantity, Double price, Float tax,
 			Set<InvoiceProduct> invoiceProducts, Set<Client> client) {
 		super();
@@ -107,7 +107,7 @@ public class Product extends BaseEntity {
 		this.vendor = client;
 	}
 
-	public Product(Integer idProduct, String name, String description,
+	public Product(Long idProduct, String name, String description,
 			Double quantity, Double price, Float tax,
 			Set<InvoiceProduct> invoiceProducts, Set<Client> client,
 			Set<Unit> units) {
@@ -123,7 +123,7 @@ public class Product extends BaseEntity {
 		this.units = units;
 	}
 
-	public Product(Integer idProduct, String name, String description,
+	public Product(Long idProduct, String name, String description,
 			Double quantity, Double price, Float tax,
 			Set<InvoiceProduct> invoiceProducts, Set<Client> client,
 			Set<Unit> units, Measure productMeasure) {
@@ -140,11 +140,11 @@ public class Product extends BaseEntity {
 		this.measure = productMeasure;
 	}
 
-	public final Integer getIdProduct() {
+	public final Long getIdProduct() {
 		return id;
 	}
 
-	public final void setIdProduct(Integer idProduct) {
+	public final void setIdProduct(Long idProduct) {
 		this.id = idProduct;
 	}
 

@@ -33,7 +33,7 @@ public class InvoiceProduct implements Serializable {
 	@Column(name = "idInvoiceProduct", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "assigned", strategy = "assigned")
-	private Integer id;
+	private Long id;
 
 	@Basic
 	@Column(name = "quantity", insertable = true, nullable = false, updatable = true)
@@ -55,7 +55,7 @@ public class InvoiceProduct implements Serializable {
 		super(); // hibernate
 	}
 
-	public InvoiceProduct(Integer id, Double quantity, Float price,
+	public InvoiceProduct(Long id, Double quantity, Float price,
 			Integer tax, String comment) {
 		super();
 		this.id = id;
@@ -65,7 +65,7 @@ public class InvoiceProduct implements Serializable {
 		this.comment = comment;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -97,7 +97,7 @@ public class InvoiceProduct implements Serializable {
 		return comment;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -32,7 +32,7 @@ public class Invoice extends BaseEntity {
 	@Column(name = "idInvoice", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer id;
+	protected Long id;
 
 	@Column(name = "refNumber", updatable = false, insertable = true, nullable = false)
 	private String invoiceNumber;
@@ -63,7 +63,7 @@ public class Invoice extends BaseEntity {
 		super(); // hibernate
 	}
 
-	public Invoice(Integer idInvoice, String invoiceNumber, Date createdDate,
+	public Invoice(Long idInvoice, String invoiceNumber, Date createdDate,
 			Date dueDate, String description) {
 		super();
 		this.id = idInvoice;
@@ -73,7 +73,7 @@ public class Invoice extends BaseEntity {
 		this.description = description;
 	}
 
-	public Invoice(Integer idInvoice, String invoiceNumber, Date createdDate,
+	public Invoice(Long idInvoice, String invoiceNumber, Date createdDate,
 			Date dueDate, String description, Client invoiceClient,
 			Set<InvoiceProduct> invoiceProducts, InvoiceType invoiceType) {
 		super();
@@ -87,11 +87,11 @@ public class Invoice extends BaseEntity {
 		this.invoiceType = invoiceType;
 	}
 
-	public final Integer getIdInvoice() {
+	public final Long getIdInvoice() {
 		return id;
 	}
 
-	public final void setIdInvoice(Integer idInvoice) {
+	public final void setIdInvoice(Long idInvoice) {
 		this.id = idInvoice;
 	}
 

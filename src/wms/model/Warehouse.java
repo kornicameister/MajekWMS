@@ -25,7 +25,7 @@ public class Warehouse extends BaseEntity {
 	@Column(name = "idWarehouse", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer id;
+	protected Long id;
 
 	@Basic
 	@Column(name = "createdDate", nullable = false)
@@ -50,7 +50,7 @@ public class Warehouse extends BaseEntity {
 		super(); // for hibernate
 	}
 
-	public Warehouse(Integer idWarehouse, Date createdDate, String name,
+	public Warehouse(Long idWarehouse, Date createdDate, String name,
 			String description, Integer size, Integer maximumSize) {
 		super();
 		this.id = idWarehouse;
@@ -61,7 +61,7 @@ public class Warehouse extends BaseEntity {
 		this.maximumSize = maximumSize;
 	}
 
-	public Warehouse(Integer idWarehouse, Set<Unit> units,
+	public Warehouse(Long idWarehouse, Set<Unit> units,
 			Date createdDate, String name, String description, Integer size,
 			Integer maximumSize) {
 		super();
@@ -73,7 +73,7 @@ public class Warehouse extends BaseEntity {
 		this.maximumSize = maximumSize;
 	}
 
-	public final Integer getIdWarehouse() {
+	public final Long getIdWarehouse() {
 		return id;
 	}
 
@@ -97,7 +97,7 @@ public class Warehouse extends BaseEntity {
 		return maximumSize;
 	}
 
-	public final void setIdWarehouse(Integer idWarehouse) {
+	public final void setIdWarehouse(Long idWarehouse) {
 		this.id = idWarehouse;
 	}
 

@@ -19,9 +19,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NaturalId;
 
+@SuppressWarnings("deprecation")
 @Entity
 @Table(name = "unit")
+@org.hibernate.annotations.Entity(
+		dynamicUpdate = true
+)
 public class Unit extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 2437063899438647082L;
@@ -30,10 +35,11 @@ public class Unit extends BaseEntity {
 	@Column(name = "idUnit", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer id;
+	protected Long id;
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
+	@NaturalId(mutable = true)
 	protected String name;
 
 	@Column(name = "description", nullable = true, length = 666)
@@ -41,17 +47,17 @@ public class Unit extends BaseEntity {
 
 	@Basic
 	@Column(name = "size", nullable = false)
-	private Integer size;
+	private Long size;
 
 	@Basic
 	@Column(name = "maxSize", nullable = false)
-	private Integer maximumSize;
+	private Long maximumSize;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "warehouse_id", referencedColumnName = "idWarehouse")
 	private Warehouse warehouse;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
 	private UnitType type;
 
@@ -63,8 +69,8 @@ public class Unit extends BaseEntity {
 		super();
 	}
 
-	public Unit(Integer idUnit, String name, String description, Integer size,
-			Integer maximumSize) {
+	public Unit(Long idUnit, String name, String description, Long size,
+			Long maximumSize) {
 		super();
 		this.id = idUnit;
 		this.name = name;
@@ -73,8 +79,8 @@ public class Unit extends BaseEntity {
 		this.maximumSize = maximumSize;
 	}
 
-	public Unit(Integer id, String name, String description, Integer size,
-			Integer maximumSize, Warehouse warehouse, UnitType type,
+	public Unit(Long id, String name, String description, Long size,
+			Long maximumSize, Warehouse warehouse, UnitType type,
 			Set<Product> products) {
 		super();
 		this.id = id;
@@ -87,11 +93,11 @@ public class Unit extends BaseEntity {
 		this.products = products;
 	}
 
-	public final Integer getId() {
+	public final Long getId() {
 		return id;
 	}
 
-	public final void setId(Integer id) {
+	public final void setId(Long id) {
 		this.id = id;
 	}
 
@@ -111,19 +117,19 @@ public class Unit extends BaseEntity {
 		this.description = description;
 	}
 
-	public final Integer getSize() {
+	public final Long getSize() {
 		return size;
 	}
 
-	public final void setSize(Integer size) {
+	public final void setSize(Long size) {
 		this.size = size;
 	}
 
-	public final Integer getMaximumSize() {
+	public final Long getMaximumSize() {
 		return maximumSize;
 	}
 
-	public final void setMaximumSize(Integer maximumSize) {
+	public final void setMaximumSize(Long maximumSize) {
 		this.maximumSize = maximumSize;
 	}
 

@@ -23,7 +23,7 @@ public class UnitType extends BaseEntity {
 	@Column(name = "idUnitType", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	private Integer id;
+	private Long id;
 
 	@Basic
 	@Column(name = "abbreviation", length = 6, nullable = false, unique = true, insertable = true, updatable = true)
@@ -45,7 +45,7 @@ public class UnitType extends BaseEntity {
 		super();
 	}
 
-	public UnitType(Integer idUnitType, String abbreviation,
+	public UnitType(Long idUnitType, String abbreviation,
 			String description, String name, Integer parentType) {
 		super();
 		this.id = idUnitType;
@@ -55,11 +55,11 @@ public class UnitType extends BaseEntity {
 		this.parentType = parentType;
 	}
 	
-	public final Integer getIdUnitType() {
+	public final Long getIdUnitType() {
 		return id;
 	}
 
-	public final void setIdUnitType(Integer idUnitType) {
+	public final void setIdUnitType(Long idUnitType) {
 		this.id = idUnitType;
 	}
 

@@ -26,7 +26,7 @@ public class Measure extends BaseEntity {
 	@Column(name = "idMeasure", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Integer id;
+	protected Long id;
 
 	@Basic
 	@Column(nullable = false, length = 10)
@@ -49,7 +49,7 @@ public class Measure extends BaseEntity {
 		this.name = name;
 	}
 
-	public Measure(Integer idMeasure, String abbreviation, String name,
+	public Measure(Long idMeasure, String abbreviation, String name,
 			Set<Product> products) {
 		super();
 		this.id = idMeasure;
@@ -58,11 +58,11 @@ public class Measure extends BaseEntity {
 		this.products = products;
 	}
 
-	public final Integer getIdMeasure() {
+	public final Long getIdMeasure() {
 		return id;
 	}
 
-	public final void setIdMeasure(Integer idMeasure) {
+	public final void setIdMeasure(Long idMeasure) {
 		this.id = idMeasure;
 	}
 
