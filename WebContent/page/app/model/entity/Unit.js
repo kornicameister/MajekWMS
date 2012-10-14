@@ -16,24 +16,12 @@ Ext.define('WMS.model.entity.Unit', {
     ],
 
     fields: [
-        {
-            name   : 'id',
-            type   : 'int',
-            persist: true
-        },
+        { name: 'id', type: 'int', persist: true},
         'name',
         'description',
-        {
-            name   : 'warehouse_id',
-            type   : 'int',
-            mapping: 'warehouse.id'
-        },
-        {
-            name   : 'unittype_id',
-            type   : 'int',
-            mapping: 'type.id'
-        },
-        { name: 'size', type: 'int', defaultValue: 0},
+        { name: 'warehouse_id', type: 'int', mapping: 'warehouse.id'},
+        { name: 'unittype_id', type: 'int', mapping: 'type.id'},
+        { name: 'size', type: 'int', defaultValue: 0, persist: true},
         { name: 'maximumSize', type: 'int', defaultValue: 0}
     ],
 
@@ -57,7 +45,10 @@ Ext.define('WMS.model.entity.Unit', {
         {
             type          : 'hasMany',
             associationKey: 'products',
-            model         : 'WMS.model.entity.Product'
+            model         : 'WMS.model.entity.Product',
+            getterName    : 'getProducts',
+            setterName    : 'setProducts',
+            foreignKey    : 'unit_id'
         }
     ],
 
@@ -67,7 +58,8 @@ Ext.define('WMS.model.entity.Unit', {
     //TODO validations
 
     proxy: {
-        type: 'wms',
-        url : 'wms/agent/unit'
+        type        : 'wms',
+        url         : 'wms/agent/unit',
+        batchActions: true
     }
 });

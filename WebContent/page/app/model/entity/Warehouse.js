@@ -15,6 +15,11 @@ Ext.define('WMS.model.entity.Warehouse', {
     ],
 
     fields      : [
+        {
+            name   : 'id',
+            type   : 'int',
+            persist: true
+        },
         'name',
         'description',
         { name: 'maximumSize', type: 'int', defaultValue: 0},
@@ -28,7 +33,7 @@ Ext.define('WMS.model.entity.Warehouse', {
             name       : 'getUnits',
             model      : 'WMS.model.entity.Unit',
             storeConfig: {
-                storeId : 'Units'
+                storeId: 'Units'
             }
         }
     ],
