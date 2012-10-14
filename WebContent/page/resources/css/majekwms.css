@@ -88,3 +88,8 @@
     background-image: url('../images/view/wms/warehouse/unit-add.png');
     background-size: 100%;
 }
+
+.warehouseDescription {
+    text-align: center;
+    font-size: x-large;
+}

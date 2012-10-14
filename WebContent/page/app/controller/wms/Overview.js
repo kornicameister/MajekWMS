@@ -16,7 +16,7 @@ Ext.define('WMS.controller.wms.Overview', {
     ],
     refs  : [
         {ref: 'unitsGrid', selector: 'grid'},
-        {ref: 'warehouseDescription', selector: 'panel'}
+        {ref: 'warehouseDescription', selector: 'wmsoverviews panel'}
     ],
 
     gridLoadingMask: undefined,
@@ -50,11 +50,11 @@ Ext.define('WMS.controller.wms.Overview', {
             var wd = me.getWarehouseDescription();
             if (Ext.isDefined(wd)) {
                 console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
-                wd.update(activeWarehouse.getData());
 
                 activeWarehouse.getUnits().addListener('load', function (store) {
                     console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
                     me.getUnitsGrid().reconfigure(store);
+                    wd.update(activeWarehouse.getData());
                     me.gridLoadingMask.hide();
                 });
                 activeWarehouse.getUnits().addListener('update', function (store,records,operation) {

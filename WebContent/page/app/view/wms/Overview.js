@@ -27,7 +27,16 @@ Ext.define('WMS.view.wms.Overview', {
                 type: 'fit'
             },
             itemId: 'description',
-            title : 'Warehouse'
+            title : 'Warehouse',
+            tpl   : new Ext.XTemplate(
+                // TODO support for dd,dt and so on
+                '<div class="warehouseDescription">',
+                '<p>Name: {name}</p>',
+                '<p>Description: {description}</p>',
+                '<p>Usage: {size} of {maximumSize}</p>',
+                '<p>Created: {createdDate}</p>',
+                '</div>'
+            )
         },
         {
             xtype: 'splitter'
