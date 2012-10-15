@@ -16,51 +16,45 @@
  * user information such as warehouse diagram etc.
  */
 Ext.define('WMS.view.MasterView', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.tab.Panel',
     alias : 'widget.masterview',
 
-    title   : 'WMS - Warehouse',
-    defaults: {
+    title         : 'WMS - Warehouse',
+    defaults      : {
         autoScroll: true
     },
-    layout  : {
-        type: 'fit'
-    },
+    deferredRender: true,
 
-    items: {
-        xtype : 'tabpanel',
-        itemId: 'masterTabPanel',
-        items : [
-            {
-                xtype : 'wmsoverviews',
-                itemId: 'wmsOverview',
-                title : 'Overview'
+    items: [
+        {
+            xtype : 'wmsoverviews',
+            itemId: 'wmsOverview',
+            title : 'Overview'
+        },
+        {
+            xtype : 'wmsunit',
+            itemId: 'wmsUnit',
+            title : 'Units',
+            layout: {
+                type: 'accordion'
             },
-            {
-                xtype : 'wmsunit',
-                itemId: 'wmsUnit',
-                title : 'Units',
-                layout: {
-                    type: 'accordion'
+            items : [
+                {
+                    xtype : 'wmsunitplacement',
+                    itemId: 'wmsUnitSchema',
+                    title : 'Unit\'s placement'
                 },
-                items : [
-                    {
-                        xtype : 'wmsunitplacement',
-                        itemId: 'wmsUnitSchema',
-                        title : 'Unit\'s placement'
-                    },
-                    {
-                        xtype : 'wmsinventory',
-                        itemId: 'wmsInventory',
-                        title : "Inventory"
-                    }
-                ]
-            },
-            {
-                xtype : 'wmsstatistics',
-                itemId: 'wmsStatistics',
-                title : 'Statistics'
-            }
-        ]
-    }
+                {
+                    xtype : 'wmsinventory',
+                    itemId: 'wmsInventory',
+                    title : "Inventory"
+                }
+            ]
+        },
+        {
+            xtype : 'wmsstatistics',
+            itemId: 'wmsStatistics',
+            title : 'Statistics'
+        }
+    ]
 });

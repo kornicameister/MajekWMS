@@ -15,7 +15,17 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
 
     constructor: function (config) {
         config = Ext.apply({
-            surface: []
+            tiles            : [],
+            drawConfiguration: {
+                tile: {
+                    width : 120,
+                    height: 120
+                },
+                unit: {
+                    width : 80,
+                    height: 80
+                }
+            }
         }, config);
         Ext.apply(this, config);
         this.callParent(arguments);
@@ -23,75 +33,102 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
 
     init: function () {
         console.init('WMS.controller.wms.UnitPlacement initializing');
-        var me = this,
-            warehouses = me.getController('Master').getWarehousesStore();
-
+        var me = this;
         me.control({
             'wmsunitplacement #unitsDrawingCmp': {
-                render: function (board) {
-                    console.log('UnitPlacement :: Drawing chart initialized');
-                    me.drawUnits(board);
-                }
+                boxready: me.onUnitBoardRender
             }
-        });
+        }, me);
+    },
 
-        me.mon(warehouses, 'activechanged', function (store, activeWarehouse) {
-            activeWarehouse.getUnits().addListener('load', function (store) {
-                if (store.getTotalCount() > 0) {
-                    me.preparePaths(store);
-                }
-            })
-        });
+    onUnitBoardRender: function (board) {
+        console.log('UnitPlacement :: Drawing chart initialized');
+        var me = this;
+
+        me.drawHostTiles(board);
+        me.drawUnits(board);
+    },
+
+    drawHostTiles: function (board) {
+        // TODO get paper size, to calculate tiles count on both axis
+        // each tile can host only one unit
+        console.log('UnitPlacement :: Drawing - > host tiles');
+        var me = this,
+            surface = board['surface'],
+            boardSize = board.getSize(),
+            unitsCount = unitStore = me.getController('Master').getWarehousesStore().getActive().getUnits().getTotalCount(),
+            xCount = Math.floor(boardSize['width'] / me['drawConfiguration']['tile']['width']),
+            yCount = Math.floor(boardSize['height'] / me['drawConfiguration']['tile']['height']),
+            tile = undefined;
+
+        if (!Ext.isDefined(surface)) {
+            console.error('UnitPlacement :: Surface not ready...');
+            return;
+        }
+
+        if (xCount >= yCount) {
+            xCount = Math.max(xCount, unitsCount);
+        } else {
+            yCount = Math.max(yCount, unitsCount);
+        }
+
+        for (var y = 0; y < yCount; y++) {
+            for (var x = 0; x < xCount; x++) {
+                tile = surface.add({
+                    type   : 'rect',
+                    width  : me['drawConfiguration']['tile']['width'],
+                    height : me['drawConfiguration']['tile']['height'],
+                    radius : 5,
+                    fill   : '#C0C0C0',
+                    x      : x * me['drawConfiguration']['tile']['width'] + 5,
+                    y      : y * me['drawConfiguration']['tile']['height'] + 5,
+                    opacity: 0.2
+                });
+                tile.show(true);
+                me.tiles.push(tile);
+            }
+        }
     },
 
     drawUnits: function (board) {
         console.log('UnitPlacement :: Commencing sprites drawing...');
         var me = this,
-            surface = board['surface'];
+            surface = board['surface'],
+            it = 0,
+            tileBBox,
+            rectShape,
+            rectText,
+            unitStore = me.getController('Master').getWarehousesStore().getActive().getUnits();
 
-        me.surface = surface.add(me.surface);
-        Ext.each(me.surface, function (sprite) {
-            sprite.show(true);
-        });
-    },
-
-    preparePaths: function (unitsStore) {
-        console.log('UnitPlacement :: Commencing sprites initializing...');
-        var unitName = undefined,
-            unitSize = undefined,
-            unitType = undefined,
-            surface = new Array();
-
-        var x = 120, y = 200;
-
-        unitsStore.each(function (unit) {
-            unitName = unit.get('name');
-            unitSize = unit.get('size');
-            unitType = unit.getType().get('name');
-
-            surface.push({
+        unitStore.each(function (unit) {
+            tileBBox = me['tiles'][it].getBBox();
+            rectShape = surface.add({
                 type          : 'rect',
-                width         : 80,
-                height        : 80,
+                width         : me['drawConfiguration']['unit']['width'],
+                height        : me['drawConfiguration']['unit']['height'],
                 radius        : 15,
                 fill          : 'green',
-                opacity       : 0.5,
                 stroke        : 'red',
                 'stroke-width': 2,
-                x             : x,
-                y             : y
+                x             : tileBBox['x'] + tileBBox['width'] / 4,
+                y             : tileBBox['y'] + tileBBox['height'] / 4
             });
-            surface.push({
+            rectText = surface.add({
                 type: 'text',
-                text: unitName + '\n[ ' + unitSize + ' ]',
+                text: unit.get('name') + '\n[ ' + unit.get('size') + ' ]',
                 font: '12px monospace',
-                x   : x + 10,
-                y   : y + 40
+                x   : tileBBox['x'] + tileBBox['width'] / 4 + 10,
+                y   : tileBBox['y'] + tileBBox['height'] / 4 + 40
             });
+            me['tiles'][it]['unit'] = {
+                shape : rectShape,
+                header: rectText
+            };
 
-            x += 120;
-            y += 20;
+            rectShape.show(true);
+            rectText.show(true);
+
+            console.log('UnitPlacement :: Tile assigned with unit -> ', me['tiles'][it++]);
         });
-        this.surface = surface;
     }
 });

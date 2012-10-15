@@ -95,6 +95,7 @@ Ext.define('WMS.view.wms.Overview', {
                 {
                     header   : 'Type',
                     dataIndex: 'unittype_id',
+                    flex     : 2,
                     renderer : function (unittype_id) {
 
                         if (!Ext.isNumber(unittype_id)) {
