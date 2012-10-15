@@ -22,8 +22,8 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
                     height: 120
                 },
                 unit: {
-                    width : 80,
-                    height: 80
+                    width : 90,
+                    height: 90
                 }
             }
         }, config);
@@ -56,7 +56,7 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
         var me = this,
             surface = board['surface'],
             boardSize = board.getSize(),
-            unitsCount = unitStore = me.getController('Master').getWarehousesStore().getActive().getUnits().getTotalCount(),
+            unitsCount = me.getController('Master').getWarehousesStore().getActive().getUnits().getTotalCount(),
             xCount = Math.floor(boardSize['width'] / me['drawConfiguration']['tile']['width']),
             yCount = Math.floor(boardSize['height'] / me['drawConfiguration']['tile']['height']),
             tile = undefined;
@@ -75,60 +75,66 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
         for (var y = 0; y < yCount; y++) {
             for (var x = 0; x < xCount; x++) {
                 tile = surface.add({
-                    type   : 'rect',
-                    width  : me['drawConfiguration']['tile']['width'],
-                    height : me['drawConfiguration']['tile']['height'],
-                    radius : 5,
-                    fill   : '#C0C0C0',
-                    x      : x * me['drawConfiguration']['tile']['width'] + 5,
-                    y      : y * me['drawConfiguration']['tile']['height'] + 5,
-                    opacity: 0.2
+                    type          : 'rect',
+                    width         : me['drawConfiguration']['tile']['width'],
+                    height        : me['drawConfiguration']['tile']['height'],
+                    radius        : 5,
+                    fill          : '#C0C0C0',
+                    stroke        : '#CCCCCC',
+                    'stroke-width': 2,
+                    x             : x * me['drawConfiguration']['tile']['width'] + 5,
+                    y             : y * me['drawConfiguration']['tile']['height'] + 5,
+                    opacity       : 0.2
                 });
                 tile.show(true);
-                me.tiles.push(tile);
+                me['tiles'].push(tile);
             }
         }
     },
 
     drawUnits: function (board) {
+        function drawUnitShape(unitRecord, tileBBox) {
+            var rectShape = surface.add({
+                type          : 'rect',
+                width         : unitWidth,
+                height        : unitHeight,
+                x             : Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
+                y             : Math.floor(tileBBox['y'] + ((tileBBox['height'] - unitWidth) / 2)),
+                radius        : 12,
+                fill          : 'green',
+                stroke        : 'red',
+                'stroke-width': 2,
+                group         : warehouse.get('name')
+            });
+            var textShape = surface.add({
+                type  : 'text',
+                text  : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
+                fill  : 'black',
+                font  : '10px monospace',
+                width : unitWidth,
+                height: unitHeight,
+                x     : Math.floor(rectShape['x'] + (rectShape['width'] / 3)),
+                y     : Math.floor(rectShape['y'] + (rectShape['height'] / 4))
+            });
+            rectShape.show(true);
+            textShape.show(true);
+            rectShape['description'] = textShape;
+            console.log('UnitPlacement :: Drawn UnitShape -> ', rectShape);
+            return rectShape;
+        }
+
         console.log('UnitPlacement :: Commencing sprites drawing...');
         var me = this,
             surface = board['surface'],
             it = 0,
-            tileBBox,
-            rectShape,
-            rectText,
-            unitStore = me.getController('Master').getWarehousesStore().getActive().getUnits();
+            warehouse = me.getController('Master').getWarehousesStore().getActive(),
+            unitStore = warehouse.getUnits(),
+            unitWidth = me['drawConfiguration']['unit']['width'],
+            unitHeight = me['drawConfiguration']['unit']['height'];
 
         unitStore.each(function (unit) {
-            tileBBox = me['tiles'][it].getBBox();
-            rectShape = surface.add({
-                type          : 'rect',
-                width         : me['drawConfiguration']['unit']['width'],
-                height        : me['drawConfiguration']['unit']['height'],
-                radius        : 15,
-                fill          : 'green',
-                stroke        : 'red',
-                'stroke-width': 2,
-                x             : tileBBox['x'] + tileBBox['width'] / 4,
-                y             : tileBBox['y'] + tileBBox['height'] / 4
-            });
-            rectText = surface.add({
-                type: 'text',
-                text: unit.get('name') + '\n[ ' + unit.get('size') + ' ]',
-                font: '12px monospace',
-                x   : tileBBox['x'] + tileBBox['width'] / 4 + 10,
-                y   : tileBBox['y'] + tileBBox['height'] / 4 + 40
-            });
-            me['tiles'][it]['unit'] = {
-                shape : rectShape,
-                header: rectText
-            };
-
-            rectShape.show(true);
-            rectText.show(true);
-
-            console.log('UnitPlacement :: Tile assigned with unit -> ', me['tiles'][it++]);
+            me['tiles'][it]['unit'] = drawUnitShape(unit, me['tiles'][it].getBBox());
+            it++;
         });
     }
 });
