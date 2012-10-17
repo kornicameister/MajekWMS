@@ -58,6 +58,7 @@ public class WMSDataAgent extends HttpServlet {
 
 	private void processRequest(HttpServletRequest req,
 			HttpServletResponse resp, CRUD action) throws IOException {
+		resp.setCharacterEncoding("UTF-8");
 		PrintWriter out = resp.getWriter();
 		RequestController controller = RequestController
 				.pickController(RDExtractor.parse(req, action));

@@ -3,12 +3,19 @@ package wms.controller.base;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javassist.tools.reflect.Reflection;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,6 +33,7 @@ import wms.controller.base.format.response.ResponseReadFormat;
 import wms.controller.hibernate.HibernateBridge;
 import wms.model.BaseEntity;
 import wms.model.Warehouse;
+import wms.utils.StringUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -55,6 +63,7 @@ public abstract class RequestController implements Controller {
 	protected ArrayList<BaseEntity> lastRead = new ArrayList<>();
 	private Integer updateCount = new Integer(0);
 	protected final RData rdata;
+	private Set<Method> sorters;
 	private final static Logger logger = Logger
 			.getLogger(RequestController.class.getName());
 
@@ -106,7 +115,7 @@ public abstract class RequestController implements Controller {
 	public void create() {
 		logger.entering(this.getClass().getName(), "create");
 		Serializable savedID = null;
-		Collection<? extends BaseEntity> data = this.extractFromPayload();
+		Collection<? extends BaseEntity> data = this.parsePayload();
 
 		// saving
 		this.session.beginTransaction();
@@ -128,7 +137,7 @@ public abstract class RequestController implements Controller {
 
 		Transaction t = this.session.beginTransaction();
 		this.session.flush();
-		for (Object saveable : this.extractFromPayload()) {
+		for (Object saveable : this.parsePayload()) {
 			this.session.update(saveable);
 			this.updateCount++;
 		}
@@ -141,7 +150,7 @@ public abstract class RequestController implements Controller {
 	public void delete() {
 		Transaction t = this.session.beginTransaction();
 		try {
-			for (Object obj : this.extractFromPayload()) {
+			for (Object obj : this.parsePayload()) {
 				this.session.delete(obj);
 			}
 		} catch (Exception e) {
@@ -206,7 +215,8 @@ public abstract class RequestController implements Controller {
 	 * 
 	 * @return
 	 */
-	protected Collection<? extends BaseEntity> extractFromPayload() {
+	protected Collection<? extends BaseEntity> parsePayload() {
+		RequestController.logger.info("Parsing payload started");
 		Gson gson = new GsonBuilder().setDateFormat("y-M-d")
 				.setPrettyPrinting().create();
 		List<BaseEntity> data = new ArrayList<>();
@@ -219,18 +229,15 @@ public abstract class RequestController implements Controller {
 			for (short i = 0; i < ddata.size(); i++) {
 				dataElement = (JSONObject) ddata.get(i);
 
-				if (this.rdata.getAction() != CRUD.DELETE) {
-					entity = (BaseEntity) gson.fromJson(dataElement
-							.toJSONString(), this.rdata.getModule()
-							.getEntityClass());
-				}
-
 				switch (this.rdata.getAction()) {
 				case UPDATE:
-					entity = this.preUpdate(entity, dataElement);
+					entity = this.preUpdateByReflection(dataElement);
 					break;
 				case CREATE:
-					entity = this.preCreate(entity, dataElement);
+					entity = this.preCreate(
+							entity = (BaseEntity) gson.fromJson(dataElement
+									.toJSONString(), this.rdata.getModule()
+									.getEntityClass()), dataElement);
 					break;
 				case DELETE:
 					entity = this.preDelete(dataElement);
@@ -248,21 +255,100 @@ public abstract class RequestController implements Controller {
 					"Something went wrong when decoding [CREATE] request", e);
 		}
 
+		RequestController.logger
+				.info("Payload parsed, extracted entities count = [ "
+						+ data.size() + " ]");
 		return data;
 	}
 
 	/**
-	 * Method that all derived controllers must implement in order to ensure
-	 * that models with fields marked as being in associations were set not
-	 * null.
+	 * Method, thanks to {@link Reflection} mechanism goes and efficiently
+	 * updates only these properties in target class that were changes on the
+	 * client side. Still method specific for certain entity must be called in
+	 * order to ensure that properties different that simple(ak primitives) will
+	 * be set before commencing update to database engine.
 	 * 
-	 * @param b
-	 * @param payloadedData
+	 * @param jData
+	 *            {@link JSONObject} full of properties that were changed and
+	 *            must be saved
 	 * @return valid object if entity indeed differs from passed copy or null if
 	 *         entity was not modified
 	 */
-	protected abstract BaseEntity preUpdate(BaseEntity b,
-			JSONObject payloadedData);
+	private BaseEntity preUpdateByReflection(JSONObject jData) {
+		logger.info(String.format(
+				"Update via reflection, payload data = [ %s ]",
+				jData.toJSONString()));
+		BaseEntity b = (BaseEntity) this.session.get(this.rdata.getModule()
+				.getEntityClass(), (Serializable) jData.get("id"));
+
+		// this method is called many times still, setters are extracted only once !
+		this.extractSetters(b);
+		
+		for (Method m : this.sorters) {
+			String methodName = m.getName(), propertyName = null;
+			String type[] = methodName.split("^(set)");
+			if (methodName.contains("set")) {
+				propertyName = StringUtils
+						.decapitalizeFirstLetter(type[type.length - 1]);
+				Object value = jData.get(propertyName);
+				if (value != null && !propertyName.equals("id")) {
+					try {
+						m.invoke(b, value);
+					} catch (IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return this.preUpdateNonPrimitives(b, jData);
+	}
+
+	/**
+	 * Method goes through methods declared in {@link BaseEntity}(b) and cuts
+	 * off all but setters.
+	 * 
+	 * @param b
+	 * @return
+	 */
+	private void extractSetters(BaseEntity b) {
+		
+		if(this.sorters != null && this.sorters.size() > 0){
+			return;
+		}
+		
+		Method methods[] = b.getClass().getMethods();
+		Arrays.sort(methods, new Comparator<Method>() {
+
+			@Override
+			public int compare(Method o1, Method o2) {
+				String o1Name = o1.getName(), o2Name = o2.getName();
+
+				boolean isO1Setter = o1Name.contains("set"), isO2Setter = o2Name
+						.contains("set");
+
+				if (isO1Setter && isO2Setter) {
+					return o1Name.compareTo(o2Name);
+				} else if (isO1Setter && !isO2Setter) {
+					return -1;
+				} else if (!isO1Setter && isO2Setter) {
+					return 1;
+				}
+				return 0;
+			}
+		});
+
+		Set<Method> sortes = new HashSet<>();
+		for (Method method : methods) {
+			if (method.getName().contains("set")) {
+				sortes.add(method);
+			}
+		}
+
+		logger.info(String.format("Extracted [ %d ] setter from [ %s ]",
+				sortes.size(), b.getClass().getSimpleName()));
+		this.sorters = sortes;
+	}
 
 	/**
 	 * Method for implementing controllers that is called when inserting new
@@ -286,6 +372,17 @@ public abstract class RequestController implements Controller {
 	 * @return
 	 */
 	protected abstract BaseEntity preDelete(JSONObject payloadedData);
+
+	/**
+	 * Method updates model specific fields, fields that needs getting data out
+	 * of database.
+	 * 
+	 * @param b
+	 * @param payloadedData
+	 * @return
+	 */
+	protected abstract BaseEntity preUpdateNonPrimitives(BaseEntity b,
+			JSONObject payloadedData);
 
 	public static String buildErrorResponse() {
 		return null;

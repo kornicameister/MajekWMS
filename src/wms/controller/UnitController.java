@@ -53,37 +53,34 @@ public class UnitController extends RequestController {
 			}
 		}
 	}
-	
-	@Override
-	protected BaseEntity preUpdate(BaseEntity b, JSONObject payloadedData) {
-		ActionData ad = extractActionData(b, payloadedData);
-		Unit oldUnit = (Unit) this.session.get(Unit.class, ad.idUnit);
 
-		if (!oldUnit.equals(ad.newUnit)) {
-			oldUnit.setType((UnitType) this.session.byId(UnitType.class)
-					.getReference(ad.fkUnitType));
-			oldUnit.setWarehouse((Warehouse) this.session.byId(Warehouse.class)
-					.getReference(ad.fkWarehouse));
-			oldUnit.setDescription((String) payloadedData.get("description"));
-			oldUnit.setMaximumSize((Long) payloadedData.get("maximumSize"));
-			oldUnit.setName((String) payloadedData.get("name"));
-			oldUnit.setSize((Long) payloadedData.get("size"));
-		} else {
-			return null;
+	@Override
+	protected BaseEntity preUpdateNonPrimitives(BaseEntity b, JSONObject payloadedData) {
+		Unit unit = (Unit) b;
+		ActionData ad = extractActionData(unit, payloadedData);
+
+		if (ad.fkWarehouse != null) {
+			unit.setWarehouse((Warehouse) this.session.byId(Warehouse.class)
+					.load(ad.fkWarehouse));
+		} else if (ad.fkUnitType != null) {
+			unit.setType((UnitType) this.session.byId(UnitType.class).load(
+					ad.fkUnitType));
 		}
-		return oldUnit;
+		return unit;
 	}
 
 	@Override
 	protected BaseEntity preCreate(BaseEntity b, JSONObject payloadedData) {
 		ActionData ad = extractActionData(b, payloadedData);
 
-		ad.newUnit.setType((UnitType) this.session.byId(UnitType.class).getReference(ad.fkUnitType));
-		ad.newUnit.setWarehouse((Warehouse) this.session.byId(Warehouse.class).getReference(ad.fkWarehouse));
+		ad.newUnit.setType((UnitType) this.session.byId(UnitType.class)
+				.getReference(ad.fkUnitType));
+		ad.newUnit.setWarehouse((Warehouse) this.session.byId(Warehouse.class)
+				.getReference(ad.fkWarehouse));
 
 		return ad.newUnit;
 	}
-	
+
 	@Override
 	protected BaseEntity preDelete(JSONObject payloadedData) {
 		ActionData ad = extractActionData(null, payloadedData);
