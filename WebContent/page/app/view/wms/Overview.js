@@ -70,12 +70,7 @@ Ext.define('WMS.view.wms.Overview', {
                 {
                     header   : 'Size',
                     dataIndex: 'size',
-                    field    : {
-                        xtype   : 'numberfield',
-                        enabled : false,
-                        editable: false,
-                        value   : 0
-                    }
+                    readOnly : true
                 },
                 {
                     header   : 'Maximum size',
@@ -129,7 +124,7 @@ Ext.define('WMS.view.wms.Overview', {
 
                         tpl       : Ext.create('Ext.XTemplate',
                             '<tpl for=".">',
-                            '<div class="x-boundlist-item">{abbreviation} - {description}</div>',
+                            '<div class="x-boundlist-item">{name} - {description}</div>',
                             '</tpl>'
                         ),
                         displayTpl: Ext.create('Ext.XTemplate',

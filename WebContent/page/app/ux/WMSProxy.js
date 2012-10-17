@@ -19,9 +19,10 @@ Ext.define('Ext.ux.proxy.WMSProxy', {
         successProperty: 'success'
     },
     writer            : {
-        type       : 'json',
-        root       : 'data',
-        allowSingle: false
+        type          : 'json',
+        root          : 'data',
+        allowSingle   : false,
+        writeAllFields: false
     },
     listeners         : {
         exception: function (proxy, response, operation) {
