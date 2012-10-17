@@ -5,11 +5,14 @@
  * Time  : 22:56
  */
 
-Ext.define('WMS.controller.wms.UnitPlacement', {
+Ext.define('WMS.controller.wms.unit.Placement', {
     extend: 'Ext.app.Controller',
     views : ['WMS.view.wms.UnitPlacement'],
 
-    refs: [
+    requires: [
+        'WMS.controller.wms.unit.UnitDDManager'
+    ],
+    refs    : [
         { ref: 'unitBoard', selector: 'wmsunitplacement unitsDrawingCmp' }
     ],
 
@@ -25,7 +28,8 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
                     width : 90,
                     height: 90
                 }
-            }
+            },
+            ddManager        : Ext.create('WMS.controller.wms.unit.UnitDDManager')
         }, config);
         Ext.apply(this, config);
         this.callParent(arguments);
@@ -36,12 +40,12 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
         var me = this;
         me.control({
             'wmsunitplacement #unitsDrawingCmp': {
-                boxready: me.onUnitBoardRender
+                boxready: me.onBoxReady
             }
         }, me);
     },
 
-    onUnitBoardRender: function (board) {
+    onBoxReady: function (board) {
         console.log('UnitPlacement :: Drawing chart initialized');
         var me = this;
 
@@ -104,21 +108,22 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
                 fill          : 'green',
                 stroke        : 'red',
                 'stroke-width': 2,
-                group         : warehouse.get('name')
+                draggable     : true
             });
             var textShape = surface.add({
-                type  : 'text',
-                text  : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
-                fill  : 'black',
-                font  : '10px monospace',
-                width : unitWidth,
-                height: unitHeight,
-                x     : Math.floor(rectShape['x'] + (rectShape['width'] / 3)),
-                y     : Math.floor(rectShape['y'] + (rectShape['height'] / 4))
+                type     : 'text',
+                text     : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
+                fill     : 'black',
+                font     : '10px monospace',
+                width    : unitWidth,
+                height   : unitHeight,
+                x        : Math.floor(rectShape['x'] + (rectShape['width'] / 3)),
+                y        : Math.floor(rectShape['y'] + (rectShape['height'] / 4)),
+                draggable: true
             });
             rectShape.show(true);
             textShape.show(true);
-            rectShape['description'] = textShape;
+            rectShape['text'] = textShape;
             console.log('UnitPlacement :: Drawn UnitShape -> ', rectShape);
             return rectShape;
         }
@@ -136,5 +141,6 @@ Ext.define('WMS.controller.wms.UnitPlacement', {
             me['tiles'][it]['unit'] = drawUnitShape(unit, me['tiles'][it].getBBox());
             it++;
         });
+        me.ddManager.setTiles(me['tiles']);
     }
 });

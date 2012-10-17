@@ -35,8 +35,8 @@
                     'wms.Inventory',
                     'wms.Overview',
                     'wms.Statistics',
-                    'wms.Unit',
-                    'wms.UnitPlacement',
+                    'wms.unit.Unit',
+                    'wms.unit.Placement',
 
                     'Toolbars',
                     'Navigation',

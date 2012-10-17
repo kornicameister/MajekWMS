@@ -15,13 +15,7 @@ Ext.define('WMS.view.wms.UnitPlacement', {
     },
 
     items: {
-        xtype     : 'draw',
-        itemId    : 'unitsDrawingCmp',
-        viewBox   : true,
-        autoScroll: true,
-        autoSize  : true,
-        defaults  : {
-            draggable: true
-        }
+        xtype    : 'draw',
+        itemId   : 'unitsDrawingCmp'
     }
 });

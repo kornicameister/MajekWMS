@@ -5,7 +5,7 @@
  * Time   : 16:44
  */
 
-Ext.define('WMS.controller.wms.Unit', {
+Ext.define('WMS.controller.wms.unit.Unit', {
     extend: 'Ext.app.Controller',
     views : ['WMS.view.wms.Unit'],
     init  : function () {
