@@ -86,7 +86,7 @@ Ext.define('WMS.controller.wms.Overview', {
             console.error('Overview :: Failed to add new unit when row edition enabled');
         }
 
-        grid.getPlugin('unitRowEditor').startEdit(store.getTotalCount() + 1, 0);
+        grid.getPlugin('unitRowEditor').startEdit(store.getTotalCount() - 1, 0);
 
         Ext.getCmp('statusBar').setStatus({
             text : 'You\'ve just added new unit...',

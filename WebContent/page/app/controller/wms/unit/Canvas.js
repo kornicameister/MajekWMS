@@ -5,15 +5,17 @@
  * Time  : 22:56
  */
 
-Ext.define('WMS.controller.wms.unit.Placement', {
+Ext.define('WMS.controller.wms.unit.Canvas', {
     extend: 'Ext.app.Controller',
-    views : ['WMS.view.wms.UnitPlacement'],
 
     requires: [
         'WMS.controller.wms.unit.UnitDDManager'
     ],
+    views   : [
+        'WMS.view.wms.unit.Canvas'
+    ],
     refs    : [
-        { ref: 'unitBoard', selector: 'wmsunitplacement unitsDrawingCmp' }
+        { ref: 'unitBoard', selector: 'wmsunitcanvas unitsDrawingCmp' }
     ],
 
     constructor: function (config) {
@@ -36,17 +38,17 @@ Ext.define('WMS.controller.wms.unit.Placement', {
     },
 
     init: function () {
-        console.init('WMS.controller.wms.UnitPlacement initializing');
+        console.init('WMS.controller.wms.unit.Canvas initializing');
         var me = this;
         me.control({
-            'wmsunitplacement #unitsDrawingCmp': {
+            'wmsunitcanvas #unitsDrawingCmp': {
                 boxready: me.onBoxReady
             }
         }, me);
     },
 
     onBoxReady: function (board) {
-        console.log('UnitPlacement :: Drawing chart initialized');
+        console.log('Canvas :: Drawing chart initialized');
         var me = this;
 
         me.drawHostTiles(board);
@@ -56,7 +58,7 @@ Ext.define('WMS.controller.wms.unit.Placement', {
     drawHostTiles: function (board) {
         // TODO get paper size, to calculate tiles count on both axis
         // each tile can host only one unit
-        console.log('UnitPlacement :: Drawing - > host tiles');
+        console.log('Canvas :: Drawing - > host tiles');
         var me = this,
             surface = board['surface'],
             boardSize = board.getSize(),
@@ -66,7 +68,7 @@ Ext.define('WMS.controller.wms.unit.Placement', {
             tile = undefined;
 
         if (!Ext.isDefined(surface)) {
-            console.error('UnitPlacement :: Surface not ready...');
+            console.error('Canvas :: Surface not ready...');
             return;
         }
 
@@ -124,11 +126,10 @@ Ext.define('WMS.controller.wms.unit.Placement', {
             rectShape.show(true);
             textShape.show(true);
             rectShape['text'] = textShape;
-            console.log('UnitPlacement :: Drawn UnitShape -> ', rectShape);
             return rectShape;
         }
 
-        console.log('UnitPlacement :: Commencing sprites drawing...');
+        console.log('Canvas :: Commencing sprites drawing...');
         var me = this,
             surface = board['surface'],
             it = 0,
@@ -137,10 +138,14 @@ Ext.define('WMS.controller.wms.unit.Placement', {
             unitWidth = me['drawConfiguration']['unit']['width'],
             unitHeight = me['drawConfiguration']['unit']['height'];
 
+        // TODO add support for embedding tile withing unit record !
+
         unitStore.each(function (unit) {
-            me['tiles'][it]['unit'] = drawUnitShape(unit, me['tiles'][it].getBBox());
-            it++;
+            me['tiles'][it++]['unit'] = unit.setSprite(
+                drawUnitShape(unit, me['tiles'][it].getBBox())
+            );
         });
         me.ddManager.setTiles(me['tiles']);
+        console.log('Canvas :: Drawn units count = [' + me['tiles'].length + ']');
     }
 });
