@@ -11,5 +11,20 @@
 Ext.define('WMS.view.wms.Unit', {
     extend : 'Ext.panel.Panel',
     alias  : 'widget.wmsunit',
-    iconCls: 'view-wms-unit'
+    iconCls: 'view-wms-unit',
+    layout : {
+        type: 'accordion'
+    },
+    items  : [
+        {
+            xtype : 'wmsunitcanvas',
+            itemId: 'wmsUnitSchema',
+            title : 'Unit\'s placement'
+        },
+        {
+            xtype : 'wmsinventory',
+            itemId: 'wmsInventory',
+            title : "Inventory"
+        }
+    ]
 });

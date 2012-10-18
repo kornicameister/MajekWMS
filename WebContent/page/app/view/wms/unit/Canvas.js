@@ -5,9 +5,9 @@
  * Time  : 22:34
  */
 
-Ext.define('WMS.view.wms.UnitPlacement', {
+Ext.define('WMS.view.wms.unit.Canvas', {
     extend : 'Ext.panel.Panel',
-    alias  : 'widget.wmsunitplacement',
+    alias  : 'widget.wmsunitcanvas',
     iconCls: 'view-wms-unit-placement',
 
     layout: {

@@ -281,9 +281,10 @@ public abstract class RequestController implements Controller {
 		BaseEntity b = (BaseEntity) this.session.get(this.rdata.getModule()
 				.getEntityClass(), (Serializable) jData.get("id"));
 
-		// this method is called many times still, setters are extracted only once !
+		// this method is called many times still, setters are extracted only
+		// once !
 		this.extractSetters(b);
-		
+
 		for (Method m : this.sorters) {
 			String methodName = m.getName(), propertyName = null;
 			String type[] = methodName.split("^(set)");
@@ -298,6 +299,9 @@ public abstract class RequestController implements Controller {
 							| InvocationTargetException e) {
 						e.printStackTrace();
 					}
+				} else if (!propertyName.equals("id")) {
+					logger.warning(String.format(
+							"Unrecognized property [ %s ]", propertyName));
 				}
 			}
 		}
@@ -312,11 +316,11 @@ public abstract class RequestController implements Controller {
 	 * @return
 	 */
 	private void extractSetters(BaseEntity b) {
-		
-		if(this.sorters != null && this.sorters.size() > 0){
+
+		if (this.sorters != null && this.sorters.size() > 0) {
 			return;
 		}
-		
+
 		Method methods[] = b.getClass().getMethods();
 		Arrays.sort(methods, new Comparator<Method>() {
 

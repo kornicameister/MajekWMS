@@ -7,8 +7,8 @@
 
 Ext.define('WMS.controller.wms.unit.Unit', {
     extend: 'Ext.app.Controller',
-    views : ['WMS.view.wms.Unit'],
+    views : ['WMS.view.wms.unit.Unit'],
     init  : function () {
-        console.init('WMS.controller.wms.Unit initializing')
+        console.init('WMS.controller.wms.unit.Unit initializing')
     }
 });
