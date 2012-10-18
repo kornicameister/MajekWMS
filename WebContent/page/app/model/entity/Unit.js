@@ -12,13 +12,14 @@ Ext.define('WMS.model.entity.Unit', {
     extend: 'Ext.data.Model',
 
     requires: [
-        'WMS.model.entity.Product'
+        'WMS.model.entity.Product',
+        'WMS.model.sprite.Unit'
     ],
 
     fields: [
         { name: 'id', type: 'int', persist: true},
-        'name',
-        'description',
+        { name: 'name', type: 'string'},
+        { name: 'description', type: 'string'},
         { name: 'warehouse_id', type: 'int', mapping: 'warehouse.id'},
         { name: 'unittype_id', type: 'int', mapping: 'type.id'},
         { name: 'size', type: 'int', defaultValue: 0, persist: true},
@@ -56,6 +57,24 @@ Ext.define('WMS.model.entity.Unit', {
         'id', 'name'
     ],
     //TODO validations
+
+    setSprite: function (sprite) {
+        var me = this;
+        if (!Ext.isDefined(sprite['isModel'])) {
+            sprite = Ext.create('WMS.model.sprite.Unit', {
+                id    : sprite['id'],
+                sprite: sprite,
+                unit  : me
+            })
+        }
+        me['sprite'] = sprite;
+        return sprite;
+    },
+
+    getSprite: function () {
+        var me = this;
+        return me['sprite'];
+    },
 
     proxy: {
         type        : 'wms',

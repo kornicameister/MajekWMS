@@ -22,7 +22,7 @@ Ext.define('WMS.view.wms.Unit', {
             title : 'Unit\'s placement'
         },
         {
-            xtype : 'wmsinventory',
+            xtype : 'wmsunitinventory',
             itemId: 'wmsInventory',
             title : "Inventory"
         }

@@ -32,11 +32,11 @@
 
                 controllers: [
                     // viewport WMSView underlying controller
-                    'wms.Inventory',
                     'wms.Overview',
                     'wms.Statistics',
-                    'wms.unit.Unit',
-                    'wms.unit.Placement',
+                    'wms.Unit',
+                    'wms.unit.Canvas',
+                    'wms.unit.Inventory',
 
                     'Toolbars',
                     'Navigation',
