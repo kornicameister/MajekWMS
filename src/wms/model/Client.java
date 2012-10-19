@@ -1,19 +1,11 @@
 package wms.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -44,102 +36,92 @@ public class Client extends BaseEntity {
 	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 
-	@OneToMany(mappedBy = "invoiceClient", fetch = FetchType.LAZY)
-	private Set<Invoice> invoices = new HashSet<>(0);
-	
-	@ManyToMany
-	@JoinTable(name = "productClient",
-			joinColumns = {@JoinColumn(name = "client_id", referencedColumnName="idClient")},
-			inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName="idProduct")})
-	private Set<Product> products = new HashSet<>(0);
-
 	public Client() {
 		super(); // hibernate
 	}
 
-	public Client(String name, String company, String description) {
-		super();
-		this.name = name;
-		this.company = company;
-		this.description = description;
-	}
-
-	public Client(String name, String company, String description,
-			Set<Invoice> invoices) {
-		super();
-		this.name = name;
-		this.company = company;
-		this.description = description;
-		this.invoices = invoices;
-	}
-
-	public Client(String name, String company, String description,
-			Set<Product> products, Set<Invoice> invoices) {
-		super();
-		this.name = name;
-		this.company = company;
-		this.description = description;
-		this.products = products;
-		this.invoices = invoices;
-	}
-
-	public Client(Long idClient, String name, String company,
-			String description, Set<Product> products, Set<Invoice> invoices) {
-		super();
-		this.id = idClient;
-		this.name = name;
-		this.company = company;
-		this.description = description;
-		this.products = products;
-		this.invoices = invoices;
-	}
-
-	public final Long getIdClient() {
+	public synchronized final Long getId() {
 		return id;
 	}
 
-	public final void setIdClient(Long idClient) {
-		this.id = idClient;
+	public synchronized final void setId(Long id) {
+		this.id = id;
 	}
 
-	public final String getName() {
+	public synchronized final String getName() {
 		return name;
 	}
 
-	public final String getCompany() {
-		return company;
-	}
-
-	public final String getDescription() {
-		return description;
-	}
-
-	public final Set<Product> getProducts() {
-		return products;
-	}
-
-	public final Set<Invoice> getInvoices() {
-		return invoices;
-	}
-
-	public final void setName(String name) {
+	public synchronized final void setName(String name) {
 		this.name = name;
 	}
 
-	public final void setCompany(String company) {
+	public synchronized final String getCompany() {
+		return company;
+	}
+
+	public synchronized final void setCompany(String company) {
 		this.company = company;
 	}
 
-	public final void setDescription(String description) {
+	public synchronized final String getDescription() {
+		return description;
+	}
+
+	public synchronized final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public final void setProducts(Set<Product> products) {
-		this.products = products;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((company == null) ? 0 : company.hashCode());
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
 
-	public final void setInvoices(Set<Invoice> invoices) {
-		this.invoices = invoices;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof Client))
+			return false;
+		Client other = (Client) obj;
+		if (company == null) {
+			if (other.company != null)
+				return false;
+		} else if (!company.equals(other.company))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Client [getId()=" + getId() + ", getName()=" + getName()
+				+ ", getCompany()=" + getCompany() + ", getDescription()="
+				+ getDescription() + ", hashCode()=" + hashCode()
+				+ ", getVersion()=" + getVersion() + "]";
 	}
 
 }

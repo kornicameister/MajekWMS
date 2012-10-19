@@ -61,36 +61,24 @@ public class Unit extends BaseEntity {
 	@JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
 	private UnitType type;
 
-	@ManyToMany
-	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "unit_id", referencedColumnName = "idUnit") }, inverseJoinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "idProduct") })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(
+			name = "unitProduct", 
+			joinColumns = { 
+					@JoinColumn(
+							name = "unit_id", 
+							referencedColumnName = "idUnit") 
+					}, 
+			inverseJoinColumns = {
+					@JoinColumn(
+							name = "product_id", 
+							referencedColumnName = "idProduct")
+					}
+			)
 	private Set<Product> products = new HashSet<>();
 
 	public Unit() {
 		super();
-	}
-
-	public Unit(Long idUnit, String name, String description, Long size,
-			Long maximumSize) {
-		super();
-		this.id = idUnit;
-		this.name = name;
-		this.description = description;
-		this.size = size;
-		this.maximumSize = maximumSize;
-	}
-
-	public Unit(Long id, String name, String description, Long size,
-			Long maximumSize, Warehouse warehouse, UnitType type,
-			Set<Product> products) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.size = size;
-		this.maximumSize = maximumSize;
-		this.setWarehouse(warehouse);
-		this.setType(type);
-		this.products = products;
 	}
 
 	public final Long getId() {

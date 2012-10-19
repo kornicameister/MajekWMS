@@ -5,11 +5,9 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -36,9 +34,6 @@ public class Measure extends BaseEntity {
 	@Column(name = "name", nullable = false, unique = true, length = 30)
 	private String name;
 
-	@OneToMany(mappedBy = "measure", fetch = FetchType.LAZY)
-	private Set<Product> products;
-
 	public Measure() {
 		super();
 	}
@@ -55,7 +50,6 @@ public class Measure extends BaseEntity {
 		this.id = idMeasure;
 		this.abbreviation = abbreviation;
 		this.name = name;
-		this.products = products;
 	}
 
 	public final Long getIdMeasure() {
@@ -82,14 +76,6 @@ public class Measure extends BaseEntity {
 		this.name = name;
 	}
 
-	public final Set<Product> getProducts() {
-		return products;
-	}
-
-	public final void setProducts(Set<Product> products) {
-		this.products = products;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -109,11 +95,6 @@ public class Measure extends BaseEntity {
 		if (getName() != null) {
 			builder.append("getName()=");
 			builder.append(getName());
-			builder.append(", ");
-		}
-		if (getProducts() != null) {
-			builder.append("getProducts()=");
-			builder.append(getProducts());
 			builder.append(", ");
 		}
 		if (getUpdatedOn() != null) {
@@ -136,8 +117,6 @@ public class Measure extends BaseEntity {
 		result = prime * result
 				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((products == null) ? 0 : products.hashCode());
 		return result;
 	}
 
@@ -164,11 +143,6 @@ public class Measure extends BaseEntity {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (products == null) {
-			if (other.products != null)
-				return false;
-		} else if (!products.equals(other.products))
 			return false;
 		return true;
 	}

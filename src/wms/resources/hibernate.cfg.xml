@@ -25,7 +25,7 @@
 		<mapping class="wms.model.Invoice" />
 		<mapping class="wms.model.Product" />
 		<mapping class="wms.model.InvoiceProduct" />
-		<mapping class="wms.model.InvoiceProductIdentifier" />
+		<mapping class="wms.model.InvoiceProductId" />
 		<mapping class="wms.model.InvoiceType" />
 		<mapping class="wms.model.Measure" />
 		<mapping class="wms.model.Unit" />
