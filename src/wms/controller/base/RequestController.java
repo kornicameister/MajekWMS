@@ -288,7 +288,7 @@ public abstract class RequestController implements Controller {
 				Object value = jData.get(propertyName);
 				if (value != null && !propertyName.equals("id")) {
 					try {
-						m.invoke(b, value);
+						m.invoke(b, this.adjustValueType(value, propertyName));
 					} catch (IllegalAccessException | IllegalArgumentException
 							| InvocationTargetException e) {
 						e.printStackTrace();
@@ -381,6 +381,8 @@ public abstract class RequestController implements Controller {
 	 */
 	protected abstract BaseEntity preUpdateNonPrimitives(BaseEntity b,
 			JSONObject payloadedData);
+
+	protected abstract Object adjustValueType(Object value, String property);
 
 	public static String buildErrorResponse() {
 		return null;

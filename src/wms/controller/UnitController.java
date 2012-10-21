@@ -55,7 +55,8 @@ public class UnitController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preUpdateNonPrimitives(BaseEntity b, JSONObject payloadedData) {
+	protected BaseEntity preUpdateNonPrimitives(BaseEntity b,
+			JSONObject payloadedData) {
 		Unit unit = (Unit) b;
 		ActionData ad = extractActionData(unit, payloadedData);
 
@@ -92,5 +93,14 @@ public class UnitController extends RequestController {
 				(Long) payloadedData.get("warehouse_id"),
 				(Long) payloadedData.get("id"), (Unit) b);
 		return ad;
+	}
+
+	@Override
+	protected Object adjustValueType(Object value, String property) {
+		if (property.equals("price") || property.equals("quantity")) {
+			Double desired = new Double(value.toString());
+			return desired;
+		}
+		return value;
 	}
 }

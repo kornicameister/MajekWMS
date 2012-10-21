@@ -27,4 +27,13 @@ public class WarehouseController extends RequestController {
 		return b;
 	}
 
+	@Override
+	protected Object adjustValueType(Object value, String property) {
+		if (property.equals("price") || property.equals("quantity")) {
+			Double desired = new Double(value.toString());
+			return desired;
+		}
+		return value;
+	}
+
 }

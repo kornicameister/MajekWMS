@@ -117,4 +117,17 @@ public class ProductController extends RequestController {
 		values.add(value);
 	}
 
+	@Override
+	protected Object adjustValueType(Object value, String property) {
+		String stringValue = value.toString();
+		if (property.equals("price") || property.equals("quantity")) {
+			Double desired = new Double(stringValue);
+			return desired;
+		} else if (property.equals("tax")) {
+			Float desired = new Float(stringValue);
+			return desired;
+		}
+		return value;
+	}
+
 }
