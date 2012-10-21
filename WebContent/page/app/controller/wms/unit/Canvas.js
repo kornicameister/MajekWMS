@@ -8,13 +8,10 @@
 Ext.define('WMS.controller.wms.unit.Canvas', {
     extend: 'Ext.app.Controller',
 
-    requires: [
-        'WMS.controller.wms.unit.UnitDDManager'
-    ],
-    views   : [
+    views: [
         'WMS.view.wms.unit.Canvas'
     ],
-    refs    : [
+    refs : [
         { ref: 'unitBoard', selector: 'wmsunitcanvas unitsDrawingCmp' }
     ],
 
@@ -30,15 +27,14 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
                     width : 90,
                     height: 90
                 }
-            },
-            ddManager        : Ext.create('WMS.controller.wms.unit.UnitDDManager')
+            }
         }, config);
         Ext.apply(this, config);
         this.callParent(arguments);
     },
 
     init: function () {
-        console.init('WMS.controller.wms.unit.Canvas initializing');
+        console.init('WMS.controller.wms.unit.Canvas initializing... ');
         var me = this;
         me.control({
             'wmsunitcanvas #unitsDrawingCmp': {
@@ -100,7 +96,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
 
     drawUnits: function (board) {
         function drawUnitShape(unitRecord, tileBBox) {
-            var rectShape = surface.add({
+            var rectShape = board['surface'].add({
                 type          : 'rect',
                 width         : unitWidth,
                 height        : unitHeight,
@@ -112,7 +108,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
                 'stroke-width': 2,
                 draggable     : true
             });
-            var textShape = surface.add({
+            var textShape = board['surface'].add({
                 type     : 'text',
                 text     : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
                 fill     : 'black',
@@ -131,21 +127,47 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
 
         console.log('Canvas :: Commencing sprites drawing...');
         var me = this,
-            surface = board['surface'],
             it = 0,
             warehouse = me.getController('Master').getWarehousesStore().getActive(),
-            unitStore = warehouse.getUnits(),
             unitWidth = me['drawConfiguration']['unit']['width'],
-            unitHeight = me['drawConfiguration']['unit']['height'];
+            unitHeight = me['drawConfiguration']['unit']['height'],
+            unitSprite = undefined;
 
-        // TODO add support for embedding tile withing unit record !
-
-        unitStore.each(function (unit) {
-            me['tiles'][it++]['unit'] = unit.setSprite(
-                drawUnitShape(unit, me['tiles'][it].getBBox())
-            );
+        warehouse.getUnits().each(function (unit) {
+            unitSprite = drawUnitShape(unit, me['tiles'][it].getBBox());
+            me.mon(unitSprite, 'dblclick', me.onUnitSelected, me);
+            unit.setSprite(unitSprite);
+            it++;
         });
-        me.ddManager.setTiles(me['tiles']);
         console.log('Canvas :: Drawn units count = [' + me['tiles'].length + ']');
+    },
+
+    onUnitSelected: function (eventTarget) {
+        console.log('UnitDDManager :: Unit has been selected, loading products in progress...');
+        var me = this,
+            spriteId = eventTarget['id'],
+            unitStore = me.getStore('Units'),
+            unitSprite = undefined;
+
+        if (!Ext.isDefined(unitStore)) {
+            console.error('UnitDDManager :: Failed to obtain reference to Unit\'s store');
+        }
+
+        var unit = unitStore.getAt(findUnitIndex(unitStore, unitSprite, spriteId)),
+            controller = me.getController('wms.unit.Inventory');
+
+        unitStore.setActive(unit);
+        controller.loadProductsFromUnit(unit);
     }
 });
+
+function findUnitIndex(unitStore, unitSprite, spriteId) {
+    var unitIndex = unitStore.findBy(function (unit, id) {
+        unitSprite = unit.getSprite();
+        if (unitSprite.getId() === spriteId) {
+            console.log('UnitDDManager :: Located corresponding Unit, saving index...');
+            return true;
+        }
+    });
+    return unitIndex;
+}

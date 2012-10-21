@@ -15,7 +15,7 @@ Ext.define('WMS.controller.wms.Overview', {
         'wms.Overview'
     ],
     refs  : [
-        {ref: 'unitsGrid', selector: 'grid'},
+        {ref: 'unitsGrid', selector: 'wmsoverviews grid'},
         {ref: 'warehouseDescription', selector: 'wmsoverviews panel'}
     ],
 
@@ -35,14 +35,7 @@ Ext.define('WMS.controller.wms.Overview', {
             },
             'wmsoverviews #unitsGrid': {
                 selectionchange: me.onUnitSelectionChanged,
-                afterrender    : function () {
-                    me.gridLoadingMask = new Ext.LoadMask(
-                        me.getUnitsGrid(), {
-                            msg: 'Loading content...'
-                        }
-                    );
-                    me.gridLoadingMask.show();
-                }
+                afterrender    : me.onUnitGridAfterRender
             }
         });
 
@@ -57,7 +50,7 @@ Ext.define('WMS.controller.wms.Overview', {
                     wd.update(activeWarehouse.getData());
                     me.gridLoadingMask.hide();
                 });
-                activeWarehouse.getUnits().addListener('update', function (store,records,operation) {
+                activeWarehouse.getUnits().addListener('update', function (store, records, operation) {
                     Ext.getCmp('statusBar').setStatus({
                         text : 'You\'ve successfully saved ' + records.length + ' units...',
                         clear: {
@@ -69,6 +62,17 @@ Ext.define('WMS.controller.wms.Overview', {
                 });
             }
         });
+    },
+
+    onUnitGridAfterRender: function (grid) {
+        var me = this;
+        me.gridLoadingMask = new Ext.LoadMask(
+            grid,
+            {
+                msg: 'Loading content...'
+            }
+        );
+        me.gridLoadingMask.show();
     },
 
     onUnitSelectionChanged: function (selModel, selections) {
@@ -86,7 +90,7 @@ Ext.define('WMS.controller.wms.Overview', {
             console.error('Overview :: Failed to add new unit when row edition enabled');
         }
 
-        grid.getPlugin('unitRowEditor').startEdit(store.getTotalCount() - 1, 0);
+        grid.getPlugin('unitRowEditor').startEdit(store.getTotalCount(), store.getTotalCount());
 
         Ext.getCmp('statusBar').setStatus({
             text : 'You\'ve just added new unit...',

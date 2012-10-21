@@ -36,7 +36,11 @@ Ext.define('WMS.controller.Toolbars', {
     },
 
     onSaveAction: function () {
-        console.log('Save action called, to be implemented');
+        Ext.StoreManager.each(function (store) {
+            if (store['autoSync'] !== true) {
+                store.sync();
+            }
+        });
     },
 
     onRefreshAction: function () {
@@ -69,43 +73,42 @@ Ext.define('WMS.controller.Toolbars', {
         console.init('WMS.controller.Toolbars initializing...');
         var me = this;
 
-        function onButtonClick(button) {
-            var itemId = button.getItemId();
-            if (Ext.isDefined(button['hash'])) {
-                me.onServerRequestAction(button);
-            } else {
-                if (itemId === 'receiptButton') {
-                    console.log('Receipt button');
-                } else if (itemId == 'releaseButton') {
-                    console.log('Release button');
-                } else if (itemId === 'helpButton') {
-                    console.log('Help button');
-                } else if (itemId === 'saveButton') {
-                    console.log('Toolbars :: Save button');
-                    Ext.StoreManager.each(function(store){
-                        if(store['autoSync'] !== true){
-                            store.sync();
-                        }
-                    });
-                } else if (itemId === 'refreshButton') {
-                    console.log('Refresh button');
-                }
-            }
-        }
-
-        this.control({
+        me.control({
             '#headerToolbar > button'       : {
-                'click': onButtonClick
+                'click': me.onToolbarButtonClick
             },
             '#footerToolbar > button'       : {
-                'click': onButtonClick
+                'click': me.onToolbarButtonClick
             },
             '#headerToolbar > button > menu': {
-                'click': function (menu, item) {
-                    console.log(Ext.String.format('Menu {0} item clicked', menu['id']));
-                    onButtonClick(item);
-                }
+                'click': me.onMenuButtonClickWrapper
             }
-        }, this);
+        }, me);
+    },
+
+    onMenuButtonClickWrapper: function (menu, button) {
+        var me = this;
+        me.onToolbarButtonClick(button);
+    },
+
+    onToolbarButtonClick: function (button) {
+        var me = this,
+            itemId = button.getItemId();
+        if (Ext.isDefined(button['hash'])) {
+            me.onServerRequestAction(button);
+        } else {
+            if (itemId === 'receiptButton') {
+                console.log('Receipt button');
+            } else if (itemId == 'releaseButton') {
+                console.log('Release button');
+            } else if (itemId === 'helpButton') {
+                console.log('Help button');
+            } else if (itemId === 'saveButton') {
+                console.log('Toolbars :: Save button');
+                me.onSaveAction();
+            } else if (itemId === 'refreshButton') {
+                console.log('Refresh button');
+            }
+        }
     }
 });
