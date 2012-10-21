@@ -24,6 +24,7 @@ Ext.define('Ext.ux.proxy.WMSProxy', {
         allowSingle   : false,
         writeAllFields: false
     },
+    batchActions      : true,
     listeners         : {
         exception: function (proxy, response, operation) {
             Ext.MessageBox.show({
