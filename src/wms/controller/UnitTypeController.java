@@ -25,9 +25,4 @@ public class UnitTypeController extends RequestController {
 	protected BaseEntity preUpdateNonPrimitives(BaseEntity b, JSONObject payloadedData) {
 		return b;
 	}
-
-	@Override
-	protected BaseEntity postCreate(BaseEntity b, JSONObject payloadedData) {
-		return null;
-	}
 }

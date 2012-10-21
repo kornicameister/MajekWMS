@@ -52,8 +52,6 @@ import com.google.gson.JsonSerializer;
  * 
  */
 public abstract class RequestController implements Controller {
-	// TODO change variables to private, there is a possibility that CRUD method
-	// impl may disappear in Entities' controllers
 	protected final SessionFactory sessionFactory = HibernateBridge
 			.getSessionFactory();
 	protected Session session;
@@ -113,7 +111,6 @@ public abstract class RequestController implements Controller {
 
 	@Override
 	public void create() {
-		logger.entering(this.getClass().getName(), "create");
 		Serializable savedID = null;
 		Collection<? extends BaseEntity> data = this.parsePayload();
 
@@ -123,13 +120,10 @@ public abstract class RequestController implements Controller {
 			savedID = this.session.save(saveable);
 			if (savedID != null) {
 				this.createdIDS.add((Long) savedID);
-				this.postCreate(b, payloadedData)
 			}
 		}
 		this.session.getTransaction().commit();
 		// saving
-
-		logger.exiting(this.getClass().getName(), "create");
 	}
 
 	@Override
@@ -365,16 +359,6 @@ public abstract class RequestController implements Controller {
 	 */
 	protected abstract BaseEntity preCreate(BaseEntity b,
 			JSONObject payloadedData);
-
-	/**
-	 * This method, reimplemented in entity-specific-controllers, is fixed to do
-	 * set of task after creation od the entity is finished.
-	 * 
-	 * @param b
-	 * @param payloadedData
-	 * @return
-	 */
-	protected abstract BaseEntity postCreate(BaseEntity b, JSONObject payloadedData);
 
 	/**
 	 * Method for implementing controllers that extends this one. Allows to

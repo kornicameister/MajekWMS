@@ -28,9 +28,4 @@ public class MeasureController extends RequestController {
 		return b;
 	}
 
-	@Override
-	protected BaseEntity postCreate(BaseEntity b, JSONObject payloadedData) {
-		return null;
-	}
-
 }

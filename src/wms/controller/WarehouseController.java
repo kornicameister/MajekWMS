@@ -22,12 +22,9 @@ public class WarehouseController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preUpdateNonPrimitives(BaseEntity b, JSONObject payloadedData) {
+	protected BaseEntity preUpdateNonPrimitives(BaseEntity b,
+			JSONObject payloadedData) {
 		return b;
 	}
 
-	@Override
-	protected BaseEntity postCreate(BaseEntity b, JSONObject payloadedData) {
-		return null;
-	}
 }
