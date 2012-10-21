@@ -42,15 +42,10 @@ Ext.define('WMS.view.wms.Overview', {
             xtype: 'splitter'
         },
         {
-            xtype      : 'grid',
+            xtype      : 'egrid',
             itemId     : 'unitsGrid',
             emptyText  : 'No units for selected warehouse',
             flex       : 3,
-            columnWidth: 120,
-            selModel   : {
-                xtype: 'rowmodel',
-                mode : 'MULTI'
-            },
             columns    : [
                 {
                     header   : 'ID',
@@ -146,31 +141,6 @@ Ext.define('WMS.view.wms.Overview', {
                         allowBlank: false,
                         maxLength : 250
                     }
-                }
-            ],
-            dockedItems: [
-                {
-                    xtype   : 'toolbar',
-                    layout  : {
-                        type: 'hbox',
-                        pack: 'center'
-                    },
-                    defaults: {
-                        width: 150
-                    },
-                    items   : [
-                        {
-                            text   : 'Add',
-                            itemId : 'add',
-                            iconCls: 'icon-add'
-                        },
-                        {
-                            itemId  : 'delete',
-                            text    : 'Delete',
-                            iconCls : 'icon-delete',
-                            disabled: true
-                        }
-                    ]
                 }
             ],
             plugins    : [
