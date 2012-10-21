@@ -12,22 +12,45 @@ Ext.define('WMS.model.entity.Product', {
     extend: 'Ext.data.Model',
 
     fields      : [
-        'id', 'name', 'description',
+        { name: 'id', persist: true},
+        { name: 'name'},
+        { name: 'description'},
+        { name: 'unit_id', type: 'int'},
+        { name: 'measure_id', type: 'int', mapping: 'measure.id'},
         { name: 'quantity', type: 'float', defaultValue: 0.0},
         { name: 'price', type: 'float', defaultValue: 0.0},
         { name: 'tax', type: 'int', defaultValue: 22}
     ],
     associations: [
-        {name: 'units', type: 'belongsTo', model: 'WMS.model.entity.Unit'},
-        {name: 'invoiceProducts', type: 'belongsTo', model: 'WMS.model.entity.InvoiceProduct'},
-        {name: 'measure', type: 'hasOne', model: 'WMS.model.entity.Measure'},
-        {name: 'vendor', type: 'hasOne', model: 'WMS.model.entity.Client'}
+        {
+            name          : 'unit',
+            type          : 'belongsTo',
+            model         : 'WMS.model.entity.Unit',
+            setterName    : 'setUnit',
+            getterName    : 'getUnit',
+            associationKey: 'unit_id'
+        },
+        {
+            name : 'invoiceProducts',
+            type : 'hasMany',
+            model: 'WMS.model.entity.InvoiceProduct'
+        },
+        {
+            associationName: 'measure',
+            type           : 'hasOne',
+            model          : 'WMS.model.entity.Measure',
+            setterName     : 'setMeasure',
+            getterName     : 'getMeasure'
+        }
     ],
 
     // TODO validations
+    sorters     : [
+        'id'
+    ],
 
     proxy: {
-        type: 'wms',
-        url : 'wms/agent/product'
+        type    : 'wms',
+        url     : 'wms/agent/product'
     }
 });

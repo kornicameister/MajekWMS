@@ -45,11 +45,8 @@ Ext.define('WMS.model.entity.Unit', {
         },
         {
             type          : 'hasMany',
-            associationKey: 'products',
-            model         : 'WMS.model.entity.Product',
-            getterName    : 'getProducts',
-            setterName    : 'setProducts',
-            foreignKey    : 'unit_id'
+            associatedName: 'products',
+            model         : 'WMS.model.entity.Product'
         }
     ],
 
@@ -77,8 +74,7 @@ Ext.define('WMS.model.entity.Unit', {
     },
 
     proxy: {
-        type        : 'wms',
-        url         : 'wms/agent/unit',
-        batchActions: true
+        type: 'wms',
+        url : 'wms/agent/unit'
     }
 });

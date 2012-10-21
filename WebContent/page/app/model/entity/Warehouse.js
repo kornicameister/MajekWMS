@@ -33,7 +33,29 @@ Ext.define('WMS.model.entity.Warehouse', {
             name       : 'getUnits',
             model      : 'WMS.model.entity.Unit',
             storeConfig: {
-                storeId: 'Units'
+                storeId   : 'Units',
+                activeUnit: undefined,
+                getActive : function () {
+                    return this.activeUnit;
+                },
+                setActive : function (unit) {
+                    this.activeUnit = unit;
+                },
+                sync      : function () {
+                    var me = this,
+                        products = undefined;
+
+                    console.log(Ext.String.format('{0} nested sync called', me['storeId']));
+
+                    me.each(function (unit) {
+                        if (Ext.isDefined(unit.products)) {
+                            products = unit.products();
+                            products.sync();
+                        }
+                    });
+
+                    me.superclass.sync.call(me);
+                }
             }
         }
     ],
