@@ -159,7 +159,6 @@ public abstract class RequestController implements Controller {
 	@Override
 	public String buildResponse() {
 		Gson g = new GsonBuilder()
-				.setPrettyPrinting()
 				.setDateFormat("m-D-y")
 				.registerTypeHierarchyAdapter(HibernateProxy.class,
 						new HibernateProxySerializer()).create();

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.logging.Logger;
 
 import org.hibernate.Transaction;
 import org.json.simple.JSONObject;
@@ -17,6 +19,8 @@ import wms.model.Unit;
 
 public class ProductController extends RequestController {
 	private Map<Unit, HashSet<Product>> unitProduct;
+	private final static Logger logger = Logger
+			.getLogger(ProductController.class.getName());
 
 	private class ActionData {
 		Long measure_id, product_id, unit_id;
@@ -54,7 +58,13 @@ public class ProductController extends RequestController {
 			products = up.getValue();
 			unit = up.getKey();
 
-			unit.setProducts(products);
+			logger.info(String.format(
+					"Unit [ %d-%s ] updated with %d products", unit.getId(),
+					unit.getName(), products.size()));
+
+			Set<Product> dbProducts = unit.getProducts();
+			dbProducts.addAll(products);
+			unit.setProducts(dbProducts);
 			this.session.saveOrUpdate(unit);
 		}
 		t.commit();
@@ -99,8 +109,9 @@ public class ProductController extends RequestController {
 
 	private void add(final Unit key, final Product value) {
 		HashSet<Product> values = this.unitProduct.get(key);
-		if (value == null) {
+		if (values == null) {
 			values = new HashSet<Product>();
+			values.add(value);
 			this.unitProduct.put(key, values);
 		}
 		values.add(value);
