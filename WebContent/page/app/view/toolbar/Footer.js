@@ -26,19 +26,19 @@ Ext.define('WMS.view.toolbar.Footer', {
     items      : [
         {
             itemId : 'saveButton',
-            text   : 'Save',
+            text   : 'Zapisz',
             iconCls: 'view-footer-saveButton',
             width  : 100
         },
         {
             itemId : 'refreshButton',
-            text   : 'Refresh',
+            text   : 'Odśwież',
             iconCls: 'view-footer-refreshButton',
             width  : 100
         }
     ],
 
     // values when cleared
-    defaultText: 'No pending operation...'
+    defaultText: 'Brak oczekujących operacji...'
 });
 

@@ -29,17 +29,17 @@ Ext.define('WMS.view.MasterView', {
         {
             xtype : 'wmsoverviews',
             itemId: 'wmsOverview',
-            title : 'Overview'
+            title : 'Podgląd'
         },
         {
             xtype : 'wmsunit',
             itemId: 'wmsUnit',
-            title : 'Units'
+            title : 'Strefy'
         },
         {
             xtype : 'wmsstatistics',
             itemId: 'wmsStatistics',
-            title : 'Statistics'
+            title : 'Statystyki'
         }
     ]
 });

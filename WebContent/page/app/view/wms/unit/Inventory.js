@@ -125,31 +125,6 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             }
         }
     ],
-    dockedItems: [
-        {
-            xtype   : 'toolbar',
-            layout  : {
-                type: 'hbox',
-                pack: 'center'
-            },
-            defaults: {
-                width: 150
-            },
-            items   : [
-                {
-                    text   : 'Add',
-                    itemId : 'add',
-                    iconCls: 'icon-add'
-                },
-                {
-                    itemId  : 'delete',
-                    text    : 'Delete',
-                    iconCls : 'icon-delete',
-                    disabled: true
-                }
-            ]
-        }
-    ],
     plugins    : [
         Ext.create('Ext.grid.plugin.RowEditing', {
             pluginId: 'inventoryRowEditor'

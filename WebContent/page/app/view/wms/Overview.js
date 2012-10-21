@@ -54,7 +54,7 @@ Ext.define('WMS.view.wms.Overview', {
                     width    : 20
                 },
                 {
-                    header   : 'Name',
+                    header   : 'Nazwa',
                     dataIndex: 'name',
                     field    : {
                         xtype     : 'textfield',
@@ -63,12 +63,12 @@ Ext.define('WMS.view.wms.Overview', {
                     }
                 },
                 {
-                    header   : 'Size',
+                    header   : 'Rozmiar',
                     dataIndex: 'size',
                     readOnly : true
                 },
                 {
-                    header   : 'Maximum size',
+                    header   : 'Maksymalny rozmiar',
                     dataIndex: 'maximumSize',
                     field    : {
                         xtype            : 'numberfield',
@@ -83,7 +83,7 @@ Ext.define('WMS.view.wms.Overview', {
                     }
                 },
                 {
-                    header   : 'Type',
+                    header   : 'Typ',
                     dataIndex: 'unittype_id',
                     flex     : 2,
                     renderer : function (unittype_id) {
@@ -132,7 +132,7 @@ Ext.define('WMS.view.wms.Overview', {
                     }
                 },
                 {
-                    header   : 'Description',
+                    header   : 'Opis',
                     dataIndex: 'description',
                     flex     : 3,
                     field    : {

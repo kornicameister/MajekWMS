@@ -25,12 +25,12 @@ Ext.define('WMS.view.abstract.EditableGrid', {
             },
             items   : [
                 {
-                    text   : 'Add',
+                    text   : 'Dodaj',
                     itemId : 'add',
                     iconCls: 'icon-add'
                 },
                 {
-                    text    : 'Delete',
+                    text    : 'Usuń',
                     itemId  : 'delete',
                     iconCls : 'icon-delete',
                     disabled: true

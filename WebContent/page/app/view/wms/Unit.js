@@ -19,12 +19,12 @@ Ext.define('WMS.view.wms.Unit', {
         {
             xtype : 'wmsunitcanvas',
             itemId: 'wmsUnitSchema',
-            title : 'Unit\'s placement'
+            title : 'Rozmieszczenie'
         },
         {
             xtype : 'wmsunitinventory',
             itemId: 'wmsInventory',
-            title : "Inventory"
+            title : "Produkty"
         }
     ]
 });
