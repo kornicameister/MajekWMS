@@ -6,7 +6,7 @@
  */
 
 Ext.define('WMS.view.dialog.WarehouseSelector', {
-    extend   : 'WMS.view.dialog.BaseDialog',
+    extend   : 'WMS.view.abstract.BaseDialog',
     alias    : 'widget.warehouseselector',
     title    : 'Choose Warehouse',
     width    : 666,

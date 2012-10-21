@@ -60,10 +60,9 @@ Ext.define('WMS.controller.Master', {
                 });
             } else {
                 console.log(Ext.String.format('Master:: Located warehouses at count [{0}]', warehouses.length));
-                me.openWarehouseSelector(warehouses);
+                me.openWarehouseSelector();
             }
         });
-        warehousesStore.addListener('update', me.enableViewport, me);
     },
 
     onWarehouseSelected: function () {

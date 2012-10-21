@@ -5,7 +5,7 @@
  * Time  : 23:22
  */
 
-Ext.define('WMS.view.dialog.BaseDialog', {
+Ext.define('WMS.view.abstract.BaseDialog', {
     extend: 'Ext.window.Window',
 
     defaults   : {

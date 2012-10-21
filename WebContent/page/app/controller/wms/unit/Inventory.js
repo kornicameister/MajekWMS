@@ -106,5 +106,14 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
         }
         grid.reconfigure(products);
         grid.up('wmsunit').items.getAt(1).expand();
+
+        Ext.getCmp('statusBar').setStatus({
+            text : Ext.String.format('Znaleziono {1} produktów w strefie {0} ...', unit.get('name'), products.getCount()),
+            clear: {
+                wait       : 10000,
+                anim       : true,
+                useDefaults: false
+            }
+        });
     }
 });
