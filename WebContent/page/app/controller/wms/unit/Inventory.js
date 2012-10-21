@@ -100,9 +100,11 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
             products = unit.products();
 
         if (products.getCount() > 0) {
-            grid.reconfigure(products);
-            grid.up('wmsunit').items.getAt(1).expand();
+            console.log('Inventory :: Unit has some products defined...');
+        } else {
+            console.log('Inventory :: Unit has no products defined...');
         }
-
+        grid.reconfigure(products);
+        grid.up('wmsunit').items.getAt(1).expand();
     }
 });
