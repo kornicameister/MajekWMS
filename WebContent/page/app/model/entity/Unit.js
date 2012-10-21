@@ -12,8 +12,7 @@ Ext.define('WMS.model.entity.Unit', {
     extend: 'Ext.data.Model',
 
     requires: [
-        'WMS.model.entity.Product',
-        'WMS.model.sprite.Unit'
+        'WMS.model.entity.Product'
     ],
 
     fields: [
@@ -53,25 +52,6 @@ Ext.define('WMS.model.entity.Unit', {
     sorters: [
         'id', 'name'
     ],
-    //TODO validations
-
-    setSprite: function (sprite) {
-        var me = this;
-        if (!Ext.isDefined(sprite['isModel'])) {
-            sprite = Ext.create('WMS.model.sprite.Unit', {
-                id    : sprite['id'],
-                sprite: sprite,
-                unit  : me
-            })
-        }
-        me['sprite'] = sprite;
-        return sprite;
-    },
-
-    getSprite: function () {
-        var me = this;
-        return me['sprite'];
-    },
 
     proxy: {
         type: 'wms',

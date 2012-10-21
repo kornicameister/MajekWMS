@@ -9,6 +9,11 @@ Ext.define('WMS.model.sprite.Unit', {
     extend: 'Ext.data.Model',
 
     fields: [
-        'id', 'sprite', 'unit'
-    ]
+        'id', 'sprite', 'unit_id'
+    ],
+
+    proxy: {
+        type: 'localstorage',
+        id  : 'unitsprites'
+    }
 });

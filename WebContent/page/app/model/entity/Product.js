@@ -50,7 +50,7 @@ Ext.define('WMS.model.entity.Product', {
     ],
 
     proxy: {
-        type    : 'wms',
-        url     : 'wms/agent/product'
+        type: 'wms',
+        url : 'wms/agent/product'
     }
 });

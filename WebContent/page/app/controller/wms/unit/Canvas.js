@@ -8,10 +8,13 @@
 Ext.define('WMS.controller.wms.unit.Canvas', {
     extend: 'Ext.app.Controller',
 
-    views: [
+    stores: [
+        'UnitSprites'
+    ],
+    views : [
         'WMS.view.wms.unit.Canvas'
     ],
-    refs : [
+    refs  : [
         { ref: 'unitBoard', selector: 'wmsunitcanvas unitsDrawingCmp' }
     ],
 
@@ -52,8 +55,6 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
     },
 
     drawHostTiles: function (board) {
-        // TODO get paper size, to calculate tiles count on both axis
-        // each tile can host only one unit
         console.log('Canvas :: Drawing - > host tiles');
         var me = this,
             surface = board['surface'],
@@ -127,47 +128,41 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
 
         console.log('Canvas :: Commencing sprites drawing...');
         var me = this,
-            it = 0,
-            warehouse = me.getController('Master').getWarehousesStore().getActive(),
+            units = me.getController('Master').getWarehousesStore().getActive().getUnits(),
+            unitSprites = me.getUnitSpritesStore(),
             unitWidth = me['drawConfiguration']['unit']['width'],
             unitHeight = me['drawConfiguration']['unit']['height'],
-            unitSprite = undefined;
+            unitSprite = undefined,
+            sprites = [];
 
-        warehouse.getUnits().each(function (unit) {
-            unitSprite = drawUnitShape(unit, me['tiles'][it].getBBox());
+        units.each(function (unit) {
+            unitSprite = drawUnitShape(unit, me['tiles'][sprites.length].getBBox());
             me.mon(unitSprite, 'dblclick', me.onUnitSelected, me);
-            unit.setSprite(unitSprite);
-            it++;
+            unitSprite = Ext.create('WMS.model.sprite.Unit', {
+                id     : unitSprite['id'],
+                sprite : unitSprite,
+                unit_id: unit.getId()
+            });
+            sprites.push(unitSprite);
         });
+        unitSprites.add(sprites);
         console.log('Canvas :: Drawn units count = [' + me['tiles'].length + ']');
     },
 
     onUnitSelected: function (eventTarget) {
         console.log('UnitDDManager :: Unit has been selected, loading products in progress...');
         var me = this,
-            spriteId = eventTarget['id'],
-            unitStore = me.getStore('Units'),
-            unitSprite = undefined;
+            unitStore = me.getStore('Units');
 
-        if (!Ext.isDefined(unitStore)) {
-            console.error('UnitDDManager :: Failed to obtain reference to Unit\'s store');
-        }
-
-        var unit = unitStore.getAt(findUnitIndex(unitStore, unitSprite, spriteId)),
+        var unit = unitStore.getById(
+                me
+                    .getStore('UnitSprites')
+                    .getById(eventTarget['id'])
+                    .get('unit_id')
+            ),
             controller = me.getController('wms.unit.Inventory');
 
         unitStore.setActive(unit);
         controller.loadProductsFromUnit(unit);
     }
 });
-
-function findUnitIndex(unitStore, unitSprite, spriteId) {
-    var unitIndex = unitStore.findBy(function (unit, id) {
-        unitSprite = unit.getSprite();
-        if (unitSprite.getId() === spriteId) {
-            console.log('UnitDDManager :: Located corresponding Unit, saving index...');
-            return true;
-        }
-    });
-    return unitIndex;
-}
