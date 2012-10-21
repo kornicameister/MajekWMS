@@ -1,7 +1,5 @@
 package wms.model;
 
-import java.util.Set;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,74 +36,28 @@ public class Measure extends BaseEntity {
 		super();
 	}
 
-	public Measure(String abbreviation, String name) {
-		super();
-		this.abbreviation = abbreviation;
-		this.name = name;
-	}
-
-	public Measure(Long idMeasure, String abbreviation, String name,
-			Set<Product> products) {
-		super();
-		this.id = idMeasure;
-		this.abbreviation = abbreviation;
-		this.name = name;
-	}
-
-	public final Long getIdMeasure() {
+	public synchronized final Long getId() {
 		return id;
 	}
 
-	public final void setIdMeasure(Long idMeasure) {
-		this.id = idMeasure;
+	public synchronized final void setId(Long id) {
+		this.id = id;
 	}
 
-	public final String getAbbreviation() {
+	public synchronized final String getAbbreviation() {
 		return abbreviation;
 	}
 
-	public final void setAbbreviation(String abbreviation) {
+	public synchronized final void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
 
-	public final String getName() {
+	public synchronized final String getName() {
 		return name;
 	}
 
-	public final void setName(String name) {
+	public synchronized final void setName(String name) {
 		this.name = name;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Measure [hashCode()=");
-		builder.append(hashCode());
-		builder.append(", ");
-		if (getIdMeasure() != null) {
-			builder.append("getIdMeasure()=");
-			builder.append(getIdMeasure());
-			builder.append(", ");
-		}
-		if (getAbbreviation() != null) {
-			builder.append("getAbbreviation()=");
-			builder.append(getAbbreviation());
-			builder.append(", ");
-		}
-		if (getName() != null) {
-			builder.append("getName()=");
-			builder.append(getName());
-			builder.append(", ");
-		}
-		if (getUpdatedOn() != null) {
-			builder.append("getUpdatedOn()=");
-			builder.append(getUpdatedOn());
-			builder.append(", ");
-		}
-		builder.append("getVersion()=");
-		builder.append(getVersion());
-		builder.append("]");
-		return builder.toString();
 	}
 
 	@Override
@@ -114,8 +66,7 @@ public class Measure extends BaseEntity {
 		int result = super.hashCode();
 		result = prime * result
 				+ ((abbreviation == null) ? 0 : abbreviation.hashCode());
-		result = prime * result
-				+ ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -145,6 +96,14 @@ public class Measure extends BaseEntity {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Measure [getId()=" + getId() + ", getAbbreviation()="
+				+ getAbbreviation() + ", getName()=" + getName()
+				+ ", hashCode()=" + hashCode() + ", getVersion()="
+				+ getVersion() + "]";
 	}
 
 }

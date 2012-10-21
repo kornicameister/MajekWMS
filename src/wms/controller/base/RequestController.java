@@ -63,7 +63,7 @@ public abstract class RequestController implements Controller {
 	protected ArrayList<BaseEntity> lastRead = new ArrayList<>();
 	private Integer updateCount = new Integer(0);
 	protected final RData rdata;
-	private Set<Method> sorters;
+	private Set<Method> setters;
 	private final static Logger logger = Logger
 			.getLogger(RequestController.class.getName());
 
@@ -123,6 +123,7 @@ public abstract class RequestController implements Controller {
 			savedID = this.session.save(saveable);
 			if (savedID != null) {
 				this.createdIDS.add((Long) savedID);
+				this.postCreate(b, payloadedData)
 			}
 		}
 		this.session.getTransaction().commit();
@@ -285,7 +286,7 @@ public abstract class RequestController implements Controller {
 		// once !
 		this.extractSetters(b);
 
-		for (Method m : this.sorters) {
+		for (Method m : this.setters) {
 			String methodName = m.getName(), propertyName = null;
 			String type[] = methodName.split("^(set)");
 			if (methodName.contains("set")) {
@@ -317,7 +318,7 @@ public abstract class RequestController implements Controller {
 	 */
 	private void extractSetters(BaseEntity b) {
 
-		if (this.sorters != null && this.sorters.size() > 0) {
+		if (this.setters != null && this.setters.size() > 0) {
 			return;
 		}
 
@@ -351,7 +352,7 @@ public abstract class RequestController implements Controller {
 
 		logger.info(String.format("Extracted [ %d ] setter from [ %s ]",
 				sortes.size(), b.getClass().getSimpleName()));
-		this.sorters = sortes;
+		this.setters = sortes;
 	}
 
 	/**
@@ -364,6 +365,16 @@ public abstract class RequestController implements Controller {
 	 */
 	protected abstract BaseEntity preCreate(BaseEntity b,
 			JSONObject payloadedData);
+
+	/**
+	 * This method, reimplemented in entity-specific-controllers, is fixed to do
+	 * set of task after creation od the entity is finished.
+	 * 
+	 * @param b
+	 * @param payloadedData
+	 * @return
+	 */
+	protected abstract BaseEntity postCreate(BaseEntity b, JSONObject payloadedData);
 
 	/**
 	 * Method for implementing controllers that extends this one. Allows to

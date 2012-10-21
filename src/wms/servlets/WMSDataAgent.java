@@ -34,7 +34,7 @@ public class WMSDataAgent extends HttpServlet {
 	public void init() throws ServletException {
 		try {
 			if (HibernateBridge.accessHibernate()) {
-				logger.config("Hibernate connection is up and running");
+				logger.info("Hibernate connection is up and running");
 			} else {
 				logger.severe("No exception was caught, still connection is down");
 			}
@@ -49,7 +49,7 @@ public class WMSDataAgent extends HttpServlet {
 	@Override
 	public void destroy() {
 		if (HibernateBridge.closeHibernate()) {
-			logger.fine("Closed Hibernate connection");
+			logger.info("Closed Hibernate connection");
 		} else {
 			logger.warning("Failed to close Hibernate connection");
 		}
@@ -60,8 +60,7 @@ public class WMSDataAgent extends HttpServlet {
 			HttpServletResponse resp, CRUD action) throws IOException {
 		resp.setCharacterEncoding("UTF-8");
 		PrintWriter out = resp.getWriter();
-		RequestController controller = RequestController
-				.pickController(RDExtractor.parse(req, action));
+		RequestController controller = RequestController.pickController(RDExtractor.parse(req, action));
 
 		if (controller == null) {
 			logger.warning(String.format(

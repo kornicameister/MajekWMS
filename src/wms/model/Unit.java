@@ -24,9 +24,7 @@ import org.hibernate.annotations.NaturalId;
 @SuppressWarnings("deprecation")
 @Entity
 @Table(name = "unit")
-@org.hibernate.annotations.Entity(
-		dynamicUpdate = true
-)
+@org.hibernate.annotations.Entity(dynamicUpdate = true)
 public class Unit extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 2437063899438647082L;
@@ -62,19 +60,7 @@ public class Unit extends BaseEntity {
 	private UnitType type;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "unitProduct", 
-			joinColumns = { 
-					@JoinColumn(
-							name = "unit_id", 
-							referencedColumnName = "idUnit") 
-					}, 
-			inverseJoinColumns = {
-					@JoinColumn(
-							name = "product_id", 
-							referencedColumnName = "idProduct")
-					}
-			)
+	@JoinTable(name = "unitProduct", joinColumns = { @JoinColumn(name = "unit_id", referencedColumnName = "idUnit") }, inverseJoinColumns = { @JoinColumn(name = "product_id", referencedColumnName = "idProduct") })
 	private Set<Product> products = new HashSet<>();
 
 	public Unit() {
@@ -143,6 +129,10 @@ public class Unit extends BaseEntity {
 
 	public final void setProducts(Set<Product> products) {
 		this.products = products;
+	}
+
+	public void addProduct(Product p) {
+		this.products.add(p);
 	}
 
 	@Override

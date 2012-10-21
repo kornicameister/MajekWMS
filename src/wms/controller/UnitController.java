@@ -93,4 +93,9 @@ public class UnitController extends RequestController {
 				(Long) payloadedData.get("id"), (Unit) b);
 		return ad;
 	}
+
+	@Override
+	protected BaseEntity postCreate(BaseEntity b, JSONObject payloadedData) {
+		return null;
+	}
 }
