@@ -13,7 +13,7 @@ Ext.define('WMS.view.Navigation', {
     alias : 'widget.navigation',
 
     itemId: 'navigator',
-    title : 'WMS - Navigator',
+    title : 'WMS - Nawigator',
 
     width      : 200,
     margins    : {

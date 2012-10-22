@@ -44,7 +44,7 @@ Ext.define('WMS.view.wms.Overview', {
         {
             xtype      : 'egrid',
             itemId     : 'unitsGrid',
-            emptyText  : 'No units for selected warehouse',
+            emptyText  : 'W tym magazynie nie ma jeszcze żadnej strefy...',
             flex       : 3,
             columns    : [
                 {
