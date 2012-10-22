@@ -38,7 +38,7 @@ Ext.define('WMS.controller.Toolbars', {
 
         me.control({
             '#headerToolbar > unitsButton > menu': {
-                'click': me.onUnitSelected
+                'iclick': me.onUnitSelected
             },
             '#footerToolbar > saveButton'        : {
                 'click': me.onSaveAction
@@ -46,18 +46,6 @@ Ext.define('WMS.controller.Toolbars', {
             '#footerToolbar > refreshButton'     : {
                 'click': me.onRefreshAction
             }
-        });
-    },
-
-    onUnitsLoad: function (store) {
-        var me = this,
-            unitsMenu = me.getUnitMenu();
-
-        store.each(function (unit) {
-            unitsMenu.add({
-                itemId: unit.getId(),
-                text  : unit.get('name')
-            });
         });
     },
 

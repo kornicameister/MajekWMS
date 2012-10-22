@@ -30,9 +30,12 @@
 
 /**
  * @class Ext.ux.menu.StoreMenu
+ * @extend Ext.menu.Menu
  * @author Tomasz Trębski
+ * @version 0.0.1
  * @description This is normal Ext.menu.Menu with just one difference. It is boosted up by underlying
  * store that provides data source for this menu.
+ * @requires browser that supports HTML5 - LocalStorage as mentioned in Ext.data.proxy.LocalStorage documentation
  */
 Ext.define('Ext.ux.menu.StoreMenu', {
     extend            : 'Ext.menu.Menu',
