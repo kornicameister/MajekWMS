@@ -20,6 +20,14 @@ Ext.define('Ext.ux.menu.StoreMenu', {
     store: undefined,
 
     /**
+     * @private
+     * This variable holds reference to local storage store, that is used
+     * to map menu item to attached store item in order to fire custom
+     * events
+     */
+    mapStore: undefined,
+
+    /**
      * @cfg {Boolean} will be used to detect whether or not store should
      * reload before each menu expand
      */
@@ -34,6 +42,17 @@ Ext.define('Ext.ux.menu.StoreMenu', {
     initComponent: function () {
         var me = this;
 
+        // adjusting map store
+        me.mapStore = Ext.create('Ext.data.Store', {
+            fields: [
+                'id', 'itemId', 'storeItem', 'menuItem'
+            ],
+            proxy : {
+                type: 'localstorage'
+            }
+        });
+
+        // setting the store
         if (Ext.isDefined(me.store)) {
             me.store = Ext.StoreManager.lookup(me.store);
             if (!(me.store === null || !Ext.isDefined(me.store))) {
@@ -47,17 +66,53 @@ Ext.define('Ext.ux.menu.StoreMenu', {
             }
         }
 
+        // custom events
+        me.addEvents(
+            /**
+             * @event iclick
+             * @description Wrapper for Ext.menu.Menu's click event, that despite
+             * passing item of the menu that has been clicked passes store item
+             * that is tied to it.
+             *
+             * @param this, Ext.menu.menu
+             * @param menuItem
+             * @param storeItem
+             */
+            'iclick'
+        );
+
+        // wrappers
+        me.mon(me, 'click', me.onItemClickWrapper, me);
+
         Ext.menu.Manager.register(me);
         me.callParent(arguments);
     },
 
+    onItemClickWrapper: function (me, menuItem) {
+        var storeMenuItem = me.mapStore.getById(menuItem['id']);
+
+        if (Ext.isDefined(storeMenuItem)) {
+            me.fireEvent('iclick', me, menuItem, storeMenuItem.get('storeItem'));
+        }
+    },
+
     onStoreLoad: function (store) {
-        var me = this;
+        var me = this,
+            cmp = undefined;
+
         me.removeAll(true);
+        me.mapStore.removeAll(true);
         store = me.store || store;
+
         store.each(function (item) {
-            me.add({
+            cmp = me.add({
                 text: item.get(me.itemRef)
+            });
+            me.mapStore.add({
+                id       : cmp['id'],
+                itemId   : item.getId(),
+                storeItem: item,
+                menuItem : cmp
             });
         });
     },
@@ -67,14 +122,20 @@ Ext.define('Ext.ux.menu.StoreMenu', {
         store = me.store || store;
     },
 
-    reconfigure: function (store) {
-        var me = this;
+    checkStore: function (me, store) {
         store = Ext.StoreManager.lookup(store);
-
         if (Ext.isDefined(me.store)) {
-            me.store.destroyStore();
+            me.mun(me.store);
+            me.store = store;
+        } else {
             me.store = store;
         }
+        return me.store;
+    },
+
+    reconfigure: function (store) {
+        var me = this;
+        me.store = me.checkStore(me, store);
 
         // tapping events
         me.mon(me.store, 'datachanged', me.onStoreChanged, me);
