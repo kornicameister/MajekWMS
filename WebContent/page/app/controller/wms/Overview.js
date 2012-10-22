@@ -44,34 +44,32 @@ Ext.define('WMS.controller.wms.Overview', {
 
     onActiveWarehouseChange: function (store, activeWarehouse) {
         var me = this,
+            units = activeWarehouse.getUnits();
+
+        console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
+        me.mon(units, 'load', me.onUnitsStoreLoaded, me);
+        me.mon(units, 'update', me.onUnitsStoreUpdated);
+    },
+
+    onUnitsStoreUpdated: function (store, records) {
+        Ext.getCmp('statusBar').setStatus({
+            text : 'You\'ve successfully saved ' + records.length + 'units...',
+            clear: {
+                wait       : 10000,
+                anim       : true,
+                useDefaults: false
+            }
+        });
+    },
+
+    onUnitsStoreLoaded: function (store) {
+        var me = this,
             wd = me.getWarehouseDescription();
 
-        if (Ext.isDefined(wd)) {
-            console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
-
-            me.mon(
-                activeWarehouse,
-                'load',
-                function (store) {
-                    console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
-                    me.getUnitsGrid().reconfigure(store);
-                    wd.update(activeWarehouse.getData());
-                    me.gridLoadingMask.hide();
-                });
-            me.mon(
-                activeWarehouse.getUnits(),
-                'update',
-                function (store, records) {
-                    Ext.getCmp('statusBar').setStatus({
-                        text : 'You\'ve successfully saved ' + records.length + ' units...',
-                        clear: {
-                            wait       : 10000,
-                            anim       : true,
-                            useDefaults: false
-                        }
-                    });
-                });
-        }
+        console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
+        me.getUnitsGrid().reconfigure(store);
+        wd.update(store.getAt(0).getWarehouse().getData());
+        me.gridLoadingMask.hide();
     },
 
     onUnitGridAfterRender: function (grid) {
