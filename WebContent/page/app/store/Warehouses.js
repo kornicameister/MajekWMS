@@ -37,10 +37,6 @@ Ext.define('WMS.store.Warehouses', {
         this.callParent([config])
     },
 
-    getWarehouses: function () {
-        return this['data'];
-    },
-
     setActive: function (wId) {
         if (Ext.isNumber(wId)) {
             this.activeWarehouse = this.getById(wId);
@@ -52,12 +48,5 @@ Ext.define('WMS.store.Warehouses', {
 
     getActive: function () {
         return this.activeWarehouse;
-    },
-
-    addWarehouse: function (model) {
-        model = Ext.apply({
-            size: 0
-        }, model);
-        return this.add([model]);
     }
 });

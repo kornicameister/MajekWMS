@@ -39,18 +39,29 @@ Ext.define('WMS.controller.wms.Overview', {
             }
         });
 
-        warehouses.addListener('activechanged', function (store, activeWarehouse) {
-            var wd = me.getWarehouseDescription();
-            if (Ext.isDefined(wd)) {
-                console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
+        me.mon(warehouses, 'activechanged', me.onActiveWarehouseChange, me);
+    },
 
-                activeWarehouse.getUnits().addListener('load', function (store) {
+    onActiveWarehouseChange: function (store, activeWarehouse) {
+        var me = this,
+            wd = me.getWarehouseDescription();
+
+        if (Ext.isDefined(wd)) {
+            console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
+
+            me.mon(
+                activeWarehouse,
+                'load',
+                function (store) {
                     console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
                     me.getUnitsGrid().reconfigure(store);
                     wd.update(activeWarehouse.getData());
                     me.gridLoadingMask.hide();
                 });
-                activeWarehouse.getUnits().addListener('update', function (store, records, operation) {
+            me.mon(
+                activeWarehouse.getUnits(),
+                'update',
+                function (store, records) {
                     Ext.getCmp('statusBar').setStatus({
                         text : 'You\'ve successfully saved ' + records.length + ' units...',
                         clear: {
@@ -60,18 +71,12 @@ Ext.define('WMS.controller.wms.Overview', {
                         }
                     });
                 });
-            }
-        });
+        }
     },
 
     onUnitGridAfterRender: function (grid) {
         var me = this;
-        me.gridLoadingMask = new Ext.LoadMask(
-            grid,
-            {
-                msg: 'Loading content...'
-            }
-        );
+        me.gridLoadingMask = new Ext.LoadMask(grid, { msg: 'Loading content...'});
         me.gridLoadingMask.show();
     },
 

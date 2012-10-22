@@ -20,16 +20,9 @@ Ext.define('WMS.controller.Master', {
 
     init: function () {
         console.init('WMS.controller.Master initializing...');
-        var me = this,
-            warehousesStore = me.getWarehousesStore(),
-            warehouses = undefined;
+        var me = this;
 
         me.control({
-            'wizardwarehouse'             : {
-                show: function () {
-                    console.log('Master:: WarehouseWizard is visible');
-                }
-            },
             '#submitButton'               : {
                 click: me.onWarehouseSubmit
             },
@@ -37,42 +30,53 @@ Ext.define('WMS.controller.Master', {
                 click: me.onWarehouseSelected
             },
             'warehouseselector grid'      : {
-                selectionchange: function (grid, selected) {
-                    selected = selected[0];
-                    console.log('Master:: Warehouse ' + Ext.String.format('{0} marked as active', selected.get('name')));
-                    warehousesStore.setActive(selected);
-                }
+                selectionchange: me.onWarehouseSelectionChange
             }
         });
 
-        me.getWarehousesStore().addListener('load', function (store) {
-            warehouses = store.getWarehouses();
-            if (warehouses.length === 0) {
-                console.log("Master:: Found no warehouses, commencing loading warehouse wizard");
-                Ext.MessageBox.show({
-                    title        : 'No warehouse found...',
-                    msg          : 'MajekWMS detected that there is no warehouse defined',
-                    buttons      : Ext.MessageBox.OK,
-                    fn           : me.openWarehouseWizard,
-                    animateTarget: Ext.getBody(),
-                    icon         : Ext.MessageBox.WARNING,
-                    scope        : me
-                });
-            } else {
-                console.log(Ext.String.format('Master:: Located warehouses at count [{0}]', warehouses.length));
-                me.openWarehouseSelector();
-            }
-        });
+        me.mon(me.getWarehousesStore(), 'load', me.onWarehousesLoad, me);
+    },
+
+    onWarehousesLoad: function (store) {
+        var me = this,
+            warehouses = store.getRange();
+
+        if (warehouses.length === 0) {
+            console.log("Master:: Found no warehouses, commencing loading warehouse wizard");
+            Ext.MessageBox.show({
+                title        : 'No warehouse found...',
+                msg          : 'MajekWMS detected that there is no warehouse defined',
+                buttons      : Ext.MessageBox.OK,
+                fn           : me.openWarehouseWizard,
+                animateTarget: Ext.getBody(),
+                icon         : Ext.MessageBox.WARNING,
+                scope        : me
+            });
+        } else {
+            console.log(Ext.String.format('Master:: Located warehouses at count [{0}]', warehouses.length));
+            me.openWarehouseSelector();
+        }
+    },
+
+    onWarehouseSelectionChange: function (grid, selected) {
+        var me = this,
+            warehousesStore = me.getWarehousesStore();
+
+        selected = selected[0];
+        console.log('Master:: Warehouse ' + Ext.String.format('{0} marked as active', selected.get('name')));
+        warehousesStore.setActive(selected);
     },
 
     onWarehouseSelected: function () {
         var me = this,
             warehouse = me.getWarehousesStore().getActive();
+
         warehouse.getUnits().load({
             callback: function (records) {
                 console.log("Master :: Successfully loaded "
                     + records.length + ' records for Warehouse ['
                     + warehouse.get('name') + ']');
+                me.getController('WMS.controller.Toolbars').getUnitMenu().reconfigure(warehouse.getUnits());
             }
         });
         me.warehouseselector.close();

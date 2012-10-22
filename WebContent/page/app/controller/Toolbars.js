@@ -9,12 +9,15 @@
  */
 
 Ext.define('WMS.controller.Toolbars', {
-    extend: 'Ext.app.Controller',
-    views : [
+    extend  : 'Ext.app.Controller',
+    requires: [
+        'Ext.ux.menu.StoreMenu'
+    ],
+    views   : [
         'toolbar.Header',
         'toolbar.Footer'
     ],
-    refs  : [
+    refs    : [
         {
             ref     : 'tBar',
             selector: 'headbar'
@@ -25,7 +28,7 @@ Ext.define('WMS.controller.Toolbars', {
         },
         {
             ref     : 'unitMenu',
-            selector: 'headbar unitMenu'
+            selector: 'headbar storemenu'
         }
     ],
 
@@ -34,16 +37,32 @@ Ext.define('WMS.controller.Toolbars', {
         var me = this;
 
         me.control({
-            '#headerToolbar > button'       : {
-                'click': me.onToolbarButtonClick
+            '#headerToolbar > unitsButton > menu': {
+                'click': me.onUnitSelected
             },
-            '#footerToolbar > button'       : {
-                'click': me.onToolbarButtonClick
+            '#footerToolbar > saveButton'        : {
+                'click': me.onSaveAction
             },
-            '#headerToolbar > button > menu': {
-                'click': me.onMenuButtonClickWrapper
+            '#footerToolbar > refreshButton'     : {
+                'click': me.onRefreshAction
             }
-        }, me);
+        });
+    },
+
+    onUnitsLoad: function (store) {
+        var me = this,
+            unitsMenu = me.getUnitMenu();
+
+        store.each(function (unit) {
+            unitsMenu.add({
+                itemId: unit.getId(),
+                text  : unit.get('name')
+            });
+        });
+    },
+
+    onUnitSelected: function (item) {
+        console.log(item);
     },
 
     onSaveAction: function () {

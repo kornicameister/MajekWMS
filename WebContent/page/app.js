@@ -17,7 +17,8 @@
     Ext.Loader.setConfig({
         enabled: true,
         paths  : {
-            'Ext.ux': 'page/app/ux'
+            'Ext.ux'     : 'page/app/ux',
+            'Ext.ux.menu': 'page/app/ux'
         }
     });
 

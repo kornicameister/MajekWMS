@@ -62,10 +62,9 @@ Ext.define('WMS.view.toolbar.Header', {
             iconCls: 'view-toolbar-unitsButton',
             text   : 'Strefy',
             menu   : {
-                xtype      : 'menu',
+                xtype      : 'storemenu',
                 defaultType: 'button',
-                itemId     : 'unitMenu',
-                items      : []
+                itemId     : 'unitMenu'
             }
         },
         '-',
