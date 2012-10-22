@@ -1,10 +1,39 @@
-/**
- * Project: MajekWMS
- * User   : kornicameister
- * Date   : 22.10.12
- * Time   : 12:15
+/*
+ * In development, due to adjusting the extension to Ext 4.*, by kornicameister [Tomasz Trębski] -> kornicameister@gmail.com
+ *
+ * Originally created by
+ * Marco Wienkoop (wm003/lubber) / copyright (c) 2009, Marco Wienkoop (marco.wienkoop@lubber.de) http://www.lubber.de
+ *
+ * Inspired by modifications by Joe Kuan - kuan.joe@gmail.com
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+
+ * This Addon requires the ExtJS Library, which is distributed under the terms of the GPL v3 (from V2.1)
+ * See http://extjs.com/license for more info
+ *
+ *
+ * TODO 1 - provide generating custom handlers
+ * TODO 2 - test reconfiguring
+ * TODO 3 - xtemplate
  */
 
+/**
+ * @class Ext.ux.menu.StoreMenu
+ * @author Tomasz Trębski
+ * @description This is normal Ext.menu.Menu with just one difference. It is boosted up by underlying
+ * store that provides data source for this menu.
+ */
 Ext.define('Ext.ux.menu.StoreMenu', {
     extend            : 'Ext.menu.Menu',
     alternateClassName: 'Ext.menu.StoreMenu',
