@@ -59,7 +59,7 @@ public class Product extends BaseEntity {
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
 	@JoinColumn(name = "measure_id", referencedColumnName = "idMeasure")
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	private Measure measure;
 
 	public Product() {

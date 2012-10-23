@@ -1,5 +1,6 @@
 package wms.controller;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class ProductController extends RequestController {
 			.getLogger(ProductController.class.getName());
 
 	private class ActionData {
+		@SuppressWarnings("unused")
 		Long measure_id, product_id, unit_id;
 		Product product;
 
@@ -84,9 +86,7 @@ public class ProductController extends RequestController {
 
 	@Override
 	protected BaseEntity preDelete(JSONObject payloadedData) {
-		ActionData ad = extractActionData(null, payloadedData);
-		return (BaseEntity) this.session.byId(Product.class)
-				.load(ad.product_id);
+		return (BaseEntity) this.session.byId(Product.class).load((Serializable) payloadedData.get("id"));
 	}
 
 	@Override
