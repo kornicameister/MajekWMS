@@ -49,8 +49,8 @@ Ext.define('WMS.controller.Toolbars', {
         });
     },
 
-    onUnitSelected: function (item) {
-        console.log(item);
+    onUnitSelected: function (storemenu, item, storeItem) {
+
     },
 
     onSaveAction: function () {

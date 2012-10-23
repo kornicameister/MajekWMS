@@ -13,7 +13,10 @@ Ext.define('WMS.view.wms.Unit', {
     alias  : 'widget.wmsunit',
     iconCls: 'view-wms-unit',
     layout : {
-        type: 'accordion'
+        type   : 'accordion',
+        pack   : 'center',
+        stretch: 'max',
+        animate: true
     },
     items  : [
         {
@@ -24,7 +27,8 @@ Ext.define('WMS.view.wms.Unit', {
         {
             xtype : 'wmsunitinventory',
             itemId: 'wmsInventory',
-            title : "Produkty"
+            title : 'Produkty',
+            flex  : 3
         }
     ]
 });
