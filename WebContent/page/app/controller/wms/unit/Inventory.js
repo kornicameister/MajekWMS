@@ -30,14 +30,12 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
                 click: me.onProductDelete
             },
             'wmsunitinventory'        : {
-                selectionchange: me.onProductSelectionChanged,
-                afterrender    : me.onProductListAfterRender
+                selectionchange: me.onProductSelectionChanged
             }
         });
     },
 
     onProductAdd: function () {
-        console.log('Inventory :: Adding new product');
         var me = this,
             unit = me.getStore('Units').getActive(),
             store = unit.products(),
@@ -50,10 +48,10 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
             console.error('Overview :: Failed to add new product when row edition enabled');
         }
 
-        grid.getPlugin('inventoryRowEditor').startEdit(store.getCount(), 1);
+        grid.getPlugin('inventoryRowEditor').startEdit(store.getRange().length - 1, 1);
 
         Ext.getCmp('statusBar').setStatus({
-            text : 'You\'ve just added new product...',
+            text : 'Właśnie stworzyłeś nowy produkt...',
             clear: {
                 wait       : 10000,
                 anim       : true,
@@ -63,7 +61,6 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
     },
 
     onProductDelete: function () {
-        console.log('Inventory :: Deleting already defined product');
         var me = this,
             store = me.getStore('Units').getActive().products(),
             grid = me.getProductList(),
@@ -72,9 +69,9 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
         if (selection) {
             store.remove(selection);
             Ext.getCmp('statusBar').setStatus({
-                text : Ext.String.format('You\'ve just deleted {0} {1}',
+                text : Ext.String.format('Właśnie usunąłeś {0} {1}',
                     selection.length,
-                    selection.length > 0 ? 'products' : 'product'),
+                    selection.length > 1 ? 'produktów' : 'produkt'),
                 clear: {
                     wait       : 10000,
                     anim       : true,
@@ -82,10 +79,6 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
                 }
             });
         }
-    },
-
-    onProductListAfterRender: function () {
-        console.log('Inventory :: Product list rendered successfully');
     },
 
     onProductSelectionChanged: function (selModel, selections) {
@@ -97,15 +90,11 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
     loadProductsFromUnit: function (unit) {
         var me = this,
             grid = me.getProductList(),
-            products = unit.products();
+            products = unit.products(),
+            unitCtrl = me.getController('WMS.controller.wms.Unit');
 
-        if (products.getCount() > 0) {
-            console.log('Inventory :: Unit has some products defined...');
-        } else {
-            console.log('Inventory :: Unit has no products defined...');
-        }
         grid.reconfigure(products);
-        grid.up('wmsunit').items.getAt(1).expand();
+        unitCtrl.activateInventory();
 
         Ext.getCmp('statusBar').setStatus({
             text : Ext.String.format('Znaleziono {1} produktów w strefie {0} ...', unit.get('name'), products.getCount()),

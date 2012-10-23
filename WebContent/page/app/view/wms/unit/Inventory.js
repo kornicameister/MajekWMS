@@ -10,10 +10,11 @@ Ext.define('WMS.view.wms.unit.Inventory', {
     alias  : 'widget.wmsunitinventory',
     iconCls: 'view-wms-inventory',
 
-    title      : 'Inventory',
-    itemId     : 'inventoryGrid',
-    emptyText  : 'No products for selected unit...',
-    columns    : [
+    title     : 'Inventory',
+    itemId    : 'inventoryGrid',
+    emptyText : 'No products for selected unit...',
+    autoScroll: true,
+    columns   : [
         {
             header   : 'ID',
             dataIndex: 'id',
@@ -125,7 +126,7 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             }
         }
     ],
-    plugins    : [
+    plugins   : [
         Ext.create('Ext.grid.plugin.RowEditing', {
             pluginId: 'inventoryRowEditor'
         })
