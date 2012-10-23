@@ -37,13 +37,13 @@ Ext.define('WMS.controller.Toolbars', {
         var me = this;
 
         me.control({
-            '#headerToolbar > unitsButton > menu': {
+            '#headerToolbar storemenu'                   : {
                 'iclick': me.onUnitSelected
             },
-            '#footerToolbar > saveButton'        : {
+            '#footerToolbar button[itemId=saveButton]'   : {
                 'click': me.onSaveAction
             },
-            '#footerToolbar > refreshButton'     : {
+            '#footerToolbar button[itemId=refreshButton]': {
                 'click': me.onRefreshAction
             }
         });
