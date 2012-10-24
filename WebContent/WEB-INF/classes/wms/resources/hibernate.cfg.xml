@@ -30,7 +30,9 @@
 		<mapping class="wms.model.Measure" />
 		<mapping class="wms.model.Unit" />
 		<mapping class="wms.model.UnitType" />
-		<mapping class="wms.model.Warehouse" />
+		<mapping class="wms.model.Warehouse" />		
+		<mapping class="wms.model.User" />
+		
 		<!-- events -->
 		<event type="auto-flush" />
 	</session-factory>

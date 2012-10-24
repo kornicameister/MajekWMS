@@ -43,8 +43,7 @@ public class WMSAuthAgent extends HttpServlet {
 		Session session = sf.openSession();
 		PrintWriter out = response.getWriter();
 
-		User user = (User) session.byNaturalId(User.class).using("login",
-				request.getParameter("login"));
+		User user = (User) session.byNaturalId(User.class).using("login",request.getParameter("login")).load();
 		if (user.getPassword().equals(request.getParameter("password"))) {
 			out.write(new Gson().toJson(user).toString());
 		} else {

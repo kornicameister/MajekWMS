@@ -14,6 +14,7 @@ Ext.define('WMS.controller.Master', {
     stores: ['Warehouses'],
     views : [
         'MasterView',
+        'dialog.Login',
         'dialog.Warehouse',
         'dialog.WarehouseSelector'
     ],
@@ -96,6 +97,13 @@ Ext.define('WMS.controller.Master', {
         var me = this;
         me.warehouseselector = me.getView('dialog.WarehouseSelector').create();
         me.warehouseselector.show();
+        me.openLogin();
+    },
+
+    openLogin: function () {
+        var me = this;
+        me.login = me.getView('dialog.Login').create();
+        me.login.show();
     },
 
     /**
