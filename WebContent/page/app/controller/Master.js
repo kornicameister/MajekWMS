@@ -14,7 +14,6 @@ Ext.define('WMS.controller.Master', {
     stores: ['Warehouses'],
     views : [
         'MasterView',
-        'dialog.Login',
         'dialog.Warehouse',
         'dialog.WarehouseSelector'
     ],
@@ -55,7 +54,7 @@ Ext.define('WMS.controller.Master', {
             });
         } else {
             console.log(Ext.String.format('Master:: Located warehouses at count [{0}]', warehouses.length));
-            me.openWarehouseSelector();
+//            me.openWarehouseSelector();
         }
     },
 

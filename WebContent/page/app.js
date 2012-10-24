@@ -40,7 +40,7 @@
                     'wms.unit.Inventory',
 
                     'Toolbars',
-                    'Navigation',
+                    'Login',
                     'Master',
                     'Viewport'
                 ]
