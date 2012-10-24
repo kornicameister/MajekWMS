@@ -1,7 +1,6 @@
 package wms.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -11,50 +10,76 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
+import wms.controller.base.format.BaseFormat;
 import wms.controller.hibernate.HibernateBridge;
 import wms.model.User;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
 @WebServlet(urlPatterns = { "/wms/auth" }, asyncSupported = true, loadOnStartup = 2, name = "WMSAuthAgent")
 public class WMSAuthAgent extends HttpServlet {
 	private static final long serialVersionUID = -6718574188511649132L;
 	private static Logger logger = Logger.getLogger(WMSAuthAgent.class
 			.getName());
-	private static boolean READY;
-
-	public WMSAuthAgent() {
-		super();
-		WMSAuthAgent.READY = false;
-	}
 
 	@Override
 	public void init() throws ServletException {
 		logger.info("Authorization module is up and running");
-		WMSAuthAgent.READY = true;
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		SessionFactory sf = HibernateBridge.getSessionFactory();
-		Session session = sf.openSession();
-		PrintWriter out = response.getWriter();
+		Long startTime = System.nanoTime();
+		String responseString = null;
+		Session session = HibernateBridge.getSessionFactory().openSession();
 
-		User user = (User) session.byNaturalId(User.class).using("login",request.getParameter("login")).load();
-		if (user.getPassword().equals(request.getParameter("password"))) {
-			out.write(new Gson().toJson(user).toString());
-		} else {
-			out.write("{status: invalid}");
+		logger.info("Authorization initialized, looking for provided credentials");
+
+		synchronized (session) {
+			User user = (User) session.byNaturalId(User.class)
+					.using("login", request.getParameter("login")).load();
+			if (user.getPassword().equals(request.getParameter("password"))) {
+				// GsonBuilder ways is required only here, because here...user
+				// is defined
+				responseString = new GsonBuilder()
+						.excludeFieldsWithoutExposeAnnotation()
+						.create()
+						.toJson(new AuthRespone(user,
+								"Provided credentials are valid", true,
+								System.nanoTime() - startTime,
+								WMSAuthAgent.class.getName()),
+								AuthRespone.class).toString();
+				logger.info("User's credentials seems to be valid");
+			} else {
+				responseString = new Gson().toJson(
+						new AuthRespone(null, "Invalid user's credentials",
+								false, System.nanoTime() - startTime,
+								WMSAuthAgent.class.getName()),
+						AuthRespone.class).toString();
+				logger.warning("Invalid user's credentials");
+			}
+			session.clear();
+			session.close();
 		}
-
-		sf.close();
+		response.getWriter().write(responseString);
 	}
 
-	public static boolean isReady() {
-		return READY;
+	public class AuthRespone extends BaseFormat {
+		@Expose
+		private final User user;
+		@Expose
+		private final String message;
+
+		public AuthRespone(User user, String message, boolean success,
+				Long time, String handler) {
+			super(success, time, handler);
+			this.user = user;
+			this.message = message;
+		}
 	}
 
 }

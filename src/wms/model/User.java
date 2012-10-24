@@ -13,6 +13,8 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 @Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "login" }) })
 public class User extends BaseEntity {
@@ -23,11 +25,13 @@ public class User extends BaseEntity {
 	@Column(name = "idUser", updatable = false, insertable = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@GenericGenerator(name = "increment", strategy = "increment")
+	@Expose
 	protected Long id;
 
 	@Basic
 	@NaturalId
 	@Column(name = "login", nullable = false, unique = true, length = 16, updatable = false)
+	@Expose
 	private String login;
 
 	@Basic
