@@ -5,9 +5,9 @@
  * Time   : 11:45
  */
 
-Ext.define('WMS.view.login.LoginPanel', {
-    extend: 'Ext.panel.Panel',
-    alias : 'widget.loginpanel',
+Ext.define('WMS.view.login.Dialog', {
+    extend: 'WMS.view.abstract.BaseDialog',
+    alias : 'widget.logindialog',
     title : 'Welcome',
 
     layout: {
@@ -21,9 +21,10 @@ Ext.define('WMS.view.login.LoginPanel', {
             url  : 'wms/auth'
         },
         {
-            xtype: 'panel',
-            title: 'Warehouses',
-            items: {
+            xtype  : 'panel',
+            title  : 'Warehouses',
+            enabled: false,
+            items  : {
                 xtype : 'combo',
                 itemId: 'warehouseSelector'
             }
