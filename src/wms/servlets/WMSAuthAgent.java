@@ -1,6 +1,7 @@
 package wms.servlets;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -39,33 +40,55 @@ public class WMSAuthAgent extends HttpServlet {
 
 		logger.info("Authorization initialized, looking for provided credentials");
 
-		synchronized (session) {
-			User user = (User) session.byNaturalId(User.class)
-					.using("login", request.getParameter("login")).load();
-			if (user.getPassword().equals(request.getParameter("password"))) {
-				// GsonBuilder ways is required only here, because here...user
-				// is defined
-				responseString = new GsonBuilder()
-						.excludeFieldsWithoutExposeAnnotation()
-						.create()
-						.toJson(new AuthRespone(user,
-								"Provided credentials are valid", true,
-								System.nanoTime() - startTime,
-								WMSAuthAgent.class.getName()),
-								AuthRespone.class).toString();
-				logger.info("User's credentials seems to be valid");
-			} else {
-				responseString = new Gson().toJson(
-						new AuthRespone(null, "Invalid user's credentials",
-								false, System.nanoTime() - startTime,
-								WMSAuthAgent.class.getName()),
-						AuthRespone.class).toString();
-				logger.warning("Invalid user's credentials");
-			}
-			session.clear();
+		final String login = request.getParameter("login"), password = request
+				.getParameter("password");
+
+		if (login == null || password == null) {
+			logger.severe("Either login/password are null");
+			responseString = parseFailure(startTime);
 			session.close();
+			return;
 		}
+
+		User user = (User) session.byNaturalId(User.class)
+				.using("login", login).load();
+		try {
+			if (user == null || !user.getPassword().equals(password)) {
+				responseString = parseFailure(startTime);
+			} else if (user.getPassword().equals(password)) {
+				responseString = parseSuccess(startTime, user);
+			}
+		} catch (NullPointerException e) {
+			logger.log(Level.WARNING, "Failed to parse authorization request",
+					e);
+			responseString = parseFailure(startTime);
+		}
+		session.clear();
+		session.close();
+
 		response.getWriter().write(responseString);
+	}
+
+	private String parseSuccess(Long startTime, User user) {
+		String responseString = new GsonBuilder()
+				.excludeFieldsWithoutExposeAnnotation()
+				.create()
+				.toJson(new AuthRespone(user, "Provided credentials are valid",
+						true, System.nanoTime() - startTime,
+						WMSAuthAgent.class.getName()), AuthRespone.class)
+				.toString();
+		logger.info("User's credentials seems to be valid");
+		return responseString;
+	}
+
+	private String parseFailure(Long startTime) {
+		String responseString = new Gson().toJson(
+				new AuthRespone(null, "Invalid user's credentials", false,
+						System.nanoTime() - startTime,
+						WMSAuthAgent.class.getName()), AuthRespone.class)
+				.toString();
+		logger.warning("Invalid user's credentials");
+		return responseString;
 	}
 
 	public class AuthRespone extends BaseFormat {
