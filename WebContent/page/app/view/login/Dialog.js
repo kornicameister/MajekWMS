@@ -6,15 +6,12 @@
  */
 
 Ext.define('WMS.view.login.Dialog', {
-    extend: 'WMS.view.abstract.BaseDialog',
-    alias : 'widget.logindialog',
-    title : 'Welcome',
+    extend  : 'WMS.view.abstract.BaseDialog',
+    alias   : 'widget.logindialog',
+    title   : 'Welcome',
+    autoShow: true,
 
-    layout: {
-        type: 'fit'
-    },
-
-    items: [
+    items  : [
         {
             xtype: 'loginform',
             title: 'Login credentials',
@@ -28,6 +25,12 @@ Ext.define('WMS.view.login.Dialog', {
                 xtype : 'combo',
                 itemId: 'warehouseSelector'
             }
+        }
+    ],
+    buttons: [
+        {
+            itemId: 'openWarehouseButton',
+            text  : 'Open warehouse'
         }
     ]
 });
