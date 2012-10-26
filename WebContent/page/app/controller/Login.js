@@ -30,7 +30,7 @@ Ext.define('WMS.controller.Login', {
         },
         {
             ref     : 'warehousesCombo',
-            selector: 'logindialog panel combo'
+            selector: 'logindialog loginform combo'
         }
     ],
 
@@ -60,10 +60,9 @@ Ext.define('WMS.controller.Login', {
     onWarehousesLoad: function (store) {
         console.log('Login :: Warehouses store has been loaded');
         var me = this,
-            warehouses = store.getRange(),
-            warehouseCombo = me.getWarehousesCombo();
+            wCount = store.getRange().length;
 
-        if (warehouses.length === 0) {
+        if (wCount === 0) {
             console.log("Login :: Found no warehouses, commencing loading warehouse wizard");
             Ext.MessageBox.show({
                 title        : 'No warehouse found...',
@@ -74,9 +73,6 @@ Ext.define('WMS.controller.Login', {
                 icon         : Ext.MessageBox.WARNING,
                 scope        : me
             });
-        } else {
-            console.log(Ext.String.format('Login :: Located warehouses at count [{0}]', warehouses.length));
-            warehouseCombo.reconfigure(warehouses);
         }
     },
 
@@ -91,14 +87,13 @@ Ext.define('WMS.controller.Login', {
 
     onWarehouseOpen: function () {
         var me = this,
-            warehouse = me.getWarehousesStore().getActive();
+            warehouse = me.getWarehousesStore().getActive(),
+            unitMenu = me.getController('WMS.controller.Toolbars').getUnitMenu();
 
         warehouse.getUnits().load({
-            callback: function (records) {
-                console.log("Login :: Successfully loaded "
-                    + records.length + ' records for Warehouse ['
-                    + warehouse.get('name') + ']');
-                me.getController('WMS.controller.Toolbars').getUnitMenu().reconfigure(warehouse.getUnits());
+            callback: function () {
+                unitMenu.reconfigure(this);
+                me.getDialog().close();
             }
         });
     },
@@ -113,7 +108,6 @@ Ext.define('WMS.controller.Login', {
     onLoginButtonClicked: function (button) {
         console.log('Login :: Login button has been clicked...');
         var me = this,
-            warehouses = me.getWarehousesStore(),
             formRef = button.up('form');
 
         formRef.submit({
@@ -124,20 +118,34 @@ Ext.define('WMS.controller.Login', {
             waitMsg     : 'Sending data...',
 
             success: function (form, action) {
-                var obj = Ext.util.JSON.decode(action.response.responseText);
-                Ext.Msg.alert('Status', 'Login Successful!', function (btn) {
-                    if (btn == 'ok') {
-                        warehouses.load()
-                    }
-                });
+                var obj = Ext.decode(action.response.responseText);
+
+                if (obj['success'] === true) {
+                    Ext.getCmp('statusBar').setStatus({
+                        text : Ext.String.format('Zalogowałeś się jako {0}', obj['user']['login']),
+                        clear: {
+                            wait       : 10000,
+                            anim       : true,
+                            useDefaults: false
+                        }
+                    });
+                    me.onWarehouseOpen();
+                } else {
+                    Ext.Msg.alert('Logowanie nieudane',
+                        'Podany login lub hasło są błędne !!!'
+                    );
+                    formRef.reset();
+                }
             },
 
             failure: function (form, action) {
+                var obj = Ext.decode(action.response.responseText),
+                    success = obj['success'];
                 if (action.failureType == 'server') {
-                    var obj = Ext.util.JSON.decode(action.response.responseText);
-                    Ext.Msg.alert('Login Failed!', obj.errors.reason);
+                    Ext.Msg.alert('Logowanie nieudane :: ', (!success ? 'Złe dane logowanie' : 'brak danych'));
                 } else {
-                    Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText);
+                    Ext.Msg.alert('Logowanie nieudane',
+                        'Serwer jest obecnie niedostępny : ' + action.response.responseText);
                 }
                 formRef.reset();
             }

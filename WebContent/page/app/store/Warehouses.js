@@ -16,7 +16,7 @@ Ext.define('WMS.store.Warehouses', {
     extend: 'Ext.data.Store',
     model : 'WMS.model.entity.Warehouse',
 
-    autoLoad: false,
+    autoLoad: true,
     autoSync: true,
 
     activeWarehouse: undefined,

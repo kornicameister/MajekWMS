@@ -9,7 +9,8 @@ Ext.define('WMS.controller.wms.Overview', {
     extend: 'Ext.app.Controller',
 
     stores: [
-        'UnitTypes'
+        'UnitTypes',
+        'Warehouses'
     ],
     views : [
         'wms.Overview'
@@ -24,7 +25,7 @@ Ext.define('WMS.controller.wms.Overview', {
     init: function () {
         console.init('WMS.controller.wms.Overview initializing...');
         var me = this,
-            warehouses = me.getController('Master').getWarehousesStore();
+            warehouses = me.getWarehousesStore();
 
         me.control({
             'wmsoverviews #add'      : {
@@ -94,7 +95,6 @@ Ext.define('WMS.controller.wms.Overview', {
         }
 
         grid.getPlugin('unitRowEditor').startEdit(store.getTotalCount(), store.getTotalCount());
-
         Ext.getCmp('statusBar').setStatus({
             text : 'You\'ve just added new unit...',
             clear: {
