@@ -15,54 +15,39 @@ Ext.define('WMS.view.login.Form', {
     alias       : 'widget.loginform',
     labelWidth  : 80,
     frame       : false,
-    defaultType : 'textfield',
     monitorValid: true,
-    items       : [
+
+    defaultType: 'textfield',
+    defaults   : {
+        allowBlank: false
+    },
+
+    items: [
         {
-            fieldLabel: 'Username',
-            name      : 'login',
-            allowBlank: false
+            fieldLabel: 'Użytkownik',
+            name      : 'login'
         },
         {
-            fieldLabel: 'Password',
+            fieldLabel: 'Hasło',
             name      : 'password',
-            inputType : 'password',
-            allowBlank: false
+            inputType : 'password'
+        },
+        {
+            xtype     : 'combo',
+            name      : 'warehouse',
+            fieldLabel: 'Magazyn',
+            store     : 'Warehouses',
+
+            valueField  : 'id',
+            displayField: 'name',
+
+            typeAhead    : true,
+            triggerAction: 'all',
+            selectOnTab  : true
         }
     ],
 
     buttons: [
-        {
-            text    : 'Login',
-            formBind: true,
-            handler : function (button) {
-                button.up('form').submit({
-                    method      : 'POST',
-                    jsonSubmit  : true,
-                    paramsAsHash: true,
-                    waitTitle   : 'Connecting',
-                    waitMsg     : 'Sending data...',
-
-                    success: function (form, action) {
-                        var obj = Ext.util.JSON.decode(action.response.responseText);
-                        Ext.Msg.alert('Status', 'Login Successful!', function (btn) {
-                            if (btn == 'ok') {
-                                // handle ok button
-                            }
-                        });
-                    },
-
-                    failure: function (form, action) {
-                        if (action.failureType == 'server') {
-                            var obj = Ext.util.JSON.decode(action.response.responseText);
-                            Ext.Msg.alert('Login Failed!', obj.errors.reason);
-                        } else {
-                            Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText);
-                        }
-                        login.getForm().reset();
-                    }
-                });
-            }
-        }
+        {text: 'Login', formBind: true}
     ]
 });
