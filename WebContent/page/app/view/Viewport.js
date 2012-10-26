@@ -17,14 +17,10 @@ Ext.define('WMS.view.Viewport', {
         xtype : 'panel',
         layout: 'accordion',
         title : 'WMS Simulator',
-        items : [
-            {
-                xtype: 'loginpanel'
-            },
-            {
-                xtype: 'masterview'
-            }
-        ],
+
+        items: {
+            xtype: 'masterview'
+        },
 
         tbar: {
             xtype: 'headbar'
