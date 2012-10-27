@@ -20,8 +20,6 @@ Ext.define('WMS.controller.wms.Overview', {
         {ref: 'warehouseDescription', selector: 'wmsoverviews panel'}
     ],
 
-    gridLoadingMask: undefined,
-
     init: function () {
         console.init('WMS.controller.wms.Overview initializing...');
         var me = this,
@@ -35,8 +33,7 @@ Ext.define('WMS.controller.wms.Overview', {
                 click: me.onUnitDelete
             },
             'wmsoverviews #unitsGrid': {
-                selectionchange: me.onUnitSelectionChanged,
-                afterrender    : me.onUnitGridAfterRender
+                selectionchange: me.onUnitSelectionChanged
             }
         });
 
@@ -68,15 +65,9 @@ Ext.define('WMS.controller.wms.Overview', {
             wd = me.getWarehouseDescription();
 
         console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
+
         me.getUnitsGrid().reconfigure(store);
         wd.update(store.getAt(0).getWarehouse().getData());
-        me.gridLoadingMask.hide();
-    },
-
-    onUnitGridAfterRender: function (grid) {
-        var me = this;
-        me.gridLoadingMask = new Ext.LoadMask(grid, { msg: 'Loading content...'});
-        me.gridLoadingMask.show();
     },
 
     onUnitSelectionChanged: function (selModel, selections) {

@@ -5,6 +5,10 @@
  * Time   : 17:02
  */
 
+/**
+ * @class WMS.controller.Login
+ *
+ */
 Ext.define('WMS.controller.Login', {
     extend: 'Ext.app.Controller',
 
@@ -31,6 +35,10 @@ Ext.define('WMS.controller.Login', {
         {
             ref     : 'warehousesCombo',
             selector: 'logindialog loginform combo'
+        },
+        {
+            ref     : 'masterView',
+            selector: 'masterview'
         }
     ],
 
@@ -39,11 +47,6 @@ Ext.define('WMS.controller.Login', {
         var me = this;
 
         me.control({
-            'logindialog'                             : {
-                'render': function () {
-                    console.log('Lol I have been rendered');
-                }
-            },
             'logindialog loginform button[text=Login]': {
                 'click': me.onLoginButtonClicked
             },
@@ -52,9 +55,23 @@ Ext.define('WMS.controller.Login', {
             },
             'logindialog openWarehouseButton'         : {
                 'click': me.onWarehouseOpen
+            },
+            '#viewport'                               : {
+                'afterrender': me.maskViewport
             }
         });
+
         me.mon(me.getWarehousesStore(), 'load', me.onWarehousesLoad, me);
+    },
+
+    maskViewport: function (view) {
+        this['loadMask'] = new Ext.LoadMask(
+            view,
+            {
+                msg: 'Loading content...'
+            }
+        );
+        this['loadMask'].show();
     },
 
     onWarehousesLoad: function (store) {
@@ -94,6 +111,7 @@ Ext.define('WMS.controller.Login', {
             callback: function () {
                 unitMenu.reconfigure(this);
                 me.getDialog().close();
+                me['loadMask'].hide();
             }
         });
     },

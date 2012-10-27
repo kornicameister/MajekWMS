@@ -7,6 +7,10 @@
 
 /**
  * @class WMS.view.login.Dialog
+ * @extend WMS.view.abstract.BaseDialog
+ * @description This class embeds WMS.view.login.Form
+ * in instance of dialog window. As WMS.view.abstract.BaseDialog
+ * itself extends well known Ext.window.Window.
  */
 Ext.define('WMS.view.login.Dialog', {
     extend    : 'WMS.view.abstract.BaseDialog',
@@ -16,10 +20,10 @@ Ext.define('WMS.view.login.Dialog', {
     autoRender: true,
 
     layout: {
-        type : 'fit'
+        type: 'fit'
     },
 
-    items  : [
+    items: [
         {
             xtype: 'loginform',
             url  : 'wms/auth'

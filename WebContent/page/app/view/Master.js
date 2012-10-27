@@ -15,7 +15,7 @@
  * Class represents top-level container for panels located underneath which presents
  * user information such as warehouse diagram etc.
  */
-Ext.define('WMS.view.MasterView', {
+Ext.define('WMS.view.Master', {
     extend: 'Ext.tab.Panel',
     alias : 'widget.masterview',
 

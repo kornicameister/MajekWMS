@@ -12,22 +12,21 @@
 Ext.define('WMS.controller.Master', {
     extend: 'Ext.app.Controller',
 
-    views: [
-        'MasterView'
+    views : [
+        'Master'
     ],
 
     init: function () {
         console.init('WMS.controller.Master initializing...');
         var me = this;
-
         me.control({
             'masterview': {
-                'afterrender': me.openLoginDialog
+                'afterrender': me.onMasterRender
             }
         });
     },
 
-    openLoginDialog: function () {
+    onMasterRender: function (view) {
         console.log('Master :: Opening login.Dialog...');
         Ext.create('WMS.view.login.Dialog');
     }

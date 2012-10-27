@@ -41,8 +41,7 @@
 
                     'Toolbars',
                     'Login',
-                    'Master',
-                    'Viewport'
+                    'Master'
                 ]
             });
         }

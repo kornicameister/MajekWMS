@@ -6,9 +6,10 @@
  */
 
 /**
- * @class WMS.view.dialog.Login
- * @extend WMS.view.abstract.BaseDialog
- * @description This class provided UI component that allows user to login into application
+ * @class WMS.view.login.Form
+ * @extend Ext.form.
+ * @description This class provided UI component that allows
+ * user to login into application
  */
 Ext.define('WMS.view.login.Form', {
     extend      : 'Ext.form.Panel',
@@ -48,6 +49,6 @@ Ext.define('WMS.view.login.Form', {
     ],
 
     buttons: [
-        {text: 'Login', formBind: true}
+        {text: 'Login', formBind: true, flex: 3}
     ]
 });

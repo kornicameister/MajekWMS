@@ -95,7 +95,7 @@ Ext.define('WMS.view.wms.Overview', {
                         }
 
                         if (unittype_id > 0) {
-                            return Ext.getStore('UnitTypes').getById(unittype_id).get('name')
+                            return Ext.getStore('UnitTypes').getById(unittype_id).get('name');
                         } else if (unittype_id === 0) {
                             return 'undefined';
                         }
