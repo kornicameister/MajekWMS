@@ -1,5 +1,7 @@
 package wms.controller.base.format;
 
+import java.util.concurrent.TimeUnit;
+
 import com.google.gson.annotations.Expose;
 
 public class BaseFormat {
@@ -13,7 +15,7 @@ public class BaseFormat {
 	public BaseFormat(boolean success, Long time, String handler) {
 		super();
 		this.success = success;
-		this.time = time;
+		this.time = TimeUnit.NANOSECONDS.toMillis(time);
 		this.handler = handler;
 	}
 
