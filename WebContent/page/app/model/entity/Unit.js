@@ -15,14 +15,18 @@ Ext.define('WMS.model.entity.Unit', {
         'WMS.model.entity.Product'
     ],
 
+    statics: {
+        SIZE_EXCEEDED: 1
+    },
+
     fields: [
         { name: 'id', type: 'int', persist: true},
         { name: 'name', type: 'string'},
         { name: 'description', type: 'string'},
         { name: 'warehouse_id', type: 'int', mapping: 'warehouse.id'},
         { name: 'unittype_id', type: 'int', mapping: 'type.id'},
-        { name: 'size', type: 'int', defaultValue: 0, persist: true},
-        { name: 'maximumSize', type: 'int', defaultValue: 0}
+        { name: 'size', type: 'int', defaultValue: 0},
+        { name: 'usage', type: 'float', persist: false}
     ],
 
     associations: [
@@ -46,7 +50,48 @@ Ext.define('WMS.model.entity.Unit', {
             type          : 'hasMany',
             associatedName: 'products',
             model         : 'WMS.model.entity.Product',
-            foreignKey    : 'unit_id'
+            foreignKey    : 'unit_id',
+            storeConfig   : {
+                constructor: function (config) {
+                    // Clone the config so we don't modify the original config object
+                    config = Ext.Object.merge({}, config);
+                    var me = this;
+
+                    me.addEvents(
+                        /**
+                         * @event updatefail
+                         * @description Fires after update of record has failed
+                         * @param store
+                         * @param record
+                         * @param reason
+                         */
+                        'updatefail'
+                    );
+                },
+                listeners  : {
+                    'update': function (store, record, ops, modifiedFields) {
+                        if (modifiedFields !== null && Ext.isDefined(modifiedFields)) {
+                            var contains = Ext.Array.contains;
+
+                            if (contains(modifiedFields, 'pallets')) {
+                                var unit = Ext.getStore('Units').getById(record.get('unit_id')),
+                                    newUnitSize = 0,
+                                    unitSize = unit.get('size');
+
+                                store.each(function (prod) {
+                                    newUnitSize += prod.get('pallets');
+                                });
+
+                                if (newUnitSize < unitSize || newUnitSize === unitSize) {
+                                    unit.set('usage', newUnitSize / unitSize);
+                                } else {
+                                    store.fireEvent('updatefail', store, record, WMS.model.entity.Unit.SIZE_EXCEEDED);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     ],
 
@@ -66,10 +111,8 @@ Ext.define('WMS.model.entity.Unit', {
      */
     addProduct: function (product) {
         var me = this,
-            products = me.products(),
-            productRecord = products.add(product);
-
-        return productRecord;
+            products = me.products();
+        return products.add(product);
     },
 
     deleteProduct: function (product) {

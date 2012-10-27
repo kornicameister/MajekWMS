@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NaturalId;
 
@@ -47,9 +48,8 @@ public class Unit extends BaseEntity {
 	@Column(name = "size", nullable = false)
 	private Long size;
 
-	@Basic
-	@Column(name = "maxSize", nullable = false)
-	private Long maximumSize;
+	@Formula("(select sum(p.pallets) / (select u.size from unit u where u.idUnit=idUnit) from product p where p.idProduct in (select up.product_id from unitProduct up where up.unit_id=idUnit))")
+	private Float usage;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "warehouse_id", referencedColumnName = "idWarehouse")
@@ -67,72 +67,72 @@ public class Unit extends BaseEntity {
 		super();
 	}
 
-	public final Long getId() {
+	public synchronized final Long getId() {
 		return id;
 	}
 
-	public final void setId(Long id) {
+	public synchronized final void setId(Long id) {
 		this.id = id;
 	}
 
-	public final String getName() {
+	public synchronized final String getName() {
 		return name;
 	}
 
-	public final void setName(String name) {
+	public synchronized final void setName(String name) {
 		this.name = name;
 	}
 
-	public final String getDescription() {
+	public synchronized final String getDescription() {
 		return description;
 	}
 
-	public final void setDescription(String description) {
+	public synchronized final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public final Long getSize() {
+	public synchronized final Long getSize() {
 		return size;
 	}
 
-	public final void setSize(Long size) {
+	public synchronized final void setSize(Long size) {
 		this.size = size;
 	}
 
-	public final Long getMaximumSize() {
-		return maximumSize;
+	public synchronized final Float getUsage() {
+		return usage;
 	}
 
-	public final void setMaximumSize(Long maximumSize) {
-		this.maximumSize = maximumSize;
-	}
-
-	public final Warehouse getWarehouse() {
+	public synchronized final Warehouse getWarehouse() {
 		return warehouse;
 	}
 
-	public final void setWarehouse(Warehouse warehouse) {
+	public synchronized final void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
 	}
 
-	public final UnitType getType() {
+	public synchronized final UnitType getType() {
 		return type;
 	}
 
-	public final void setType(UnitType type) {
+	public synchronized final void setType(UnitType type) {
 		this.type = type;
 	}
 
-	public final Set<Product> getProducts() {
+	public synchronized final Set<Product> getProducts() {
 		return products;
 	}
 
-	public final void setProducts(Set<Product> products) {
+	public synchronized final void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 
-	public void addProduct(Product p) {
-		this.products.add(p);
+	@Override
+	public String toString() {
+		return "Unit [id=" + id + ", name=" + name + ", description="
+				+ description + ", size=" + size + ", usage=" + usage
+				+ ", warehouse=" + warehouse + ", type=" + type + ", products="
+				+ products + "]";
 	}
 
 	@Override
@@ -142,13 +142,12 @@ public class Unit extends BaseEntity {
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((maximumSize == null) ? 0 : maximumSize.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((products == null) ? 0 : products.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((usage == null) ? 0 : usage.hashCode());
 		result = prime * result
 				+ ((warehouse == null) ? 0 : warehouse.hashCode());
 		return result;
@@ -160,7 +159,7 @@ public class Unit extends BaseEntity {
 			return true;
 		if (!super.equals(obj))
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Unit))
 			return false;
 		Unit other = (Unit) obj;
 		if (description == null) {
@@ -172,11 +171,6 @@ public class Unit extends BaseEntity {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (maximumSize == null) {
-			if (other.maximumSize != null)
-				return false;
-		} else if (!maximumSize.equals(other.maximumSize))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -198,23 +192,17 @@ public class Unit extends BaseEntity {
 				return false;
 		} else if (!type.equals(other.type))
 			return false;
+		if (usage == null) {
+			if (other.usage != null)
+				return false;
+		} else if (!usage.equals(other.usage))
+			return false;
 		if (warehouse == null) {
 			if (other.warehouse != null)
 				return false;
 		} else if (!warehouse.equals(other.warehouse))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Unit [getId()=" + getId() + ", getName()=" + getName()
-				+ ", getDescription()=" + getDescription() + ", getSize()="
-				+ getSize() + ", getMaximumSize()=" + getMaximumSize()
-				+ ", getWarehouse()=" + getWarehouse() + ", getType()="
-				+ getType() + ", getProducts()=" + getProducts()
-				+ ", hashCode()=" + hashCode() + ", getVersion()="
-				+ getVersion() + "]";
 	}
 
 }

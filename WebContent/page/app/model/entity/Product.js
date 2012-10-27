@@ -20,17 +20,9 @@ Ext.define('WMS.model.entity.Product', {
         { name: 'quantity', type: 'float', defaultValue: 0.0},
         { name: 'price', type: 'float', defaultValue: 0.0},
         { name: 'tax', type: 'int', defaultValue: 22},
-        { name: 'pallets', type: 'int', defaultValue: 1}
+        { name: 'pallets', type: 'int', defaultValue: 0}
     ],
     associations: [
-        {
-            name          : 'unit',
-            type          : 'belongsTo',
-            model         : 'WMS.model.entity.Unit',
-            setterName    : 'setUnit',
-            getterName    : 'getUnit',
-            associationKey: 'unit_id'
-        },
         {
             name : 'invoiceProducts',
             type : 'hasMany',
