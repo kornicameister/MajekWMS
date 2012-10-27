@@ -1,7 +1,6 @@
 package wms.model;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -38,87 +38,63 @@ public class Warehouse extends BaseEntity {
 	@Column(name = "description", nullable = true, length = 666)
 	private String description;
 
-	@Basic
-	@Column(name = "size", nullable = true)
-	private Integer size;
+	@Formula("(SELECT sum(u.size)/size from unit u where u.warehouse_id = idWarehouse)")
+	private Float usage;
 
 	@Basic
-	@Column(name = "maxSize", nullable = false)
-	private Integer maximumSize;
+	@Column(name = "size", nullable = false)
+	private Integer size;
 
 	public Warehouse() {
 		super(); // for hibernate
 	}
 
-	public Warehouse(Long idWarehouse, Date createdDate, String name,
-			String description, Integer size, Integer maximumSize) {
-		super();
-		this.id = idWarehouse;
-		this.createdDate = createdDate;
-		this.name = name;
-		this.description = description;
-		this.size = size;
-		this.maximumSize = maximumSize;
-	}
-
-	public Warehouse(Long idWarehouse, Set<Unit> units,
-			Date createdDate, String name, String description, Integer size,
-			Integer maximumSize) {
-		super();
-		this.id = idWarehouse;
-		this.createdDate = createdDate;
-		this.name = name;
-		this.description = description;
-		this.size = size;
-		this.maximumSize = maximumSize;
-	}
-
-	public final Long getIdWarehouse() {
+	public synchronized final Long getId() {
 		return id;
 	}
 
-	public final Date getCreatedDate() {
+	public synchronized final void setId(Long id) {
+		this.id = id;
+	}
+
+	public synchronized final Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public final String getName() {
-		return name;
-	}
-
-	public final String getDescription() {
-		return description;
-	}
-
-	public final Integer getSize() {
-		return size;
-	}
-
-	public final Integer getMaximumSize() {
-		return maximumSize;
-	}
-
-	public final void setIdWarehouse(Long idWarehouse) {
-		this.id = idWarehouse;
-	}
-
-	public final void setCreatedDate(Date createdDate) {
+	public synchronized final void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public final void setName(String name) {
+	public synchronized final String getName() {
+		return name;
+	}
+
+	public synchronized final void setName(String name) {
 		this.name = name;
 	}
 
-	public final void setDescription(String description) {
+	public synchronized final String getDescription() {
+		return description;
+	}
+
+	public synchronized final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public final void setSize(Integer size) {
-		this.size = size;
+	public synchronized final Float getUsage() {
+		return usage;
 	}
 
-	public final void setMaximumSize(Integer maximumSize) {
-		this.maximumSize = maximumSize;
+	public synchronized final void setUsage(Float usage) {
+		this.usage = usage;
+	}
+
+	public synchronized final Integer getSize() {
+		return size;
+	}
+
+	public synchronized final void setSize(Integer size) {
+		this.size = size;
 	}
 
 	@Override
@@ -128,8 +104,11 @@ public class Warehouse extends BaseEntity {
 		result = prime * result
 				+ ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result
-				+ ((id == null) ? 0 : id.hashCode());
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		result = prime * result + ((usage == null) ? 0 : usage.hashCode());
 		return result;
 	}
 
@@ -147,6 +126,11 @@ public class Warehouse extends BaseEntity {
 				return false;
 		} else if (!createdDate.equals(other.createdDate))
 			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -157,7 +141,24 @@ public class Warehouse extends BaseEntity {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (size == null) {
+			if (other.size != null)
+				return false;
+		} else if (!size.equals(other.size))
+			return false;
+		if (usage == null) {
+			if (other.usage != null)
+				return false;
+		} else if (!usage.equals(other.usage))
+			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Warehouse [id=" + id + ", createdDate=" + createdDate
+				+ ", name=" + name + ", description=" + description
+				+ ", usage=" + usage + ", size=" + size + "]";
 	}
 
 }

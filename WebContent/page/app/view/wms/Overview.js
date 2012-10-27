@@ -33,17 +33,17 @@ Ext.define('WMS.view.wms.Overview', {
                 '<div class="view-wms-overview-warehouse-panel">',
                 '<p>Name: {name}</p>',
                 '<p>Description: {description}</p>',
-                '<p>Usage: {size} of {maximumSize}</p>',
+                '<p>Usage: {usage} % of {size}</p>',
                 '<p>Created: {createdDate}</p>',
                 '</div>'
             )
         },
         {
-            xtype      : 'egrid',
-            itemId     : 'unitsGrid',
-            emptyText  : 'W tym magazynie nie ma jeszcze żadnej strefy...',
-            flex       : 3,
-            columns    : [
+            xtype    : 'egrid',
+            itemId   : 'unitsGrid',
+            emptyText: 'W tym magazynie nie ma jeszcze żadnej strefy...',
+            flex     : 3,
+            columns  : [
                 {
                     header   : 'ID',
                     dataIndex: 'id',
@@ -60,46 +60,30 @@ Ext.define('WMS.view.wms.Overview', {
                     }
                 },
                 {
-                    header   : 'Rozmiar',
-                    dataIndex: 'size',
-                    readOnly : true
+                    header   : 'Wypełnienie',
+                    dataIndex: 'usage',
+                    readOnly : true,
+                    renderer : sizeColumnRenderer
                 },
                 {
                     header   : 'Maksymalny rozmiar',
-                    dataIndex: 'maximumSize',
+                    dataIndex: 'size',
                     field    : {
-                        xtype            : 'numberfield',
-                        name             : 'maximumSize',
-                        allowBlank       : false,
-                        value            : 100,
-                        minValue         : 1,
-                        maxValue         : Number.MAX_VALUE,
-                        step             : 200,
-                        keyNavEnabled    : true,
-                        mouseWheelEnabled: true
-                    }
+                        xtype     : 'navnumberfield',
+                        name      : 'maximumSize',
+                        allowBlank: false,
+                        value     : 100,
+                        minValue  : 1,
+                        maxValue  : Number.MAX_VALUE,
+                        step      : 50
+                    },
+                    flex     : 2
                 },
                 {
                     header   : 'Typ',
                     dataIndex: 'unittype_id',
                     flex     : 2,
-                    renderer : function (unittype_id) {
-
-                        if (!Ext.isNumber(unittype_id)) {
-                            return 'unknown';
-                        } else if (Ext.isString(unittype_id)) {
-                            unittype_id = parseInt(unittype_id);
-                        }
-
-                        if (unittype_id > 0) {
-                            return Ext.getStore('UnitTypes').getById(unittype_id).get('name');
-                        } else if (unittype_id === 0) {
-                            return 'undefined';
-                        }
-
-                        console.error("OverviewView :: Failed to recognize unittype_id");
-                        return '';
-                    },
+                    renderer : typeColumnRenderer,
                     editor   : {
                         xtype       : 'combo',
                         store       : 'UnitTypes',
@@ -140,7 +124,7 @@ Ext.define('WMS.view.wms.Overview', {
                     }
                 }
             ],
-            plugins    : [
+            plugins  : [
                 Ext.create('Ext.grid.plugin.RowEditing', {
                     pluginId: 'unitRowEditor'
                 })
@@ -148,3 +132,25 @@ Ext.define('WMS.view.wms.Overview', {
         }
     ]
 });
+
+function sizeColumnRenderer(value, md, record) {
+    value *= 100;
+    return value.toFixed(2) + ' %';
+}
+
+function typeColumnRenderer(unittype_id) {
+    if (!Ext.isNumber(unittype_id)) {
+        return 'unknown';
+    } else if (Ext.isString(unittype_id)) {
+        unittype_id = parseInt(unittype_id);
+    }
+
+    if (unittype_id > 0) {
+        return Ext.getStore('UnitTypes').getById(unittype_id).get('name');
+    } else if (unittype_id === 0) {
+        return 'undefined';
+    }
+
+    console.error("OverviewView :: Failed to recognize unittype_id");
+    return '';
+}

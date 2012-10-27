@@ -15,14 +15,10 @@ Ext.define('WMS.model.entity.Warehouse', {
     ],
 
     fields      : [
-        {
-            name   : 'id',
-            type   : 'int',
-            persist: true
-        },
+        { name: 'id', type: 'int', persist: true},
         'name',
-        'description',
-        { name: 'maximumSize', type: 'int', defaultValue: 0},
+        { name: 'description', type: 'string'},
+        { name: 'usage', type: 'float', defaultValue: 0.0, convert: convertUsage},
         { name: 'size', type: 'int', defaultValue: 0},
         { name: 'createdDate', type: 'date', serialize: serializeDate}
     ],
@@ -72,6 +68,32 @@ Ext.define('WMS.model.entity.Warehouse', {
                     });
 
                     me.superclass.sync.call(me);
+                },
+
+                listeners: {
+                    'update': function (store, unit, ops, modifiedFields) {
+                        if (ops !== Ext.data.Model.EDIT) {
+                            return;
+                        }
+                        if (modifiedFields !== null && Ext.isDefined(modifiedFields)) {
+                            var contains = Ext.Array.contains;
+
+                            if (contains(modifiedFields, 'size')) {
+                                var newUnitSize = 0,
+                                    unitSize = unit.get('size');
+
+                                unit.products().each(function (prod) {
+                                    newUnitSize += prod.get('pallets');
+                                });
+
+                                if (newUnitSize < unitSize || newUnitSize === unitSize) {
+                                    unit.set('usage', newUnitSize / unitSize);
+                                } else {
+                                    store.fireEvent('updatefail', store, unit, WMS.model.entity.Unit.SIZE_EXCEEDED);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -85,4 +107,7 @@ Ext.define('WMS.model.entity.Warehouse', {
 
 function serializeDate(value) {
     return Ext.Date.format(new Date(value), 'Y-m-d');
+}
+function convertUsage(value) {
+    return (value * 100).toFixed(2);
 }

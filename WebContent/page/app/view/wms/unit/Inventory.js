@@ -60,23 +60,7 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             header   : 'Jednostka',
             dataIndex: 'measure_id',
             width    : 120,
-            renderer : function (measure_id) {
-
-                if (!Ext.isNumber(measure_id)) {
-                    return 'unknown';
-                } else if (Ext.isString(measure_id)) {
-                    measure_id = parseInt(measure_id);
-                }
-
-                if (measure_id > 0) {
-                    return Ext.getStore('Measures').getById(measure_id).get('abbreviation');
-                } else if (measure_id === 0) {
-                    return 'undefined';
-                }
-
-                console.error("InventoryView :: Failed to recognize measure_id");
-                return '';
-            },
+            renderer : measureColumnRenderer,
             editor   : {
                 xtype       : 'combo',
                 store       : 'Measures',
@@ -139,3 +123,21 @@ Ext.define('WMS.view.wms.unit.Inventory', {
         })
     ]
 });
+
+function measureColumnRenderer(measure_id) {
+
+    if (!Ext.isNumber(measure_id)) {
+        return 'unknown';
+    } else if (Ext.isString(measure_id)) {
+        measure_id = parseInt(measure_id);
+    }
+
+    if (measure_id > 0) {
+        return Ext.getStore('Measures').getById(measure_id).get('abbreviation');
+    } else if (measure_id === 0) {
+        return 'undefined';
+    }
+
+    console.error("InventoryView :: Failed to recognize measure_id");
+    return '';
+}
