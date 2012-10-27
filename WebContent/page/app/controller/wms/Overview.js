@@ -16,8 +16,8 @@ Ext.define('WMS.controller.wms.Overview', {
         'wms.Overview'
     ],
     refs  : [
-        {ref: 'unitsGrid', selector: 'wmsoverviews grid'},
-        {ref: 'warehouseDescription', selector: 'wmsoverviews panel'}
+        {ref: 'unitsGrid', selector: 'wmsoverviews egrid[itemId=unitsGrid]'},
+        {ref: 'warehouseDescription', selector: 'wmsoverviews propertygrid[itemId=description]'}
     ],
 
     init: function () {
@@ -26,18 +26,30 @@ Ext.define('WMS.controller.wms.Overview', {
             warehouses = me.getWarehousesStore();
 
         me.control({
-            'wmsoverviews #add'      : {
+            'wmsoverviews #add'                            : {
                 click: me.onNewUnit
             },
-            'wmsoverviews #delete'   : {
+            'wmsoverviews #delete'                         : {
                 click: me.onUnitDelete
             },
-            'wmsoverviews #unitsGrid': {
+            'wmsoverviews #unitsGrid'                      : {
                 selectionchange: me.onUnitSelectionChanged
+            },
+            'wmsoverviews propertygrid[itemId=description]': {
+                edit: me.onWarehousePropertyEdit
             }
         });
 
         me.mon(warehouses, 'activechanged', me.onActiveWarehouseChange, me);
+    },
+
+    // TODO missing impl
+    onWarehousePropertyEdit: function (editor, event) {
+        var me = this,
+            value = event['value'],
+            field = event['record'].get('name');
+
+        console.log(value);
     },
 
     onActiveWarehouseChange: function (store, activeWarehouse) {
@@ -63,12 +75,22 @@ Ext.define('WMS.controller.wms.Overview', {
 
     onUnitsStoreLoaded: function (store) {
         var me = this,
-            wd = me.getWarehouseDescription();
+            wd = me.getWarehouseDescription(),
+            activeWarehouse = me.getWarehousesStore().getActive(),
+            source = activeWarehouse.toSource(
+                [
+                    { field: 'name', header: 'Nazwa'},
+                    { field: 'description', header: 'Opis'},
+                    { field: 'usage', header: 'Wypełnienie'},
+                    { field: 'size', header: 'Rozmiar'},
+                    { field: 'createdDate', header: 'Utworzony'}
+                ]
+            );
 
         console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
 
         me.getUnitsGrid().reconfigure(store);
-        wd.update(me.getWarehousesStore().getActive().getData());
+        wd.setSource(source);
     },
 
     onUnitSelectionChanged: function (selModel, selections) {

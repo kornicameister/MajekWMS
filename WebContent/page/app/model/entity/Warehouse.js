@@ -16,7 +16,7 @@ Ext.define('WMS.model.entity.Warehouse', {
 
     fields      : [
         { name: 'id', type: 'int', persist: true},
-        'name',
+        { name: 'name', type: 'string' },
         { name: 'description', type: 'string'},
         { name: 'usage', type: 'float', defaultValue: 0.0, convert: convertUsage},
         { name: 'size', type: 'int', defaultValue: 0},
@@ -102,6 +102,29 @@ Ext.define('WMS.model.entity.Warehouse', {
     proxy: {
         type: 'wms',
         url : 'wms/agent/warehouse'
+    },
+
+    toSource: function (desc) {
+        var me = this,
+            property = undefined,
+            source = {};
+
+        if (!Ext.isDefined(desc)) {
+            desc = [];
+            Ext.each(me.getFields(), function (field) {
+                property = {
+                    field : field.getName(),
+                    header: field.getName().toUpperCase()
+                };
+                desc.push(property);
+            });
+        }
+
+        Ext.each(desc, function (d) {
+            property = me.get(d['field']);
+            source[d['header']] = property;
+        });
+        return source;
     }
 });
 

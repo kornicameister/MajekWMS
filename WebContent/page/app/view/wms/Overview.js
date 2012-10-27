@@ -21,22 +21,11 @@ Ext.define('WMS.view.wms.Overview', {
 
     items: [
         {
-            xtype : 'panel',
+            xtype : 'propertygrid',
             flex  : 1,
-            layout: {
-                type: 'fit'
-            },
             itemId: 'description',
             title : 'Warehouse',
-            tpl   : new Ext.XTemplate(
-                // TODO support for dd,dt and so on
-                '<div class="view-wms-overview-warehouse-panel">',
-                '<p>Name: {name}</p>',
-                '<p>Description: {description}</p>',
-                '<p>Usage: {usage} % of {size}</p>',
-                '<p>Created: {createdDate}</p>',
-                '</div>'
-            )
+            source: {}
         },
         {
             xtype    : 'egrid',
