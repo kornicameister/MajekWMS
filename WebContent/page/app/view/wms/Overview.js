@@ -30,16 +30,13 @@ Ext.define('WMS.view.wms.Overview', {
             title : 'Warehouse',
             tpl   : new Ext.XTemplate(
                 // TODO support for dd,dt and so on
-                '<div class="warehouseDescription">',
+                '<div class="view-wms-overview-warehouse-panel">',
                 '<p>Name: {name}</p>',
                 '<p>Description: {description}</p>',
                 '<p>Usage: {size} of {maximumSize}</p>',
                 '<p>Created: {createdDate}</p>',
                 '</div>'
             )
-        },
-        {
-            xtype: 'splitter'
         },
         {
             xtype      : 'egrid',

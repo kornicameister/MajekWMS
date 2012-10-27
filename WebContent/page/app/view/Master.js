@@ -18,8 +18,6 @@
 Ext.define('WMS.view.Master', {
     extend: 'Ext.tab.Panel',
     alias : 'widget.masterview',
-
-    title         : 'WMS - Warehouse',
     defaults      : {
         autoScroll: true
     },
