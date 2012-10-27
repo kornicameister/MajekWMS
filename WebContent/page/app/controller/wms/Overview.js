@@ -67,7 +67,7 @@ Ext.define('WMS.controller.wms.Overview', {
         console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
 
         me.getUnitsGrid().reconfigure(store);
-        wd.update(store.getAt(0).getWarehouse().getData());
+        wd.update(me.getWarehousesStore().getActive().getData());
     },
 
     onUnitSelectionChanged: function (selModel, selections) {

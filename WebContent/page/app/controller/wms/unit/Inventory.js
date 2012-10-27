@@ -8,13 +8,16 @@
 Ext.define('WMS.controller.wms.unit.Inventory', {
     extend: 'Ext.app.Controller',
 
-    stores: [
+    requires: [
+        'WMS.view.abstract.NavigableNumberField'
+    ],
+    stores  : [
         'Measures'
     ],
-    views : [
+    views   : [
         'wms.unit.Inventory'
     ],
-    refs  : [
+    refs    : [
         { ref: 'productList', selector: 'wmsunitinventory' }
     ],
 

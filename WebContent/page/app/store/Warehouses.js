@@ -34,7 +34,7 @@ Ext.define('WMS.store.Warehouses', {
             'activechanged'
         );
 
-        this.callParent([config])
+        this.callParent([config]);
     },
 
     setActive: function (wId) {

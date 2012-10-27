@@ -97,6 +97,15 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
     },
 
     drawUnits: function (board) {
+        console.log('Canvas :: Commencing sprites drawing...');
+        var me = this,
+            units = me.getWarehousesStore().getActive().getUnits(),
+            unitSprites = me.getUnitSpritesStore(),
+            unitWidth = me['drawConfiguration']['unit']['width'],
+            unitHeight = me['drawConfiguration']['unit']['height'],
+            unitSprite = undefined,
+            sprites = [];
+
         function drawUnitShape(unitRecord, tileBBox) {
             var rectShape = board['surface'].add({
                 type          : 'rect',
@@ -108,7 +117,8 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
                 fill          : 'green',
                 stroke        : 'red',
                 'stroke-width': 2,
-                draggable     : true
+                draggable     : true,
+                group         : unitRecord.get('name')
             });
             var textShape = board['surface'].add({
                 type     : 'text',
@@ -119,22 +129,13 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
                 height   : unitHeight,
                 x        : Math.floor(rectShape['x'] + (rectShape['width'] / 3)),
                 y        : Math.floor(rectShape['y'] + (rectShape['height'] / 4)),
-                draggable: true
+                draggable: true,
+                group    : unitRecord.get('name')
             });
             rectShape.show(true);
             textShape.show(true);
-            rectShape['text'] = textShape;
             return rectShape;
         }
-
-        console.log('Canvas :: Commencing sprites drawing...');
-        var me = this,
-            units = me.getWarehousesStore().getActive().getUnits(),
-            unitSprites = me.getUnitSpritesStore(),
-            unitWidth = me['drawConfiguration']['unit']['width'],
-            unitHeight = me['drawConfiguration']['unit']['height'],
-            unitSprite = undefined,
-            sprites = [];
 
         units.each(function (unit) {
             unitSprite = drawUnitShape(unit, me['tiles'][sprites.length].getBBox());
