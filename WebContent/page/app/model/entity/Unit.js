@@ -112,6 +112,11 @@ Ext.define('WMS.model.entity.Unit', {
     addProduct: function (product) {
         var me = this,
             products = me.products();
+
+        Ext.each(product, function (p) {
+            p.set('unit_id', me.getId());
+        });
+
         return products.add(product);
     },
 
