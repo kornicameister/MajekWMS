@@ -35,13 +35,30 @@ Ext.define('WMS.model.entity.Warehouse', {
             storeConfig: {
                 storeId   : 'Units',
                 activeUnit: undefined,
-                getActive : function () {
+
+                /**
+                 * Method returns unit that is set as active. In other
+                 * words it is about the unit chosen from units' grid.
+                 * @return WMS.model.entity.Unit
+                 */
+                getActive: function () {
                     return this.activeUnit;
                 },
-                setActive : function (unit) {
+
+                /**
+                 * Method to set new unit as active
+                 * @param unit
+                 */
+                setActive: function (unit) {
                     this.activeUnit = unit;
                 },
-                sync      : function () {
+
+                /**
+                 * @override Ext.data.Store.sync
+                 * @description Overridden version of old sync method that is extend for unit's store
+                 * to call for sync method for each underlying product's store
+                 */
+                sync: function () {
                     var me = this,
                         products = undefined;
 

@@ -40,18 +40,17 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
 
     onProductAdd: function () {
         var me = this,
-            unit = me.getStore('Units').getActive(),
-            store = unit.products(),
-            grid = me.getProductList(),
-            record = store.add(Ext.create('WMS.model.entity.Product', {
-                unit_id: unit.getId()
-            }));
+            activeUnit = me.getStore('Units').getActive(),
+            record = activeUnit
+                .addProduct(Ext.create('WMS.model.entity.Product'));
 
         if (!Ext.isDefined(record)) {
             console.error('Overview :: Failed to add new product when row edition enabled');
         }
 
-        grid.getPlugin('inventoryRowEditor').startEdit(store.getRange().length - 1, 1);
+        me.getProductList()
+            .getPlugin('inventoryRowEditor')
+            .startEdit(activeUnit.getProductsCount() - 1, 1);
 
         Ext.getCmp('statusBar').setStatus({
             text : 'Właśnie stworzyłeś nowy produkt...',
@@ -65,12 +64,16 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
 
     onProductDelete: function () {
         var me = this,
-            store = me.getStore('Units').getActive().products(),
-            grid = me.getProductList(),
-            selection = grid.getView().getSelectionModel().getSelection();
+            activeUnit = me
+                .getStore('Units')
+                .getActive(),
+            selection = me.getProductList()
+                .getView()
+                .getSelectionModel()
+                .getSelection();
 
         if (selection) {
-            store.remove(selection);
+            activeUnit.deleteProduct(selection);
             Ext.getCmp('statusBar').setStatus({
                 text : Ext.String.format('Właśnie usunąłeś {0} {1}',
                     selection.length,

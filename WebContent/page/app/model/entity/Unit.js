@@ -45,7 +45,8 @@ Ext.define('WMS.model.entity.Unit', {
         {
             type          : 'hasMany',
             associatedName: 'products',
-            model         : 'WMS.model.entity.Product'
+            model         : 'WMS.model.entity.Product',
+            foreignKey    : 'unit_id'
         }
     ],
 
@@ -56,5 +57,37 @@ Ext.define('WMS.model.entity.Unit', {
     proxy: {
         type: 'wms',
         url : 'wms/agent/unit'
+    },
+
+    /**
+     * Use this method to add new product to unit.
+     * @param product
+     * @return {*}
+     */
+    addProduct: function (product) {
+        var me = this,
+            products = me.products(),
+            productRecord = products.add(product);
+
+        return productRecord;
+    },
+
+    deleteProduct: function (product) {
+        var me = this,
+            products = me.products();
+
+        function validateRemove(units, removedRecords) {
+            me.mun(products, 'bulkremove', validateRemove);
+            return removedRecords;
+        }
+
+        me.mon(products, 'bulkremove', validateRemove);
+        products.remove(product);
+    },
+
+    getProductsCount: function () {
+        var me = this;
+
+        return me.products().getCount();
     }
 });
