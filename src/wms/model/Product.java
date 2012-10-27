@@ -22,9 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 @SuppressWarnings("deprecation")
 @Entity
 @Table(name = "product")
-@org.hibernate.annotations.Entity(
-		dynamicUpdate = true
-)
+@org.hibernate.annotations.Entity(dynamicUpdate = true)
 public class Product extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;
@@ -44,6 +42,10 @@ public class Product extends BaseEntity {
 	private String description;
 
 	@Basic
+	@Column(name = "pallets", nullable = false, insertable = true, updatable = true)
+	private Integer pallets;
+
+	@Basic
 	@Column(name = "quantity", nullable = false, insertable = true, updatable = true)
 	private Double quantity;
 
@@ -55,7 +57,7 @@ public class Product extends BaseEntity {
 	@Column(name = "tax", nullable = false, insertable = true, updatable = true)
 	private Float tax;
 
-	@OneToMany(fetch = FetchType.LAZY,  mappedBy="pk.product")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product")
 	private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
 	@JoinColumn(name = "measure_id", referencedColumnName = "idMeasure")
@@ -131,6 +133,14 @@ public class Product extends BaseEntity {
 		this.measure = measure;
 	}
 
+	public synchronized final Integer getPallets() {
+		return pallets;
+	}
+
+	public synchronized final void setPallets(Integer pallets) {
+		this.pallets = pallets;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -142,6 +152,7 @@ public class Product extends BaseEntity {
 				+ ((invoiceProducts == null) ? 0 : invoiceProducts.hashCode());
 		result = prime * result + ((measure == null) ? 0 : measure.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((pallets == null) ? 0 : pallets.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result
 				+ ((quantity == null) ? 0 : quantity.hashCode());
@@ -183,6 +194,11 @@ public class Product extends BaseEntity {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (pallets == null) {
+			if (other.pallets != null)
+				return false;
+		} else if (!pallets.equals(other.pallets))
+			return false;
 		if (price == null) {
 			if (other.price != null)
 				return false;
@@ -203,12 +219,11 @@ public class Product extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Product [getId()=" + getId() + ", getName()=" + getName()
-				+ ", getDescription()=" + getDescription() + ", getQuantity()="
-				+ getQuantity() + ", getPrice()=" + getPrice() + ", getTax()="
-				+ getTax() + ", getInvoiceProducts()=" + getInvoiceProducts()
-				+ ", getMeasure()=" + getMeasure() + ", hashCode()="
-				+ hashCode() + ", getVersion()=" + getVersion() + "]";
+		return "Product [id=" + id + ", name=" + name + ", description="
+				+ description + ", pallets=" + pallets + ", quantity="
+				+ quantity + ", price=" + price + ", tax=" + tax
+				+ ", invoiceProducts=" + invoiceProducts + ", measure="
+				+ measure + "]";
 	}
 
 }

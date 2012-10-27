@@ -31,18 +31,29 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             }
         },
         {
+            header   : 'PJŁ',
+            dataIndex: 'pallets',
+            field    : {
+                xtype     : 'navnumberfield',
+                name      : 'pallets',
+                allowBlank: false,
+                value     : 1,
+                minValue  : 1,
+                maxValue  : Number.MAX_VALUE,
+                step      : 1
+            }
+        },
+        {
             header   : 'Ilość',
             dataIndex: 'quantity',
             field    : {
-                xtype            : 'numberfield',
-                name             : 'maximumSize',
-                allowBlank       : false,
-                value            : 100,
-                minValue         : 1,
-                maxValue         : Number.MAX_VALUE,
-                step             : 200,
-                keyNavEnabled    : true,
-                mouseWheelEnabled: true
+                xtype     : 'navnumberfield',
+                name      : 'maximumSize',
+                allowBlank: false,
+                value     : 100,
+                minValue  : 1,
+                maxValue  : Number.MAX_VALUE,
+                step      : 200
             }
         },
         {
@@ -58,7 +69,7 @@ Ext.define('WMS.view.wms.unit.Inventory', {
                 }
 
                 if (measure_id > 0) {
-                    return Ext.getStore('Measures').getById(measure_id).get('abbreviation')
+                    return Ext.getStore('Measures').getById(measure_id).get('abbreviation');
                 } else if (measure_id === 0) {
                     return 'undefined';
                 }
@@ -85,15 +96,13 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             header   : 'Cena',
             dataIndex: 'price',
             field    : {
-                xtype            : 'numberfield',
-                name             : 'price',
-                allowBlank       : false,
-                value            : 22,
-                minValue         : 0.1,
-                maxValue         : Number.MAX_VALUE,
-                step             : 0.1,
-                keyNavEnabled    : true,
-                mouseWheelEnabled: true
+                xtype     : 'navnumberfield',
+                name      : 'price',
+                allowBlank: false,
+                value     : 22,
+                minValue  : 0.1,
+                maxValue  : Number.MAX_VALUE,
+                step      : 0.1
             }
         },
         {
@@ -103,15 +112,13 @@ Ext.define('WMS.view.wms.unit.Inventory', {
                 return value + ' %';
             },
             field    : {
-                xtype            : 'numberfield',
-                name             : 'tax',
-                allowBlank       : false,
-                value            : 22,
-                minValue         : 10,
-                maxValue         : 100,
-                step             : 0.5,
-                keyNavEnabled    : true,
-                mouseWheelEnabled: true
+                xtype     : 'navnumberfield',
+                name      : 'tax',
+                allowBlank: false,
+                value     : 22,
+                minValue  : 10,
+                maxValue  : 100,
+                step      : 0.5
             }
         },
         {

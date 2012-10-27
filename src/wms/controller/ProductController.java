@@ -86,7 +86,8 @@ public class ProductController extends RequestController {
 
 	@Override
 	protected BaseEntity preDelete(JSONObject payloadedData) {
-		return (BaseEntity) this.session.byId(Product.class).load((Serializable) payloadedData.get("id"));
+		return (BaseEntity) this.session.byId(Product.class).load(
+				(Serializable) payloadedData.get("id"));
 	}
 
 	@Override
@@ -125,6 +126,9 @@ public class ProductController extends RequestController {
 			return desired;
 		} else if (property.equals("tax")) {
 			Float desired = new Float(stringValue);
+			return desired;
+		} else if (property.equals("pallets")) {
+			Integer desired = new Integer(stringValue);
 			return desired;
 		}
 		return value;
