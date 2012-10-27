@@ -50,8 +50,9 @@ Ext.define('WMS.controller.wms.Overview', {
     },
 
     onUnitsStoreUpdated: function (store, records) {
+        var length = records.length;
         Ext.getCmp('statusBar').setStatus({
-            text : 'You\'ve successfully saved ' + records.length + 'units...',
+            text : Ext.String.format('Uaktualniłeś {0} {1}', length, (length === 1 ? 'strefę' : 'stref')),
             clear: {
                 wait       : 10000,
                 anim       : true,
@@ -87,7 +88,7 @@ Ext.define('WMS.controller.wms.Overview', {
 
         grid.getPlugin('unitRowEditor').startEdit(store.getTotalCount(), store.getTotalCount());
         Ext.getCmp('statusBar').setStatus({
-            text : 'You\'ve just added new unit...',
+            text : 'Właśnie dodałeś nową strefę...',
             clear: {
                 wait       : 10000,
                 anim       : true,
@@ -105,9 +106,9 @@ Ext.define('WMS.controller.wms.Overview', {
         if (selection) {
             store.remove(selection);
             Ext.getCmp('statusBar').setStatus({
-                text : Ext.String.format('You\'ve just deleted {0} {1}',
+                text : Ext.String.format('Usunąłeś {0} {1}',
                     selection.length,
-                    selection.length > 0 ? 'units' : 'unit'),
+                    selection.length > 0 ? 'stref' : 'strefę'),
                 clear: {
                     wait       : 10000,
                     anim       : true,

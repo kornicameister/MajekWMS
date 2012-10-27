@@ -41,8 +41,7 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
     onProductAdd: function () {
         var me = this,
             activeUnit = me.getStore('Units').getActive(),
-            record = activeUnit
-                .addProduct(Ext.create('WMS.model.entity.Product'));
+            record = activeUnit.addProduct(Ext.create('WMS.model.entity.Product'));
 
         if (!Ext.isDefined(record)) {
             console.error('Overview :: Failed to add new product when row edition enabled');
