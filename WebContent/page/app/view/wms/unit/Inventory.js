@@ -14,26 +14,43 @@ Ext.define('WMS.view.wms.unit.Inventory', {
     itemId    : 'inventoryGrid',
     emptyText : 'No products for selected unit...',
     autoScroll: true,
-    columns   : [
+
+    features: [
+        { ftype: 'summary' }
+    ],
+
+    columns: [
         {
             header   : 'ID',
             dataIndex: 'id',
             width    : 20,
-            editable : false
+            editable : false,
+            hidden   : true
         },
         {
-            header   : 'Nazwa',
-            dataIndex: 'name',
-            field    : {
+            header         : 'Nazwa',
+            dataIndex      : 'name',
+            summaryType    : 'count',
+            summaryRenderer: function (value) {
+                return Ext.String.format('{0} produkt{1}', value, value !== 1 ? 'ów' : '');
+            },
+            field          : {
                 xtype     : 'textfield',
                 name      : 'name',
                 allowBlank: false
             }
         },
         {
-            header   : 'PJŁ',
-            dataIndex: 'pallets',
-            field    : {
+            header         : 'PJŁ',
+            dataIndex      : 'pallets',
+            summaryType    : 'sum',
+            sortable       : true,
+            summaryType    : 'sum',
+            summaryRenderer: function (value) {
+                var total = Ext.getStore('Units').getActive().get('size');
+                return Ext.String.format('{0} z {1} PJŁ', value, total);
+            },
+            field          : {
                 xtype     : 'navnumberfield',
                 name      : 'pallets',
                 allowBlank: false,
@@ -44,9 +61,10 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             }
         },
         {
-            header   : 'Ilość',
-            dataIndex: 'quantity',
-            field    : {
+            header     : 'Ilość',
+            dataIndex  : 'quantity',
+            summaryType: 'average',
+            field      : {
                 xtype     : 'navnumberfield',
                 name      : 'maximumSize',
                 allowBlank: false,
@@ -77,9 +95,13 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             }
         },
         {
-            header   : 'Cena',
-            dataIndex: 'price',
-            field    : {
+            header         : 'Cena',
+            dataIndex      : 'price',
+            summaryType    : 'average',
+            summaryRenderer: function (value) {
+                return value + ' zł';
+            },
+            field          : {
                 xtype     : 'navnumberfield',
                 name      : 'price',
                 allowBlank: false,
@@ -117,7 +139,7 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             }
         }
     ],
-    plugins   : [
+    plugins: [
         Ext.create('Ext.grid.plugin.RowEditing', {
             pluginId: 'inventoryRowEditor'
         })

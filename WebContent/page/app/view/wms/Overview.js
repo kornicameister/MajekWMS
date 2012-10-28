@@ -32,7 +32,18 @@ Ext.define('WMS.view.wms.Overview', {
             itemId   : 'unitsGrid',
             emptyText: 'W tym magazynie nie ma jeszcze żadnej strefy...',
             flex     : 3,
-            columns  : [
+
+            features: [
+                {
+                    id                : 'group',
+                    ftype             : 'groupingsummary',
+                    groupHeaderTpl    : '{name}',
+                    hideGroupedHeader : true,
+                    enableGroupingMenu: false
+                }
+            ],
+
+            columns: [
                 {
                     header   : 'ID',
                     dataIndex: 'id',
@@ -113,7 +124,7 @@ Ext.define('WMS.view.wms.Overview', {
                     }
                 }
             ],
-            plugins  : [
+            plugins: [
                 Ext.create('Ext.grid.plugin.RowEditing', {
                     pluginId: 'unitRowEditor'
                 })

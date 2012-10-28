@@ -30,6 +30,7 @@ Ext.define('WMS.model.entity.Warehouse', {
             model      : 'WMS.model.entity.Unit',
             storeConfig: {
                 storeId   : 'Units',
+                groupField: 'unittype_id',
                 activeUnit: undefined,
 
                 /**
