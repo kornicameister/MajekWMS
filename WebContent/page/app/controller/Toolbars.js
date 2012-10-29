@@ -15,7 +15,8 @@ Ext.define('WMS.controller.Toolbars', {
     ],
     views   : [
         'toolbar.Header',
-        'toolbar.Footer'
+        'toolbar.Footer',
+        'wizard.Client'
     ],
     refs    : [
         {
@@ -40,6 +41,9 @@ Ext.define('WMS.controller.Toolbars', {
             '#headerToolbar storemenu'                   : {
                 'iclick': me.onUnitSelected
             },
+            '#headerToolbar menu[itemId=clientsMenu]'    : {
+                'click': me.onClientMenuClick
+            },
             '#footerToolbar button[itemId=saveButton]'   : {
                 'click': me.onSaveAction
             },
@@ -47,6 +51,33 @@ Ext.define('WMS.controller.Toolbars', {
                 'click': me.onRefreshAction
             }
         });
+    },
+
+    onClientMenuClick: function (menu, item) {
+        console.log('Toolbars :: ' + Ext.String.format('{0} button clicked...', item['itemId']));
+        var me = this;
+        if (item['itemId'] === 'addClient') {
+            me.onAddClient();
+        } else {
+            me.onListClients();
+        }
+    },
+
+    /**
+     * @description Opens new client's wizard
+     */
+    onAddClient: function () {
+        var me = this,
+            clientWizard = me.getView('wizard.Client');
+
+        clientWizard.create().show();
+    },
+
+    /**
+     * @description Open list of clients as new tab in master view
+     */
+    onListClients: function () {
+
     },
 
     onUnitSelected: function (storemenu, item, storeItem) {

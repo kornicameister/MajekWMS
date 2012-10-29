@@ -1,5 +1,6 @@
 package wms.controller.base.extractor;
 
+import wms.controller.ClientController;
 import wms.controller.MeasureController;
 import wms.controller.ProductController;
 import wms.controller.UnitController;
@@ -7,6 +8,7 @@ import wms.controller.UnitTypeController;
 import wms.controller.WarehouseController;
 import wms.controller.base.RequestController;
 import wms.model.BaseEntity;
+import wms.model.Client;
 import wms.model.Measure;
 import wms.model.Product;
 import wms.model.Unit;
@@ -25,7 +27,7 @@ public enum Entity {
 	MEASURE(MeasureController.class,Measure.class),
 	PRODUCT(ProductController.class,Product.class), 
 	INVOICE(null,null), 
-	CLIENT(null,null), 
+	CLIENT(ClientController.class,Client.class), 
 	INVOICETYPE(null,null);
 
 	private final Class<? extends BaseEntity> entityClass;

@@ -67,6 +67,28 @@ Ext.define('WMS.view.toolbar.Header', {
                 itemId     : 'unitMenu'
             }
         },
+        {
+            itemId : 'clientsButton',
+            iconCls: 'view-toolbar-clientsButton',
+            text   : 'Klienci',
+            menu   : {
+                xtype      : 'menu',
+                defaultType: 'button',
+                itemId     : 'clientsMenu',
+                items      : [
+                    {
+                        itemId : 'addClient',
+                        text   : 'Nowy klient',
+                        iconCls: 'view-toolbar-clientsButton-add'
+                    },
+                    {
+                        itemId : 'listClient',
+                        text   : 'Lista klientów',
+                        iconCls: 'view-toolbar-clientsButton-list'
+                    }
+                ]
+            }
+        },
         '-',
         '->',
         {

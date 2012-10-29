@@ -39,6 +39,9 @@
                     'wms.unit.Canvas',
                     'wms.unit.Inventory',
 
+                    'wizard.Client',
+                    'wizard.Warehouse',
+
                     'Toolbars',
                     'Login',
                     'Master'
