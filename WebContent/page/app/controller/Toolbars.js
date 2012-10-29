@@ -16,7 +16,7 @@ Ext.define('WMS.controller.Toolbars', {
     views   : [
         'toolbar.Header',
         'toolbar.Footer',
-        'wizard.Client'
+        'wizard.client.Dialog'
     ],
     refs    : [
         {
@@ -68,7 +68,7 @@ Ext.define('WMS.controller.Toolbars', {
      */
     onAddClient: function () {
         var me = this,
-            clientWizard = me.getView('wizard.Client');
+            clientWizard = me.getView('wizard.client.Dialog');
 
         clientWizard.create().show();
     },
