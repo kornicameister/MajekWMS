@@ -15,7 +15,7 @@
 Ext.define('WMS.view.login.Dialog', {
     extend    : 'WMS.view.abstract.BaseDialog',
     alias     : 'widget.logindialog',
-    title     : 'Welcome',
+    title     : 'Witaj',
     autoShow  : true,
     autoRender: true,
 
