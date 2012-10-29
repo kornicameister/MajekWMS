@@ -6,6 +6,11 @@
     background-image: url("../images/delete.png") !important;
 }
 
+.icon-list {
+    background-image: url("../images/list.gif") !important;
+    background-size: 60%
+}
+
 .view-button-cancel {
     background-image: url("../images/cancel.png") !important;
     background-size: 60%
@@ -22,13 +27,8 @@
     background-size: 60%
 }
 
-.view-toolbar-clientsButton-add {
-    background-image: url("../images/view/header/client-add.png") !important;
-    background-size: 60%
-}
-
-.view-toolbar-clientsButton-list {
-    background-image: url("../images/view/header/client-list.gif") !important;
+.view-toolbar-suppliersButton {
+    background-image: url("../images/view/header/suppliers.png") !important;
     background-size: 60%
 }
 

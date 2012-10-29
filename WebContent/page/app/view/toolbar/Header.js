@@ -70,7 +70,7 @@ Ext.define('WMS.view.toolbar.Header', {
         {
             itemId : 'clientsButton',
             iconCls: 'view-toolbar-clientsButton',
-            text   : 'Klienci',
+            text   : 'Odbiorcy',
             menu   : {
                 xtype      : 'menu',
                 defaultType: 'button',
@@ -78,13 +78,35 @@ Ext.define('WMS.view.toolbar.Header', {
                 items      : [
                     {
                         itemId : 'addClient',
-                        text   : 'Nowy klient',
-                        iconCls: 'view-toolbar-clientsButton-add'
+                        text   : 'Nowy odbiorca',
+                        iconCls: 'icon-add'
                     },
                     {
                         itemId : 'listClient',
-                        text   : 'Lista klientów',
-                        iconCls: 'view-toolbar-clientsButton-list'
+                        text   : 'Lista obiorców',
+                        iconCls: 'icon-list'
+                    }
+                ]
+            }
+        },
+        {
+            itemId : 'suppliers',
+            iconCls: 'view-toolbar-suppliersButton',
+            text   : 'Dostawcy',
+            menu   : {
+                xtype      : 'menu',
+                defaultType: 'button',
+                itemId     : 'suppliersMenu',
+                items      : [
+                    {
+                        itemId : 'addSupplier',
+                        text   : 'Nowy dostawca',
+                        iconCls: 'icon-add'
+                    },
+                    {
+                        itemId : 'listSupplier',
+                        text   : 'Lista dostawców',
+                        iconCls: 'icon-list'
                     }
                 ]
             }
