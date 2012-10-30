@@ -8,6 +8,7 @@
 Ext.define('WMS.view.wizard.client.Form', {
     extend: 'Ext.form.Panel',
     alias : 'widget.clientform',
+    url   : 'wms/client/save',
 
     monitorValid: true,
 
@@ -46,14 +47,14 @@ Ext.define('WMS.view.wizard.client.Form', {
         {
             itemId  : 'submit',
             text    : 'Dodaj',
-            iconCls : 'view-toolbar-clientsButton-add',
+            iconCls : 'icon-add',
             formBind: true, //only enabled once the form is valid
             disabled: true
         },
         {
             itemId  : 'cancel',
             text    : 'Anuluj',
-            iconCls : 'view-button-cancel',
+            iconCls : 'icon-cancel',
             formBind: false,
             disabled: false
         }

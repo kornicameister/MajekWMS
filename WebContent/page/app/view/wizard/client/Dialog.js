@@ -16,7 +16,6 @@ Ext.define('WMS.view.wizard.client.Dialog', {
     ],
 
     items: {
-        xtype: 'clientform',
-        url  : 'wms/client/save'
+        xtype: 'clientform'
     }
 });

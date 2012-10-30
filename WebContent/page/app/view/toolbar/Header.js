@@ -80,11 +80,6 @@ Ext.define('WMS.view.toolbar.Header', {
                         itemId : 'addClient',
                         text   : 'Nowy odbiorca',
                         iconCls: 'icon-add'
-                    },
-                    {
-                        itemId : 'listClient',
-                        text   : 'Lista obiorców',
-                        iconCls: 'icon-list'
                     }
                 ]
             }
@@ -102,11 +97,6 @@ Ext.define('WMS.view.toolbar.Header', {
                         itemId : 'addSupplier',
                         text   : 'Nowy dostawca',
                         iconCls: 'icon-add'
-                    },
-                    {
-                        itemId : 'listSupplier',
-                        text   : 'Lista dostawców',
-                        iconCls: 'icon-list'
                     }
                 ]
             }
