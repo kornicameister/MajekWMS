@@ -41,6 +41,9 @@ Ext.define('WMS.controller.Toolbars', {
             '#headerToolbar storemenu'                   : {
                 'iclick': me.onUnitSelected
             },
+            '#headerToolbar button[itemId=clientsButton]': {
+                'click': me.onClientButtonClick
+            },
             '#headerToolbar menu[itemId=clientsMenu]'    : {
                 'click': me.onClientMenuClick
             },
@@ -57,27 +60,27 @@ Ext.define('WMS.controller.Toolbars', {
         console.log('Toolbars :: ' + Ext.String.format('{0} button clicked...', item['itemId']));
         var me = this;
         if (item['itemId'] === 'addClient') {
-            me.onAddClient();
+            me.onAddClient(item);
         } else {
-            me.onListClients();
+            console.log('Toolbars :: ' + Ext.String.format('{0} button has not ben recognized...', item['itemId']))
         }
+    },
+
+    onClientButtonClick: function () {
+        var me = this,
+            masterCtrl = me.getController('WMS.controller.Master');
+
+        masterCtrl.openClientsManager();
     },
 
     /**
      * @description Opens new client's wizard
      */
-    onAddClient: function () {
+    onAddClient: function (button) {
         var me = this,
             clientWizard = me.getView('wizard.client.Dialog');
 
-        clientWizard.create().show();
-    },
-
-    /**
-     * @description Open list of clients as new tab in master view
-     */
-    onListClients: function () {
-
+        clientWizard.create().show(button.up('menu').up('button'));
     },
 
     onUnitSelected: function (storemenu, item, storeItem) {
