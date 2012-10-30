@@ -11,39 +11,88 @@ Ext.define('WMS.view.wizard.client.Form', {
     url   : 'wms/client/save',
 
     monitorValid: true,
-
-    defaultType: 'textfield',
-    defaults   : {
-        allowBlank: false
+    autoScroll  : true,
+    defaultType : 'fieldset',
+    defaults    : {
+        defaultType: 'textfield',
+        collapsible: true,
+        collapsed  : true,
+        defaults: {
+            maxLength : 45,
+            width     : 300,
+            allowBlank: false
+        }
     },
-    layout     : {
+    layout      : {
         type : 'vbox',
         pack : 'center',
         align: 'stretch'
     },
-    items      : [
+    items       : [
         {
-            fieldLabel: 'Nazwa',
-            name      : 'name',
-            emptyText : 'Nazwa użytkownika [skrót]',
-            maxLength : 45
+            title    : 'Podstawowe informacje',
+            collapsed: false,
+            items    : [
+                {
+                    fieldLabel: 'Nazwa',
+                    name      : 'name',
+                    emptyText : 'Nazwa użytkownika [skrót]'
+                },
+                {
+                    fieldLabel: 'Firma',
+                    name      : 'company',
+                    emptyText : 'Firma [właściwa nazwa]'
+                },
+                {
+                    xtype     : 'textarea',
+                    fieldLabel: 'Dodatkowe informacje',
+                    name      : 'description',
+                    emptyText : 'Jakiekolwiek dodatkowe informacje na ' +
+                        'temat tego klienta',
+                    maxLength : 200
+                }
+            ]
         },
         {
-            fieldLabel: 'Firma',
-            name      : 'company',
-            emptyText : 'Firma [właściwa nazwa]',
-            maxLength : 45
+            title   : 'Dane adresowe',
+            items   : [
+                {
+                    fieldLabel: 'Ulica',
+                    name      : 'street'
+                },
+                {
+                    fieldLabel: 'Kod pocztowy',
+                    name      : 'postcode'
+                },
+                {
+                    fieldLabel: 'Miejscowość',
+                    name      : 'city'
+                }
+            ]
         },
         {
-            xtype     : 'textarea',
-            fieldLabel: 'Dodatkowe informacje',
-            name      : 'description',
-            emptyText : 'Jakiekolwiek dodatkowe informacje na ' +
-                'temat tego klienta',
-            maxLength : 200
+            title: 'Dane firmy',
+            items: [
+                {
+                    fieldLabel: 'NIP',
+                    name      : 'nip'
+                },
+                {
+                    fieldLabel: 'Telefon',
+                    name      : 'phone'
+                },
+                {
+                    fieldLabel: 'Fax',
+                    name      : 'fax'
+                },
+                {
+                    fieldLabel: 'Numer konta',
+                    name      : 'account'
+                }
+            ]
         }
     ],
-    buttons    : [
+    buttons     : [
         {
             itemId  : 'submit',
             text    : 'Dodaj',
