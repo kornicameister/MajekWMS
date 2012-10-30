@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
 import wms.model.BaseEntity;
-import wms.model.Client;
+import wms.model.client.Client;
 
 public class ClientController extends RequestController {
 

@@ -8,12 +8,12 @@ import wms.controller.UnitTypeController;
 import wms.controller.WarehouseController;
 import wms.controller.base.RequestController;
 import wms.model.BaseEntity;
-import wms.model.Client;
 import wms.model.Measure;
 import wms.model.Product;
 import wms.model.Unit;
 import wms.model.UnitType;
 import wms.model.Warehouse;
+import wms.model.client.Client;
 
 /**
  * This enum is used mainly when creating 

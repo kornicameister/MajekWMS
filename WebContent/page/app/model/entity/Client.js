@@ -21,9 +21,22 @@ Ext.define('WMS.model.entity.Client', {
             foreignKey: 'client_id',
             name      : 'getClients',
             model     : 'WMS.model.entity.Invoice'
+        },
+        {
+            type          : 'hasOne',
+            model         : 'WMS.model.entity.Address',
+            associatedName: 'address',
+            setterName    : 'setAddress',
+            getterName    : 'getAddress'
+        },
+        {
+            type          : 'hasOne',
+            model         : 'WMS.model.entity.ClientDetails',
+            associatedName: 'details',
+            getterName    : 'getDetails',
+            setterName    : 'setDetails'
         }
     ],
-
 
     proxy: {
         type: 'wms',

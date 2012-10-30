@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.client;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -6,11 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import wms.model.BaseEntity;
 
 @Entity
 @Table(name = "client", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
@@ -36,9 +40,9 @@ public class Client extends BaseEntity {
 	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 
-	public Client() {
-		super(); // hibernate
-	}
+	@OneToOne
+	@PrimaryKeyJoinColumn(referencedColumnName = "idClientDetails")
+	private ClientDetails details;
 
 	public synchronized final Long getId() {
 		return id;
@@ -72,6 +76,14 @@ public class Client extends BaseEntity {
 		this.description = description;
 	}
 
+	public synchronized final ClientDetails getDetails() {
+		return details;
+	}
+
+	public synchronized final void setDetails(ClientDetails details) {
+		this.details = details;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,6 +91,7 @@ public class Client extends BaseEntity {
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((details == null) ? 0 : details.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -103,6 +116,11 @@ public class Client extends BaseEntity {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
+		if (details == null) {
+			if (other.details != null)
+				return false;
+		} else if (!details.equals(other.details))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -118,10 +136,9 @@ public class Client extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Client [getId()=" + getId() + ", getName()=" + getName()
-				+ ", getCompany()=" + getCompany() + ", getDescription()="
-				+ getDescription() + ", hashCode()=" + hashCode()
-				+ ", getVersion()=" + getVersion() + "]";
+		return "Client [id=" + id + ", name=" + name + ", company=" + company
+				+ ", description=" + description + ", details=" + details + "]";
 	}
-
+	
+	
 }

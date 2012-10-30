@@ -21,6 +21,8 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import wms.model.client.Client;
+
 @Entity
 @Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "refNumber" }) })
 public class Invoice extends BaseEntity {

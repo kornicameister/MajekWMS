@@ -21,7 +21,6 @@
 
 		<!-- mapping -->
 		<mapping class="wms.model.BaseEntity" />
-		<mapping class="wms.model.Client" />
 		<mapping class="wms.model.Invoice" />
 		<mapping class="wms.model.Product" />
 		<mapping class="wms.model.InvoiceProduct" />
@@ -30,9 +29,14 @@
 		<mapping class="wms.model.Measure" />
 		<mapping class="wms.model.Unit" />
 		<mapping class="wms.model.UnitType" />
-		<mapping class="wms.model.Warehouse" />		
+		<mapping class="wms.model.Warehouse" />
 		<mapping class="wms.model.User" />
-		
+
+		<mapping class="wms.model.client.City" />
+		<mapping class="wms.model.client.Address" />
+		<mapping class="wms.model.client.ClientDetails" />
+		<mapping class="wms.model.client.Client" />
+
 		<!-- events -->
 		<event type="auto-flush" />
 	</session-factory>
