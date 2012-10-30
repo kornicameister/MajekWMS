@@ -9,7 +9,7 @@ Ext.define('WMS.view.wizard.client.Dialog', {
     extend: 'WMS.view.abstract.BaseDialog',
     alias : 'widget.wizardclient',
     title : 'Dodawanie nowego klienta',
-    width : 500,
+    width : 400,
 
     requires: [
         'WMS.view.wizard.client.Form'

@@ -11,77 +11,89 @@ Ext.define('WMS.view.manager.client.Manager', {
     title  : 'Menadżer - odbiorcy',
     iconCls: 'view-toolbar-clientsButton',
 
-    requires: [
+    uses: [
         'WMS.view.wizard.client.Form'
     ],
 
-    closable  : true,
-    layout    : {
-        type          : 'border',
-        menageOverflow: 2,
-        split         : true
+    closable   : true,
+    layout     : {
+        type: 'accordion'
     },
-    bodyBorder: false,
-    defaults  : {
-        margins    : '5 0 0 0',
-        collapsible: true,
-        bodyPadding: 10
-    },
-
-    items: [
+    items      : [
         {
-            xtype    : 'clientform',
-            title    : 'Nowy odbiorca',
-            region   : 'west',
-            collapsed: false,
-            width    : 400,
-            maxWidth : 450,
-            minWidth : 350,
-            floatable: false,
-            iconCls  : 'icon-add'
-        },
-        {
-            xtype      : 'panel',
-            itemId     : 'lists',
-            region     : 'center',
-            collapsible: false,
-            layout     : {
-                type: 'accordion'
+            xtype     : 'grid',
+            itemId    : 'clientList',
+            title     : 'Odbiorcy',
+            iconCls   : 'view-toolbar-clientsButton',
+            autoScroll: true,
+            viewConfig: {
+                emptyText: 'Nie zdefiniowano jeszcze żadnego odbiorcy...'
             },
-            items      : [
+            store     : 'Clients',
+            columns   : [
                 {
-                    xtype      : 'grid',
-                    itemId     : 'clientList',
-                    title      : 'Odbiorcy',
-                    iconCls    : 'view-toolbar-clientsButton',
-                    multiSelect: true,
-                    autoScroll : true,
-                    viewConfig : {
-                        emptyText: 'Nie zdefiniowano jeszcze żadnego odbiorcy...'
-                    },
-                    store      : 'Clients',
-                    columns    : [
-                        {
-                            header   : 'Skrót',
-                            dataIndex: 'name',
-                            width    : 160
-                        },
-                        {
-                            header   : 'Firma',
-                            dataIndex: 'company',
-                            width    : 260
-                        },
-                        {
-                            header   : 'Szczegóły',
-                            dataIndex: 'description',
-                            flex     : 3
-                        }
-                    ]
+                    header   : 'Skrót',
+                    dataIndex: 'name',
+                    width    : 160
                 },
                 {
-                    xtype  : 'form',
-                    itemId : 'clientDetailed',
-                    title  : 'Szczegóły',
+                    header   : 'Firma',
+                    dataIndex: 'company',
+                    width    : 260
+                },
+                {
+                    header   : 'Szczegóły',
+                    dataIndex: 'description',
+                    flex     : 3
+                }
+            ]
+        },
+        {
+            xtype  : 'form',
+            itemId : 'clientDetailed',
+            title  : 'Szczegóły',
+            iconCls: 'icon-details'
+        }
+    ],
+    dockedItems: [
+        {
+            xtype   : 'toolbar',
+            dock    : 'bottom',
+            layout  : {
+                type: 'hbox',
+                pack: 'center'
+            },
+            defaults: {
+                xtype : 'button',
+                width : 120,
+                height: 40
+            },
+            items   : [
+                {
+                    itemId : 'releaseClient',
+                    text   : 'Nowe wydanie',
+                    iconCls: 'view-toolbar-releaseButton'
+                },
+                '-',
+                {
+                    itemId : 'newClient',
+                    text   : 'Nowy odbiorca',
+                    iconCls: 'icon-add'
+                },
+                {
+                    itemId : 'editClient',
+                    text   : 'Edytuj odbiorcę',
+                    iconCls: 'icon-edit'
+                },
+                {
+                    itemId : 'removeClient',
+                    text   : 'Usuń odbiorcę',
+                    iconCls: 'icon-delete'
+                },
+                '-',
+                {
+                    itemId : 'detailsClient',
+                    text   : 'Szczegóły',
                     iconCls: 'icon-details'
                 }
             ]

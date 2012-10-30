@@ -39,6 +39,8 @@
                     'wms.unit.Canvas',
                     'wms.unit.Inventory',
 
+                    'manager.Client',
+
                     'wizard.Client',
                     'wizard.Warehouse',
 
