@@ -24,13 +24,6 @@ Ext.define('WMS.model.entity.Client', {
         },
         {
             type          : 'hasOne',
-            model         : 'WMS.model.entity.Address',
-            associatedName: 'address',
-            setterName    : 'setAddress',
-            getterName    : 'getAddress'
-        },
-        {
-            type          : 'hasOne',
             model         : 'WMS.model.entity.ClientDetails',
             associatedName: 'details',
             getterName    : 'getDetails',

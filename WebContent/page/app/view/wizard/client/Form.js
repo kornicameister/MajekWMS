@@ -17,7 +17,7 @@ Ext.define('WMS.view.wizard.client.Form', {
         defaultType: 'textfield',
         collapsible: true,
         collapsed  : true,
-        defaults: {
+        defaults   : {
             maxLength : 45,
             width     : 300,
             allowBlank: false
@@ -54,8 +54,8 @@ Ext.define('WMS.view.wizard.client.Form', {
             ]
         },
         {
-            title   : 'Dane adresowe',
-            items   : [
+            title: 'Dane adresowe',
+            items: [
                 {
                     fieldLabel: 'Ulica',
                     name      : 'street'
@@ -65,8 +65,16 @@ Ext.define('WMS.view.wizard.client.Form', {
                     name      : 'postcode'
                 },
                 {
+                    xtype     : 'combo',
                     fieldLabel: 'Miejscowość',
-                    name      : 'city'
+                    name      : 'city',
+
+                    store        : 'Cities',
+                    valueField   : 'id',
+                    displayField : 'name',
+                    typeAhead    : true,
+                    triggerAction: 'all',
+                    selectOnTab  : true
                 }
             ]
         },

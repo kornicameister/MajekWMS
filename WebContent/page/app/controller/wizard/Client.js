@@ -19,7 +19,8 @@ Ext.define('WMS.controller.wizard.Client', {
     ],
 
     stores: [
-        'Clients'
+        'Clients',
+        'Cities'
     ],
     refs  : [
         {

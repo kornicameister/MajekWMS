@@ -13,5 +13,15 @@ Ext.define('WMS.model.entity.ClientDetails', {
         {name: 'phone', type: 'string'},
         {name: 'fax', type: 'string'},
         {name: 'account', type: 'string'}
+    ],
+
+    associations: [
+        {
+            type          : 'hasOne',
+            model         : 'WMS.model.entity.Address',
+            associatedName: 'address',
+            setterName    : 'setAddress',
+            getterName    : 'getAddress'
+        }
     ]
 });
