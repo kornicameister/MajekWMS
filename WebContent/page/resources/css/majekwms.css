@@ -11,8 +11,13 @@
     background-size: 60%
 }
 
-.view-button-cancel {
+.icon-cancel {
     background-image: url("../images/cancel.png") !important;
+    background-size: 60%
+}
+
+.icon-details {
+    background-image: url("../images/details.png") !important;
     background-size: 60%
 }
 

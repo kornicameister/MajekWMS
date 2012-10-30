@@ -12,8 +12,20 @@
 Ext.define('WMS.controller.Master', {
     extend: 'Ext.app.Controller',
 
-    views : [
-        'Master'
+    requires: [
+        'WMS.view.manager.client.Manager'
+    ],
+
+    views: [
+        'WMS.view.Master',
+        'WMS.view.manager.client.Manager'
+    ],
+
+    refs: [
+        {
+            ref     : 'masterView',
+            selector: 'masterview'
+        }
     ],
 
     init: function () {
@@ -29,5 +41,15 @@ Ext.define('WMS.controller.Master', {
     onMasterRender: function (view) {
         console.log('Master :: Opening login.Dialog...');
         Ext.create('WMS.view.login.Dialog');
+    },
+
+    openClientsManager: function () {
+        console.log('Master :: Opening clients manager')
+        var me = this,
+            masterView = me.getMasterView(),
+            clientsManager = me.getView('manager.client.Manager').create();
+
+        clientsManager = masterView.add(clientsManager);
+        clientsManager.show();
     }
 });

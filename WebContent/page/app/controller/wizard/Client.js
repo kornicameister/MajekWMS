@@ -33,10 +33,10 @@ Ext.define('WMS.controller.wizard.Client', {
         var me = this;
 
         me.control({
-            'wizardclient button[itemId=submit]': {
+            'clientform button[itemId=submit]': {
                 'click': me.onClientSubmit
             },
-            'wizardclient button[itemId=cancel]': {
+            'clientform button[itemId=cancel]': {
                 'click': me.onCancel
             }
         })
@@ -59,11 +59,14 @@ Ext.define('WMS.controller.wizard.Client', {
                         useDefaults: false
                     }
                 });
+                form.reset();
             } else {
                 form.reset();
             }
             console.log('wizard.Client :: Client has been successfully added...');
-            me.getWizard().close();
+            if (Ext.isDefined(me.getWizard())) {
+                me.getWizard().close();
+            }
         }
 
     },
