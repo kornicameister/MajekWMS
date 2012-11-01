@@ -4,14 +4,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,21 +17,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import wms.model.client.Client;
 
 @Entity
 @Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "refNumber" }) })
+@AttributeOverride(name = "id", column = @Column(name = "idInvoice", updatable = false, insertable = true, nullable = false))
 public class Invoice extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = -3204092137188652431L;
-
-	@Id
-	@Column(name = "idInvoice", updatable = false, insertable = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Long id;
 
 	@Column(name = "refNumber", updatable = false, insertable = true, nullable = false)
 	private String invoiceNumber;
@@ -63,14 +54,6 @@ public class Invoice extends BaseEntity {
 
 	public Invoice() {
 		super(); // hibernate
-	}
-
-	public synchronized final Long getId() {
-		return id;
-	}
-
-	public synchronized final void setId(Long id) {
-		this.id = id;
 	}
 
 	public synchronized final String getInvoiceNumber() {
@@ -140,7 +123,6 @@ public class Invoice extends BaseEntity {
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((invoiceNumber == null) ? 0 : invoiceNumber.hashCode());
 		result = prime * result
@@ -178,11 +160,6 @@ public class Invoice extends BaseEntity {
 				return false;
 		} else if (!dueDate.equals(other.dueDate))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (invoiceNumber == null) {
 			if (other.invoiceNumber != null)
 				return false;
@@ -203,13 +180,11 @@ public class Invoice extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Invoice [getId()=" + getId() + ", getInvoiceNumber()="
-				+ getInvoiceNumber() + ", getCreatedDate()=" + getCreatedDate()
-				+ ", getDueDate()=" + getDueDate() + ", getDescription()="
-				+ getDescription() + ", getInvoiceProducts()="
-				+ getInvoiceProducts() + ", getClient()=" + getClient()
-				+ ", getType()=" + getType() + ", hashCode()=" + hashCode()
-				+ ", getVersion()=" + getVersion() + "]";
+		return "Invoice [invoiceNumber=" + invoiceNumber + ", createdDate="
+				+ createdDate + ", dueDate=" + dueDate + ", description="
+				+ description + ", invoiceProducts=" + invoiceProducts
+				+ ", client=" + client + ", type=" + type + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }

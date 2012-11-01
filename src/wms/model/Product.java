@@ -3,35 +3,26 @@ package wms.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.GenericGenerator;
-
 @SuppressWarnings("deprecation")
 @Entity
 @Table(name = "product")
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
+@AttributeOverride(name = "id", column = @Column(name = "idProduct", updatable = false, insertable = true, nullable = false))
 public class Product extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;
-
-	@Id
-	@Column(name = "idProduct", updatable = false, insertable = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Long id;
 
 	@Basic
 	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
@@ -66,14 +57,6 @@ public class Product extends BaseEntity {
 
 	public Product() {
 		super();
-	}
-
-	public synchronized final Long getId() {
-		return id;
-	}
-
-	public synchronized final void setId(Long id) {
-		this.id = id;
 	}
 
 	public synchronized final String getName() {
@@ -147,7 +130,6 @@ public class Product extends BaseEntity {
 		int result = super.hashCode();
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((invoiceProducts == null) ? 0 : invoiceProducts.hashCode());
 		result = prime * result + ((measure == null) ? 0 : measure.hashCode());
@@ -173,11 +155,6 @@ public class Product extends BaseEntity {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
 			return false;
 		if (invoiceProducts == null) {
 			if (other.invoiceProducts != null)
@@ -219,11 +196,11 @@ public class Product extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", description="
-				+ description + ", pallets=" + pallets + ", quantity="
-				+ quantity + ", price=" + price + ", tax=" + tax
-				+ ", invoiceProducts=" + invoiceProducts + ", measure="
-				+ measure + "]";
+		return "Product [name=" + name + ", description=" + description
+				+ ", pallets=" + pallets + ", quantity=" + quantity
+				+ ", price=" + price + ", tax=" + tax + ", invoiceProducts="
+				+ invoiceProducts + ", measure=" + measure + ", toString()="
+				+ super.toString() + "]";
 	}
 
 }

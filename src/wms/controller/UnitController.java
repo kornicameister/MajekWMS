@@ -49,7 +49,7 @@ public class UnitController extends RequestController {
 
 			transaction.commit();
 			for (Object o : data) {
-				this.lastRead.add((BaseEntity) o);
+				this.affected.add((BaseEntity) o);
 			}
 		}
 	}

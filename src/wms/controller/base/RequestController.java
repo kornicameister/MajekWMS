@@ -28,12 +28,14 @@ import wms.controller.UnitController;
 import wms.controller.UnitTypeController;
 import wms.controller.base.extractor.Entity;
 import wms.controller.base.extractor.RData;
-import wms.controller.base.format.response.ResponseCreateFormat;
-import wms.controller.base.format.response.ResponseReadFormat;
+import wms.controller.base.format.response.CFormat;
+import wms.controller.base.format.response.DFormat;
+import wms.controller.base.format.response.RFormat;
+import wms.controller.base.format.response.UFormat;
 import wms.controller.hibernate.HibernateBridge;
 import wms.model.BaseEntity;
 import wms.model.Warehouse;
-import wms.utils.StringUtils;
+import wms.utilities.StringUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -56,11 +58,13 @@ public abstract class RequestController implements Controller {
 			.getSessionFactory();
 	protected Session session;
 	protected Gson jsonForm;
+
+	// -----------RESPONSE----------------/
 	protected long processTime = 0l;
-	protected ArrayList<Long> createdIDS = new ArrayList<>();
-	protected ArrayList<BaseEntity> lastRead = new ArrayList<>();
-	private Integer updateCount = new Integer(0);
+	protected Set<BaseEntity> affected = new HashSet<>();
 	protected final RData rdata;
+	// -----------RESPONSE----------------/
+
 	private Set<Method> setters;
 	private final static Logger logger = Logger
 			.getLogger(RequestController.class.getName());
@@ -105,7 +109,7 @@ public abstract class RequestController implements Controller {
 				.list();
 		this.session.getTransaction().commit();
 		for (Object o : data) {
-			this.lastRead.add((BaseEntity) o);
+			this.affected.add((BaseEntity) o);
 		}
 	}
 
@@ -114,42 +118,33 @@ public abstract class RequestController implements Controller {
 		Serializable savedID = null;
 		Collection<? extends BaseEntity> data = this.parsePayload();
 
-		// saving
 		this.session.beginTransaction();
-		for (Object saveable : data) {
-			savedID = this.session.save(saveable);
+		for (BaseEntity entity : data) {
+			savedID = this.session.save(entity);
 			if (savedID != null) {
-				this.createdIDS.add((Long) savedID);
+				this.affected.add(entity);
 			}
 		}
 		this.session.getTransaction().commit();
-		// saving
 	}
 
 	@Override
 	public void update() {
-		logger.entering(this.getClass().getName(), "update");
-
 		Transaction t = this.session.beginTransaction();
 		this.session.flush();
-		for (Object saveable : this.parsePayload()) {
-			this.session.update(saveable);
-			this.updateCount++;
+		for (Object entity : this.parsePayload()) {
+			this.session.update(entity);
+			this.affected.add((BaseEntity) entity);
 		}
 		t.commit();
-
-		logger.exiting(this.getClass().getName(), "update");
 	}
 
 	@Override
 	public void delete() {
 		Transaction t = this.session.beginTransaction();
-		try {
-			for (Object obj : this.parsePayload()) {
-				this.session.delete(obj);
-			}
-		} catch (Exception e) {
-			System.out.println("Something went wrong...");
+		for (Object obj : this.parsePayload()) {
+			this.session.delete(obj);
+			this.affected.add((BaseEntity) obj);
 		}
 		t.commit();
 	}
@@ -178,20 +173,20 @@ public abstract class RequestController implements Controller {
 
 		switch (this.rdata.getAction()) {
 		case CREATE:
-			response.append(g.toJson(new ResponseCreateFormat(true,
-					this.processTime, controller, this.createdIDS),
-					ResponseCreateFormat.class));
+			response.append(g.toJson(new CFormat(true, this.processTime,
+					controller, this.affected), CFormat.class));
 			break;
 		case READ:
-			response.append(g.toJson(new ResponseReadFormat(true,
-					this.processTime, controller, this.lastRead),
-					ResponseReadFormat.class));
+			response.append(g.toJson(new RFormat(true, this.processTime,
+					controller, this.affected), RFormat.class));
 			break;
 		case UPDATE:
-			response.append("{updated: " + this.updateCount + "}");
+			response.append(g.toJson(new UFormat(true, this.processTime,
+					controller, this.affected), UFormat.class));
 			break;
 		case DELETE:
-			response.append("");
+			response.append(g.toJson(new DFormat(true, this.processTime,
+					controller, this.affected), DFormat.class));
 			break;
 		}
 

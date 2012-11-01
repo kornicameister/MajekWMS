@@ -2,29 +2,31 @@ package wms.controller.base.format;
 
 import java.util.concurrent.TimeUnit;
 
+import wms.controller.base.CRUD;
+
 import com.google.gson.annotations.Expose;
 
-public class BaseFormat {
+/**
+ * This class wraps basic format of the server response.
+ * Without affected entities or anything else.
+ * @author kornicameister
+ * 
+ */
+public abstract class BaseFormat {
 	@Expose
-	final Long time;
+	protected Long time;
 	@Expose
-	final String handler;
+	protected String handler;
 	@Expose
-	final Boolean success;
+	protected Boolean success;
+	@Expose
+	protected CRUD action;
 
-	public BaseFormat(boolean success, Long time, String handler) {
-		super();
+	public BaseFormat(boolean success, Long time, String handler, CRUD action) {
 		this.success = success;
 		this.time = TimeUnit.NANOSECONDS.toMillis(time);
 		this.handler = handler;
-	}
-
-	public final Long getTime() {
-		return time;
-	}
-
-	public final String getHandler() {
-		return handler;
+		this.action = action;
 	}
 
 }

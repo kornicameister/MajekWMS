@@ -1,29 +1,20 @@
 package wms.model;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.GenericGenerator;
-
 @Entity
 @Table(name = "unitType", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"name", "abbreviation" }) })
+@AttributeOverride(name = "id", column = @Column(name = "idUnitType", updatable = false, insertable = true, nullable = false))
 public class UnitType extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = -7479798313966564213L;
-
-	@Id
-	@Column(name = "idUnitType", updatable = false, insertable = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GenericGenerator(name = "increment", strategy = "increment")
-	private Long id;
 
 	@Basic
 	@Column(name = "abbreviation", length = 6, nullable = false, unique = true, insertable = true, updatable = true)
@@ -45,54 +36,43 @@ public class UnitType extends BaseEntity {
 		super();
 	}
 
-	public UnitType(Long idUnitType, String abbreviation,
-			String description, String name, Integer parentType) {
-		super();
-		this.id = idUnitType;
-		this.abbreviation = abbreviation;
-		this.description = description;
-		this.name = name;
-		this.parentType = parentType;
-	}
-	
-	public final Long getIdUnitType() {
-		return id;
-	}
-
-	public final void setIdUnitType(Long idUnitType) {
-		this.id = idUnitType;
-	}
-
-	public final String getAbbreviation() {
+	public synchronized final String getAbbreviation() {
 		return abbreviation;
 	}
 
-	public final void setAbbreviation(String abbreviation) {
+	public synchronized final void setAbbreviation(String abbreviation) {
 		this.abbreviation = abbreviation;
 	}
 
-	public final String getDescription() {
+	public synchronized final String getDescription() {
 		return description;
 	}
 
-	public final void setDescription(String description) {
+	public synchronized final void setDescription(String description) {
 		this.description = description;
 	}
 
-	public final String getName() {
+	public synchronized final String getName() {
 		return name;
 	}
 
-	public final void setName(String name) {
+	public synchronized final void setName(String name) {
 		this.name = name;
 	}
 
-	public final Integer getParentType() {
+	public synchronized final Integer getParentType() {
 		return parentType;
 	}
 
-	public final void setParentType(Integer parentType) {
+	public synchronized final void setParentType(Integer parentType) {
 		this.parentType = parentType;
+	}
+
+	@Override
+	public String toString() {
+		return "UnitType [abbreviation=" + abbreviation + ", description="
+				+ description + ", name=" + name + ", parentType=" + parentType
+				+ ", toString()=" + super.toString() + "]";
 	}
 
 	@Override
@@ -103,8 +83,6 @@ public class UnitType extends BaseEntity {
 				+ ((abbreviation == null) ? 0 : abbreviation.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result
-				+ ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((parentType == null) ? 0 : parentType.hashCode());
@@ -130,11 +108,6 @@ public class UnitType extends BaseEntity {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -146,49 +119,6 @@ public class UnitType extends BaseEntity {
 		} else if (!parentType.equals(other.parentType))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UnitType [");
-		if (getIdUnitType() != null) {
-			builder.append("getIdUnitType()=");
-			builder.append(getIdUnitType());
-			builder.append(", ");
-		}
-		if (getAbbreviation() != null) {
-			builder.append("getAbbreviation()=");
-			builder.append(getAbbreviation());
-			builder.append(", ");
-		}
-		if (getDescription() != null) {
-			builder.append("getDescription()=");
-			builder.append(getDescription());
-			builder.append(", ");
-		}
-		if (getName() != null) {
-			builder.append("getName()=");
-			builder.append(getName());
-			builder.append(", ");
-		}
-		if (getParentType() != null) {
-			builder.append("getParentType()=");
-			builder.append(getParentType());
-			builder.append(", ");
-		}
-		builder.append("hashCode()=");
-		builder.append(hashCode());
-		builder.append(", ");
-		if (getUpdatedOn() != null) {
-			builder.append("getUpdatedOn()=");
-			builder.append(getUpdatedOn());
-			builder.append(", ");
-		}
-		builder.append("getVersion()=");
-		builder.append(getVersion());
-		builder.append("]");
-		return builder.toString();
 	}
 
 }

@@ -2,30 +2,22 @@ package wms.model;
 
 import java.util.Date;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "warehouse", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@AttributeOverride(name = "id", column = @Column(name = "idWarehouse", updatable = false, insertable = true, nullable = false))
 public class Warehouse extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = 4557522901223374020L;
-
-	@Id
-	@Column(name = "idWarehouse", updatable = false, insertable = true, nullable = false)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@GenericGenerator(name = "increment", strategy = "increment")
-	protected Long id;
 
 	@Basic
 	@Column(name = "createdDate", nullable = false)
@@ -47,14 +39,6 @@ public class Warehouse extends BaseEntity {
 
 	public Warehouse() {
 		super(); // for hibernate
-	}
-
-	public synchronized final Long getId() {
-		return id;
-	}
-
-	public synchronized final void setId(Long id) {
-		this.id = id;
 	}
 
 	public synchronized final Date getCreatedDate() {
@@ -105,7 +89,6 @@ public class Warehouse extends BaseEntity {
 				+ ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
 		result = prime * result + ((usage == null) ? 0 : usage.hashCode());
@@ -131,11 +114,6 @@ public class Warehouse extends BaseEntity {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -156,9 +134,9 @@ public class Warehouse extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Warehouse [id=" + id + ", createdDate=" + createdDate
-				+ ", name=" + name + ", description=" + description
-				+ ", usage=" + usage + ", size=" + size + "]";
+		return "Warehouse [createdDate=" + createdDate + ", name=" + name
+				+ ", description=" + description + ", usage=" + usage
+				+ ", size=" + size + ", toString()=" + super.toString() + "]";
 	}
 
 }

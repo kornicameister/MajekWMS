@@ -1,12 +1,12 @@
 package wms.model.client;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,15 +19,10 @@ import wms.model.BaseEntity;
 
 @Entity
 @Table(name = "clientDetails")
+@AttributeOverride(name = "id", column = @Column(name = "idClientDetails", updatable = false, insertable = true, nullable = false))
 public class ClientDetails extends BaseEntity {
 	@Transient
 	private static final long serialVersionUID = -4305913399009774547L;
-
-	@Id
-	@Column(name = "idClientDetails", updatable = false, insertable = true, nullable = false)
-	@GeneratedValue(generator = "generator")
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "client"))
-	private Long id;
 
 	@Basic
 	@Column(name = "phone", length = 20, insertable = true, updatable = true, nullable = false)
@@ -53,12 +48,11 @@ public class ClientDetails extends BaseEntity {
 		super();
 	}
 
+	@Override
+	@GeneratedValue(generator = "generator")
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "client"))
 	public synchronized final Long getId() {
-		return id;
-	}
-
-	public synchronized final void setId(Long id) {
-		this.id = id;
+		return super.getId();
 	}
 
 	public synchronized final String getPhone() {

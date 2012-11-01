@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 
+import wms.controller.base.CRUD;
 import wms.controller.base.format.BaseFormat;
 import wms.controller.hibernate.HibernateBridge;
 import wms.model.User;
@@ -99,7 +100,7 @@ public class WMSAuthAgent extends HttpServlet {
 
 		public AuthRespone(User user, String message, boolean success,
 				Long time, String handler) {
-			super(success, time, handler);
+			super(success, time, handler, CRUD.READ);
 			this.user = user;
 			this.message = message;
 		}

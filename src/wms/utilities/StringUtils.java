@@ -1,4 +1,4 @@
-package wms.utils;
+package wms.utilities;
 
 public class StringUtils {
 	/**
