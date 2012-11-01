@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.product;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,18 +15,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import wms.model.basic.NamedPersistenceObject;
+import wms.model.invoice.InvoiceProduct;
+
 @SuppressWarnings("deprecation")
 @Entity
 @Table(name = "product")
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
 @AttributeOverride(name = "id", column = @Column(name = "idProduct", updatable = false, insertable = true, nullable = false))
-public class Product extends BaseEntity {
+public class Product extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;
-
-	@Basic
-	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
-	private String name;
 
 	@Basic
 	@Column(name = "description", nullable = true, length = 250)
@@ -57,14 +56,6 @@ public class Product extends BaseEntity {
 
 	public Product() {
 		super();
-	}
-
-	public synchronized final String getName() {
-		return name;
-	}
-
-	public synchronized final void setName(String name) {
-		this.name = name;
 	}
 
 	public synchronized final String getDescription() {
@@ -133,7 +124,6 @@ public class Product extends BaseEntity {
 		result = prime * result
 				+ ((invoiceProducts == null) ? 0 : invoiceProducts.hashCode());
 		result = prime * result + ((measure == null) ? 0 : measure.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((pallets == null) ? 0 : pallets.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
 		result = prime * result
@@ -166,11 +156,6 @@ public class Product extends BaseEntity {
 				return false;
 		} else if (!measure.equals(other.measure))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		if (pallets == null) {
 			if (other.pallets != null)
 				return false;
@@ -196,11 +181,27 @@ public class Product extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Product [name=" + name + ", description=" + description
-				+ ", pallets=" + pallets + ", quantity=" + quantity
-				+ ", price=" + price + ", tax=" + tax + ", invoiceProducts="
-				+ invoiceProducts + ", measure=" + measure + ", toString()="
-				+ super.toString() + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Product [");
+		if (description != null)
+			builder.append("description=").append(description).append(", ");
+		if (pallets != null)
+			builder.append("pallets=").append(pallets).append(", ");
+		if (quantity != null)
+			builder.append("quantity=").append(quantity).append(", ");
+		if (price != null)
+			builder.append("price=").append(price).append(", ");
+		if (tax != null)
+			builder.append("tax=").append(tax).append(", ");
+		if (invoiceProducts != null)
+			builder.append("invoiceProducts=").append(invoiceProducts)
+					.append(", ");
+		if (measure != null)
+			builder.append("measure=").append(measure).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

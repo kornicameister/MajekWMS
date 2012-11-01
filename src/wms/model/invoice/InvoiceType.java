@@ -1,7 +1,6 @@
-package wms.model;
+package wms.model.invoice;
 
 import javax.persistence.AttributeOverride;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,16 +10,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import wms.model.basic.NamedPersistenceObject;
+
 @Entity
 @Table(name = "invoiceType", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 @AttributeOverride(name = "id", column = @Column(name = "idInvoiceType", updatable = false, insertable = true, nullable = false))
-public class InvoiceType extends BaseEntity {
+public class InvoiceType extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -7345851338532573657L;
-
-	@Basic
-	@Column(name = "name", length = 10, insertable = true, updatable = true)
-	private String name;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idInvoiceType", referencedColumnName = "invoicetype_id", insertable = false, updatable = false)
@@ -28,14 +25,6 @@ public class InvoiceType extends BaseEntity {
 
 	public InvoiceType() {
 		super();
-	}
-
-	public synchronized final String getName() {
-		return name;
-	}
-
-	public synchronized final void setName(String name) {
-		this.name = name;
 	}
 
 	public synchronized final Invoice getInvoice() {
@@ -51,7 +40,6 @@ public class InvoiceType extends BaseEntity {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((invoice == null) ? 0 : invoice.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -69,17 +57,19 @@ public class InvoiceType extends BaseEntity {
 				return false;
 		} else if (!invoice.equals(other.invoice))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "InvoiceType [name=" + name + ", invoice=" + invoice + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("InvoiceType [");
+		if (invoice != null)
+			builder.append("invoice=").append(invoice).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

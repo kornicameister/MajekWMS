@@ -15,12 +15,12 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import wms.model.BaseEntity;
+import wms.model.basic.PersistenceObject;
 
 @Entity
 @Table(name = "clientDetails")
 @AttributeOverride(name = "id", column = @Column(name = "idClientDetails", updatable = false, insertable = true, nullable = false))
-public class ClientDetails extends BaseEntity {
+public class ClientDetails extends PersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -4305913399009774547L;
 

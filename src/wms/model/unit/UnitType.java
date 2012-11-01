@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.unit;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
@@ -8,11 +8,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import wms.model.basic.NamedPersistenceObject;
+
 @Entity
 @Table(name = "unitType", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"name", "abbreviation" }) })
 @AttributeOverride(name = "id", column = @Column(name = "idUnitType", updatable = false, insertable = true, nullable = false))
-public class UnitType extends BaseEntity {
+public class UnitType extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -7479798313966564213L;
 
@@ -23,10 +25,6 @@ public class UnitType extends BaseEntity {
 	@Basic
 	@Column(name = "description", length = 120, insertable = true, updatable = true)
 	private String description;
-
-	@Basic
-	@Column(name = "name", length = 20, nullable = false, unique = true, insertable = true, updatable = true)
-	private String name;
 
 	@Basic
 	@Column(name = "parentType", nullable = true, unique = false, insertable = true, updatable = true)
@@ -52,27 +50,12 @@ public class UnitType extends BaseEntity {
 		this.description = description;
 	}
 
-	public synchronized final String getName() {
-		return name;
-	}
-
-	public synchronized final void setName(String name) {
-		this.name = name;
-	}
-
 	public synchronized final Integer getParentType() {
 		return parentType;
 	}
 
 	public synchronized final void setParentType(Integer parentType) {
 		this.parentType = parentType;
-	}
-
-	@Override
-	public String toString() {
-		return "UnitType [abbreviation=" + abbreviation + ", description="
-				+ description + ", name=" + name + ", parentType=" + parentType
-				+ ", toString()=" + super.toString() + "]";
 	}
 
 	@Override
@@ -83,7 +66,6 @@ public class UnitType extends BaseEntity {
 				+ ((abbreviation == null) ? 0 : abbreviation.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((parentType == null) ? 0 : parentType.hashCode());
 		return result;
@@ -108,17 +90,28 @@ public class UnitType extends BaseEntity {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		if (parentType == null) {
 			if (other.parentType != null)
 				return false;
 		} else if (!parentType.equals(other.parentType))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UnitType [");
+		if (abbreviation != null)
+			builder.append("abbreviation=").append(abbreviation).append(", ");
+		if (description != null)
+			builder.append("description=").append(description).append(", ");
+		if (parentType != null)
+			builder.append("parentType=").append(parentType).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

@@ -8,10 +8,10 @@ import org.json.simple.JSONObject;
 
 import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.BaseEntity;
-import wms.model.Unit;
-import wms.model.UnitType;
 import wms.model.Warehouse;
+import wms.model.basic.PersistenceObject;
+import wms.model.unit.Unit;
+import wms.model.unit.UnitType;
 import wms.utilities.Pair;
 
 public class UnitController extends RequestController {
@@ -49,13 +49,13 @@ public class UnitController extends RequestController {
 
 			transaction.commit();
 			for (Object o : data) {
-				this.affected.add((BaseEntity) o);
+				this.affected.add((PersistenceObject) o);
 			}
 		}
 	}
 
 	@Override
-	protected BaseEntity preUpdateNonPrimitives(BaseEntity b,
+	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
 			JSONObject payloadedData) {
 		Unit unit = (Unit) b;
 		ActionData ad = extractActionData(unit, payloadedData);
@@ -71,7 +71,7 @@ public class UnitController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preCreate(BaseEntity b, JSONObject payloadedData) {
+	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
 		ActionData ad = extractActionData(b, payloadedData);
 
 		ad.newUnit.setType((UnitType) this.session.byId(UnitType.class)
@@ -83,12 +83,12 @@ public class UnitController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preDelete(JSONObject payloadedData) {
+	protected PersistenceObject preDelete(JSONObject payloadedData) {
 		ActionData ad = extractActionData(null, payloadedData);
-		return (BaseEntity) this.session.byId(Unit.class).load(ad.idUnit);
+		return (PersistenceObject) this.session.byId(Unit.class).load(ad.idUnit);
 	}
 
-	private ActionData extractActionData(BaseEntity b, JSONObject payloadedData) {
+	private ActionData extractActionData(PersistenceObject b, JSONObject payloadedData) {
 		ActionData ad = new ActionData((Long) payloadedData.get("unittype_id"),
 				(Long) payloadedData.get("warehouse_id"),
 				(Long) payloadedData.get("id"), (Unit) b);

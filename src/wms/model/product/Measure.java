@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.product;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
@@ -8,20 +8,18 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import wms.model.basic.NamedPersistenceObject;
+
 @Entity
 @Table(name = "measure", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 @AttributeOverride(name = "id", column = @Column(name = "idMeasure", updatable = false, insertable = true, nullable = false))
-public class Measure extends BaseEntity {
+public class Measure extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 8140273816811139591L;
 
 	@Basic
 	@Column(nullable = false, length = 10)
 	private String abbreviation;
-
-	@Basic
-	@Column(name = "name", nullable = false, unique = true, length = 30)
-	private String name;
 
 	public Measure() {
 		super();
@@ -35,21 +33,12 @@ public class Measure extends BaseEntity {
 		this.abbreviation = abbreviation;
 	}
 
-	public synchronized final String getName() {
-		return name;
-	}
-
-	public synchronized final void setName(String name) {
-		this.name = name;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
 				+ ((abbreviation == null) ? 0 : abbreviation.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -67,18 +56,19 @@ public class Measure extends BaseEntity {
 				return false;
 		} else if (!abbreviation.equals(other.abbreviation))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Measure [abbreviation=" + abbreviation + ", name=" + name
-				+ ", toString()=" + super.toString() + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Measure [");
+		if (abbreviation != null)
+			builder.append("abbreviation=").append(abbreviation).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

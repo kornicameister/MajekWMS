@@ -1,9 +1,11 @@
-package wms.model;
+package wms.model.invoice;
 
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+
+import wms.model.product.Product;
 
 @Embeddable
 public class InvoiceProductId implements Serializable {

@@ -10,12 +10,14 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 
+import wms.model.basic.PersistenceObject;
+
 import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "login" }) })
 @AttributeOverride(name = "id", column = @Column(name = "idUser", updatable = false, insertable = true, nullable = false))
-public class User extends BaseEntity {
+public class User extends PersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -1852439527741996474L;
 

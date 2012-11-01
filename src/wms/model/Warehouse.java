@@ -12,20 +12,18 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Formula;
 
+import wms.model.basic.NamedPersistenceObject;
+
 @Entity
 @Table(name = "warehouse", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 @AttributeOverride(name = "id", column = @Column(name = "idWarehouse", updatable = false, insertable = true, nullable = false))
-public class Warehouse extends BaseEntity {
+public class Warehouse extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 4557522901223374020L;
 
 	@Basic
 	@Column(name = "createdDate", nullable = false)
 	private Date createdDate;
-
-	@Basic
-	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
-	protected String name;
 
 	@Column(name = "description", nullable = true, length = 666)
 	private String description;
@@ -47,14 +45,6 @@ public class Warehouse extends BaseEntity {
 
 	public synchronized final void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}
-
-	public synchronized final String getName() {
-		return name;
-	}
-
-	public synchronized final void setName(String name) {
-		this.name = name;
 	}
 
 	public synchronized final String getDescription() {
@@ -89,7 +79,6 @@ public class Warehouse extends BaseEntity {
 				+ ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
 		result = prime * result + ((usage == null) ? 0 : usage.hashCode());
 		return result;
@@ -114,11 +103,6 @@ public class Warehouse extends BaseEntity {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		if (size == null) {
 			if (other.size != null)
 				return false;
@@ -134,9 +118,20 @@ public class Warehouse extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Warehouse [createdDate=" + createdDate + ", name=" + name
-				+ ", description=" + description + ", usage=" + usage
-				+ ", size=" + size + ", toString()=" + super.toString() + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Warehouse [");
+		if (createdDate != null)
+			builder.append("createdDate=").append(createdDate).append(", ");
+		if (description != null)
+			builder.append("description=").append(description).append(", ");
+		if (usage != null)
+			builder.append("usage=").append(usage).append(", ");
+		if (size != null)
+			builder.append("size=").append(size).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

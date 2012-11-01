@@ -4,17 +4,17 @@ import java.util.Set;
 
 import wms.controller.base.CRUD;
 import wms.controller.base.format.BaseFormat;
-import wms.model.BaseEntity;
+import wms.model.basic.PersistenceObject;
 
 import com.google.gson.annotations.Expose;
 
 public class UFormat extends BaseFormat {
 
 	@Expose
-	protected final Set<BaseEntity> updated;
+	protected final Set<PersistenceObject> updated;
 
 	public UFormat(boolean success, Long time, String handler,
-			Set<BaseEntity> affected) {
+			Set<PersistenceObject> affected) {
 		super(success, time, handler, CRUD.UPDATE);
 		this.updated = affected;
 	}

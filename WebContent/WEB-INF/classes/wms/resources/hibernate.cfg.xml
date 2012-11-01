@@ -20,22 +20,32 @@
 		<property name="hibernate.connection.characterEncoding">UTF-8</property>
 
 		<!-- mapping -->
-		<mapping class="wms.model.BaseEntity" />
-		<mapping class="wms.model.Invoice" />
-		<mapping class="wms.model.Product" />
-		<mapping class="wms.model.InvoiceProduct" />
-		<mapping class="wms.model.InvoiceProductId" />
-		<mapping class="wms.model.InvoiceType" />
-		<mapping class="wms.model.Measure" />
-		<mapping class="wms.model.Unit" />
-		<mapping class="wms.model.UnitType" />
-		<mapping class="wms.model.Warehouse" />
-		<mapping class="wms.model.User" />
-
+		<!-- basic -->
+		<mapping class="wms.model.basic.PersistenceObject" />
+		<mapping class="wms.model.basic.NamedPersistenceObject" />
+		
+		<!-- client -->
 		<mapping class="wms.model.client.City" />
 		<mapping class="wms.model.client.Address" />
 		<mapping class="wms.model.client.ClientDetails" />
 		<mapping class="wms.model.client.Client" />
+		
+		<!-- invoice -->
+		<mapping class="wms.model.invoice.Invoice" />
+		<mapping class="wms.model.invoice.InvoiceProduct" />
+		<mapping class="wms.model.invoice.InvoiceProductId" />
+		<mapping class="wms.model.invoice.InvoiceType" />
+		
+		<!-- product -->
+		<mapping class="wms.model.product.Product" />
+		<mapping class="wms.model.product.Measure" />
+		
+		<!-- unit -->
+		<mapping class="wms.model.unit.Unit" />
+		<mapping class="wms.model.unit.UnitType" />
+		
+		<mapping class="wms.model.Warehouse" />
+		<mapping class="wms.model.User" />
 
 		<!-- events -->
 		<event type="auto-flush" />

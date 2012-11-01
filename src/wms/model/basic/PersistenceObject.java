@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.basic;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -29,7 +29,7 @@ import com.google.gson.annotations.Expose;
  */
 
 @MappedSuperclass
-abstract public class BaseEntity implements Serializable {
+abstract public class PersistenceObject implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 8641451013192983600L;
 
@@ -47,7 +47,7 @@ abstract public class BaseEntity implements Serializable {
 	@Column(name = "updatedOn")
 	private Date updatedOn;
 
-	public BaseEntity() {
+	public PersistenceObject() {
 		super();
 		this.updatedOn = new Date();
 	}
@@ -93,9 +93,9 @@ abstract public class BaseEntity implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof BaseEntity))
+		if (!(obj instanceof PersistenceObject))
 			return false;
-		BaseEntity other = (BaseEntity) obj;
+		PersistenceObject other = (PersistenceObject) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

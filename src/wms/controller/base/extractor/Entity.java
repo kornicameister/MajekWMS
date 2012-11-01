@@ -8,14 +8,14 @@ import wms.controller.UnitController;
 import wms.controller.UnitTypeController;
 import wms.controller.WarehouseController;
 import wms.controller.base.RequestController;
-import wms.model.BaseEntity;
-import wms.model.Measure;
-import wms.model.Product;
-import wms.model.Unit;
-import wms.model.UnitType;
 import wms.model.Warehouse;
+import wms.model.basic.PersistenceObject;
 import wms.model.client.City;
 import wms.model.client.Client;
+import wms.model.product.Measure;
+import wms.model.product.Product;
+import wms.model.unit.Unit;
+import wms.model.unit.UnitType;
 
 /**
  * This enum is used mainly when creating 
@@ -33,10 +33,10 @@ public enum Entity {
 	INVOICETYPE(null,null),
 	CITY(CityController.class,City.class);
 
-	private final Class<? extends BaseEntity> entityClass;
+	private final Class<? extends PersistenceObject> entityClass;
 	private final Class<? extends RequestController> entityControllerClass;
 
-	private Entity(Class<? extends RequestController> ec,Class<? extends BaseEntity> bc) {
+	private Entity(Class<? extends RequestController> ec,Class<? extends PersistenceObject> bc) {
 		this.entityControllerClass = ec;
 		this.entityClass = bc;
 	}
@@ -46,7 +46,7 @@ public enum Entity {
 		return this.entityClass.getSimpleName();
 	}
 
-	public Class<? extends BaseEntity> getEntityClass() {
+	public Class<? extends PersistenceObject> getEntityClass() {
 		return entityClass;
 	}
 

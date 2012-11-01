@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.invoice;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -17,12 +17,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import wms.model.basic.PersistenceObject;
 import wms.model.client.Client;
 
 @Entity
 @Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "refNumber" }) })
 @AttributeOverride(name = "id", column = @Column(name = "idInvoice", updatable = false, insertable = true, nullable = false))
-public class Invoice extends BaseEntity {
+public class Invoice extends PersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -3204092137188652431L;
 

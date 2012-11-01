@@ -13,10 +13,10 @@ import org.json.simple.JSONObject;
 
 import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.BaseEntity;
-import wms.model.Measure;
-import wms.model.Product;
-import wms.model.Unit;
+import wms.model.basic.PersistenceObject;
+import wms.model.product.Measure;
+import wms.model.product.Product;
+import wms.model.unit.Unit;
 
 public class ProductController extends RequestController {
 	private Map<Unit, HashSet<Product>> unitProduct;
@@ -73,7 +73,7 @@ public class ProductController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preCreate(BaseEntity b, JSONObject payloadedData) {
+	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
 		ActionData ad = extractActionData(b, payloadedData);
 
 		ad.product.setMeasure((Measure) this.session.byId(Measure.class).load(
@@ -85,13 +85,13 @@ public class ProductController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preDelete(JSONObject payloadedData) {
-		return (BaseEntity) this.session.byId(Product.class).load(
+	protected PersistenceObject preDelete(JSONObject payloadedData) {
+		return (PersistenceObject) this.session.byId(Product.class).load(
 				(Serializable) payloadedData.get("id"));
 	}
 
 	@Override
-	protected BaseEntity preUpdateNonPrimitives(BaseEntity b,
+	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
 			JSONObject payloadedData) {
 		ActionData ad = extractActionData(b, payloadedData);
 
@@ -102,7 +102,7 @@ public class ProductController extends RequestController {
 		return ad.product;
 	}
 
-	private ActionData extractActionData(BaseEntity b, JSONObject payloadedData) {
+	private ActionData extractActionData(PersistenceObject b, JSONObject payloadedData) {
 		return new ActionData((Long) payloadedData.get("measure_id"),
 				(Long) payloadedData.get("id"),
 				(Long) payloadedData.get("unit_id"), (Product) b);

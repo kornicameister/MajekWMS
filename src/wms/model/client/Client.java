@@ -10,18 +10,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import wms.model.BaseEntity;
+import wms.model.basic.NamedPersistenceObject;
 
 @Entity
 @Table(name = "client", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 @AttributeOverride(name = "id", column = @Column(name = "idClient", updatable = false, insertable = true, nullable = false))
-public class Client extends BaseEntity {
+public class Client extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 1283426340575080285L;
-
-	@Basic
-	@Column(name = "name", nullable = false, unique = true, length = 45, updatable = true)
-	private String name;
 
 	@Basic
 	@Column(name = "company", nullable = false, unique = true, length = 45, updatable = true)
@@ -37,14 +33,6 @@ public class Client extends BaseEntity {
 
 	public Client() {
 		super();
-	}
-
-	public synchronized final String getName() {
-		return name;
-	}
-
-	public synchronized final void setName(String name) {
-		this.name = name;
 	}
 
 	public synchronized final String getCompany() {
@@ -72,6 +60,22 @@ public class Client extends BaseEntity {
 	}
 
 	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Client [");
+		if (company != null)
+			builder.append("company=").append(company).append(", ");
+		if (description != null)
+			builder.append("description=").append(description).append(", ");
+		if (details != null)
+			builder.append("details=").append(details).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
@@ -79,7 +83,6 @@ public class Client extends BaseEntity {
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((details == null) ? 0 : details.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -107,19 +110,7 @@ public class Client extends BaseEntity {
 				return false;
 		} else if (!details.equals(other.details))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Client [name=" + name + ", company=" + company
-				+ ", description=" + description + ", details=" + details
-				+ ", toString()=" + super.toString() + "]";
 	}
 
 }

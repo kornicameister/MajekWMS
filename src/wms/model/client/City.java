@@ -10,12 +10,12 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 
-import wms.model.BaseEntity;
+import wms.model.basic.PersistenceObject;
 
 @Entity
 @Table(name = "city", uniqueConstraints = { @UniqueConstraint(columnNames = "name") })
 @AttributeOverride(name = "id", column = @Column(name = "idCity", updatable = false, insertable = true, nullable = false))
-public class City extends BaseEntity {
+public class City extends PersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -3110066439211353202L;
 

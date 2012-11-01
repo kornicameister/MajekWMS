@@ -1,4 +1,4 @@
-package wms.model;
+package wms.model.unit;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,21 +17,19 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.NaturalId;
+
+import wms.model.Warehouse;
+import wms.model.basic.NamedPersistenceObject;
+import wms.model.product.Product;
 
 @SuppressWarnings("deprecation")
 @Entity
 @Table(name = "unit")
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
 @AttributeOverride(name = "id", column = @Column(name = "idUnit", updatable = false, insertable = true, nullable = false))
-public class Unit extends BaseEntity {
+public class Unit extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 2437063899438647082L;
-
-	@Basic
-	@Column(name = "name", nullable = false, unique = true, length = 20, updatable = true)
-	@NaturalId(mutable = true)
-	protected String name;
 
 	@Column(name = "description", nullable = true, length = 666)
 	private String description;
@@ -57,14 +55,6 @@ public class Unit extends BaseEntity {
 
 	public Unit() {
 		super();
-	}
-
-	public synchronized final String getName() {
-		return name;
-	}
-
-	public synchronized final void setName(String name) {
-		this.name = name;
 	}
 
 	public synchronized final String getDescription() {
@@ -112,12 +102,33 @@ public class Unit extends BaseEntity {
 	}
 
 	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Unit [");
+		if (description != null)
+			builder.append("description=").append(description).append(", ");
+		if (size != null)
+			builder.append("size=").append(size).append(", ");
+		if (usage != null)
+			builder.append("usage=").append(usage).append(", ");
+		if (warehouse != null)
+			builder.append("warehouse=").append(warehouse).append(", ");
+		if (type != null)
+			builder.append("type=").append(type).append(", ");
+		if (products != null)
+			builder.append("products=").append(products).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((products == null) ? 0 : products.hashCode());
 		result = prime * result + ((size == null) ? 0 : size.hashCode());
@@ -141,11 +152,6 @@ public class Unit extends BaseEntity {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
 			return false;
 		if (products == null) {
 			if (other.products != null)
@@ -173,14 +179,6 @@ public class Unit extends BaseEntity {
 		} else if (!warehouse.equals(other.warehouse))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Unit [name=" + name + ", description=" + description
-				+ ", size=" + size + ", usage=" + usage + ", warehouse="
-				+ warehouse + ", type=" + type + ", products=" + products
-				+ ", toString()=" + super.toString() + "]";
 	}
 
 }

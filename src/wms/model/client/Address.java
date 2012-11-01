@@ -10,12 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import wms.model.BaseEntity;
+import wms.model.basic.PersistenceObject;
 
 @Entity
 @Table(name = "address")
 @AttributeOverride(name = "id", column = @Column(name = "idAddress", updatable = false, insertable = true, nullable = false))
-public class Address extends BaseEntity {
+public class Address extends PersistenceObject {
 	private static final long serialVersionUID = -252544167932088793L;
 
 	@Basic

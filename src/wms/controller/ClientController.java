@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 
 import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.BaseEntity;
+import wms.model.basic.PersistenceObject;
 import wms.model.client.Client;
 import wms.model.client.ClientDetails;
 import wms.utilities.Pair;
@@ -44,7 +44,7 @@ public class ClientController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preCreate(BaseEntity b, JSONObject payloadedData) {
+	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
 		/*
 		 * payloadedData includes both client and clientDetails
 		 */
@@ -55,13 +55,13 @@ public class ClientController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preDelete(JSONObject payloadedData) {
-		return (BaseEntity) this.session.byId(Client.class).load(
+	protected PersistenceObject preDelete(JSONObject payloadedData) {
+		return (PersistenceObject) this.session.byId(Client.class).load(
 				(Serializable) payloadedData.get("id"));
 	}
 
 	@Override
-	protected BaseEntity preUpdateNonPrimitives(BaseEntity b,
+	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
 			JSONObject payloadedData) {
 		return b;
 	}

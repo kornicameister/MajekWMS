@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.BaseEntity;
+import wms.model.basic.PersistenceObject;
 import wms.model.client.Address;
 import wms.model.client.City;
 
@@ -14,7 +14,7 @@ public class AddressController extends RequestController {
 		Long city_id, address_id;
 		Address address;
 
-		public ActionData(BaseEntity b, JSONObject p) {
+		public ActionData(PersistenceObject b, JSONObject p) {
 			super();
 			this.city_id = (Long) p.get("city_id");
 			this.address_id = (Long) p.get("id");
@@ -27,7 +27,7 @@ public class AddressController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preCreate(BaseEntity b, JSONObject payloadedData) {
+	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
 		ActionData ad = new ActionData(b, payloadedData);
 		ad.address.setCity((City) this.session.byId(City.class)
 				.load(ad.city_id));
@@ -35,14 +35,14 @@ public class AddressController extends RequestController {
 	}
 
 	@Override
-	protected BaseEntity preDelete(JSONObject payloadedData) {
+	protected PersistenceObject preDelete(JSONObject payloadedData) {
 		ActionData ad = new ActionData(null, payloadedData);
-		return (BaseEntity) this.session.byId(Address.class)
+		return (PersistenceObject) this.session.byId(Address.class)
 				.load(ad.address_id);
 	}
 
 	@Override
-	protected BaseEntity preUpdateNonPrimitives(BaseEntity b,
+	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
 			JSONObject payloadedData) {
 		ActionData ad = new ActionData(b, payloadedData);
 
