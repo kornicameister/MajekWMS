@@ -1,6 +1,7 @@
 package wms.model.invoice;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +15,9 @@ import wms.model.basic.NamedPersistenceObject;
 
 @Entity
 @Table(name = "invoiceType", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@AttributeOverride(name = "id", column = @Column(name = "idInvoiceType", updatable = false, insertable = true, nullable = false))
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "id", column = @Column(name = "idInvoiceType", updatable = false, insertable = true, nullable = false)),
+		@AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = false, nullable = false, length = 10, unique = true)) })
 public class InvoiceType extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -7345851338532573657L;

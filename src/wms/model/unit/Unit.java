@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,7 +27,9 @@ import wms.model.product.Product;
 @Entity
 @Table(name = "unit")
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
-@AttributeOverride(name = "id", column = @Column(name = "idUnit", updatable = false, insertable = true, nullable = false))
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "id", column = @Column(name = "idUnit", updatable = false, insertable = true, nullable = false)),
+		@AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = false)) })
 public class Unit extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 2437063899438647082L;

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,7 +23,9 @@ import wms.model.invoice.InvoiceProduct;
 @Entity
 @Table(name = "product")
 @org.hibernate.annotations.Entity(dynamicUpdate = true)
-@AttributeOverride(name = "id", column = @Column(name = "idProduct", updatable = false, insertable = true, nullable = false))
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "id", column = @Column(name = "idProduct", updatable = false, insertable = true, nullable = false)),
+		@AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = false)) })
 public class Product extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 1246737308278979025L;

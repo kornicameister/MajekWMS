@@ -1,6 +1,7 @@
 package wms.model.client;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,13 +15,15 @@ import wms.model.basic.NamedPersistenceObject;
 
 @Entity
 @Table(name = "client", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@AttributeOverride(name = "id", column = @Column(name = "idClient", updatable = false, insertable = true, nullable = false))
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "id", column = @Column(name = "idClient", updatable = false, insertable = true, nullable = false)),
+		@AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = true)) })
 public class Client extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 1283426340575080285L;
 
 	@Basic
-	@Column(name = "company", nullable = false, unique = true, length = 45, updatable = true)
+	@Column(name = "company", insertable = true, nullable = false, unique = true, length = 45, updatable = true)
 	private String company;
 
 	@Basic

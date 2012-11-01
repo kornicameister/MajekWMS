@@ -1,7 +1,6 @@
 package wms.model.basic;
 
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
@@ -16,7 +15,6 @@ public abstract class NamedPersistenceObject extends PersistenceObject {
 	private static final long serialVersionUID = -4491787496758100976L;
 
 	@Basic
-	@Column(name = "name", nullable = false, unique = true, length = 45, updatable = true)
 	private String name;
 
 	public NamedPersistenceObject() {

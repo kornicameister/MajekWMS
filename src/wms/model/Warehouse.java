@@ -3,6 +3,7 @@ package wms.model;
 import java.util.Date;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,9 @@ import wms.model.basic.NamedPersistenceObject;
 
 @Entity
 @Table(name = "warehouse", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-@AttributeOverride(name = "id", column = @Column(name = "idWarehouse", updatable = false, insertable = true, nullable = false))
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "id", column = @Column(name = "idWarehouse", updatable = false, insertable = true, nullable = false)),
+		@AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 20, unique = true)) })
 public class Warehouse extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 4557522901223374020L;
