@@ -12,7 +12,11 @@ Ext.define('WMS.view.manager.client.Manager', {
     iconCls: 'view-toolbar-clientsButton',
 
     uses: [
-        'WMS.view.wizard.client.Form'
+        'WMS.view.wizard.client.Form',
+        'WMS.view.manager.abstract.DetailsHolder',
+        'WMS.view.manager.client.details.Client',
+        'WMS.view.manager.client.details.Receipts',
+        'WMS.view.manager.client.details.Releases'
     ],
 
     closable   : true,
@@ -49,10 +53,25 @@ Ext.define('WMS.view.manager.client.Manager', {
             ]
         },
         {
-            xtype  : 'form',
-            itemId : 'clientDetailed',
-            title  : 'Szczegóły',
-            iconCls: 'icon-details'
+            xtype : 'managerdetailsholder',
+            itemId: 'clientDetailed',
+            items : [
+                {
+                    xtype : 'clientdetails',
+                    itemId: 'clientDetails',
+                    flex  : 1
+                },
+                {
+                    xtype : 'clientreleases',
+                    itemId: 'clientReleases',
+                    flex  : 2
+                },
+                {
+                    xtype : 'clientreceipts',
+                    itemId: 'clientsReceipts',
+                    flex  : 2
+                }
+            ]
         }
     ],
     dockedItems: [

@@ -13,13 +13,14 @@ Ext.define('WMS.view.manager.abstract.DetailsHolder', {
     autoScroll : true,
     layout     : {
         type : 'hbox',
-        pack : 'stretch',
-        align: 'center'
+        pack : 'center',
+        align: 'stretch'
     },
     bodyPadding: 5,
     defaults   : {
         bodyPadding: 2,
-        frame      : true
+        frame      : true,
+        margin     : 1
     },
     defaultType: 'grid',
     tools      : [

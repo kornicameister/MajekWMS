@@ -21,6 +21,12 @@
             'Ext.ux.menu': 'page/app/ux'
         }
     });
+    Ext.override('Ext.panel.Panel', {
+        titleAlign: 'center',
+        style     : {
+            marginBottom: '5px'
+        }
+    });
 
     Ext.Loader.loadScript({
         url   : 'page/app/ux/WMSProxy.js',

@@ -23,6 +23,7 @@ Ext.define('WMS.model.entity.Client', {
         {
             associationName: 'address',
             associationKey : 'address',
+            instanceName   : 'address',
             foreignKey     : 'address_id',
             type           : 'hasOne',
             model          : 'WMS.model.entity.Address',
@@ -32,6 +33,7 @@ Ext.define('WMS.model.entity.Client', {
         {
             associationName: 'details',
             associationKey : 'details',
+            instanceName   : 'details',
             foreignKey     : 'details_id',
             type           : 'hasOne',
             model          : 'WMS.model.entity.ClientDetails',

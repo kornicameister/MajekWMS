@@ -25,6 +25,7 @@ Ext.define('WMS.model.entity.Address', {
         {
             associationName: 'city',
             associationKey : 'city',
+            instanceName   : 'city',
             foreignKey     : 'city_id',
             type           : 'hasOne',
             model          : 'WMS.model.entity.City',
