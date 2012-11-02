@@ -6,35 +6,34 @@
  */
 
 Ext.define('WMS.model.entity.Address', {
-    extend: 'Ext.data.Model',
-
-    fields: [
-        {
-            name: 'id',
-            type: 'int'
-        },
-        {
-            name: 'street',
-            type: 'string'
-        },
-        {
-            name: 'postcode',
-            type: 'string'
-        },
-        {
-            name: 'city_id',
-            type: 'string'
-        }
+    extend      : 'Ext.data.Model',
+    requires    : [
+        'WMS.model.entity.City'
     ],
-
+    fields      : [
+        'id',
+        'postcode',
+        'street',
+        { name: 'city_id', type: 'int', mapping: 'city.id'}
+    ],
     associations: [
         {
-            type          : 'hasOne',
-            mode          : 'WMS.model.entity.City',
-            associatedName: 'city',
-            setterName    : 'setCity',
-            getterName    : 'getCity',
-            associationKey: 'city_id'
+            name : 'client',
+            type : 'belongsTo',
+            model: 'WMS.model.entity.Client'
+        },
+        {
+            associationName: 'city',
+            associationKey : 'city',
+            foreignKey     : 'city_id',
+            type           : 'hasOne',
+            model          : 'WMS.model.entity.City',
+            setterName     : 'setCity',
+            getterName     : 'getCity'
         }
-    ]
+    ],
+    proxy       : {
+        type: 'wms',
+        url : 'wms/agent/address'
+    }
 });

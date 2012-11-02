@@ -6,34 +6,41 @@
  */
 
 Ext.define('WMS.model.entity.Client', {
-    extend: 'Ext.data.Model',
-
-    fields: [
-        { name: 'id', type: 'int' },
-        { name: 'name', type: 'string'},
-        { name: 'company', type: 'string'},
-        { name: 'description', type: 'string'}
+    extend      : 'Ext.data.Model',
+    requires    : [
+        'WMS.model.entity.Address',
+        'WMS.model.entity.ClientDetails'
     ],
-
+    fields      : [
+        'id',
+        'name',
+        'company',
+        'description',
+        { name: 'details_id', type: 'int', mapping: 'details.id'},
+        { name: 'address_id', type: 'int', mapping: 'address.id'}
+    ],
     associations: [
         {
-            type      : 'hasMany',
-            foreignKey: 'client_id',
-            name      : 'getClients',
-            model     : 'WMS.model.entity.Invoice'
+            associationName: 'address',
+            associationKey : 'address',
+            foreignKey     : 'address_id',
+            type           : 'hasOne',
+            model          : 'WMS.model.entity.Address',
+            getterName     : 'getAddress',
+            setterName     : 'setAddress'
         },
         {
-            type          : 'hasOne',
-            model         : 'WMS.model.entity.ClientDetails',
-            associatedName: 'details',
-            getterName    : 'getDetails',
-            setterName    : 'setDetails'
+            associationName: 'details',
+            associationKey : 'details',
+            foreignKey     : 'details_id',
+            type           : 'hasOne',
+            model          : 'WMS.model.entity.ClientDetails',
+            getterName     : 'getDetails',
+            setterName     : 'setDetails'
         }
     ],
-
-    proxy: {
+    proxy       : {
         type: 'wms',
         url : 'wms/agent/client'
     }
-
 });

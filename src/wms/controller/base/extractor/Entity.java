@@ -29,7 +29,7 @@ public enum Entity {
 	MEASURE(MeasureController.class,Measure.class),
 	PRODUCT(ProductController.class,Product.class), 
 	INVOICE(null,null), 
-	CLIENT(ClientController.class,Client.class), 
+	CLIENT(ClientController.class,Client.class),
 	INVOICETYPE(null,null),
 	CITY(CityController.class,City.class);
 

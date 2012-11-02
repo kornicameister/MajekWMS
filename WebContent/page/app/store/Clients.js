@@ -10,15 +10,5 @@ Ext.define('WMS.store.Clients', {
     model : 'WMS.model.entity.Client',
 
     autoLoad: true,
-    autoSync: true,
-
-    add: function (records) {
-        var me = this,
-            recordsM = [];
-
-        Ext.each(records, function (client) {
-            recordsM.push(client);
-        });
-        return recordsM;
-    }
+    autoSync: true
 });

@@ -6,8 +6,7 @@
  */
 
 Ext.define('WMS.model.entity.Measure', {
-    extend: 'Ext.data.Model',
-
+    extend      : 'Ext.data.Model',
     fields      : [
         'id', 'name', 'abbreviation'
     ],
@@ -18,10 +17,8 @@ Ext.define('WMS.model.entity.Measure', {
         { name: 'length', field: 'name', min: 5, max: 45},
         { name: 'length', field: 'abbreviation', min: 1, max: 45}
     ],
-
-    proxy: {
+    proxy       : {
         type: 'wms',
         url : 'wms/agent/measure'
     }
-
 });

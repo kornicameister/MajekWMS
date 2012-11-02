@@ -2,13 +2,9 @@ package wms.model.client;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,7 +15,7 @@ import wms.model.basic.PersistenceObject;
 
 @Entity
 @Table(name = "clientDetails")
-@AttributeOverride(name = "id", column = @Column(name = "idClientDetails", updatable = false, insertable = true, nullable = false))
+@AttributeOverride(name = "id", column = @Column(name = "client_id", updatable = false, insertable = true, nullable = false))
 public class ClientDetails extends PersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -4305913399009774547L;
@@ -39,10 +35,6 @@ public class ClientDetails extends PersistenceObject {
 	@Basic
 	@Column(name = "nip", length = 15, insertable = true, updatable = true, nullable = false)
 	private String nip;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "address_id", referencedColumnName = "idAddress")
-	private Address address;
 
 	public ClientDetails() {
 		super();
@@ -87,20 +79,11 @@ public class ClientDetails extends PersistenceObject {
 		this.nip = nip;
 	}
 
-	public synchronized final Address getAddress() {
-		return address;
-	}
-
-	public synchronized final void setAddress(Address address) {
-		this.address = address;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((account == null) ? 0 : account.hashCode());
-		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((fax == null) ? 0 : fax.hashCode());
 		result = prime * result + ((nip == null) ? 0 : nip.hashCode());
 		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
@@ -120,11 +103,6 @@ public class ClientDetails extends PersistenceObject {
 			if (other.account != null)
 				return false;
 		} else if (!account.equals(other.account))
-			return false;
-		if (address == null) {
-			if (other.address != null)
-				return false;
-		} else if (!address.equals(other.address))
 			return false;
 		if (fax == null) {
 			if (other.fax != null)
@@ -146,8 +124,20 @@ public class ClientDetails extends PersistenceObject {
 
 	@Override
 	public String toString() {
-		return "ClientDetails [phone=" + phone + ", fax=" + fax + ", account="
-				+ account + ", nip=" + nip + ", address=" + address + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ClientDetails [");
+		if (phone != null)
+			builder.append("phone=").append(phone).append(", ");
+		if (fax != null)
+			builder.append("fax=").append(fax).append(", ");
+		if (account != null)
+			builder.append("account=").append(account).append(", ");
+		if (nip != null)
+			builder.append("nip=").append(nip).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

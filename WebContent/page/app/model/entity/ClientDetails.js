@@ -6,22 +6,23 @@
  */
 
 Ext.define('WMS.model.entity.ClientDetails', {
-    extend: 'Ext.data.Model',
-    fields: [
-        {name: 'id', type: 'int'},
-        {name: 'nip', type: 'string'},
-        {name: 'phone', type: 'string'},
-        {name: 'fax', type: 'string'},
-        {name: 'account', type: 'string'}
+    extend      : 'Ext.data.Model',
+    fields      : [
+        'id',
+        'nip',
+        'phone',
+        'fax',
+        'account'
     ],
-
     associations: [
         {
-            type          : 'hasOne',
-            model         : 'WMS.model.entity.Address',
-            associatedName: 'address',
-            setterName    : 'setAddress',
-            getterName    : 'getAddress'
+            name : 'client',
+            type : 'belongsTo',
+            model: 'WMS.model.entity.Client'
         }
-    ]
+    ],
+    proxy       : {
+        type: 'wms',
+        url : 'wms/agent/clientdetails'
+    }
 });

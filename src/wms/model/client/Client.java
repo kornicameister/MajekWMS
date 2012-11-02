@@ -3,8 +3,12 @@ package wms.model.client;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -30,9 +34,13 @@ public class Client extends NamedPersistenceObject {
 	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 
-	@OneToOne
-	@PrimaryKeyJoinColumn(referencedColumnName = "idClientDetails")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn(name = "details_id", referencedColumnName = "idClientDetails")
 	private ClientDetails details;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "address_id", referencedColumnName = "idAddress")
+	private Address address;
 
 	public Client() {
 		super();
@@ -62,26 +70,19 @@ public class Client extends NamedPersistenceObject {
 		this.details = details;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Client [");
-		if (company != null)
-			builder.append("company=").append(company).append(", ");
-		if (description != null)
-			builder.append("description=").append(description).append(", ");
-		if (details != null)
-			builder.append("details=").append(details).append(", ");
-		if (super.toString() != null)
-			builder.append("toString()=").append(super.toString());
-		builder.append("]");
-		return builder.toString();
+	public synchronized final Address getAddress() {
+		return address;
+	}
+
+	public synchronized final void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((company == null) ? 0 : company.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
@@ -98,6 +99,11 @@ public class Client extends NamedPersistenceObject {
 		if (!(obj instanceof Client))
 			return false;
 		Client other = (Client) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
 		if (company == null) {
 			if (other.company != null)
 				return false;
@@ -114,6 +120,24 @@ public class Client extends NamedPersistenceObject {
 		} else if (!details.equals(other.details))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Client [");
+		if (company != null)
+			builder.append("company=").append(company).append(", ");
+		if (description != null)
+			builder.append("description=").append(description).append(", ");
+		if (details != null)
+			builder.append("details=").append(details).append(", ");
+		if (address != null)
+			builder.append("address=").append(address).append(", ");
+		if (super.toString() != null)
+			builder.append("toString()=").append(super.toString());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

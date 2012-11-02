@@ -19,7 +19,6 @@ import wms.model.User;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.Expose;
 
 @WebServlet(urlPatterns = { "/wms/auth" }, asyncSupported = true, loadOnStartup = 2, name = "WMSAuthAgent")
 public class WMSAuthAgent extends HttpServlet {
@@ -93,15 +92,9 @@ public class WMSAuthAgent extends HttpServlet {
 	}
 
 	public class AuthRespone extends BaseFormat {
-		@Expose
-		private final User user;
-		@Expose
-		private final String message;
-
 		public AuthRespone(User user, String message, boolean success,
 				Long time, String handler) {
-			super(success, time, handler, CRUD.READ);
-			this.user = user;
+			super(success, time, handler, user, CRUD.READ);
 			this.message = message;
 		}
 	}
