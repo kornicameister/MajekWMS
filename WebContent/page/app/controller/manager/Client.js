@@ -6,32 +6,24 @@
  */
 
 Ext.define('WMS.controller.manager.Client', {
-    extend: 'Ext.app.Controller',
-
-    requires: [
+    extend                    : 'Ext.app.Controller',
+    requires                  : [
         'WMS.view.wizard.client.Dialog'
     ],
-    views   : [
+    views                     : [
         'WMS.view.manager.client.Manager'
     ],
-    refs    : [
-        {
-            ref     : 'managerUI',
-            selector: 'clientmanager'
-        },
-        {
-            ref     : 'clientsList',
-            selector: 'clientmanager grid'
-        }
+    refs                      : [
+        { ref: 'managerUI', selector: 'clientmanager' },
+        { ref: 'clientsList', selector: 'clientmanager grid'},
+        { ref: 'clientDetails', selector: 'clientmanager clientdetails'}
     ],
-    stores  : [
+    stores                    : [
         'Clients'
     ],
-
-    init: function () {
+    init                      : function () {
         console.init('WMS.controller.manager.Client is initializing...');
         var me = this;
-
         me.control({
             'clientmanager toolbar button[itemId=newClient]'    : {
                 'click': me.onNewClientAddClick
@@ -53,28 +45,39 @@ Ext.define('WMS.controller.manager.Client', {
             }
         });
     },
+    onDetailsClientRequest    : function (client) {
+        var me = this,
+            detailsView = me.getClientDetails(),
+            data = client.getData(true);
 
-    onDetailsClientRequest: function (client) {
-        var me;
+        if (Ext.isDefined(client) && Ext.isDefined(detailsView)) {
+            detailsView.update(data);
+            me.popupDetailsView();
+
+            Ext.getCmp('statusBar').setStatus({
+                text : Ext.String.format('Wyświetlam szczegóły odbiorcy {0}', client.get('name')),
+                clear: {
+                    wait       : 10000,
+                    anim       : true,
+                    useDefaults: false
+                }
+            })
+        }
     },
-
-    onReleaseClientClick: function () {
+    onReleaseClientClick      : function () {
         var me = this,
             store = me.getClientsStore(),
             selection = this.getSelectedClients();
     },
-
-    onNewClientAddClick: function (button) {
+    onNewClientAddClick       : function (button) {
         var me = this,
             clientWizard = me.getView('wizard.client.Dialog');
         clientWizard.create().show(button);
     },
-
-    onEditClientClick: function () {
+    onEditClientClick         : function () {
 
     },
-
-    onRemoveClientClick: function () {
+    onRemoveClientClick       : function () {
         var me = this,
             store = me.getClientsStore(),
             selection = this.getSelectedClients();
@@ -92,20 +95,17 @@ Ext.define('WMS.controller.manager.Client', {
             });
         }
     },
-
     //-----------UTILS and WRAPPERS ----------------//
-
     /**
      * Method used as wrapper for the right method which is
      * to process the request
      * @param grid
      * @param record
      */
-    onDetailsClientClickGrid: function (grid, record) {
+    onDetailsClientClickGrid  : function (grid, record) {
         var me = this;
         me.onDetailsClientRequest(record);
     },
-
     /**
      * Wrapper for the method used to display details for
      * selected client. It is called as the reaction for clicking
@@ -116,15 +116,24 @@ Ext.define('WMS.controller.manager.Client', {
             selection = me.getSelectedClients();
         me.onDetailsClientRequest(selection[0]);
     },
-
     /**
      * Utility method returning selected clients.
      * Selection is understood as rows being currently selected
      * in the clients list
      * @return {*}
      */
-    getSelectedClients: function () {
+    getSelectedClients        : function () {
         var me = this;
         return me.getClientsList().getView().getSelectionModel().getSelection();
+    },
+    popupDetailsView          : function () {
+        var me = this,
+            managerUI = me.getManagerUI(),
+            detailsView = managerUI['items'].get('clientDetailed');
+        if (Ext.isDefined(detailsView)) {
+            detailsView.expand();
+        } else {
+            console.log('manager.Client :: Failed to popup with statistics')
+        }
     }
 });

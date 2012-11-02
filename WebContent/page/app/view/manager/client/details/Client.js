@@ -29,8 +29,8 @@ Ext.define('WMS.view.manager.client.details.Client', {
             //---- address association ---/
             '<tpl for="address">',
                 '<div class="address">',
-                    '<p>Ulica: <b>{name}</b></p>',
-                    '<p>Kod pocztowy: <b>{company}</b></p>',
+                    '<p>Ulica: <b>{street}</b></p>',
+                    '<p>Kod pocztowy: <b>{postcode}</b></p>',
                     '<tpl for="city">',
                         '<p>Miasto: <b>{name}</b></p>',
                     '</tpl>',
