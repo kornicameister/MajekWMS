@@ -64,9 +64,11 @@ Ext.define('WMS.view.manager.client.Manager', {
                 pack: 'center'
             },
             defaults: {
-                xtype : 'button',
-                width : 120,
-                height: 40
+                xtype    : 'button',
+                width    : 120,
+                height   : 40,
+                iconAlign: 'left',
+                scale    : 'large'
             },
             items   : [
                 {

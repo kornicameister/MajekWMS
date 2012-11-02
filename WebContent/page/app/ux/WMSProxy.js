@@ -15,8 +15,12 @@ Ext.define('Ext.ux.proxy.WMSProxy', {
     alias             : 'proxy.wms',
     reader            : {
         type           : 'json',
-        root           : 'read',
-        successProperty: 'success'
+        root           : 'data',
+        successProperty: function (data) {
+            return data['success'] === true
+        },
+        totalProperty  : 'total',
+        messageProperty: 'message'
     },
     writer            : {
         type          : 'json',

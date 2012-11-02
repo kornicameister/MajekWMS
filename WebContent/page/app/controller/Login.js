@@ -139,8 +139,9 @@ Ext.define('WMS.controller.Login', {
                 var obj = Ext.decode(action.response.responseText);
 
                 if (obj['success'] === true) {
+                    var user = obj['data'][0];
                     Ext.getCmp('statusBar').setStatus({
-                        text : Ext.String.format('Zalogowałeś się jako {0}', obj['user']['login']),
+                        text : Ext.String.format('Zalogowałeś się jako {0}', user['login']),
                         clear: {
                             wait       : 10000,
                             anim       : true,

@@ -67,7 +67,7 @@ Ext.define('WMS.view.wizard.client.Form', {
                 {
                     xtype     : 'combo',
                     fieldLabel: 'Miejscowość',
-                    name      : 'city',
+                    name      : 'city_id',
 
                     store        : 'Cities',
                     valueField   : 'id',
