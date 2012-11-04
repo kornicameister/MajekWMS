@@ -9,16 +9,16 @@
  */
 
 Ext.define('WMS.controller.Toolbars', {
-    extend  : 'Ext.app.Controller',
-    requires: [
+    extend                  : 'Ext.app.Controller',
+    requires                : [
         'Ext.ux.menu.StoreMenu'
     ],
-    views   : [
+    views                   : [
         'toolbar.Header',
         'toolbar.Footer',
         'wizard.client.Dialog'
     ],
-    refs    : [
+    refs                    : [
         {
             ref     : 'tBar',
             selector: 'headbar'
@@ -32,17 +32,18 @@ Ext.define('WMS.controller.Toolbars', {
             selector: 'headbar storemenu'
         }
     ],
-
-    init: function () {
+    init                    : function () {
         console.init('WMS.controller.Toolbars initializing...');
         var me = this;
-
         me.control({
             '#headerToolbar storemenu'                   : {
                 'iclick': me.onUnitSelected
             },
             '#headerToolbar button[itemId=clientsButton]': {
-                'click': me.onClientButtonClick
+                'click': me.onRecipientsManagerClick
+            },
+            '#headerToolbar button[itemId=suppliers]'    : {
+                'click': me.onSuppliersManagerClick
             },
             '#headerToolbar menu[itemId=clientsMenu]'    : {
                 'click': me.onClientMenuClick
@@ -55,8 +56,7 @@ Ext.define('WMS.controller.Toolbars', {
             }
         });
     },
-
-    onClientMenuClick: function (menu, item) {
+    onClientMenuClick       : function (menu, item) {
         console.log('Toolbars :: ' + Ext.String.format('{0} button clicked...', item['itemId']));
         var me = this;
         if (item['itemId'] === 'addClient') {
@@ -65,37 +65,36 @@ Ext.define('WMS.controller.Toolbars', {
             console.log('Toolbars :: ' + Ext.String.format('{0} button has not ben recognized...', item['itemId']))
         }
     },
-
-    onClientButtonClick: function () {
+    onSuppliersManagerClick : function () {
         var me = this,
             masterCtrl = me.getController('WMS.controller.Master');
-
-        masterCtrl.openClientsManager();
+        masterCtrl.openSupplierManager();
     },
-
+    onRecipientsManagerClick: function () {
+        var me = this,
+            masterCtrl = me.getController('WMS.controller.Master');
+        masterCtrl.openRecipientManager();
+    },
     /**
      * @description Opens new client's wizard
      */
-    onAddClient: function (button) {
+    onAddClient             : function (button) {
         var me = this,
             clientWizard = me.getView('wizard.client.Dialog');
 
         clientWizard.create().show(button.up('menu').up('button'));
     },
-
-    onUnitSelected: function (storemenu, item, storeItem) {
+    onUnitSelected          : function (storemenu, item, storeItem) {
 
     },
-
-    onSaveAction: function () {
+    onSaveAction            : function () {
         Ext.StoreManager.each(function (store) {
             if (store['autoSync'] !== true) {
                 store.sync();
             }
         });
     },
-
-    onRefreshAction: function () {
+    onRefreshAction         : function () {
         console.log('Refresh action called, revert changes, reload from server');
     }
 });

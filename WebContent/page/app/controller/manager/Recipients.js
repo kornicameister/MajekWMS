@@ -11,7 +11,7 @@ Ext.define('WMS.controller.manager.Recipients', {
         'WMS.view.wizard.client.Dialog'
     ],
     views                     : [
-        'WMS.view.manager.client.Manager'
+        'WMS.view.manager.recipient.Manager'
     ],
     refs                      : [
         { ref: 'managerUI', selector: 'clientmanager' },
@@ -19,7 +19,8 @@ Ext.define('WMS.controller.manager.Recipients', {
         { ref: 'clientDetails', selector: 'clientmanager clientdetails'}
     ],
     stores                    : [
-        'Recipients'
+        'Recipients',
+        'Suppliers'
     ],
     init                      : function () {
         console.init('WMS.controller.manager.Recipients is initializing...');

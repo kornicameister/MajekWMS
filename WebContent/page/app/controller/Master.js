@@ -8,27 +8,24 @@
  * Created: 28-09-2012
  */
 
-// TODO consider getting it fuck away !
 Ext.define('WMS.controller.Master', {
-    extend: 'Ext.app.Controller',
-
-    requires: [
-        'WMS.view.manager.client.Manager'
+    extend              : 'Ext.app.Controller',
+    requires            : [
+        'WMS.view.manager.recipient.Manager',
+        'WMS.view.manager.supplier.Manager'
     ],
-
-    views: [
+    views               : [
         'WMS.view.Master',
-        'WMS.view.manager.client.Manager'
+        'WMS.view.manager.recipient.Manager',
+        'WMS.view.manager.supplier.Manager'
     ],
-
-    refs: [
+    refs                : [
         {
             ref     : 'masterView',
             selector: 'masterview'
         }
     ],
-
-    init: function () {
+    init                : function () {
         console.init('WMS.controller.Master initializing...');
         var me = this;
         me.control({
@@ -37,19 +34,32 @@ Ext.define('WMS.controller.Master', {
             }
         });
     },
-
-    onMasterRender: function (view) {
+    onMasterRender      : function (view) {
         console.log('Master :: Opening login.Dialog...');
         Ext.create('WMS.view.login.Dialog');
     },
-
-    openClientsManager: function () {
-        console.log('Master :: Opening clients manager')
+    openRecipientManager: function () {
+        console.log('Master :: Opening recipients manager');
+        var me = this;
+        me.openManager('manager.recipient.Manager');
+    },
+    openSupplierManager : function () {
+        console.log('Master :: Opening suppliers manager');
+        var me = this;
+        me.openManager('manager.supplier.Manager');
+    },
+    //  --- private --- ... //
+    /**
+     * @private
+     * @description Open desired manager
+     * @param view
+     */
+    openManager         : function (view) {
         var me = this,
             masterView = me.getMasterView(),
-            clientsManager = me.getView('manager.client.Manager').create();
+            manager = me.getView(view).create();
 
-        clientsManager = masterView.add(clientsManager);
-        clientsManager.show();
+        manager = masterView.add(manager);
+        manager.show();
     }
 });
