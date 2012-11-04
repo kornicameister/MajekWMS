@@ -11,11 +11,16 @@
 		<property name="hibernate.default_schema">majekwms</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.dialect.cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+		
 		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.format_sql">true</property>
 		<property name="hibernate.generate_statistics">true</property>
+		
 		<property name="hibernate.order_inserts">true</property>
 		<property name="hibernate.order_updates">true</property>
+		<property name="hibernate.connection.autocommit">true</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		
 		<property name="hibernate.connection.useUnicode">true</property>
 		<property name="hibernate.connection.characterEncoding">UTF-8</property>
 
@@ -23,7 +28,7 @@
 		<!-- basic -->
 		<mapping class="wms.model.basic.PersistenceObject" />
 		<mapping class="wms.model.basic.NamedPersistenceObject" />
-		
+
 		<!-- client -->
 		<mapping class="wms.model.client.City" />
 		<mapping class="wms.model.client.Address" />
@@ -32,7 +37,7 @@
 		<mapping class="wms.model.client.Client" />
 		<mapping class="wms.model.client.type.Supplier" />
 		<mapping class="wms.model.client.type.Recipient" />
-		
+
 		<!-- invoice -->
 		<mapping class="wms.model.invoice.Invoice" />
 		<mapping class="wms.model.invoice.InvoiceProduct" />
@@ -41,15 +46,15 @@
 		<mapping class="wms.model.invoice.type.Receipt" />
 		<mapping class="wms.model.invoice.type.Return" />
 		<mapping class="wms.model.invoice.type.Supply" />
-		
+
 		<!-- product -->
 		<mapping class="wms.model.product.Product" />
 		<mapping class="wms.model.product.Measure" />
-		
+
 		<!-- unit -->
 		<mapping class="wms.model.unit.Unit" />
 		<mapping class="wms.model.unit.UnitType" />
-		
+
 		<mapping class="wms.model.Warehouse" />
 		<mapping class="wms.model.User" />
 

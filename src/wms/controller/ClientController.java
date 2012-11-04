@@ -40,6 +40,8 @@ public class ClientController extends RequestController {
 				logger.warning(String.format("%s is not valid client's type",
 						type));
 			}
+			logger.info(String.format(
+					"Client's type %s READ request is being processed", type));
 			this.session.beginTransaction();
 			for (Object o : query.list()) {
 				this.affected.add((PersistenceObject) o);

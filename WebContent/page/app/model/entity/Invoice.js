@@ -28,5 +28,4 @@ Ext.define('WMS.model.entity.Invoice', {
         type: 'wms',
         url : 'wms/agent/invoice'
     }
-
 });
