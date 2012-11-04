@@ -30,8 +30,8 @@
 		<mapping class="wms.model.client.ClientDetails" />
 		<mapping class="wms.model.client.ClientType" />
 		<mapping class="wms.model.client.Client" />
-		<mapping class="wms.model.client.Supplier" />
-		<mapping class="wms.model.client.Recipient" />
+		<mapping class="wms.model.client.type.Supplier" />
+		<mapping class="wms.model.client.type.Recipient" />
 		
 		<!-- invoice -->
 		<mapping class="wms.model.invoice.Invoice" />
