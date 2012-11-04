@@ -5,7 +5,7 @@
  * Time   : 01:26
  */
 
-Ext.define('WMS.model.entity.client.Recipient', {
+Ext.define('WMS.model.entity.Recipient', {
     extend: 'WMS.model.entity.Client',
     proxy : {
         type       : 'wms',

@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-Ext.define('WMS.model.entity.client.Supplier', {
+Ext.define('WMS.model.entity.Supplier', {
     extend: 'WMS.model.entity.Client',
     proxy : {
         type       : 'wms',

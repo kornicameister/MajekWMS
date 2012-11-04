@@ -6,16 +6,9 @@
  */
 
 Ext.define('WMS.model.entity.InvoiceType', {
-    extend      : 'Ext.data.Model',
-    fields      : [
-        'id', 'name'
-    ],
+    extend      : 'WMS.model.abstract.EntityType',
     associations: [
         {name: 'invoice', type: 'belongsTo', model: 'WMS.model.entity.Invoice'}
-    ],
-    validations : [
-        { name: 'length', field: 'invoiceNumber', min: 5, max: 30},
-        { name: 'length', field: 'description', min: 1, max: 250}
     ],
     proxy       : {
         type: 'wms',
