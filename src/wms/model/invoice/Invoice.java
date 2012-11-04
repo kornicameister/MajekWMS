@@ -8,8 +8,13 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -23,6 +28,9 @@ import wms.model.client.Client;
 @Entity
 @Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "refNumber" }) })
 @AttributeOverride(name = "id", column = @Column(name = "idInvoice", updatable = false, insertable = true, nullable = false))
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "invoicetype_id", discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorValue(value = "0")
 public class Invoice extends PersistenceObject {
 	@Transient
 	private static final long serialVersionUID = -3204092137188652431L;
@@ -50,7 +58,7 @@ public class Invoice extends PersistenceObject {
 	private Client client;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "invoicetype_id", referencedColumnName = "idInvoiceType")
+	@JoinColumn(name = "invoicetype_id", referencedColumnName = "idInvoiceType", insertable = false, updatable = false)
 	private InvoiceType type;
 
 	public Invoice() {

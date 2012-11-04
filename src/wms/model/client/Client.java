@@ -5,8 +5,13 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -22,6 +27,9 @@ import wms.model.basic.NamedPersistenceObject;
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "id", column = @Column(name = "idClient", updatable = false, insertable = true, nullable = false)),
 		@AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = true)) })
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type_id", discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorValue(value = "0")
 public class Client extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 1283426340575080285L;
@@ -41,6 +49,10 @@ public class Client extends NamedPersistenceObject {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "address_id", referencedColumnName = "idAddress")
 	private Address address;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "type_id", referencedColumnName = "idClientType", insertable = false, updatable = false)
+	private ClientType type;
 
 	public Client() {
 		super();
@@ -78,6 +90,14 @@ public class Client extends NamedPersistenceObject {
 		this.address = address;
 	}
 
+	public synchronized final ClientType getType() {
+		return type;
+	}
+
+	public synchronized final void setType(ClientType type) {
+		this.type = type;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -87,6 +107,7 @@ public class Client extends NamedPersistenceObject {
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((details == null) ? 0 : details.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -119,25 +140,19 @@ public class Client extends NamedPersistenceObject {
 				return false;
 		} else if (!details.equals(other.details))
 			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Client [");
-		if (company != null)
-			builder.append("company=").append(company).append(", ");
-		if (description != null)
-			builder.append("description=").append(description).append(", ");
-		if (details != null)
-			builder.append("details=").append(details).append(", ");
-		if (address != null)
-			builder.append("address=").append(address).append(", ");
-		if (super.toString() != null)
-			builder.append("toString()=").append(super.toString());
-		builder.append("]");
-		return builder.toString();
+		return "Client [company=" + company + ", description=" + description
+				+ ", details=" + details + ", address=" + address + ", type="
+				+ type + ", toString()=" + super.toString() + "]";
 	}
 
 }

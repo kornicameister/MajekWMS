@@ -28,13 +28,19 @@
 		<mapping class="wms.model.client.City" />
 		<mapping class="wms.model.client.Address" />
 		<mapping class="wms.model.client.ClientDetails" />
+		<mapping class="wms.model.client.ClientType" />
 		<mapping class="wms.model.client.Client" />
+		<mapping class="wms.model.client.Supplier" />
+		<mapping class="wms.model.client.Recipient" />
 		
 		<!-- invoice -->
 		<mapping class="wms.model.invoice.Invoice" />
 		<mapping class="wms.model.invoice.InvoiceProduct" />
 		<mapping class="wms.model.invoice.InvoiceProductId" />
 		<mapping class="wms.model.invoice.InvoiceType" />
+		<mapping class="wms.model.invoice.type.Receipt" />
+		<mapping class="wms.model.invoice.type.Return" />
+		<mapping class="wms.model.invoice.type.Supply" />
 		
 		<!-- product -->
 		<mapping class="wms.model.product.Product" />
