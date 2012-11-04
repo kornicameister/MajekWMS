@@ -6,7 +6,7 @@
  */
 
 Ext.define('WMS.view.manager.supplier.Invoices', {
-    extend    : 'WMS.grid.Invoices',
+    extend    : 'WMS.view.manager.abstract.InvoiceList',
     alias     : 'widget.supplierinvoices',
     title     : 'Dostawy',
     viewConfig: {

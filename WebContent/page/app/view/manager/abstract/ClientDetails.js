@@ -6,9 +6,8 @@
  */
 
 Ext.define('WMS.view.manager.abstract.ClientDetails', {
-    extend            : 'Ext.panel.Panel',
-    alternateClassName: 'WMS.panel.details.Client',
-    tpl               : new Ext.XTemplate(
+    extend: 'Ext.panel.Panel',
+    tpl   : new Ext.XTemplate(
         '<div class="clientDetails">',
         '<div class="basic">',
         '<p>Odbiorca: <b>{name}</b></p>',

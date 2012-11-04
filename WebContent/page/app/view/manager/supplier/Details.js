@@ -6,7 +6,7 @@
  */
 
 Ext.define('WMS.view.manager.supplier.Details', {
-    extend            : 'WMS.panel.details.Client',
+    extend            : 'WMS.view.manager.abstract.ClientDetails',
     alternateClassName: 'WMS.panel.details.Supplier',
     alias             : 'widget.supplierdetails',
     title             : 'Szczegóły dostawcy'

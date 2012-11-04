@@ -6,9 +6,9 @@
  */
 
 Ext.define('WMS.view.manager.supplier.Manager', {
-    extend : 'WMS.panel.ClientManager',
-    alias  : 'widget.clientmanager',
-    title  : 'Menadżer - odbiorcy',
+    extend : 'WMS.view.manager.abstract.ClientManager',
+    alias  : 'widget.suppliermanager',
+    title  : 'Menadżer - dostawcy',
     iconCls: 'view-toolbar-clientsButton',
     uses   : [
         'WMS.view.manager.supplier.Details',
@@ -27,8 +27,8 @@ Ext.define('WMS.view.manager.supplier.Manager', {
             itemId: 'supplierDetailsHolder',
             items : [
                 {
-                    xtype : 'clientdetails',
-                    itemId: 'clientDetails',
+                    xtype : 'supplierdetails',
+                    itemId: 'supplierDetails',
                     flex  : 1
                 },
                 {

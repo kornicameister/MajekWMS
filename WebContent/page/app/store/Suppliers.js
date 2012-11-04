@@ -6,6 +6,9 @@
  */
 
 Ext.define('WMS.store.Suppliers', {
-    extend: 'WMS.store.Clients',
-    model : 'WMS.model.entity.Supplier'
+    extend: 'Ext.data.Store',
+    model : 'WMS.model.entity.Supplier',
+
+    autoLoad: true,
+    autoSync: true
 });

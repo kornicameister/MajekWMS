@@ -6,7 +6,7 @@
  */
 
 Ext.define('WMS.view.manager.recipient.Invoices', {
-    extend    : 'WMS.grid.Invoices',
+    extend    : 'WMS.view.manager.abstract.InvoiceList',
     alias     : 'widget.recipientinvoices',
     title     : 'Wydania',
     viewConfig: {

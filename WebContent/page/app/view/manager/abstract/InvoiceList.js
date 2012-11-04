@@ -6,10 +6,8 @@
  */
 
 Ext.define('WMS.view.manager.abstract.InvoiceList', {
-    extend            : 'WMS.grid.Panel',
-    alternateClassName: 'WMS.grid.Invoices',
-    alias             : 'widget.invoices',
-    columns           : [
+    extend : 'WMS.view.manager.abstract.Grid',
+    columns: [
         {
             header   : 'ID',
             dataIndex: 'id',

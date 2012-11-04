@@ -5,13 +5,14 @@
  * Time   : 10:44
  */
 
-Ext.define('WMS.view.manager.recipient.Manager', {
+Ext.define('WMS.view.manager.abstract.ClientManager', {
     extend            : 'Ext.panel.Panel',
     alternateClassName: 'WMS.panel.ClientManager',
-    uses              : [
+    requires          : [
         'WMS.view.manager.abstract.DetailsHolder',
         'WMS.view.manager.abstract.ClientDetails',
-        'WMS.view.manager.abstract.ClientGrid'
+        'WMS.view.manager.abstract.ClientGrid',
+        'WMS.view.manager.abstract.InvoiceList'
     ],
     closable          : true,
     layout            : {

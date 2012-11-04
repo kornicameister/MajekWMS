@@ -6,14 +6,12 @@
  */
 
 Ext.define('WMS.view.manager.abstract.ClientGrid', {
-    extend            : 'Ext.grid.Panel',
-    alternateClassName: 'WMS.grid.Clients',
-    alias             : 'widget.clientgrid',
-    autoScroll        : true,
-    viewConfig        : {
-        emptyText: 'Nie zdefiniowano jeszcze żadnego odbiorcy...'
-    },
-    columns           : [
+    extend  : 'WMS.view.manager.abstract.Grid',
+    alias   : 'widget.clientgrid',
+    requires: [
+        'WMS.view.manager.abstract.Grid'
+    ],
+    columns : [
         {
             header   : 'Skrót',
             dataIndex: 'name',
