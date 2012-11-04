@@ -6,17 +6,14 @@
  */
 
 Ext.define('WMS.model.entity.Client', {
-    extend      : 'Ext.data.Model',
+    extend      : 'WMS.model.abstract.DescribedSimple',
     requires    : [
         'WMS.model.entity.Address',
         'WMS.model.entity.ClientDetails',
         'WMS.model.entity.ClientType'
     ],
     fields      : [
-        'id',
-        'name',
         'company',
-        'description',
         { name: 'details_id', type: 'int', mapping: 'details.id'},
         { name: 'address_id', type: 'int', mapping: 'address.id'},
         { name: 'type_id', type: 'int', mapping: 'type.id'}

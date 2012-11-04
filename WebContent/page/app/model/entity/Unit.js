@@ -9,27 +9,20 @@
  */
 
 Ext.define('WMS.model.entity.Unit', {
-    extend: 'Ext.data.Model',
-
-    requires: [
+    extend          : 'WMS.model.abstract.DescribedSimple',
+    requires        : [
         'WMS.model.entity.Product'
     ],
-
-    statics: {
+    statics         : {
         SIZE_EXCEEDED: 1
     },
-
-    fields: [
-        { name: 'id', type: 'int', persist: true},
-        { name: 'name', type: 'string'},
-        { name: 'description', type: 'string'},
+    fields          : [
         { name: 'warehouse_id', type: 'int', mapping: 'warehouse.id'},
         { name: 'unittype_id', type: 'int', mapping: 'type.id'},
         { name: 'size', type: 'int', defaultValue: 0},
         { name: 'usage', type: 'float', persist: false}
     ],
-
-    associations: [
+    associations    : [
         {
             type          : 'belongsTo',
             associationKey: 'warehouse',
@@ -94,22 +87,16 @@ Ext.define('WMS.model.entity.Unit', {
             }
         }
     ],
-
-    sorters: [
-        'id', 'name'
-    ],
-
-    proxy: {
+    proxy           : {
         type: 'wms',
         url : 'wms/agent/unit'
     },
-
     /**
      * Use this method to add new product to unit.
      * @param product
      * @return {*}
      */
-    addProduct: function (product) {
+    addProduct      : function (product) {
         var me = this,
             products = me.products();
 
@@ -119,8 +106,7 @@ Ext.define('WMS.model.entity.Unit', {
 
         return products.add(product);
     },
-
-    deleteProduct: function (product) {
+    deleteProduct   : function (product) {
         var me = this,
             products = me.products();
 
@@ -132,7 +118,6 @@ Ext.define('WMS.model.entity.Unit', {
         me.mon(products, 'bulkremove', validateRemove);
         products.remove(product);
     },
-
     getProductsCount: function () {
         var me = this;
 

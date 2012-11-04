@@ -6,9 +6,9 @@
  */
 
 Ext.define('WMS.model.entity.Measure', {
-    extend      : 'Ext.data.Model',
+    extend      : 'WMS.model.abstract.Simple',
     fields      : [
-        'id', 'name', 'abbreviation'
+        'abbreviation'
     ],
     associations: [
         {name: 'products', type: 'belongsTo', model: 'WMS.model.entity.Product'}

@@ -9,13 +9,9 @@
  */
 
 Ext.define('WMS.model.entity.UnitType', {
-    extend: 'Ext.data.Model',
-
+    extend      : 'WMS.model.abstract.DescribedSimple',
     fields      : [
-        'id',
-        'name' ,
         'abbreviation',
-        'description',
         'parentType'
     ],
     validations : [
@@ -23,10 +19,8 @@ Ext.define('WMS.model.entity.UnitType', {
         { name: 'length', field: 'abbreviation', min: 1, max: 6},
         { name: 'length', field: 'description', min: 1, max: 120}
     ],
-
     proxy: {
         type: 'wms',
         url : 'wms/agent/unittype'
     }
-
 });

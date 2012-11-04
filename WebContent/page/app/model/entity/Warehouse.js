@@ -9,15 +9,11 @@
  */
 
 Ext.define('WMS.model.entity.Warehouse', {
-    extend  : 'Ext.data.Model',
-    requires: [
+    extend      : 'WMS.model.abstract.DescribedSimple',
+    requires    : [
         'WMS.model.entity.Unit'
     ],
-
     fields      : [
-        { name: 'id', type: 'int', persist: true},
-        { name: 'name', type: 'string' },
-        { name: 'description', type: 'string'},
         { name: 'usage', type: 'float', defaultValue: 0.0, convert: convertUsage},
         { name: 'size', type: 'int', defaultValue: 0},
         { name: 'createdDate', type: 'date', serialize: serializeDate}
@@ -99,13 +95,11 @@ Ext.define('WMS.model.entity.Warehouse', {
             }
         }
     ],
-
-    proxy: {
+    proxy       : {
         type: 'wms',
         url : 'wms/agent/warehouse'
     },
-
-    toSource: function (desc) {
+    toSource    : function (desc) {
         var me = this,
             property = undefined,
             source = {};

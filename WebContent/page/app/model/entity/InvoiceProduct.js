@@ -9,8 +9,7 @@
  */
 
 Ext.define('WMS.model.entity.InvoiceProduct', {
-    extend: 'Ext.data.Model',
-
+    extend      : 'Ext.data.Model',
     fields      : [
         'id', 'comment',
         { name: 'quantity', type: 'float', defaultValue: 0.0},
@@ -24,10 +23,8 @@ Ext.define('WMS.model.entity.InvoiceProduct', {
     validations : [
         { name: 'length', field: 'comment', min: 1, max: 45}
     ],
-
-    proxy: {
+    proxy       : {
         type: 'wms',
         url : 'wms/agent/invoiceproduct'
     }
-
 });

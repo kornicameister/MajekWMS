@@ -6,7 +6,7 @@
  */
 
 Ext.define('WMS.model.entity.ClientType', {
-    extend      : 'WMS.model.abstract.EntityType',
+    extend      : 'WMS.model.abstract.Simple',
     associations: [
         {name: 'client', type: 'belongsTo', model: 'WMS.model.entity.Client'}
     ],

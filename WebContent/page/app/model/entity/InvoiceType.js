@@ -6,7 +6,7 @@
  */
 
 Ext.define('WMS.model.entity.InvoiceType', {
-    extend      : 'WMS.model.abstract.EntityType',
+    extend      : 'WMS.model.abstract.Simple',
     associations: [
         {name: 'invoice', type: 'belongsTo', model: 'WMS.model.entity.Invoice'}
     ],

@@ -9,12 +9,8 @@
  */
 
 Ext.define('WMS.model.entity.Product', {
-    extend: 'Ext.data.Model',
-
+    extend      : 'WMS.model.abstract.DescribedSimple',
     fields      : [
-        { name: 'id', persist: true},
-        { name: 'name'},
-        { name: 'description'},
         { name: 'unit_id', type: 'int'},
         { name: 'measure_id', type: 'int', mapping: 'measure.id'},
         { name: 'quantity', type: 'float', defaultValue: 0.0},
@@ -36,13 +32,7 @@ Ext.define('WMS.model.entity.Product', {
             getterName     : 'getMeasure'
         }
     ],
-
-    // TODO validations
-    sorters     : [
-        'id'
-    ],
-
-    proxy: {
+    proxy       : {
         type: 'wms',
         url : 'wms/agent/product'
     }

@@ -6,20 +6,12 @@
  */
 
 Ext.define('WMS.model.entity.City', {
-    extend      : 'Ext.data.Model',
-    fields      : [
-        'id', 'name'
-    ],
+    extend      : 'WMS.model.abstract.Simple',
     associations: [
         {
             name : 'address',
             type : 'belongsTo',
             model: 'WMS.model.entity.Address'
-        }
-    ],
-    sorters     : [
-        {
-            property: 'name'
         }
     ],
     proxy       : {
