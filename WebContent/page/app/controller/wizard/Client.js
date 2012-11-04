@@ -12,24 +12,21 @@
  * @description This class masters wizard that is used do create new client
  */
 Ext.define('WMS.controller.wizard.Client', {
-    extend: 'Ext.app.Controller',
-
-    requires: [
+    extend        : 'Ext.app.Controller',
+    requires      : [
         'WMS.view.wizard.client.Dialog'
     ],
-
-    stores: [
+    stores        : [
         'Clients',
         'Cities'
     ],
-    refs  : [
+    refs          : [
         {
             ref     : 'wizard',
             selector: 'wizardclient'
         }
     ],
-
-    init: function () {
+    init          : function () {
         console.log('WMS.controller.wizard.Client initializing...');
         var me = this;
 
@@ -42,7 +39,6 @@ Ext.define('WMS.controller.wizard.Client', {
             }
         })
     },
-
     onClientSubmit: function (button) {
         console.log('wizard.Client :: Submit button has been clicked...');
         var me = this,
@@ -71,8 +67,7 @@ Ext.define('WMS.controller.wizard.Client', {
         }
 
     },
-
-    onCancel: function () {
+    onCancel      : function () {
         var me = this;
         me.getWizard().close();
     }

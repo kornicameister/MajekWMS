@@ -5,7 +5,7 @@
  * Time   : 11:48
  */
 
-Ext.define('WMS.controller.manager.Client', {
+Ext.define('WMS.controller.manager.Recipients', {
     extend                    : 'Ext.app.Controller',
     requires                  : [
         'WMS.view.wizard.client.Dialog'
@@ -19,10 +19,10 @@ Ext.define('WMS.controller.manager.Client', {
         { ref: 'clientDetails', selector: 'clientmanager clientdetails'}
     ],
     stores                    : [
-        'Clients'
+        'Recipients'
     ],
     init                      : function () {
-        console.init('WMS.controller.manager.Client is initializing...');
+        console.init('WMS.controller.manager.Recipients is initializing...');
         var me = this;
         me.control({
             'clientmanager toolbar button[itemId=newClient]'    : {
@@ -133,7 +133,7 @@ Ext.define('WMS.controller.manager.Client', {
         if (Ext.isDefined(detailsView)) {
             detailsView.expand();
         } else {
-            console.log('manager.Client :: Failed to popup with statistics')
+            console.log('manager.Recipients :: Failed to popup with statistics')
         }
     }
 });

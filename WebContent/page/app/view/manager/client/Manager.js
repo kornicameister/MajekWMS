@@ -33,7 +33,7 @@ Ext.define('WMS.view.manager.client.Manager', {
             viewConfig: {
                 emptyText: 'Nie zdefiniowano jeszcze żadnego odbiorcy...'
             },
-            store     : 'Clients',
+            store     : 'Recipients',
             columns   : [
                 {
                     header   : 'Skrót',
