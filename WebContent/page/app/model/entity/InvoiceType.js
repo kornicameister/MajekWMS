@@ -6,8 +6,7 @@
  */
 
 Ext.define('WMS.model.entity.InvoiceType', {
-    extend: 'Ext.data.Model',
-
+    extend      : 'Ext.data.Model',
     fields      : [
         'id', 'name'
     ],
@@ -18,10 +17,8 @@ Ext.define('WMS.model.entity.InvoiceType', {
         { name: 'length', field: 'invoiceNumber', min: 5, max: 30},
         { name: 'length', field: 'description', min: 1, max: 250}
     ],
-
-    proxy: {
+    proxy       : {
         type: 'wms',
         url : 'wms/agent/invoicetype'
     }
-
 });
