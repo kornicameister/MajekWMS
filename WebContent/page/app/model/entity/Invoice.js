@@ -11,7 +11,7 @@
 Ext.define('WMS.model.entity.Invoice', {
     extend      : 'WMS.model.abstract.DescribedSimple',
     fields      : [
-        'id', 'invoiceNumber',
+        'id', 'refNumber',
         { name: 'createdDate', type: 'date'},
         { name: 'dueDate', type: 'date'}
     ],
@@ -21,7 +21,7 @@ Ext.define('WMS.model.entity.Invoice', {
         {name: 'invoiceClient', type: 'hasOne', model: 'WMS.model.entity.Client'}
     ],
     validations : [
-        { name: 'length', field: 'invoiceNumber', min: 5, max: 30},
+        { name: 'length', field: 'refNumber', min: 5, max: 30},
         { name: 'length', field: 'description', min: 1, max: 250}
     ],
     proxy       : {
