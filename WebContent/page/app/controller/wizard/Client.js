@@ -46,7 +46,7 @@ Ext.define('WMS.controller.wizard.Client', {
             clients = me.getClientsStore();
 
         if (form.isValid()) {
-            var client = clients.add(form.getValues())[0];
+            var client = clients.saveAssociatedClient(form.getValues())[0];
             if (Ext.isDefined(client)) {
                 Ext.getCmp('statusBar').setStatus({
                     text : Ext.String.format('Klient {0} został pomyślnie dodany', client.get('name')),

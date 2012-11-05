@@ -24,5 +24,15 @@ Ext.define('WMS.model.entity.ClientDetails', {
     proxy       : {
         type: 'wms',
         url : 'wms/agent/clientdetails'
+    },
+    statics     : {
+        extract: function (raw) {
+            var fields = [ 'nip', 'phone', 'fax', 'account'],
+                clientDetails = {};
+            Ext.each(fields, function (chunk) {
+                clientDetails[chunk] = raw[chunk];
+            });
+            return clientDetails;
+        }
     }
 });

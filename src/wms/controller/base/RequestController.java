@@ -26,6 +26,8 @@ import org.json.simple.JSONObject;
 
 import wms.controller.UnitController;
 import wms.controller.UnitTypeController;
+import wms.controller.base.annotations.HideAssociation;
+import wms.controller.base.annotations.HideField;
 import wms.controller.base.extractor.Entity;
 import wms.controller.base.extractor.RData;
 import wms.controller.base.format.response.CFormat;
@@ -37,6 +39,8 @@ import wms.model.Warehouse;
 import wms.model.basic.PersistenceObject;
 import wms.utilities.StringUtils;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -63,6 +67,19 @@ public abstract class RequestController implements Controller {
 	protected long processTime = 0l;
 	protected Set<PersistenceObject> affected = new HashSet<>();
 	protected final RData rdata;
+	private static ExclusionStrategy HHExclusionStrategy = new ExclusionStrategy() {
+		@Override
+		public boolean shouldSkipField(FieldAttributes f) {
+			boolean isHideAssocationEnabled = f.getAnnotation(HideAssociation.class) != null;
+			boolean isHideFieldEnabled = f.getAnnotation(HideField.class) != null;
+			return (isHideAssocationEnabled || isHideFieldEnabled);
+		}
+
+		@Override
+		public boolean shouldSkipClass(Class<?> arg0) {
+			return false;
+		}
+	};
 	// -----------RESPONSE----------------/
 
 	private Set<Method> setters;
@@ -155,6 +172,8 @@ public abstract class RequestController implements Controller {
 	public String buildResponse() {
 		Gson g = new GsonBuilder()
 				.setDateFormat("m-D-y")
+				.setPrettyPrinting()
+				.setExclusionStrategies(HHExclusionStrategy)
 				.registerTypeHierarchyAdapter(HibernateProxy.class,
 						new HibernateProxySerializer()).create();
 		return this.createResponseString(g);
@@ -224,9 +243,10 @@ public abstract class RequestController implements Controller {
 					break;
 				case CREATE:
 					entity = this.preCreate(
-							entity = (PersistenceObject) gson.fromJson(dataElement
-									.toJSONString(), this.rdata.getModule()
-									.getEntityClass()), dataElement);
+							entity = (PersistenceObject) gson.fromJson(
+									dataElement.toJSONString(), this.rdata
+											.getModule().getEntityClass()),
+							dataElement);
 					break;
 				case DELETE:
 					entity = this.preDelete(dataElement);
@@ -267,8 +287,8 @@ public abstract class RequestController implements Controller {
 		logger.info(String.format(
 				"Update via reflection, payload data = [ %s ]",
 				jData.toJSONString()));
-		PersistenceObject b = (PersistenceObject) this.session.get(this.rdata.getModule()
-				.getEntityClass(), (Serializable) jData.get("id"));
+		PersistenceObject b = (PersistenceObject) this.session.get(this.rdata
+				.getModule().getEntityClass(), (Serializable) jData.get("id"));
 
 		// this method is called many times still, setters are extracted only
 		// once !
@@ -298,8 +318,8 @@ public abstract class RequestController implements Controller {
 	}
 
 	/**
-	 * Method goes through methods declared in {@link PersistenceObject}(b) and cuts
-	 * off all but setters.
+	 * Method goes through methods declared in {@link PersistenceObject}(b) and
+	 * cuts off all but setters.
 	 * 
 	 * @param b
 	 * @return
@@ -374,8 +394,8 @@ public abstract class RequestController implements Controller {
 	 * @param payloadedData
 	 * @return
 	 */
-	protected abstract PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
-			JSONObject payloadedData);
+	protected abstract PersistenceObject preUpdateNonPrimitives(
+			PersistenceObject b, JSONObject payloadedData);
 
 	protected abstract Object adjustValueType(Object value, String property);
 

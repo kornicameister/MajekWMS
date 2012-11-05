@@ -54,7 +54,43 @@ Ext.define('WMS.model.entity.Client', {
         }
     ],
     proxy       : {
-        type: 'wms',
-        url : 'wms/agent/client'
+        type  : 'wms',
+        url   : 'wms/agent/client',
+        writer: {
+            type          : 'json',
+            root          : 'data',
+            allowSingle   : false,
+            writeAllFields: false,
+            /**
+             * Method is overridden due to need to
+             * provide more thick data package. Instead
+             * of POSTING client, address, clientDetails in
+             * separate requests.
+             * @param record
+             * @return {*|String}
+             */
+            getRecordData : function (record) {
+                var toBeSent = record.getData();
+                toBeSent['address'] = record['address'];
+                toBeSent['details'] = record['details'];
+                toBeSent['type'] = record['type'];
+
+                delete toBeSent['address_id'];
+                delete toBeSent['details_id'];
+                delete toBeSent['type_id'];
+
+                return toBeSent;
+            }
+        }
+    },
+    statics     : {
+        extract: function (raw) {
+            var fields = ['address_id', 'type_id', 'details_id', 'description', 'name','company'],
+                client = {};
+            Ext.each(fields, function (chunk) {
+                client[chunk] = raw[chunk];
+            });
+            return client;
+        }
     }
 });

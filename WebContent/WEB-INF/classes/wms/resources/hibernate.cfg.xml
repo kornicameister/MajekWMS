@@ -25,6 +25,7 @@
 
 		<!-- mapping -->
 		<!-- basic -->
+		<mapping class="wms.model.basic.BasicPersistanceObject"/>
 		<mapping class="wms.model.basic.PersistenceObject" />
 		<mapping class="wms.model.basic.NamedPersistenceObject" />
 

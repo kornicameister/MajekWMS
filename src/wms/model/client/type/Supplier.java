@@ -16,4 +16,9 @@ public class Supplier extends Client {
 		super();
 	}
 
+	@Override
+	public String toString() {
+		return "Supplier [toString()=" + super.toString() + "]";
+	}
+
 }

@@ -15,7 +15,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -42,8 +41,7 @@ public class Client extends NamedPersistenceObject {
 	@Column(name = "description", nullable = true, length = 200)
 	private String description;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn(name = "details_id", referencedColumnName = "idClientDetails")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
 	private ClientDetails details;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

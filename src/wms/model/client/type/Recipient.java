@@ -16,4 +16,9 @@ public class Recipient extends Client {
 		super();
 	}
 
+	@Override
+	public String toString() {
+		return "Recipient [toString()=" + super.toString() + "]";
+	}
+
 }

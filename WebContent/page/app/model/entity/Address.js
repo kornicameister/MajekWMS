@@ -37,5 +37,15 @@ Ext.define('WMS.model.entity.Address', {
     proxy       : {
         type: 'wms',
         url : 'wms/agent/address'
+    },
+    statics     : {
+        extract: function (raw) {
+            var fields = ['postcode', 'street', 'city_id'],
+                address = {};
+            Ext.each(fields, function (chunk) {
+                address[chunk] = raw[chunk];
+            });
+            return address;
+        }
     }
 });
