@@ -10,45 +10,44 @@ Ext.define('WMS.controller.manager.Recipients', {
     requires                  : [
         'WMS.view.wizard.client.Dialog'
     ],
+    refs                      : [
+        { ref: 'managerUI', selector: 'recipientmanager' },
+        { ref: 'recipientList', selector: 'recipientmanager clientgrid'},
+        { ref: 'detailsView', selector: 'recipientmanager recipientdetails'}
+    ],
     views                     : [
         'WMS.view.manager.recipient.Manager'
     ],
-    refs                      : [
-        { ref: 'managerUI', selector: 'clientmanager' },
-        { ref: 'clientsList', selector: 'clientmanager grid'},
-        { ref: 'clientDetails', selector: 'clientmanager clientdetails'}
-    ],
     stores                    : [
-        'Recipients',
-        'Suppliers'
+        'Recipients'
     ],
     init                      : function () {
         console.init('WMS.controller.manager.Recipients is initializing...');
         var me = this;
         me.control({
-            'clientmanager toolbar button[itemId=newClient]'    : {
+            'recipientmanager toolbar button[itemId=newClient]'    : {
                 'click': me.onNewClientAddClick
             },
-            'clientmanager toolbar button[itemId=removeClient]' : {
+            'recipientmanager toolbar button[itemId=removeClient]' : {
                 'click': me.onRemoveClientClick
             },
-            'clientmanager toolbar button[itemId=editClient]'   : {
+            'recipientmanager toolbar button[itemId=editClient]'   : {
                 'click': me.onEditClientClick
             },
-            'clientmanager toolbar button[itemId=detailsClient]': {
+            'recipientmanager toolbar button[itemId=detailsClient]': {
                 'click': me.onDetailsClientClickButton
             },
-            'clientmanager toolbar button[itemId=releaseClient]': {
+            'recipientmanager toolbar button[itemId=releaseClient]': {
                 'click': me.onReleaseClientClick
             },
-            'clientmanager grid'                                : {
+            'recipientmanager clientgrid'                          : {
                 'itemdblclick': me.onDetailsClientClickGrid
             }
         });
     },
     onDetailsClientRequest    : function (client) {
         var me = this,
-            detailsView = me.getClientDetails(),
+            detailsView = me.getDetailsView(),
             data = client.getData(true);
 
         if (Ext.isDefined(client) && Ext.isDefined(detailsView)) {
@@ -98,6 +97,25 @@ Ext.define('WMS.controller.manager.Recipients', {
     },
     //-----------UTILS and WRAPPERS ----------------//
     /**
+     * Utility method returning selected clients.
+     * Selection is understood as rows being currently selected
+     * in the clients list
+     * @return {*}
+     */
+    getSelectedClients        : function () {
+        var me = this;
+        return me.getRecipientList().getView().getSelectionModel().getSelection();
+    },
+    popupDetailsView          : function () {
+        var me = this,
+            managerUI = me.getManagerUI(),
+            detailsView = managerUI['items'].get('recipientDetailsHolder');
+        if (Ext.isDefined(detailsView)) {
+            detailsView.expand();
+        } else {
+            console.log('manager.Recipients :: Failed to popup with statistics')
+        }
+    }, /**
      * Method used as wrapper for the right method which is
      * to process the request
      * @param grid
@@ -116,25 +134,5 @@ Ext.define('WMS.controller.manager.Recipients', {
         var me = this,
             selection = me.getSelectedClients();
         me.onDetailsClientRequest(selection[0]);
-    },
-    /**
-     * Utility method returning selected clients.
-     * Selection is understood as rows being currently selected
-     * in the clients list
-     * @return {*}
-     */
-    getSelectedClients        : function () {
-        var me = this;
-        return me.getClientsList().getView().getSelectionModel().getSelection();
-    },
-    popupDetailsView          : function () {
-        var me = this,
-            managerUI = me.getManagerUI(),
-            detailsView = managerUI['items'].get('clientDetailed');
-        if (Ext.isDefined(detailsView)) {
-            detailsView.expand();
-        } else {
-            console.log('manager.Recipients :: Failed to popup with statistics')
-        }
     }
 });

@@ -27,7 +27,7 @@ Ext.define('WMS.controller.wizard.Client', {
         }
     ],
     init          : function () {
-        console.log('WMS.controller.wizard.Client initializing...');
+        console.init('WMS.controller.wizard.Client initializing...');
         var me = this;
 
         me.control({

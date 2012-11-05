@@ -46,6 +46,7 @@
                     'wms.unit.Inventory',
 
                     'manager.Recipients',
+                    'manager.Suppliers',
 
                     'wizard.Client',
                     'wizard.Warehouse',

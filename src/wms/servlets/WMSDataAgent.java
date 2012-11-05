@@ -60,9 +60,10 @@ public class WMSDataAgent extends HttpServlet {
 			HttpServletResponse resp, CRUD action) throws IOException {
 		resp.setCharacterEncoding("UTF-8");
 		PrintWriter out = resp.getWriter();
-		RequestController controller = RequestController.pickController(RDExtractor.parse(req, action));
+		RequestController controller = null;
 
-		if (controller == null) {
+		if ((controller = RequestController.pickController(RDExtractor.parse(
+				req, action))) == null) {
 			logger.warning(String.format(
 					"Module not recognized, tried extract from URI=[%s]",
 					req.getRequestURI()));
