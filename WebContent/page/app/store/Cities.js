@@ -10,5 +10,5 @@ Ext.define('WMS.store.Cities', {
     model : 'WMS.model.entity.City',
 
     autoLoad: true,
-    autoSync: true
+    autoSync: false
 });

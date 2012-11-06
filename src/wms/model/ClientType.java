@@ -1,4 +1,4 @@
-package wms.model.client;
+package wms.model;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import wms.model.basic.NamedPersistenceObject;
 
 @Entity
 @Table(name = "clientType", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })

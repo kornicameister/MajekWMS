@@ -1,4 +1,4 @@
-package wms.model.product;
+package wms.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import wms.model.basic.NamedPersistenceObject;
-import wms.model.invoice.InvoiceProduct;
 
 @SuppressWarnings("deprecation")
 @Entity

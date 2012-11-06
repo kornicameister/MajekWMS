@@ -1,25 +1,22 @@
 package wms.controller.base.extractor;
 
 import wms.controller.AddressController;
-import wms.controller.CityController;
+import wms.controller.BasicController;
 import wms.controller.ClientController;
-import wms.controller.ClientDetailsController;
 import wms.controller.MeasureController;
 import wms.controller.ProductController;
 import wms.controller.UnitController;
 import wms.controller.UnitTypeController;
 import wms.controller.WarehouseController;
 import wms.controller.base.RequestController;
+import wms.model.Address;
+import wms.model.BasicPersistanceObject;
+import wms.model.Client;
+import wms.model.Measure;
+import wms.model.Product;
+import wms.model.Unit;
+import wms.model.UnitType;
 import wms.model.Warehouse;
-import wms.model.basic.BasicPersistanceObject;
-import wms.model.client.Address;
-import wms.model.client.City;
-import wms.model.client.Client;
-import wms.model.client.ClientDetails;
-import wms.model.product.Measure;
-import wms.model.product.Product;
-import wms.model.unit.Unit;
-import wms.model.unit.UnitType;
 
 /**
  * This enum is used mainly when creating 
@@ -35,11 +32,10 @@ public enum Entity {
 	INVOICE(null,null), 
 	CLIENT(ClientController.class,Client.class),
 	INVOICETYPE(null,null),
-	CITY(CityController.class,City.class),
-	ADDRESS(AddressController.class, Address.class),
-	CLIENTDETAILS(ClientDetailsController.class,ClientDetails.class);
+	BASIC(BasicController.class, BasicPersistanceObject.class),
+	ADDRESS(AddressController.class, Address.class);
 
-	private final Class<? extends BasicPersistanceObject> entityClass;
+	private Class<? extends BasicPersistanceObject> entityClass;
 	private final Class<? extends RequestController> entityControllerClass;
 
 	private Entity(Class<? extends RequestController> ec,Class<? extends BasicPersistanceObject> bc) {
@@ -58,5 +54,10 @@ public enum Entity {
 
 	public Class<? extends RequestController> getEntityControllerClass() {
 		return entityControllerClass;
-	};
+	}
+	
+	public void setEntityClass(Class<? extends BasicPersistanceObject> entityClass) {
+		this.entityClass = entityClass;
+	}
+	
 }

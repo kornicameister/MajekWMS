@@ -1,4 +1,4 @@
-package wms.model.basic;
+package wms.model;
 
 import javax.persistence.Basic;
 import javax.persistence.MappedSuperclass;

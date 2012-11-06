@@ -6,22 +6,20 @@
  */
 
 Ext.define('WMS.controller.wizard.Warehouse', {
-    extend: 'Ext.app.Controller',
-
-    views : [
+    extend           : 'Ext.app.Controller',
+    views            : [
         'wizard.Warehouse'
     ],
-    refs  : [
+    refs             : [
         {
             ref     : 'wizard',
             selector: 'wizardwarehouse'
         }
     ],
-    stores: [
+    stores           : [
         'Warehouses'
     ],
-
-    init: function () {
+    init             : function () {
         console.init('WMS.controller.wizard.Warehouse initializing...');
         var me = this;
 
@@ -31,14 +29,12 @@ Ext.define('WMS.controller.wizard.Warehouse', {
             }
         });
     },
-
-    openWizard: function () {
+    openWizard       : function () {
         var me = this,
             wizardView = me.getWizard();
 
         wizardView.show(true);
     },
-
     onWarehouseSubmit: function (button) {
         var form = button.up('form').getForm(),
             me = this;

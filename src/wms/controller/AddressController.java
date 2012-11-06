@@ -2,13 +2,12 @@ package wms.controller;
 
 import org.json.simple.JSONObject;
 
-import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.basic.PersistenceObject;
-import wms.model.client.Address;
-import wms.model.client.City;
+import wms.model.Address;
+import wms.model.City;
+import wms.model.PersistenceObject;
 
-public class AddressController extends RequestController {
+public class AddressController extends BasicController {
 
 	private class ActionData {
 		Long city_id, address_id;

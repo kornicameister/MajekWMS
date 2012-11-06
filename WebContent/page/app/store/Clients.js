@@ -12,24 +12,7 @@ Ext.define('WMS.store.Clients', {
     autoLoad: true,
     autoSync: true,
 
-    /**
-     * This method saves new client to server along with associated data
-     * such as details and address.
-     * Client is valid only if address and details are valid. But even though
-     * address can be saved prior to client there is a problem with
-     * clientDetails that must be saved after client's successful save;
-     * @param rawClient
-     */
-    saveAssociatedClient: function (rawClient) {
-        var address = WMS.model.entity.Address.extract(rawClient),
-            client = WMS.model.entity.Client.extract(rawClient),
-            clientDetails = WMS.model.entity.ClientDetails.extract(rawClient);
-
-        client = Ext.create('WMS.model.entity.Client', client);
-        client['address'] = address;
-        client['details'] = clientDetails;
-        client['type'] = {id: 1};
-
+    saveAssociatedClient: function (client) {
         this.add(client);
     }
 });

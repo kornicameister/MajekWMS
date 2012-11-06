@@ -1,4 +1,4 @@
-package wms.model.client;
+package wms.model;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Basic;
@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import wms.model.basic.PersistenceObject;
 
 @Entity
 @Table(name = "address")

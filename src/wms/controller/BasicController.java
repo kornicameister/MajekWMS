@@ -4,17 +4,16 @@ import org.json.simple.JSONObject;
 
 import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.basic.PersistenceObject;
+import wms.model.PersistenceObject;
 
-public class ClientDetailsController extends RequestController {
+public class BasicController extends RequestController {
 
-	public ClientDetailsController(RData data) {
+	public BasicController(RData data) {
 		super(data);
 	}
 
 	@Override
-	protected PersistenceObject preCreate(PersistenceObject b,
-			JSONObject payloadedData) {
+	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
 		return b;
 	}
 

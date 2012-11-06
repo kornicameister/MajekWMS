@@ -6,20 +6,26 @@
  */
 
 Ext.define('WMS.view.wizard.client.Form', {
-    extend: 'Ext.form.Panel',
-    alias : 'widget.clientform',
-    url   : 'wms/client/save',
-
+    extend      : 'Ext.form.Panel',
+    alias       : 'widget.clientform',
+    url         : 'wms/client/save',
+    requires    : [
+        'WMS.model.entity.City',
+        'WMS.model.entity.ClientType'
+    ],
     monitorValid: true,
     autoScroll  : true,
+    plain       : true,
     defaultType : 'fieldset',
     defaults    : {
-        defaultType: 'textfield',
-        collapsible: true,
-        collapsed  : true,
-        defaults   : {
+        defaultType  : 'textfield',
+        fieldDefaults: {
+            labelWidth: 55,
+            msgTarget : 'side'
+        },
+        defaults     : {
             maxLength : 45,
-            width     : 300,
+            width     : 350,
             allowBlank: false
         }
     },
@@ -29,6 +35,22 @@ Ext.define('WMS.view.wizard.client.Form', {
         align: 'stretch'
     },
     items       : [
+        {
+            title   : 'Typ',
+            disabled: true,
+            items   : {
+                xtype        : 'combo',
+                itemId       : 'typeId',
+                fieldLabel   : 'Typ',
+                name         : 'type_id',
+                store        : 'ClientTypes',
+                valueField   : 'id',
+                displayField : 'name',
+                typeAhead    : true,
+                triggerAction: 'all',
+                selectOnTab  : true
+            }
+        },
         {
             title    : 'Podstawowe informacje',
             collapsed: false,
@@ -65,10 +87,9 @@ Ext.define('WMS.view.wizard.client.Form', {
                     name      : 'postcode'
                 },
                 {
-                    xtype     : 'combo',
-                    fieldLabel: 'Miejscowość',
-                    name      : 'city_id',
-
+                    xtype        : 'combo',
+                    fieldLabel   : 'Miejscowość',
+                    name         : 'city_id',
                     store        : 'Cities',
                     valueField   : 'id',
                     displayField : 'name',

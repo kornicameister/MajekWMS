@@ -19,7 +19,9 @@ Ext.define('WMS.controller.manager.Recipients', {
         'WMS.view.manager.recipient.Manager'
     ],
     stores                    : [
-        'Recipients'
+        'Clients',
+        'Cities',
+        'ClientTypes'
     ],
     init                      : function () {
         console.init('WMS.controller.manager.Recipients is initializing...');

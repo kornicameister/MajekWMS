@@ -25,6 +25,6 @@ Ext.define('WMS.model.entity.InvoiceProduct', {
     ],
     proxy       : {
         type: 'wms',
-        url : 'wms/agent/invoiceproduct'
+        url : 'wms/agent/invoiceProduct'
     }
 });

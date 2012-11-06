@@ -48,6 +48,9 @@ Ext.define('WMS.controller.Toolbars', {
             '#headerToolbar menu[itemId=clientsMenu]'    : {
                 'click': me.onClientMenuClick
             },
+            '#headerToolbar menu[itemId=suppliersMenu]'    : {
+                'click': me.onClientMenuClick
+            },
             '#footerToolbar button[itemId=saveButton]'   : {
                 'click': me.onSaveAction
             },
@@ -58,9 +61,13 @@ Ext.define('WMS.controller.Toolbars', {
     },
     onClientMenuClick       : function (menu, item) {
         console.log('Toolbars :: ' + Ext.String.format('{0} button clicked...', item['itemId']));
-        var me = this;
+        var me = this,
+            clientWizardManager = me.getController('WMS.controller.wizard.Client');
+
         if (item['itemId'] === 'addClient') {
-            me.onAddClient(item);
+            clientWizardManager.openAsRecipient();
+        } else if(item['itemId'] === 'addSupplier'){
+            clientWizardManager.openAsSupplier();
         } else {
             console.log('Toolbars :: ' + Ext.String.format('{0} button has not ben recognized...', item['itemId']))
         }
@@ -74,15 +81,6 @@ Ext.define('WMS.controller.Toolbars', {
         var me = this,
             masterCtrl = me.getController('WMS.controller.Master');
         masterCtrl.openRecipientManager();
-    },
-    /**
-     * @description Opens new client's wizard
-     */
-    onAddClient             : function (button) {
-        var me = this,
-            clientWizard = me.getView('wizard.client.Dialog');
-
-        clientWizard.create().show(button.up('menu').up('button'));
     },
     onUnitSelected          : function (storemenu, item, storeItem) {
 

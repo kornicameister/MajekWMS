@@ -23,7 +23,7 @@ Ext.define('WMS.model.entity.ClientDetails', {
     ],
     proxy       : {
         type: 'wms',
-        url : 'wms/agent/clientdetails'
+        url : 'wms/agent/clientDetails'
     },
     statics     : {
         extract: function (raw) {

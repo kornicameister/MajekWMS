@@ -1,4 +1,4 @@
-package wms.model.client;
+package wms.model;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,7 +15,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import wms.controller.base.annotations.HideAssociation;
-import wms.model.basic.BasicPersistanceObject;
 
 import com.google.gson.annotations.SerializedName;
 

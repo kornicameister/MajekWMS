@@ -35,8 +35,8 @@ import wms.controller.base.format.response.DFormat;
 import wms.controller.base.format.response.RFormat;
 import wms.controller.base.format.response.UFormat;
 import wms.controller.hibernate.HibernateBridge;
+import wms.model.PersistenceObject;
 import wms.model.Warehouse;
-import wms.model.basic.PersistenceObject;
 import wms.utilities.StringUtils;
 
 import com.google.gson.ExclusionStrategy;
@@ -122,8 +122,7 @@ public abstract class RequestController implements Controller {
 	@Override
 	public void read() {
 		this.session.beginTransaction();
-		List<?> data = this.session.createQuery(this.rdata.getReadQuery())
-				.list();
+		List<?> data = this.session.createQuery(this.rdata.getReadQuery()).list();
 		this.session.getTransaction().commit();
 		for (Object o : data) {
 			this.affected.add((PersistenceObject) o);

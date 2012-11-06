@@ -1,4 +1,4 @@
-package wms.model.invoice;
+package wms.model;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,8 +22,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import wms.model.basic.PersistenceObject;
-import wms.model.client.Client;
 
 @Entity
 @Table(name = "invoice", schema = "majekwms", uniqueConstraints = { @UniqueConstraint(columnNames = { "refNumber" }) })

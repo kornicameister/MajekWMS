@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import wms.controller.base.CRUD;
-import wms.model.basic.PersistenceObject;
+import wms.model.PersistenceObject;
 
 import com.google.gson.annotations.Expose;
 

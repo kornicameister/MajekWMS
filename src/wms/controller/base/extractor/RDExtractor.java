@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +15,9 @@ import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
 import wms.controller.base.CRUD;
+import wms.model.BasicPersistanceObject;
 import wms.utilities.Pair;
+import wms.utilities.StringUtils;
 
 /**
  * RequestDataExtractor. Class with static method to utilize extracting required
@@ -27,6 +30,8 @@ import wms.utilities.Pair;
  * 
  */
 public final class RDExtractor {
+	private final static Logger logger = Logger.getLogger(RDExtractor.class
+			.getName());
 
 	public static RData parse(HttpServletRequest req, CRUD action)
 			throws IOException {
@@ -70,6 +75,7 @@ public final class RDExtractor {
 	 * @param uri
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static Entity getModuleAction(String[] uri) {
 		String module = uri[uri.length - 1];
 		Entity moduleE = null;
@@ -79,8 +85,24 @@ public final class RDExtractor {
 			module = uri[uri.length - 2];
 			moduleE = Entity.valueOf(module);
 		} catch (Exception e) {
-			moduleE = Entity.valueOf(module.toUpperCase());
+			try {
+				moduleE = Entity.valueOf(module.toUpperCase());
+			} catch (IllegalArgumentException e2) {
+				moduleE = Entity.BASIC;
+				module = "wms.model."
+						+ StringUtils.capitalizeFirstLetter(module);
+				try {
+					moduleE.setEntityClass((Class<? extends BasicPersistanceObject>) Class
+							.forName(module));
+					logger.info(String
+							.format("Couldn't determine controller, will try to use BasicController [ %s ]",
+									module));
+				} catch (ClassNotFoundException e1) {
+					e1.printStackTrace();
+				}
+			}
 		}
+		logger.info(String.format("Recognized controller - [ %s ]", moduleE));
 		return moduleE;
 	}
 
@@ -142,6 +164,9 @@ public final class RDExtractor {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+
+		logger.info(String.format("Extracted payloaded data, size = [ %d ]",
+				payloadJSON.size()));
 		return payloadJSON;
 	}
 }

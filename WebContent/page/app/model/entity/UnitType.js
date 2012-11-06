@@ -21,6 +21,6 @@ Ext.define('WMS.model.entity.UnitType', {
     ],
     proxy: {
         type: 'wms',
-        url : 'wms/agent/unittype'
+        url : 'wms/agent/unitType'
     }
 });

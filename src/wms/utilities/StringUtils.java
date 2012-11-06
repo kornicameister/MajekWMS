@@ -11,4 +11,9 @@ public class StringUtils {
 		return Character.toLowerCase(str.charAt(0))
 				+ (str.length() > 1 ? str.substring(1) : "");
 	}
+
+	public static String capitalizeFirstLetter(final String str) {
+		return Character.toUpperCase(str.charAt(0))
+				+ (str.length() > 1 ? str.substring(1) : "");
+	}
 }

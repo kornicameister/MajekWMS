@@ -1,4 +1,4 @@
-package wms.model.unit;
+package wms.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,9 +19,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
 
-import wms.model.Warehouse;
-import wms.model.basic.NamedPersistenceObject;
-import wms.model.product.Product;
 
 @SuppressWarnings("deprecation")
 @Entity

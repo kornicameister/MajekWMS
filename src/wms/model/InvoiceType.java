@@ -1,4 +1,4 @@
-package wms.model.invoice;
+package wms.model;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import wms.model.basic.NamedPersistenceObject;
 
 @Entity
 @Table(name = "invoiceType", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })

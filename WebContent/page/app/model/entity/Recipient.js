@@ -12,6 +12,15 @@ Ext.define('WMS.model.entity.Recipient', {
         url        : 'wms/agent/client',
         extraParams: {
             type: 'recipient'
+        },
+        writer     : {
+            type          : 'json',
+            root          : 'data',
+            allowSingle   : false,
+            writeAllFields: false,
+            getRecordData : function (record) {
+                return WMS.model.entity.Client.getRecordData(record);
+            }
         }
     }
 });

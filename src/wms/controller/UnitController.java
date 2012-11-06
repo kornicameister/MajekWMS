@@ -6,15 +6,14 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.json.simple.JSONObject;
 
-import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
+import wms.model.PersistenceObject;
+import wms.model.Unit;
+import wms.model.UnitType;
 import wms.model.Warehouse;
-import wms.model.basic.PersistenceObject;
-import wms.model.unit.Unit;
-import wms.model.unit.UnitType;
 import wms.utilities.Pair;
 
-public class UnitController extends RequestController {
+public class UnitController extends BasicController {
 	private static final String WHERE_S_WFK = " where %s = :wfk";
 
 	private class ActionData {

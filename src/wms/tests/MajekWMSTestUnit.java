@@ -12,9 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import wms.model.Measure;
+import wms.model.UnitType;
 import wms.model.Warehouse;
-import wms.model.product.Measure;
-import wms.model.unit.UnitType;
 
 public class MajekWMSTestUnit {
 	private File hibernateCfg;

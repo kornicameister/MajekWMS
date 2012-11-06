@@ -13,7 +13,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Formula;
 
-import wms.model.basic.NamedPersistenceObject;
 
 @Entity
 @Table(name = "warehouse", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })

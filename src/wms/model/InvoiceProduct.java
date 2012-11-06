@@ -1,4 +1,4 @@
-package wms.model.invoice;
+package wms.model;
 
 import java.io.Serializable;
 
@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import wms.model.product.Product;
 
 @Entity
 @Table(name = "invoiceProduct")

@@ -1,4 +1,4 @@
-package wms.model.basic;
+package wms.model;
 
 import java.io.Serializable;
 import java.util.Date;

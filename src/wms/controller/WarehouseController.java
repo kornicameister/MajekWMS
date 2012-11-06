@@ -1,30 +1,10 @@
 package wms.controller;
 
-import org.json.simple.JSONObject;
-
-import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.basic.PersistenceObject;
 
-public class WarehouseController extends RequestController {
+public class WarehouseController extends BasicController {
 	public WarehouseController(RData d) {
 		super(d);
-	}
-
-	@Override
-	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
-		return b;
-	}
-
-	@Override
-	protected PersistenceObject preDelete(JSONObject payloadedData) {
-		return null;
-	}
-
-	@Override
-	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
-			JSONObject payloadedData) {
-		return b;
 	}
 
 	@Override

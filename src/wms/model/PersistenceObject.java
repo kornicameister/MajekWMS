@@ -1,4 +1,4 @@
-package wms.model.basic;
+package wms.model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

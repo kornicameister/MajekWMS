@@ -12,6 +12,6 @@ Ext.define('WMS.model.entity.ClientType', {
     ],
     proxy       : {
         type: 'wms',
-        url : 'wms/agent/clienttype'
+        url : 'wms/agent/clientType'
     }
 });

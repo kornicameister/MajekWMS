@@ -10,7 +10,6 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.NaturalId;
 
-import wms.model.basic.PersistenceObject;
 
 import com.google.gson.annotations.Expose;
 

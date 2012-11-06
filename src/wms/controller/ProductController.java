@@ -11,14 +11,13 @@ import java.util.logging.Logger;
 import org.hibernate.Transaction;
 import org.json.simple.JSONObject;
 
-import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.basic.PersistenceObject;
-import wms.model.product.Measure;
-import wms.model.product.Product;
-import wms.model.unit.Unit;
+import wms.model.Measure;
+import wms.model.PersistenceObject;
+import wms.model.Product;
+import wms.model.Unit;
 
-public class ProductController extends RequestController {
+public class ProductController extends BasicController {
 	private Map<Unit, HashSet<Product>> unitProduct;
 	private final static Logger logger = Logger
 			.getLogger(ProductController.class.getName());
