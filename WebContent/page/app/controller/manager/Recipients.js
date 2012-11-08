@@ -19,9 +19,9 @@ Ext.define('WMS.controller.manager.Recipients', {
         'WMS.view.manager.recipient.Manager'
     ],
     stores                    : [
-        'Clients',
         'Cities',
-        'ClientTypes'
+        'ClientTypes',
+        'Recipients'
     ],
     init                      : function () {
         console.init('WMS.controller.manager.Recipients is initializing...');
@@ -68,8 +68,8 @@ Ext.define('WMS.controller.manager.Recipients', {
     },
     onReleaseClientClick      : function () {
         var me = this,
-            store = me.getClientsStore(),
-            selection = this.getSelectedClients();
+            store = me.getRecipientsStore(),
+            selection = me.getSelectedClients();
     },
     onNewClientAddClick       : function (button) {
         var me = this,
@@ -81,8 +81,8 @@ Ext.define('WMS.controller.manager.Recipients', {
     },
     onRemoveClientClick       : function () {
         var me = this,
-            store = me.getClientsStore(),
-            selection = this.getSelectedClients();
+            store = me.getRecipientsStore(),
+            selection = me.getSelectedClients();
         if (selection) {
             store.remove(selection);
             Ext.getCmp('statusBar').setStatus({

@@ -6,22 +6,20 @@
  */
 
 Ext.define('WMS.controller.wms.unit.Inventory', {
-    extend: 'Ext.app.Controller',
-
-    requires: [
+    extend                   : 'Ext.app.Controller',
+    requires                 : [
         'WMS.view.abstract.NavigableNumberField'
     ],
-    stores  : [
+    stores                   : [
         'Measures'
     ],
-    views   : [
+    views                    : [
         'wms.unit.Inventory'
     ],
-    refs    : [
+    refs                     : [
         { ref: 'productList', selector: 'wmsunitinventory' }
     ],
-
-    init: function () {
+    init                     : function () {
         console.init('WMS.controller.wms.unit.Inventory initializing... ');
         var me = this;
 
@@ -37,8 +35,7 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
             }
         });
     },
-
-    onProductAdd: function () {
+    onProductAdd             : function () {
         var me = this,
             activeUnit = me.getStore('Units').getActive(),
             record = activeUnit.addProduct(Ext.create('WMS.model.entity.Product'));
@@ -60,8 +57,7 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
             }
         });
     },
-
-    onProductDelete: function () {
+    onProductDelete          : function () {
         var me = this,
             activeUnit = me
                 .getStore('Units')
@@ -85,14 +81,12 @@ Ext.define('WMS.controller.wms.unit.Inventory', {
             });
         }
     },
-
     onProductSelectionChanged: function (selModel, selections) {
         var me = this,
             grid = me.getProductList();
         grid.down('#delete').setDisabled(selections.length === 0);
     },
-
-    loadProductsFromUnit: function (unit) {
+    loadProductsFromUnit     : function (unit) {
         var me = this,
             grid = me.getProductList(),
             products = unit.products(),

@@ -10,7 +10,8 @@
 
 Ext.define('WMS.controller.Master', {
     extend              : 'Ext.app.Controller',
-    requires            : [
+    singleton           : true,
+    uses                : [
         'WMS.view.manager.recipient.Manager',
         'WMS.view.manager.supplier.Manager'
     ],

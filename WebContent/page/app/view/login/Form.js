@@ -32,19 +32,6 @@ Ext.define('WMS.view.login.Form', {
             fieldLabel: 'Hasło',
             name      : 'password',
             inputType : 'password'
-        },
-        {
-            xtype     : 'combo',
-            name      : 'warehouse',
-            fieldLabel: 'Magazyn',
-            store     : 'Warehouses',
-
-            valueField  : 'id',
-            displayField: 'name',
-
-            typeAhead    : true,
-            triggerAction: 'all',
-            selectOnTab  : true
         }
     ],
 

@@ -54,8 +54,8 @@ Ext.define('WMS.model.entity.Client', {
         }
     ],
     proxy       : {
-        type  : 'wms',
-        url   : 'wms/agent/client'
+        type: 'wms',
+        url : 'wms/agent/client'
     },
     statics     : {
         extract      : function (raw) {
@@ -72,19 +72,23 @@ Ext.define('WMS.model.entity.Client', {
          * of POSTING client, address, clientDetails in
          * separate requests.
          * @param record
+         * @param operation
          * @return {*|String}
          */
-        getRecordData: function (record) {
-            var toBeSent = record.getData();
-            toBeSent['address'] = record['address'];
-            toBeSent['details'] = record['details'];
-            toBeSent['type'] = record['type'];
+        getRecordData: function (record, operation) {
+            if (operation['action'] === 'create') {
+                var toBeSent = record.getData();
+                toBeSent['address'] = record['address'];
+                toBeSent['details'] = record['details'];
+                toBeSent['type'] = record['type'];
 
-            delete toBeSent['address_id'];
-            delete toBeSent['details_id'];
-            delete toBeSent['type_id'];
+                delete toBeSent['address_id'];
+                delete toBeSent['details_id'];
+                delete toBeSent['type_id'];
 
-            return toBeSent;
+                return toBeSent;
+            }
+            return record.getData();
         }
     }
 });

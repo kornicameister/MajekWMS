@@ -49,7 +49,7 @@
                     'manager.Suppliers',
 
                     'wizard.Client',
-                    'wizard.Warehouse',
+                    'wizard.Company',
 
                     'Toolbars',
                     'Login',

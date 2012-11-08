@@ -6,16 +6,15 @@
  */
 
 Ext.define('WMS.view.wizard.client.Dialog', {
-    extend: 'WMS.view.abstract.BaseDialog',
-    alias : 'widget.wizardclient',
-    title : 'Dodawanie nowego klienta',
-    width : 400,
-
-    requires: [
+    extend            : 'WMS.view.abstract.BaseDialog',
+    alias             : 'widget.wizardclient',
+    alternateClassName: 'WMS.wizard.Client',
+    title             : 'Dodawanie nowego klienta',
+    width             : 400,
+    uses              : [
         'WMS.view.wizard.client.Form'
     ],
-
-    items: {
+    items             : {
         xtype: 'clientform'
     }
 });

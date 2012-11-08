@@ -6,28 +6,22 @@
  */
 
 Ext.define('WMS.controller.wms.Unit', {
-    extend: 'Ext.app.Controller',
-    views : [
+    extend           : 'Ext.app.Controller',
+    views            : [
         'WMS.view.wms.Unit'
     ],
-    refs  : [
-        {
-            ref     : 'unitPanel',
-            selector: 'wmsunit'
-        }
+    refs             : [
+        { ref: 'unitPanel', selector: 'wmsunit' }
     ],
-
-    init: function () {
+    init             : function () {
         console.init('WMS.controller.wms.Unit initializing');
     },
-
     activatePlacement: function () {
         var me = this,
             unitPanel = me.getUnitPanel();
 
         unitPanel['items'].get('wmsUnitSchema').expand();
     },
-
     activateInventory: function () {
         var me = this,
             unitPanel = me.getUnitPanel();

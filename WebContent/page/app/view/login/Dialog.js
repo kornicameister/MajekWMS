@@ -18,12 +18,13 @@ Ext.define('WMS.view.login.Dialog', {
     title     : 'Witaj',
     autoShow  : true,
     autoRender: true,
-
-    layout: {
+    uses      : [
+        'WMS.view.login.Form'
+    ],
+    layout    : {
         type: 'fit'
     },
-
-    items: [
+    items     : [
         {
             xtype: 'loginform',
             url  : 'wms/auth'

@@ -10,7 +10,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
 
     stores: [
         'UnitSprites',
-        'Warehouses'
+        'Companies'
     ],
     views : [
         'WMS.view.wms.unit.Canvas'
@@ -37,25 +37,23 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
         this.callParent(arguments);
     },
 
-    init: function () {
-        console.init('WMS.controller.wms.unit.Canvas initializing... ');
-        var me = this;
-        me.control({
-            'wmsunitcanvas #unitsDrawingCmp': {
-                boxready: me.onBoxReady
-            }
-        }, me);
+    init          : function () {
+//        console.init('WMS.controller.wms.unit.Canvas initializing... ');
+//        var me = this;
+//        me.control({
+//            'wmsunitcanvas #unitsDrawingCmp': {
+//                boxready: me.onBoxReady
+//            }
+//        }, me);
     },
-
-    onBoxReady: function (board) {
+    onBoxReady    : function (board) {
         console.log('Canvas :: Drawing chart initialized');
         var me = this;
 
         me.drawHostTiles(board);
         me.drawUnits(board);
     },
-
-    drawHostTiles: function (board) {
+    drawHostTiles : function (board) {
         console.log('Canvas :: Drawing - > host tiles');
         var me = this,
             surface = board['surface'],
@@ -95,8 +93,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
             }
         }
     },
-
-    drawUnits: function (board) {
+    drawUnits     : function (board) {
         console.log('Canvas :: Commencing sprites drawing...');
         var me = this,
             units = me.getWarehousesStore().getActive().getUnits(),
@@ -150,7 +147,6 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
         unitSprites.add(sprites);
         console.log('Canvas :: Drawn units count = [' + me['tiles'].length + ']');
     },
-
     onUnitSelected: function (eventTarget) {
         console.log('UnitDDManager :: Unit has been selected, loading products in progress...');
         var me = this,

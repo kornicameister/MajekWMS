@@ -6,8 +6,7 @@
  */
 
 Ext.define('WMS.view.abstract.BaseDialog', {
-    extend: 'Ext.window.Window',
-
+    extend     : 'Ext.window.Window',
     defaults   : {
         border: false,
         frame : false

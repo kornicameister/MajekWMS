@@ -10,7 +10,7 @@ Ext.define('WMS.controller.wms.Overview', {
 
     stores: [
         'UnitTypes',
-        'Warehouses'
+        'Companies'
     ],
     views : [
         'wms.Overview'
@@ -20,30 +20,31 @@ Ext.define('WMS.controller.wms.Overview', {
         {ref: 'warehouseDescription', selector: 'wmsoverviews propertygrid[itemId=description]'}
     ],
 
-    init: function () {
-        console.init('WMS.controller.wms.Overview initializing...');
-        var me = this,
-            warehouses = me.getWarehousesStore();
-
-        me.control({
-            'wmsoverviews #add'                            : {
-                click: me.onNewUnit
-            },
-            'wmsoverviews #delete'                         : {
-                click: me.onUnitDelete
-            },
-            'wmsoverviews #unitsGrid'                      : {
-                selectionchange: me.onUnitSelectionChanged
-            },
-            'wmsoverviews propertygrid[itemId=description]': {
-                edit: me.onWarehousePropertyEdit
-            }
-        });
-
-        me.mon(warehouses, 'activechanged', me.onActiveWarehouseChange, me);
+    init                   : function () {
+//        console.init('WMS.controller.wms.Overview initializing...');
+//        var me = this,
+//            companies = me.getCompaniesStore();
+//
+//        me.control({
+//            'wmsoverviews #add'                            : {
+//                click: me.onNewUnit
+//            },
+//            'wmsoverviews #delete'                         : {
+//                click: me.onUnitDelete
+//            },
+//            'wmsoverviews #unitsGrid'                      : {
+//                selectionchange: me.onUnitSelectionChanged
+//            },
+//            'wmsoverviews propertygrid[itemId=description]': {
+//                edit: me.onWarehousePropertyEdit
+//            }
+//        });
+//
+//        me.mon(companies, 'load', me.onCompaniesLoad, me);
     },
+    onCompaniesLoad        : function (store, records) {
 
-    // TODO missing impl
+    },
     onWarehousePropertyEdit: function (editor, event) {
         var me = this,
             value = event['value'],
@@ -51,7 +52,6 @@ Ext.define('WMS.controller.wms.Overview', {
 
         console.log(value);
     },
-
     onActiveWarehouseChange: function (store, activeWarehouse) {
         var me = this,
             units = activeWarehouse.getUnits();
@@ -60,7 +60,6 @@ Ext.define('WMS.controller.wms.Overview', {
         me.mon(units, 'load', me.onUnitsStoreLoaded, me);
         me.mon(units, 'update', me.onUnitsStoreUpdated);
     },
-
     onUnitsStoreUpdated: function (store, records) {
         var length = records.length;
         Ext.getCmp('statusBar').setStatus({
@@ -72,7 +71,6 @@ Ext.define('WMS.controller.wms.Overview', {
             }
         });
     },
-
     onUnitsStoreLoaded: function (store) {
         var me = this,
             wd = me.getWarehouseDescription(),
@@ -92,15 +90,13 @@ Ext.define('WMS.controller.wms.Overview', {
         me.getUnitsGrid().reconfigure(store);
         wd.setSource(source);
     },
-
     onUnitSelectionChanged: function (selModel, selections) {
         var grid = this.getUnitsGrid();
         grid.down('#delete').setDisabled(selections.length === 0);
     },
-
     onNewUnit: function () {
         var me = this,
-            store = me.getStore('Warehouses').getActive().getUnits(),
+            store = me.getCompaniesStore().getActive().getUnits(),
             grid = me.getUnitsGrid(),
             record = store.add(Ext.create('WMS.model.entity.Unit'));
 
@@ -118,7 +114,6 @@ Ext.define('WMS.controller.wms.Overview', {
             }
         });
     },
-
     onUnitDelete: function () {
         var me = this,
             store = me.getStore('Warehouses').getActive().getUnits(),

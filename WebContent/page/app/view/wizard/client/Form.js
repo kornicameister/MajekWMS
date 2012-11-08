@@ -9,7 +9,7 @@ Ext.define('WMS.view.wizard.client.Form', {
     extend      : 'Ext.form.Panel',
     alias       : 'widget.clientform',
     url         : 'wms/client/save',
-    requires    : [
+    uses        : [
         'WMS.model.entity.City',
         'WMS.model.entity.ClientType'
     ],

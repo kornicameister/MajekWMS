@@ -10,20 +10,18 @@
  *
  */
 Ext.define('WMS.controller.Login', {
-    extend: 'Ext.app.Controller',
-
-    requires: [
+    extend              : 'Ext.app.Controller',
+    requires            : [
         'WMS.view.login.Dialog',
-        'WMS.view.login.Form',
-        'WMS.view.wizard.Warehouse'
+        'WMS.view.wizard.company.Dialog'
     ],
-    views   : [
+    views               : [
         'login.Dialog'
     ],
-    stores  : [
-        'Warehouses'
+    stores              : [
+        'Companies'
     ],
-    refs    : [
+    refs                : [
         {
             ref     : 'dialog',
             selector: 'logindialog'
@@ -33,16 +31,11 @@ Ext.define('WMS.controller.Login', {
             selector: 'logindialog loginform'
         },
         {
-            ref     : 'warehousesCombo',
-            selector: 'logindialog loginform combo'
-        },
-        {
             ref     : 'masterView',
             selector: 'masterview'
         }
     ],
-
-    init: function () {
+    init                : function () {
         console.init('WMS.controller.Login initializing...');
         var me = this;
 
@@ -50,79 +43,16 @@ Ext.define('WMS.controller.Login', {
             'logindialog loginform button[text=Login]': {
                 'click': me.onLoginButtonClicked
             },
-            'logindialog panel combo'                 : {
-                'select': me.onWarehouseSelected
-            },
-            'logindialog openWarehouseButton'         : {
-                'click': me.onWarehouseOpen
-            },
             '#viewport'                               : {
                 'afterrender': me.maskViewport
             }
         });
-
-        me.mon(me.getWarehousesStore(), 'load', me.onWarehousesLoad, me);
     },
-
-    maskViewport: function (view) {
-        this['loadMask'] = new Ext.LoadMask(
-            view,
-            {
-                msg: 'Loading content...'
-            }
-        );
-        this['loadMask'].show();
+    maskViewport        : function (view) {
+        var me = this;
+        me['loadMask'] = new Ext.LoadMask(view, { msg: 'Loading content...'});
+        me['loadMask'].show();
     },
-
-    onWarehousesLoad: function (store) {
-        console.log('Login :: Warehouses store has been loaded');
-        var me = this,
-            wCount = store.getRange().length;
-
-        if (wCount === 0) {
-            console.log("Login :: Found no warehouses, commencing loading warehouse wizard");
-            Ext.MessageBox.show({
-                title        : 'No warehouse found...',
-                msg          : 'MajekWMS detected that there is no warehouse defined',
-                buttons      : Ext.MessageBox.OK,
-                fn           : me.openWarehouseWizard,
-                animateTarget: Ext.getBody(),
-                icon         : Ext.MessageBox.WARNING,
-                scope        : me
-            });
-        }
-    },
-
-    onWarehouseSelected: function (combo, selected) {
-        var me = this,
-            warehousesStore = me.getWarehousesStore();
-
-        selected = selected[0];
-        console.log('Login :: Warehouse ' + Ext.String.format('{0} marked as active', selected.get('name')));
-        warehousesStore.setActive(selected);
-    },
-
-    onWarehouseOpen: function () {
-        var me = this,
-            warehouse = me.getWarehousesStore().getActive(),
-            unitMenu = me.getController('WMS.controller.Toolbars').getUnitMenu();
-
-        warehouse.getUnits().load({
-            callback: function () {
-                unitMenu.reconfigure(this);
-                me.getDialog().close();
-                me['loadMask'].hide();
-            }
-        });
-    },
-
-    openWarehouseWizard: function () {
-        var me = this,
-            wizardCtrl = me.getController('WMS.controller.wizard.Warehouse');
-
-        wizardCtrl.openWizard();
-    },
-
     onLoginButtonClicked: function (button) {
         console.log('Login :: Login button has been clicked...');
         var me = this,
@@ -148,7 +78,7 @@ Ext.define('WMS.controller.Login', {
                             useDefaults: false
                         }
                     });
-                    me.onWarehouseOpen();
+                    me.checkCompanies();
                 } else {
                     Ext.Msg.alert('Logowanie nieudane',
                         'Podany login lub hasło są błędne !!!'
@@ -169,5 +99,33 @@ Ext.define('WMS.controller.Login', {
                 formRef.reset();
             }
         });
+    },
+    checkCompanies      : function () {
+        var me = this,
+            companies = me.getCompaniesStore();
+
+        companies.load({
+            callback: function (data) {
+                if (Ext.isArray(data) && data.length > 1) {
+                    console.log('Login :: ' +
+                        Ext.String.format('Located {0} compan{1}', data.length, (data.length === 1 ? 'y' : 'ies')));
+                    me.openCompanySelector();
+                } else {
+                    console.log('Login :: No suitable company found, commencing wizard');
+                    me.openCompanyWizard();
+                }
+            }
+        })
+    },
+    openCompanySelector : function () {
+
+    },
+    openCompanyWizard   : function () {
+        var me = this,
+            companyWizardCtrl = me.getController('WMS.controller.wizard.Company');
+
+        if (Ext.isDefined(companyWizardCtrl)) {
+            companyWizardCtrl.openWizard();
+        }
     }
 });

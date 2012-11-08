@@ -18,8 +18,8 @@ Ext.define('WMS.model.entity.Recipient', {
             root          : 'data',
             allowSingle   : false,
             writeAllFields: false,
-            getRecordData : function (record) {
-                return WMS.model.entity.Client.getRecordData(record);
+            getRecordData : function (record, operation) {
+                return WMS.model.entity.Client.getRecordData(record, operation);
             }
         }
     }

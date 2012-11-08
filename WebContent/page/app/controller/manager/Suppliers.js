@@ -19,6 +19,8 @@ Ext.define('WMS.controller.manager.Suppliers', {
         'WMS.view.manager.supplier.Manager'
     ],
     stores                    : [
+        'Cities',
+        'ClientTypes',
         'Suppliers'
     ],
     init                      : function () {
@@ -67,8 +69,8 @@ Ext.define('WMS.controller.manager.Suppliers', {
     },
     onReleaseClientClick      : function () {
         var me = this,
-            store = me.getClientsStore(),
-            selection = this.getSelectedClients();
+            store = me.getSupplierList(),
+            selection = me.getSelectedClients();
     },
     onNewClientAddClick       : function (button) {
         var me = this,
@@ -80,8 +82,8 @@ Ext.define('WMS.controller.manager.Suppliers', {
     },
     onRemoveClientClick       : function () {
         var me = this,
-            store = me.getClientsStore(),
-            selection = this.getSelectedClients();
+            store = me.getSupplierList(),
+            selection = me.getSelectedClients();
         if (selection) {
             store.remove(selection);
             Ext.getCmp('statusBar').setStatus({
