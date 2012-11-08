@@ -28,6 +28,8 @@
 		<mapping class="wms.model.PersistenceObject" />
 		<mapping class="wms.model.NamedPersistenceObject" />
 
+		<mapping class="wms.model.Company"/>
+
 		<!-- client -->
 		<mapping class="wms.model.City" />
 		<mapping class="wms.model.Address" />
