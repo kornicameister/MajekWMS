@@ -13,13 +13,9 @@ public class BasicController extends RequestController {
 	}
 
 	@Override
-	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
+	protected PersistenceObject preCreate(PersistenceObject b,
+			JSONObject payloadedData) {
 		return b;
-	}
-
-	@Override
-	protected PersistenceObject preDelete(JSONObject payloadedData) {
-		return null;
 	}
 
 	@Override

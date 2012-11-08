@@ -3,20 +3,20 @@ package wms.controller.base.extractor;
 import wms.controller.AddressController;
 import wms.controller.BasicController;
 import wms.controller.ClientController;
+import wms.controller.CompanyController;
 import wms.controller.MeasureController;
 import wms.controller.ProductController;
 import wms.controller.UnitController;
 import wms.controller.UnitTypeController;
-import wms.controller.WarehouseController;
 import wms.controller.base.RequestController;
 import wms.model.Address;
 import wms.model.BasicPersistanceObject;
 import wms.model.Client;
+import wms.model.Company;
 import wms.model.Measure;
 import wms.model.Product;
 import wms.model.Unit;
 import wms.model.UnitType;
-import wms.model.Warehouse;
 
 /**
  * This enum is used mainly when creating 
@@ -25,7 +25,7 @@ import wms.model.Warehouse;
  */
 public enum Entity {
 	UNIT(UnitController.class,Unit.class), 
-	WAREHOUSE(WarehouseController.class,Warehouse.class), 
+	COMPANY(CompanyController.class, Company.class), 
 	UNITTYPE(UnitTypeController.class,UnitType.class), 
 	MEASURE(MeasureController.class,Measure.class),
 	PRODUCT(ProductController.class,Product.class), 

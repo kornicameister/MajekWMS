@@ -47,7 +47,7 @@ public class Client extends NamedPersistenceObject {
 	@JoinColumn(name = "address_id", referencedColumnName = "idAddress")
 	private Address address;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "type_id", referencedColumnName = "idClientType", insertable = false, updatable = false)
 	private ClientType type;
 

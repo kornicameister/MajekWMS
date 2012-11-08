@@ -1,6 +1,5 @@
 package wms.controller;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -84,11 +83,5 @@ public class ClientController extends BasicController {
 		c.getDetails().setClient(c);
 
 		return c;
-	}
-
-	@Override
-	protected PersistenceObject preDelete(JSONObject payloadedData) {
-		return (PersistenceObject) this.session.byId(Client.class).load(
-				(Serializable) payloadedData.get("id"));
 	}
 }

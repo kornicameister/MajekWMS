@@ -17,6 +17,7 @@ public class UnitController extends BasicController {
 	private static final String WHERE_S_WFK = " where %s = :wfk";
 
 	private class ActionData {
+		@SuppressWarnings("unused")
 		Long fkUnitType, fkWarehouse, idUnit;
 		Unit newUnit;
 
@@ -79,12 +80,6 @@ public class UnitController extends BasicController {
 				.getReference(ad.fkWarehouse));
 
 		return ad.newUnit;
-	}
-
-	@Override
-	protected PersistenceObject preDelete(JSONObject payloadedData) {
-		ActionData ad = extractActionData(null, payloadedData);
-		return (PersistenceObject) this.session.byId(Unit.class).load(ad.idUnit);
 	}
 
 	private ActionData extractActionData(PersistenceObject b, JSONObject payloadedData) {

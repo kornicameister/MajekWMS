@@ -10,6 +10,7 @@ import wms.model.PersistenceObject;
 public class AddressController extends BasicController {
 
 	private class ActionData {
+		@SuppressWarnings("unused")
 		Long city_id, address_id;
 		Address address;
 
@@ -31,13 +32,6 @@ public class AddressController extends BasicController {
 		ad.address.setCity((City) this.session.byId(City.class)
 				.load(ad.city_id));
 		return ad.address;
-	}
-
-	@Override
-	protected PersistenceObject preDelete(JSONObject payloadedData) {
-		ActionData ad = new ActionData(null, payloadedData);
-		return (PersistenceObject) this.session.byId(Address.class)
-				.load(ad.address_id);
 	}
 
 	@Override

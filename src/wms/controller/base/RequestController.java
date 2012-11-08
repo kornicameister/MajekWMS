@@ -70,7 +70,8 @@ public abstract class RequestController implements Controller {
 	private static ExclusionStrategy HHExclusionStrategy = new ExclusionStrategy() {
 		@Override
 		public boolean shouldSkipField(FieldAttributes f) {
-			boolean isHideAssocationEnabled = f.getAnnotation(HideAssociation.class) != null;
+			boolean isHideAssocationEnabled = f
+					.getAnnotation(HideAssociation.class) != null;
 			boolean isHideFieldEnabled = f.getAnnotation(HideField.class) != null;
 			return (isHideAssocationEnabled || isHideFieldEnabled);
 		}
@@ -100,7 +101,7 @@ public abstract class RequestController implements Controller {
 		logger.info(String.format("Processing [ %s ][ %s ] request, started",
 				this.rdata.getAction().toString(), this.rdata.getController()));
 		Long startTime = System.nanoTime();
-		this.session = this.sessionFactory.openSession();
+		this.session = HibernateBridge.getSession();
 		switch (this.rdata.getAction()) {
 		case CREATE:
 			this.create();
@@ -122,7 +123,8 @@ public abstract class RequestController implements Controller {
 	@Override
 	public void read() {
 		this.session.beginTransaction();
-		List<?> data = this.session.createQuery(this.rdata.getReadQuery()).list();
+		List<?> data = this.session.createQuery(this.rdata.getReadQuery())
+				.list();
 		this.session.getTransaction().commit();
 		for (Object o : data) {
 			this.affected.add((PersistenceObject) o);
@@ -207,11 +209,7 @@ public abstract class RequestController implements Controller {
 					controller, this.affected), DFormat.class));
 			break;
 		}
-
-		this.session.flush();
-		this.session.close();
 		this.session = null;
-
 		return response.toString();
 	}
 
@@ -383,7 +381,13 @@ public abstract class RequestController implements Controller {
 	 * @param payloadedData
 	 * @return
 	 */
-	protected abstract PersistenceObject preDelete(JSONObject payloadedData);
+	protected PersistenceObject preDelete(JSONObject payloadedData) {
+		PersistenceObject deletable = (PersistenceObject) this.session.byId(
+				this.rdata.getModule().getEntityClass()).load(
+				(Serializable) payloadedData.get("id"));
+		this.session.flush();
+		return deletable;
+	}
 
 	/**
 	 * Method updates model specific fields, fields that needs getting data out

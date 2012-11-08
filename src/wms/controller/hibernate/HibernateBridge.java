@@ -1,5 +1,6 @@
 package wms.controller.hibernate;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -9,16 +10,25 @@ import wms.model.WMSModelConstants;
 
 public final class HibernateBridge {
 	private static SessionFactory sessionFactory = null;
+	private static Session session = null;
 
 	public static final SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 
+	public static final Session getSession() {
+		if (session.isDirty()) {
+			session.clear();
+			session.flush();
+		}
+		return session;
+	}
+
 	public static boolean accessHibernate() throws HibernateBridgeException {
-		if(sessionFactory != null){
+		if (sessionFactory != null) {
 			throw new HibernateBridgeException("Already connected to hibernate");
 		}
-		
+
 		Configuration configuration = new Configuration();
 		configuration = configuration.configure(WMSModelConstants.HIBERNATE_CFG
 				.toString());
@@ -28,12 +38,14 @@ public final class HibernateBridge {
 				.buildServiceRegistry();
 		HibernateBridge.sessionFactory = configuration
 				.buildSessionFactory(serviceRegistry);
+		HibernateBridge.session = HibernateBridge.sessionFactory.openSession();
 
 		return !HibernateBridge.sessionFactory.isClosed();
 	}
 
 	public static boolean closeHibernate() {
 		if (HibernateBridge.sessionFactory != null) {
+			session.close();
 			sessionFactory.close();
 			return HibernateBridge.sessionFactory.isClosed();
 		}
