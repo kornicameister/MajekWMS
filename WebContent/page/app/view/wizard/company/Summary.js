@@ -12,8 +12,10 @@ Ext.define('WMS.view.wizard.company.Summary', {
     tpl               : new Ext.XTemplate(
         '<div class="companySummary">',
         '<div class="company">',
+        '<tpl for=".">',
         '<p>Skrót: <b>{name}</b></p>',
         '<p>Firma: <b>{longname}</b></p>',
+        '</tpl>',
         '</div>',
         '<div class="warehouse">',
         '<tpl for="warehouse">',

@@ -10,13 +10,17 @@ Ext.define('WMS.controller.wizard.Company', {
     requires        : [
         'WMS.view.wizard.company.Dialog'
     ],
+    views           : [
+        'wizard.company.Dialog'
+    ],
     refs            : [
         { ref: 'wizard', selector: 'companywizard' },
         { ref: 'welcomeStep', selector: 'companywizard panel[itemId=welcomeStep]' },
         { ref: 'companyStep', selector: 'companywizard companyform' },
         { ref: 'warehouseStep', selector: 'companywizard warehouseform' },
         { ref: 'summaryStep', selector: 'companywizard panel[itemId=summaryStep]' },
-        { ref: 'saveButton', selector: 'companyWizard panel[itemId=summaryStep] button[itemId=saveCompany]' }
+        { ref: 'saveButton', selector: 'companyWizard panel[itemId=summaryStep] button[itemId=saveCompany]' },
+        { ref: 'prevButton', selector: 'companywizard button[itemId=prev]' }
     ],
     stores          : [
         'Companies'
@@ -33,21 +37,26 @@ Ext.define('WMS.controller.wizard.Company', {
             PREV: 'prev'
         }
     },
+    config          : {
+        stepToView : new Ext.util.MixedCollection(),
+        currentStep: 0,
+        company    : undefined
+    },
     init            : function () {
         console.init('WMS.controller.wizard.Company initializing...');
         var me = this;
 
         me.control({
-            'companywizard'                         : {
+            'companywizard'                           : {
                 'render': me.initWizard
             },
-            'companywizard bbar button[itemId=next]': {
+            'companywizard button[itemId=next]'       : {
                 'click': me.onWizardNextStep
             },
-            'companywizard bbar button[itemId=prev]': {
+            'companywizard button[itemId=prev]'       : {
                 'click': me.onWizardPrevStep
             },
-            'companywizard summaryStep saveCompany' : {
+            'companywizard button[itemId=saveCompany]': {
                 click: me.onCompanySave
             }
         });
@@ -55,71 +64,83 @@ Ext.define('WMS.controller.wizard.Company', {
     initWizard      : function () {
         console.log('wizard.Company :: View rendered, wizard is ready to be used...');
         var me = this,
-            stepToView = new Ext.util.MixedCollection();
+            stepToView = me.getStepToView();
 
         // match step to view
         stepToView.add(WMS.controller.wizard.Company.STEP.WELCOME, me.getWelcomeStep());
         stepToView.add(WMS.controller.wizard.Company.STEP.COMPANY, me.getCompanyStep());
         stepToView.add(WMS.controller.wizard.Company.STEP.WAREHOUSE, me.getWarehouseStep());
         stepToView.add(WMS.controller.wizard.Company.STEP.SUMMARY, me.getSummaryStep());
-
-        Ext.apply({
-            currentStep: WMS.controller.wizard.Company.STEP.WELCOME,
-            stepToView : stepToView,
-            company    : undefined
-        }, me);
     },
     openWizard      : function () {
         var me = this,
-            wizardView = me.getView('WMS.view.wizard.company.Dialog');
-        wizardView.create().show(true);
+            wizardView = me.getWizardCompanyDialogView() || me.getWizard();
+
+        if (Ext.isDefined(wizardView)) {
+            wizardView = wizardView.create();
+        } else {
+            wizardView = Ext.create('WMS.view.wizard.company.Dialog');
+        }
+        wizardView.show();
     },
     onCompanySave   : function () {
         var me = this;
+        console.log('wizard.Company :: Saving company data');
     },
     navigate        : function (dir) {
         var me = this,
             wizard = me.getWizard(),
             layout = wizard.getLayout(),
-            stepEnabled = false;
+            stepEnabled = false,
+            currentStep = me.getCurrentStep(),
+            prevButton = me.getPrevButton();
 
         switch (dir) {
-            case WMS.controller.wizard.Company.STEP.NEXT:
+            case WMS.controller.wizard.Company.DIR.NEXT:
                 console.log('wizard.Company :: Next step');
                 if (me.collectStepData()) {
-                    me.currentStep++;
+                    me.setCurrentStep(++currentStep);
                     stepEnabled = true;
                 }
                 break;
-            case WMS.controller.wizard.Company.STEP.PREV:
+            case WMS.controller.wizard.Company.DIR.PREV:
                 console.log('wizard.Company :: Previous step');
                 if (me.purgeStepData()) {
-                    me.currentStep--;
+                    me.setCurrentStep(--currentStep);
                     stepEnabled = true;
                 }
                 break;
         }
         if (stepEnabled) {
             layout[dir]();
+            prevButton.setDisabled(currentStep === WMS.controller.wizard.Company.STEP.WELCOME);
         }
     },
     collectStepData : function () {
         console.log('wizard.Company :: Collecting data steps');
         var me = this,
-            dataView = me.stepToView.get(me.currentStep),
-            data = undefined;
+            dataView = me.stepToView.get(me.getCurrentStep()),
+            nextDataView = me.getStepToView().get(me.getCurrentStep() + 1),
+            data = undefined,
+            isValid = (Ext.isDefined(dataView.getForm) ? dataView.getForm().isValid() : false);
         switch (me.currentStep) {
             case WMS.controller.wizard.Company.STEP.COMPANY:
-                if (dataView.isValid()) {
+                if (isValid) {
                     data = dataView.getValues();
-                    me.company = Ext.create('WMS.model.entity.Company', data);
+                    me.setCompany(Ext.create('WMS.model.entity.Company', data));
+                    return true;
                 }
                 break;
             case WMS.controller.wizard.Company.STEP.WAREHOUSE:
-                if (dataView.isValid()) {
+                if (isValid) {
                     data = dataView.getValues();
-                    data = Ext.create('WMS.model.entity.Warehouse', data);
-                    me.company = setWarehouse(data);
+                    var warehouse = Ext.create('WMS.model.entity.Warehouse', data);
+                    me.getCompany().setWarehouse(warehouse);
+
+                    data = me.getCompany().getData();
+                    data['warehouse'] = warehouse;
+                    nextDataView.update(data);
+                    return true;
                 }
                 break;
             default:
@@ -129,25 +150,29 @@ Ext.define('WMS.controller.wizard.Company', {
     },
     purgeStepData   : function () {
         console.log('wizard.Company :: Purging data steps');
-        var me = this;
-        switch (me.currentStep) {
+        var me = this,
+            currentStep = me.getCurrentStep(),
+            dataView = me.stepToView.get(currentStep);
+        switch (currentStep) {
             case WMS.controller.wizard.Company.STEP.COMPANY:
-                me.company = undefined;
-                break;
+                delete me.company;
+                dataView.getForm().reset();
+                return true;
             case WMS.controller.wizard.Company.STEP.WAREHOUSE:
-                me.company.setWizard(undefined);
-                break;
+                delete me.getCompany()['warehouse'];
+                dataView.getForm().reset();
             default:
                 return true;
         }
+        return false;
     },
     //---- CUSTOM WRAPPERS --- //
     onWizardNextStep: function () {
         var me = this;
-        me.navigate(WMS.controller.wizard.Company.STEP.NEXT);
+        me.navigate(WMS.controller.wizard.Company.DIR.NEXT);
     },
     onWizardPrevStep: function () {
         var me = this;
-        me.navigate(WMS.controller.wizard.Company.STEP.PREV);
+        me.navigate(WMS.controller.wizard.Company.DIR.PREV);
     }
 });

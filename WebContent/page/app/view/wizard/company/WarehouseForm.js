@@ -51,7 +51,7 @@ Ext.define('WMS.view.wizard.company.WarehouseForm', {
             items : {
                 xtype            : 'numberfield',
                 fieldLabel       : 'Size',
-                name             : 'maximumSize',
+                name             : 'size',
                 allowBlank       : false,
                 value            : 100,
                 minValue         : 1,

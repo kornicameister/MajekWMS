@@ -7,6 +7,12 @@
 
 Ext.define('WMS.view.wizard.company.Dialog', {
     extend            : 'WMS.view.abstract.BaseDialog',
+    requires          : [
+        'WMS.view.abstract.BaseDialog',
+        'WMS.view.wizard.company.CompanyForm',
+        'WMS.view.wizard.company.WarehouseForm',
+        'WMS.view.wizard.company.Summary'
+    ],
     alternateClassName: 'WMS.wizard.Company',
     alias             : 'widget.companywizard',
     title             : 'Witaj',
@@ -15,11 +21,6 @@ Ext.define('WMS.view.wizard.company.Dialog', {
     layout            : {
         type: 'card'
     },
-    uses              : [
-        'WMS.view.wizard.company.CompanyForm',
-        'WMS.view.wizard.company.WarehouseForm',
-        'WMS.view.wizard.company.Summary'
-    ],
     items             : [
         {
             xtype : 'panel',
@@ -40,11 +41,11 @@ Ext.define('WMS.view.wizard.company.Dialog', {
         {
             xtype : 'panel',
             itemId: 'summaryStep',
-            layout: {
-                type: 'center'
-            },
+            layout: 'fit',
             items : {
-                xtype: 'companysummary'
+                xtype: 'companysummary',
+                title: 'Podsumowanie',
+                flex : 1
             },
             bbar  : [
                 {
