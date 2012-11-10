@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import wms.controller.base.CRUD;
+import wms.model.BasicPersistanceObject;
 import wms.model.PersistenceObject;
 
 import com.google.gson.annotations.Expose;
@@ -30,7 +31,7 @@ public abstract class BaseFormat {
 	protected CRUD action;
 
 	@Expose
-	protected Set<PersistenceObject> data;
+	protected Set<BasicPersistanceObject> data;
 
 	@Expose
 	protected Integer total;
@@ -39,7 +40,7 @@ public abstract class BaseFormat {
 	protected String message;
 
 	public BaseFormat(boolean success, Long time, String handler,
-			Set<PersistenceObject> data, CRUD action) {
+			Set<BasicPersistanceObject> data, CRUD action) {
 		this.success = success;
 		this.time = TimeUnit.NANOSECONDS.toMillis(time);
 		this.handler = handler;

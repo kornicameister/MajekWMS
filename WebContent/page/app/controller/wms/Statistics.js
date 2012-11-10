@@ -7,7 +7,9 @@
 
 Ext.define('WMS.controller.wms.Statistics', {
     extend: 'Ext.app.Controller',
-    views : ['WMS.view.wms.Statistics'],
+    views : [
+        'wms.Statistics'
+    ],
     init  : function () {
         console.init('WMS.controller.wms.Statistics initializing...');
     }

@@ -4,8 +4,8 @@ import org.json.simple.JSONObject;
 
 import wms.controller.base.extractor.RData;
 import wms.model.Address;
+import wms.model.BasicPersistanceObject;
 import wms.model.City;
-import wms.model.PersistenceObject;
 
 public class AddressController extends BasicController {
 
@@ -14,7 +14,7 @@ public class AddressController extends BasicController {
 		Long city_id, address_id;
 		Address address;
 
-		public ActionData(PersistenceObject b, JSONObject p) {
+		public ActionData(BasicPersistanceObject b, JSONObject p) {
 			super();
 			this.city_id = (Long) p.get("city_id");
 			this.address_id = (Long) p.get("id");
@@ -27,7 +27,7 @@ public class AddressController extends BasicController {
 	}
 
 	@Override
-	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
+	protected BasicPersistanceObject preCreate(BasicPersistanceObject b, JSONObject payloadedData) {
 		ActionData ad = new ActionData(b, payloadedData);
 		ad.address.setCity((City) this.session.byId(City.class)
 				.load(ad.city_id));
@@ -35,7 +35,7 @@ public class AddressController extends BasicController {
 	}
 
 	@Override
-	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
+	protected BasicPersistanceObject preUpdateNonPrimitives(BasicPersistanceObject b,
 			JSONObject payloadedData) {
 		ActionData ad = new ActionData(b, payloadedData);
 

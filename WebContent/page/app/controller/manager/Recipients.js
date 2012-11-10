@@ -7,16 +7,10 @@
 
 Ext.define('WMS.controller.manager.Recipients', {
     extend                    : 'Ext.app.Controller',
-    requires                  : [
-        'WMS.view.wizard.client.Dialog'
-    ],
     refs                      : [
         { ref: 'managerUI', selector: 'recipientmanager' },
         { ref: 'recipientList', selector: 'recipientmanager clientgrid'},
         { ref: 'detailsView', selector: 'recipientmanager recipientdetails'}
-    ],
-    views                     : [
-        'WMS.view.manager.recipient.Manager'
     ],
     stores                    : [
         'Cities',

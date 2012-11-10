@@ -10,6 +10,10 @@
 
 Ext.define('WMS.view.wms.Unit', {
     extend : 'Ext.panel.Panel',
+    uses   : [
+        'WMS.view.wms.unit.Canvas',
+        'WMS.view.wms.unit.Inventory'
+    ],
     alias  : 'widget.wmsunit',
     iconCls: 'view-wms-unit',
     layout : {

@@ -9,13 +9,11 @@ Ext.define('WMS.view.wms.unit.Canvas', {
     extend : 'Ext.panel.Panel',
     alias  : 'widget.wmsunitcanvas',
     iconCls: 'view-wms-unit-placement',
-
-    layout: {
+    layout : {
         type: 'fit'
     },
-
-    items: {
-        xtype    : 'draw',
-        itemId   : 'unitsDrawingCmp'
+    items  : {
+        xtype : 'draw',
+        itemId: 'unitsDrawingCmp'
     }
 });

@@ -4593,6 +4593,8 @@ var noArgs = [],
                 from = rewrite.from;
                 to = rewrite.to;
 
+//                console.log('Name = [',name,'] from = [',from,'] to = [',to,']');
+
                 if (name === from || name.substring(0, from.length) === from) {
                     name = name.substring(from.length);
 

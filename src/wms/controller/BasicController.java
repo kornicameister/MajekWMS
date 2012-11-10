@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 import wms.controller.base.RequestController;
 import wms.controller.base.extractor.RData;
-import wms.model.PersistenceObject;
+import wms.model.BasicPersistanceObject;
 
 public class BasicController extends RequestController {
 
@@ -13,13 +13,13 @@ public class BasicController extends RequestController {
 	}
 
 	@Override
-	protected PersistenceObject preCreate(PersistenceObject b,
+	protected BasicPersistanceObject preCreate(BasicPersistanceObject b,
 			JSONObject payloadedData) {
 		return b;
 	}
 
 	@Override
-	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
+	protected BasicPersistanceObject preUpdateNonPrimitives(BasicPersistanceObject b,
 			JSONObject payloadedData) {
 		return b;
 	}

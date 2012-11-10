@@ -11,6 +11,7 @@ import wms.controller.UnitTypeController;
 import wms.controller.base.RequestController;
 import wms.model.Address;
 import wms.model.BasicPersistanceObject;
+import wms.model.City;
 import wms.model.Client;
 import wms.model.Company;
 import wms.model.Measure;
@@ -33,6 +34,7 @@ public enum Entity {
 	CLIENT(ClientController.class,Client.class),
 	INVOICETYPE(null,null),
 	BASIC(BasicController.class, BasicPersistanceObject.class),
+	CITY(BasicController.class, City.class),
 	ADDRESS(AddressController.class, Address.class);
 
 	private Class<? extends BasicPersistanceObject> entityClass;

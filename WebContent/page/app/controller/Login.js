@@ -11,10 +11,6 @@
  */
 Ext.define('WMS.controller.Login', {
     extend              : 'Ext.app.Controller',
-    requires            : [
-        'WMS.view.login.Dialog',
-        'WMS.view.wizard.company.Dialog'
-    ],
     views               : [
         'login.Dialog'
     ],
@@ -22,19 +18,12 @@ Ext.define('WMS.controller.Login', {
         'Companies'
     ],
     refs                : [
-        {
-            ref     : 'dialog',
-            selector: 'logindialog'
-        },
-        {
-            ref     : 'loginForm',
-            selector: 'logindialog loginform'
-        },
-        {
-            ref     : 'masterView',
-            selector: 'masterview'
-        }
+        { ref: 'dialog', selector: 'logindialog' },
+        { ref: 'loginForm', selector: 'logindialog loginform' }
     ],
+    config              : {
+        loadMask: undefined
+    },
     init                : function () {
         console.init('WMS.controller.Login initializing...');
         var me = this;
@@ -44,14 +33,18 @@ Ext.define('WMS.controller.Login', {
                 'click': me.onLoginButtonClicked
             },
             '#viewport'                               : {
-                'afterrender': me.maskViewport
+                'render': me.maskViewport
             }
         });
     },
     maskViewport        : function (view) {
-        var me = this;
-        me['loadMask'] = new Ext.LoadMask(view, { msg: 'Loading content...'});
-        me['loadMask'].show();
+        if (Ext.isDefined(view)) {
+            var me = this;
+            me.setLoadMask(new Ext.LoadMask(view.el, { msg: 'Loading content...'}));
+            me.getLoadMask().show();
+        } else {
+            console.log('Login :: Can not mask viewport, view undefined');
+        }
     },
     onLoginButtonClicked: function (button) {
         console.log('Login :: Login button has been clicked...');
@@ -78,6 +71,7 @@ Ext.define('WMS.controller.Login', {
                             useDefaults: false
                         }
                     });
+                    me.closeLoginDialog();
                     me.checkCompanies();
                 } else {
                     Ext.Msg.alert('Logowanie nieudane',
@@ -115,7 +109,8 @@ Ext.define('WMS.controller.Login', {
                     me.openCompanyWizard();
                 }
             }
-        })
+        });
+        me.getLoadMask().hide();
     },
     openCompanySelector : function () {
 
@@ -127,5 +122,15 @@ Ext.define('WMS.controller.Login', {
         if (Ext.isDefined(companyWizardCtrl)) {
             companyWizardCtrl.openWizard();
         }
+    },
+    openLoginDialog     : function () {
+        var me = this,
+            loginDialog = me.getView('WMS.view.login.Dialog');
+        loginDialog.create().show();
+    },
+    closeLoginDialog    : function () {
+        var me = this,
+            loginDialog = me.getDialog();
+        loginDialog.close();
     }
 });

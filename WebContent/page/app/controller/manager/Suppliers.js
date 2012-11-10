@@ -7,16 +7,10 @@
 
 Ext.define('WMS.controller.manager.Suppliers', {
     extend                    : 'Ext.app.Controller',
-    requires                  : [
-        'WMS.view.wizard.client.Dialog'
-    ],
     refs                      : [
         { ref: 'managerUI', selector: 'suppliermanager' },
         { ref: 'supplierList', selector: 'suppliermanager clientgrid'},
         { ref: 'detailsView', selector: 'suppliermanager supplierdetails'}
-    ],
-    views                     : [
-        'WMS.view.manager.supplier.Manager'
     ],
     stores                    : [
         'Cities',

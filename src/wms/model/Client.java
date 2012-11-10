@@ -19,15 +19,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-
 @Entity
 @Table(name = "client", uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "id", column = @Column(name = "idClient", updatable = false, insertable = true, nullable = false)),
 		@AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = true)) })
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type_id", discriminatorType = DiscriminatorType.INTEGER)
-@DiscriminatorValue(value = "0")
+@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue(value = "client")
 public class Client extends NamedPersistenceObject {
 	@Transient
 	private static final long serialVersionUID = 1283426340575080285L;
@@ -47,8 +46,8 @@ public class Client extends NamedPersistenceObject {
 	@JoinColumn(name = "address_id", referencedColumnName = "idAddress")
 	private Address address;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "type_id", referencedColumnName = "idClientType", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "type", referencedColumnName = "type", insertable = false, updatable = false)
 	private ClientType type;
 
 	public Client() {

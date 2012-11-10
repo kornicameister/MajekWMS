@@ -7,13 +7,14 @@
 
 Ext.define('WMS.view.manager.recipient.Manager', {
     extend : 'WMS.view.manager.abstract.ClientManager',
-    alias  : 'widget.recipientmanager',
-    title  : 'Menadżer - odbiorcy',
-    iconCls: 'view-toolbar-clientsButton',
     uses   : [
+        'WMS.view.manager.abstract.ClientManager',
         'WMS.view.manager.recipient.Details',
         'WMS.view.manager.recipient.Invoices'
     ],
+    alias  : 'widget.recipientmanager',
+    title  : 'Menadżer - odbiorcy',
+    iconCls: 'view-toolbar-clientsButton',
     items  : [
         {
             xtype  : 'clientgrid',

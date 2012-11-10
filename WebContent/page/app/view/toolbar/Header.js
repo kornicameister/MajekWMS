@@ -8,8 +8,11 @@
  */
 
 Ext.define('WMS.view.toolbar.Header', {
-    itemId     : 'headerToolbar',
     extend     : 'Ext.toolbar.Toolbar',
+    requires   : [
+        'Ext.ux.menu.StoreMenu'
+    ],
+    itemId     : 'headerToolbar',
     alias      : 'widget.headbar',
     defaultType: 'splitbutton',
     defaults   : {
@@ -23,8 +26,7 @@ Ext.define('WMS.view.toolbar.Header', {
         scale     : 'large',
         arrowAlign: 'bottom'
     },
-
-    items: [
+    items      : [
         {
             xtype  : 'button',
             itemId : 'receiptButton',

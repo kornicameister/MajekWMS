@@ -9,7 +9,7 @@
  */
 
 Ext.define('WMS.view.wms.Statistics', {
-    extend: 'Ext.panel.Panel',
-    alias : 'widget.wmsstatistics',
+    extend : 'Ext.panel.Panel',
+    alias  : 'widget.wmsstatistics',
     iconCls: 'view-wms-statistics'
 });

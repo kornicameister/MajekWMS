@@ -35,7 +35,7 @@ import wms.controller.base.format.response.DFormat;
 import wms.controller.base.format.response.RFormat;
 import wms.controller.base.format.response.UFormat;
 import wms.controller.hibernate.HibernateBridge;
-import wms.model.PersistenceObject;
+import wms.model.BasicPersistanceObject;
 import wms.model.Warehouse;
 import wms.utilities.StringUtils;
 
@@ -65,7 +65,7 @@ public abstract class RequestController implements Controller {
 
 	// -----------RESPONSE----------------/
 	protected long processTime = 0l;
-	protected Set<PersistenceObject> affected = new HashSet<>();
+	protected Set<BasicPersistanceObject> affected = new HashSet<>();
 	protected final RData rdata;
 	private static ExclusionStrategy HHExclusionStrategy = new ExclusionStrategy() {
 		@Override
@@ -101,7 +101,7 @@ public abstract class RequestController implements Controller {
 		logger.info(String.format("Processing [ %s ][ %s ] request, started",
 				this.rdata.getAction().toString(), this.rdata.getController()));
 		Long startTime = System.nanoTime();
-		this.session = HibernateBridge.getSession();
+		this.session = HibernateBridge.getSessionFactory().openSession();
 		switch (this.rdata.getAction()) {
 		case CREATE:
 			this.create();
@@ -116,6 +116,9 @@ public abstract class RequestController implements Controller {
 			this.update();
 			break;
 		}
+		this.session.flush();
+		this.session.close();
+		this.session = null;
 		this.processTime = System.nanoTime() - startTime;
 	}
 
@@ -127,17 +130,17 @@ public abstract class RequestController implements Controller {
 				.list();
 		this.session.getTransaction().commit();
 		for (Object o : data) {
-			this.affected.add((PersistenceObject) o);
+			this.affected.add((BasicPersistanceObject) o);
 		}
 	}
 
 	@Override
 	public void create() {
 		Serializable savedID = null;
-		Collection<? extends PersistenceObject> data = this.parsePayload();
+		Collection<? extends BasicPersistanceObject> data = this.parsePayload();
 
 		this.session.beginTransaction();
-		for (PersistenceObject entity : data) {
+		for (BasicPersistanceObject entity : data) {
 			savedID = this.session.save(entity);
 			if (savedID != null) {
 				this.affected.add(entity);
@@ -152,7 +155,7 @@ public abstract class RequestController implements Controller {
 		this.session.flush();
 		for (Object entity : this.parsePayload()) {
 			this.session.update(entity);
-			this.affected.add((PersistenceObject) entity);
+			this.affected.add((BasicPersistanceObject) entity);
 		}
 		t.commit();
 	}
@@ -162,7 +165,7 @@ public abstract class RequestController implements Controller {
 		Transaction t = this.session.beginTransaction();
 		for (Object obj : this.parsePayload()) {
 			this.session.delete(obj);
-			this.affected.add((PersistenceObject) obj);
+			this.affected.add((BasicPersistanceObject) obj);
 		}
 		t.commit();
 	}
@@ -173,7 +176,6 @@ public abstract class RequestController implements Controller {
 	public String buildResponse() {
 		Gson g = new GsonBuilder()
 				.setDateFormat("m-D-y")
-				.setPrettyPrinting()
 				.setExclusionStrategies(HHExclusionStrategy)
 				.registerTypeHierarchyAdapter(HibernateProxy.class,
 						new HibernateProxySerializer()).create();
@@ -209,7 +211,6 @@ public abstract class RequestController implements Controller {
 					controller, this.affected), DFormat.class));
 			break;
 		}
-		this.session = null;
 		return response.toString();
 	}
 
@@ -220,14 +221,14 @@ public abstract class RequestController implements Controller {
 	 * 
 	 * @return
 	 */
-	protected Collection<? extends PersistenceObject> parsePayload() {
+	protected Collection<? extends BasicPersistanceObject> parsePayload() {
 		RequestController.logger.info("Parsing payload started");
 		Gson gson = new GsonBuilder().setDateFormat("y-M-d")
 				.setPrettyPrinting().create();
-		List<PersistenceObject> data = new ArrayList<>();
+		List<BasicPersistanceObject> data = new ArrayList<>();
 
 		JSONObject dataElement = null;
-		PersistenceObject entity = null;
+		BasicPersistanceObject entity = null;
 
 		try {
 			JSONArray ddata = (JSONArray) this.rdata.getPayload().get("data");
@@ -240,7 +241,7 @@ public abstract class RequestController implements Controller {
 					break;
 				case CREATE:
 					entity = this.preCreate(
-							entity = (PersistenceObject) gson.fromJson(
+							entity = (BasicPersistanceObject) gson.fromJson(
 									dataElement.toJSONString(), this.rdata
 											.getModule().getEntityClass()),
 							dataElement);
@@ -280,11 +281,11 @@ public abstract class RequestController implements Controller {
 	 * @return valid object if entity indeed differs from passed copy or null if
 	 *         entity was not modified
 	 */
-	private PersistenceObject preUpdateByReflection(JSONObject jData) {
+	private BasicPersistanceObject preUpdateByReflection(JSONObject jData) {
 		logger.info(String.format(
 				"Update via reflection, payload data = [ %s ]",
 				jData.toJSONString()));
-		PersistenceObject b = (PersistenceObject) this.session.get(this.rdata
+		BasicPersistanceObject b = (BasicPersistanceObject) this.session.get(this.rdata
 				.getModule().getEntityClass(), (Serializable) jData.get("id"));
 
 		// this method is called many times still, setters are extracted only
@@ -315,13 +316,13 @@ public abstract class RequestController implements Controller {
 	}
 
 	/**
-	 * Method goes through methods declared in {@link PersistenceObject}(b) and
+	 * Method goes through methods declared in {@link BasicPersistanceObject}(b) and
 	 * cuts off all but setters.
 	 * 
 	 * @param b
 	 * @return
 	 */
-	private void extractSetters(PersistenceObject b) {
+	private void extractSetters(BasicPersistanceObject b) {
 
 		if (this.setters != null && this.setters.size() > 0) {
 			return;
@@ -368,7 +369,7 @@ public abstract class RequestController implements Controller {
 	 * @param payloadedData
 	 * @return
 	 */
-	protected abstract PersistenceObject preCreate(PersistenceObject b,
+	protected abstract BasicPersistanceObject preCreate(BasicPersistanceObject b,
 			JSONObject payloadedData);
 
 	/**
@@ -381,8 +382,8 @@ public abstract class RequestController implements Controller {
 	 * @param payloadedData
 	 * @return
 	 */
-	protected PersistenceObject preDelete(JSONObject payloadedData) {
-		PersistenceObject deletable = (PersistenceObject) this.session.byId(
+	protected BasicPersistanceObject preDelete(JSONObject payloadedData) {
+		BasicPersistanceObject deletable = (BasicPersistanceObject) this.session.byId(
 				this.rdata.getModule().getEntityClass()).load(
 				(Serializable) payloadedData.get("id"));
 		this.session.flush();
@@ -397,8 +398,8 @@ public abstract class RequestController implements Controller {
 	 * @param payloadedData
 	 * @return
 	 */
-	protected abstract PersistenceObject preUpdateNonPrimitives(
-			PersistenceObject b, JSONObject payloadedData);
+	protected abstract BasicPersistanceObject preUpdateNonPrimitives(
+			BasicPersistanceObject b, JSONObject payloadedData);
 
 	protected abstract Object adjustValueType(Object value, String property);
 

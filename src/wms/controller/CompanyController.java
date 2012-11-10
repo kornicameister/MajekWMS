@@ -6,9 +6,9 @@ import org.json.simple.JSONObject;
 
 import wms.controller.base.extractor.RData;
 import wms.model.Address;
+import wms.model.BasicPersistanceObject;
 import wms.model.City;
 import wms.model.Company;
-import wms.model.PersistenceObject;
 
 /**
  * This class provides functionality customized for mastering {@link Company}
@@ -25,7 +25,7 @@ public class CompanyController extends BasicController {
 	}
 
 	@Override
-	protected PersistenceObject preCreate(PersistenceObject b,
+	protected BasicPersistanceObject preCreate(BasicPersistanceObject b,
 			JSONObject payloadedData) {
 		Company c = (Company) b;
 		Long city_id = (Long) ((HashMap<?, ?>) payloadedData.get("address"))

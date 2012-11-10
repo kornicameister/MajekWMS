@@ -17,13 +17,11 @@ Ext.define('WMS.view.login.Form', {
     labelWidth  : 80,
     frame       : false,
     monitorValid: true,
-
-    defaultType: 'textfield',
-    defaults   : {
+    defaultType : 'textfield',
+    defaults    : {
         allowBlank: false
     },
-
-    items: [
+    items       : [
         {
             fieldLabel: 'Użytkownik',
             name      : 'login'
@@ -34,8 +32,7 @@ Ext.define('WMS.view.login.Form', {
             inputType : 'password'
         }
     ],
-
-    buttons: [
+    buttons     : [
         {text: 'Login', formBind: true, flex: 3}
     ]
 });

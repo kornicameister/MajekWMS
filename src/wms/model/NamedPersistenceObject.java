@@ -21,11 +21,11 @@ public abstract class NamedPersistenceObject extends PersistenceObject {
 		super();
 	}
 
-	public synchronized final String getName() {
+	public String getName() {
 		return name;
 	}
 
-	public synchronized final void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "client")
-@DiscriminatorValue(value = "1")
+@DiscriminatorValue(value = "supplier")
 public class Supplier extends Client {
 	private static final long serialVersionUID = -3487771558214472341L;
 

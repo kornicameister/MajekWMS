@@ -6,6 +6,6 @@
  */
 
 Ext.define('WMS.view.manager.abstract.Grid', {
-    extend            : 'Ext.grid.Panel',
-    autoScroll        : true
+    extend    : 'Ext.grid.Panel',
+    autoScroll: true
 });

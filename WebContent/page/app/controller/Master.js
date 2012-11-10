@@ -10,21 +10,11 @@
 
 Ext.define('WMS.controller.Master', {
     extend              : 'Ext.app.Controller',
-    singleton           : true,
-    uses                : [
-        'WMS.view.manager.recipient.Manager',
-        'WMS.view.manager.supplier.Manager'
-    ],
     views               : [
-        'WMS.view.Master',
-        'WMS.view.manager.recipient.Manager',
-        'WMS.view.manager.supplier.Manager'
+        'Master'
     ],
     refs                : [
-        {
-            ref     : 'masterView',
-            selector: 'masterview'
-        }
+        {  ref: 'masterView', selector: 'masterview' }
     ],
     init                : function () {
         console.init('WMS.controller.Master initializing...');
@@ -37,7 +27,12 @@ Ext.define('WMS.controller.Master', {
     },
     onMasterRender      : function (view) {
         console.log('Master :: Opening login.Dialog...');
-        Ext.create('WMS.view.login.Dialog');
+        var me = this,
+            loginController = me.getController('WMS.controller.Login');
+
+        if (Ext.isDefined(loginController)) {
+            loginController.openLoginDialog();
+        }
     },
     openRecipientManager: function () {
         console.log('Master :: Opening recipients manager');

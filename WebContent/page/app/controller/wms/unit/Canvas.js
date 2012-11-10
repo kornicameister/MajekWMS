@@ -7,18 +7,16 @@
 
 Ext.define('WMS.controller.wms.unit.Canvas', {
     extend: 'Ext.app.Controller',
-
     stores: [
         'UnitSprites',
         'Companies'
     ],
     views : [
-        'WMS.view.wms.unit.Canvas'
+        'wms.unit.Canvas'
     ],
     refs  : [
         { ref: 'unitBoard', selector: 'wmsunitcanvas unitsDrawingCmp' }
     ],
-
     constructor: function (config) {
         config = Ext.apply({
             tiles            : [],
@@ -36,9 +34,8 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
         Ext.apply(this, config);
         this.callParent(arguments);
     },
-
     init          : function () {
-//        console.init('WMS.controller.wms.unit.Canvas initializing... ');
+        console.init('WMS.controller.wms.unit.Canvas initializing... ');
 //        var me = this;
 //        me.control({
 //            'wmsunitcanvas #unitsDrawingCmp': {

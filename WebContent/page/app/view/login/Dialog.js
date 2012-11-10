@@ -13,18 +13,17 @@
  * itself extends well known Ext.window.Window.
  */
 Ext.define('WMS.view.login.Dialog', {
-    extend    : 'WMS.view.abstract.BaseDialog',
-    alias     : 'widget.logindialog',
-    title     : 'Witaj',
-    autoShow  : true,
-    autoRender: true,
-    uses      : [
+    extend: 'WMS.view.abstract.BaseDialog',
+    uses  : [
+        'WMS.view.abstract.BaseDialog',
         'WMS.view.login.Form'
     ],
-    layout    : {
+    alias : 'widget.logindialog',
+    title : 'Witaj w programie MajekWMS',
+    layout: {
         type: 'fit'
     },
-    items     : [
+    items : [
         {
             xtype: 'loginform',
             url  : 'wms/auth'

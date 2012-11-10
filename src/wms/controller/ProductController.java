@@ -11,8 +11,8 @@ import org.hibernate.Transaction;
 import org.json.simple.JSONObject;
 
 import wms.controller.base.extractor.RData;
+import wms.model.BasicPersistanceObject;
 import wms.model.Measure;
-import wms.model.PersistenceObject;
 import wms.model.Product;
 import wms.model.Unit;
 
@@ -71,7 +71,8 @@ public class ProductController extends BasicController {
 	}
 
 	@Override
-	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
+	protected BasicPersistanceObject preCreate(BasicPersistanceObject b,
+			JSONObject payloadedData) {
 		ActionData ad = extractActionData(b, payloadedData);
 
 		ad.product.setMeasure((Measure) this.session.byId(Measure.class).load(
@@ -83,8 +84,8 @@ public class ProductController extends BasicController {
 	}
 
 	@Override
-	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
-			JSONObject payloadedData) {
+	protected BasicPersistanceObject preUpdateNonPrimitives(
+			BasicPersistanceObject b, JSONObject payloadedData) {
 		ActionData ad = extractActionData(b, payloadedData);
 
 		if (ad.measure_id != null) {
@@ -94,7 +95,8 @@ public class ProductController extends BasicController {
 		return ad.product;
 	}
 
-	private ActionData extractActionData(PersistenceObject b, JSONObject payloadedData) {
+	private ActionData extractActionData(BasicPersistanceObject b,
+			JSONObject payloadedData) {
 		return new ActionData((Long) payloadedData.get("measure_id"),
 				(Long) payloadedData.get("id"),
 				(Long) payloadedData.get("unit_id"), (Product) b);

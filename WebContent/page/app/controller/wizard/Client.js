@@ -13,7 +13,7 @@
  */
 Ext.define('WMS.controller.wizard.Client', {
     extend         : 'Ext.app.Controller',
-    requires       : [
+    views          : [
         'WMS.view.wizard.client.Dialog'
     ],
     stores         : [

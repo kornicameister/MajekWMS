@@ -7,13 +7,14 @@
 
 Ext.define('WMS.view.manager.supplier.Manager', {
     extend : 'WMS.view.manager.abstract.ClientManager',
-    alias  : 'widget.suppliermanager',
-    title  : 'Menadżer - dostawcy',
-    iconCls: 'view-toolbar-clientsButton',
     uses   : [
+        'WMS.view.manager.abstract.ClientManager',
         'WMS.view.manager.supplier.Details',
         'WMS.view.manager.supplier.Invoices'
     ],
+    alias  : 'widget.suppliermanager',
+    title  : 'Menadżer - dostawcy',
+    iconCls: 'view-toolbar-clientsButton',
     items  : [
         {
             xtype  : 'clientgrid',

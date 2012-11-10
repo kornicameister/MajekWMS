@@ -45,8 +45,8 @@
                     'wms.unit.Canvas',
                     'wms.unit.Inventory',
 
-                    'manager.Recipients',
                     'manager.Suppliers',
+                    'manager.Recipients',
 
                     'wizard.Client',
                     'wizard.Company',

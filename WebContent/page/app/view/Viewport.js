@@ -9,8 +9,12 @@
 
 // entry point for file
 Ext.define('WMS.view.Viewport', {
-    extend: 'Ext.Viewport',
-
+    extend  : 'Ext.Viewport',
+    uses    : [
+        'WMS.view.Master',
+        'WMS.view.toolbar.Header',
+        'WMS.view.toolbar.Footer'
+    ],
     layout  : {
         type: 'fit'
     },
@@ -19,14 +23,12 @@ Ext.define('WMS.view.Viewport', {
             type: 'fit'
         }
     },
-
-    items: {
-        id    : 'viewport',
-        xtype : 'panel',
-        title : 'WMS Simulator',
-
+    items   : {
+        id   : 'viewport',
+        xtype: 'panel',
+        title: 'WMS Simulator',
         items: {
-            xtype : 'masterview'
+            xtype: 'masterview'
         },
         tbar : {
             xtype: 'headbar'

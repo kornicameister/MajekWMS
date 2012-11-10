@@ -6,12 +6,12 @@
  */
 
 Ext.define('WMS.view.manager.abstract.ClientGrid', {
-    extend  : 'WMS.view.manager.abstract.Grid',
-    alias   : 'widget.clientgrid',
-    requires: [
+    extend : 'WMS.view.manager.abstract.Grid',
+    uses   : [
         'WMS.view.manager.abstract.Grid'
     ],
-    columns : [
+    alias  : 'widget.clientgrid',
+    columns: [
         {
             header   : 'Skrót',
             dataIndex: 'name',

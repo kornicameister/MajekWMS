@@ -6,20 +6,21 @@
  */
 
 Ext.define('WMS.view.wms.unit.Inventory', {
-    extend : 'WMS.view.abstract.EditableGrid',
-    alias  : 'widget.wmsunitinventory',
-    iconCls: 'view-wms-inventory',
-
+    extend    : 'WMS.view.abstract.EditableGrid',
+    requires  : [
+        'WMS.view.abstract.EditableGrid',
+        'WMS.view.abstract.NavigableNumberField'
+    ],
+    alias     : 'widget.wmsunitinventory',
+    iconCls   : 'view-wms-inventory',
     title     : 'Inventory',
     itemId    : 'inventoryGrid',
     emptyText : 'No products for selected unit...',
     autoScroll: true,
-
-    features: [
+    features  : [
         { ftype: 'summary' }
     ],
-
-    columns: [
+    columns   : [
         {
             header   : 'ID',
             dataIndex: 'id',
@@ -45,7 +46,6 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             dataIndex      : 'pallets',
             summaryType    : 'sum',
             sortable       : true,
-            summaryType    : 'sum',
             summaryRenderer: function (value) {
                 var total = Ext.getStore('Units').getActive().get('size');
                 return Ext.String.format('{0} z {1} PJŁ', value, total);
@@ -139,7 +139,7 @@ Ext.define('WMS.view.wms.unit.Inventory', {
             }
         }
     ],
-    plugins: [
+    plugins   : [
         Ext.create('Ext.grid.plugin.RowEditing', {
             pluginId: 'inventoryRowEditor'
         })

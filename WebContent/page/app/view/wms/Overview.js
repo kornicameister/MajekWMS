@@ -10,16 +10,18 @@
 
 Ext.define('WMS.view.wms.Overview', {
     extend : 'Ext.panel.Panel',
+    uses   : [
+        'WMS.view.abstract.EditableGrid',
+        'WMS.view.abstract.NavigableNumberField'
+    ],
     alias  : 'widget.wmsoverviews',
     iconCls: 'view-wms-overview',
-
-    layout: {
+    layout : {
         type : 'hbox',
         align: 'stretch',
         pack : 'center'
     },
-
-    items: [
+    items  : [
         {
             xtype : 'propertygrid',
             flex  : 1,
@@ -133,7 +135,7 @@ Ext.define('WMS.view.wms.Overview', {
     ]
 });
 
-function sizeColumnRenderer(value, md, record) {
+function sizeColumnRenderer(value) {
     value *= 100;
     return value.toFixed(2) + ' %';
 }

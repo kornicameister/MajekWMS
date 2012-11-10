@@ -16,14 +16,18 @@
  * user information such as warehouse diagram etc.
  */
 Ext.define('WMS.view.Master', {
-    extend: 'Ext.tab.Panel',
-    alias : 'widget.masterview',
+    extend        : 'Ext.tab.Panel',
+    uses          : [
+        'WMS.view.wms.Overview',
+        'WMS.view.wms.Unit',
+        'WMS.view.wms.Statistics'
+    ],
+    alias         : 'widget.masterview',
     defaults      : {
         autoScroll: true
     },
     deferredRender: true,
-
-    items: [
+    items         : [
         {
             xtype : 'wmsoverviews',
             itemId: 'wmsOverview',

@@ -6,22 +6,20 @@
  */
 
 Ext.define('WMS.controller.wms.Overview', {
-    extend: 'Ext.app.Controller',
-
-    stores: [
+    extend                 : 'Ext.app.Controller',
+    stores                 : [
         'UnitTypes',
         'Companies'
     ],
-    views : [
+    views                  : [
         'wms.Overview'
     ],
-    refs  : [
+    refs                   : [
         {ref: 'unitsGrid', selector: 'wmsoverviews egrid[itemId=unitsGrid]'},
         {ref: 'warehouseDescription', selector: 'wmsoverviews propertygrid[itemId=description]'}
     ],
-
     init                   : function () {
-//        console.init('WMS.controller.wms.Overview initializing...');
+        console.init('WMS.controller.wms.Overview initializing...');
 //        var me = this,
 //            companies = me.getCompaniesStore();
 //
@@ -60,7 +58,7 @@ Ext.define('WMS.controller.wms.Overview', {
         me.mon(units, 'load', me.onUnitsStoreLoaded, me);
         me.mon(units, 'update', me.onUnitsStoreUpdated);
     },
-    onUnitsStoreUpdated: function (store, records) {
+    onUnitsStoreUpdated    : function (store, records) {
         var length = records.length;
         Ext.getCmp('statusBar').setStatus({
             text : Ext.String.format('Uaktualniłeś {0} {1}', length, (length === 1 ? 'strefę' : 'stref')),
@@ -71,30 +69,30 @@ Ext.define('WMS.controller.wms.Overview', {
             }
         });
     },
-    onUnitsStoreLoaded: function (store) {
-        var me = this,
-            wd = me.getWarehouseDescription(),
-            activeWarehouse = me.getWarehousesStore().getActive(),
-            source = activeWarehouse.toSource(
-                [
-                    { field: 'name', header: 'Nazwa'},
-                    { field: 'description', header: 'Opis'},
-                    { field: 'usage', header: 'Wypełnienie'},
-                    { field: 'size', header: 'Rozmiar'},
-                    { field: 'createdDate', header: 'Utworzony'}
-                ]
-            );
-
-        console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
-
-        me.getUnitsGrid().reconfigure(store);
-        wd.setSource(source);
+    onUnitsStoreLoaded     : function (store) {
+//        var me = this,
+//            wd = me.getWarehouseDescription(),
+//            activeWarehouse = me.getWarehousesStore().getActive(),
+//            source = activeWarehouse.toSource(
+//                [
+//                    { field: 'name', header: 'Nazwa'},
+//                    { field: 'description', header: 'Opis'},
+//                    { field: 'usage', header: 'Wypełnienie'},
+//                    { field: 'size', header: 'Rozmiar'},
+//                    { field: 'createdDate', header: 'Utworzony'}
+//                ]
+//            );
+//
+//        console.log('Overview :: Units`s changed, refreshing the unit\'s grid');
+//
+//        me.getUnitsGrid().reconfigure(store);
+//        wd.setSource(source);
     },
-    onUnitSelectionChanged: function (selModel, selections) {
+    onUnitSelectionChanged : function (selModel, selections) {
         var grid = this.getUnitsGrid();
         grid.down('#delete').setDisabled(selections.length === 0);
     },
-    onNewUnit: function () {
+    onNewUnit              : function () {
         var me = this,
             store = me.getCompaniesStore().getActive().getUnits(),
             grid = me.getUnitsGrid(),
@@ -114,7 +112,7 @@ Ext.define('WMS.controller.wms.Overview', {
             }
         });
     },
-    onUnitDelete: function () {
+    onUnitDelete           : function () {
         var me = this,
             store = me.getStore('Warehouses').getActive().getUnits(),
             grid = me.getUnitsGrid(),

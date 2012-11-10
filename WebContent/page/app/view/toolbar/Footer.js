@@ -37,8 +37,6 @@ Ext.define('WMS.view.toolbar.Footer', {
             width  : 100
         }
     ],
-
-    // values when cleared
     defaultText: 'Brak oczekujących operacji...'
 });
 

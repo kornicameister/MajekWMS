@@ -7,7 +7,7 @@ import org.hibernate.Transaction;
 import org.json.simple.JSONObject;
 
 import wms.controller.base.extractor.RData;
-import wms.model.PersistenceObject;
+import wms.model.BasicPersistanceObject;
 import wms.model.Unit;
 import wms.model.UnitType;
 import wms.model.Warehouse;
@@ -49,13 +49,13 @@ public class UnitController extends BasicController {
 
 			transaction.commit();
 			for (Object o : data) {
-				this.affected.add((PersistenceObject) o);
+				this.affected.add((BasicPersistanceObject) o);
 			}
 		}
 	}
 
 	@Override
-	protected PersistenceObject preUpdateNonPrimitives(PersistenceObject b,
+	protected BasicPersistanceObject preUpdateNonPrimitives(BasicPersistanceObject b,
 			JSONObject payloadedData) {
 		Unit unit = (Unit) b;
 		ActionData ad = extractActionData(unit, payloadedData);
@@ -71,7 +71,7 @@ public class UnitController extends BasicController {
 	}
 
 	@Override
-	protected PersistenceObject preCreate(PersistenceObject b, JSONObject payloadedData) {
+	protected BasicPersistanceObject preCreate(BasicPersistanceObject b, JSONObject payloadedData) {
 		ActionData ad = extractActionData(b, payloadedData);
 
 		ad.newUnit.setType((UnitType) this.session.byId(UnitType.class)
@@ -82,7 +82,7 @@ public class UnitController extends BasicController {
 		return ad.newUnit;
 	}
 
-	private ActionData extractActionData(PersistenceObject b, JSONObject payloadedData) {
+	private ActionData extractActionData(BasicPersistanceObject b, JSONObject payloadedData) {
 		ActionData ad = new ActionData((Long) payloadedData.get("unittype_id"),
 				(Long) payloadedData.get("warehouse_id"),
 				(Long) payloadedData.get("id"), (Unit) b);

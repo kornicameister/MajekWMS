@@ -7,13 +7,13 @@
 
 Ext.define('WMS.view.manager.abstract.ClientManager', {
     extend            : 'Ext.panel.Panel',
-    alternateClassName: 'WMS.panel.ClientManager',
-    requires          : [
+    uses              : [
         'WMS.view.manager.abstract.DetailsHolder',
         'WMS.view.manager.abstract.ClientDetails',
         'WMS.view.manager.abstract.ClientGrid',
         'WMS.view.manager.abstract.InvoiceList'
     ],
+    alternateClassName: 'WMS.panel.ClientManager',
     closable          : true,
     layout            : {
         type: 'accordion'

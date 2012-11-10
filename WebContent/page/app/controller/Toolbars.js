@@ -10,27 +10,15 @@
 
 Ext.define('WMS.controller.Toolbars', {
     extend                  : 'Ext.app.Controller',
-    requires                : [
-        'Ext.ux.menu.StoreMenu'
-    ],
     views                   : [
         'toolbar.Header',
         'toolbar.Footer',
         'wizard.client.Dialog'
     ],
     refs                    : [
-        {
-            ref     : 'tBar',
-            selector: 'headbar'
-        },
-        {
-            ref     : 'fBar',
-            selector: 'footbar'
-        },
-        {
-            ref     : 'unitMenu',
-            selector: 'headbar storemenu'
-        }
+        { ref: 'tBar', selector: 'headbar' },
+        { ref: 'fBar', selector: 'footbar' },
+        { ref: 'unitMenu', selector: 'headbar storemenu' }
     ],
     init                    : function () {
         console.init('WMS.controller.Toolbars initializing...');
@@ -48,7 +36,7 @@ Ext.define('WMS.controller.Toolbars', {
             '#headerToolbar menu[itemId=clientsMenu]'    : {
                 'click': me.onClientMenuClick
             },
-            '#headerToolbar menu[itemId=suppliersMenu]'    : {
+            '#headerToolbar menu[itemId=suppliersMenu]'  : {
                 'click': me.onClientMenuClick
             },
             '#footerToolbar button[itemId=saveButton]'   : {
@@ -66,7 +54,7 @@ Ext.define('WMS.controller.Toolbars', {
 
         if (item['itemId'] === 'addClient') {
             clientWizardManager.openAsRecipient();
-        } else if(item['itemId'] === 'addSupplier'){
+        } else if (item['itemId'] === 'addSupplier') {
             clientWizardManager.openAsSupplier();
         } else {
             console.log('Toolbars :: ' + Ext.String.format('{0} button has not ben recognized...', item['itemId']))

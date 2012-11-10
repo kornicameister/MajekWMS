@@ -8,7 +8,7 @@
 Ext.define('WMS.controller.wms.Unit', {
     extend           : 'Ext.app.Controller',
     views            : [
-        'WMS.view.wms.Unit'
+        'wms.Unit'
     ],
     refs             : [
         { ref: 'unitPanel', selector: 'wmsunit' }
