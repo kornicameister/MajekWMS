@@ -1,0 +1,182 @@
+.icon-add {
+    background-image: url("../images/add.png") !important;
+}
+
+.icon-delete {
+    background-image: url("../images/delete.png") !important;
+}
+
+.icon-list {
+    background-image: url("../images/list.gif") !important;
+    background-size: 60%
+}
+
+.icon-cancel {
+    background-image: url("../images/cancel.png") !important;
+    background-size: 60%
+}
+
+.icon-details {
+    background-image: url("../images/details.png") !important;
+    background-size: 60%
+}
+
+.icon-edit {
+    background-image: url("../images/edit.png") !important;
+    background-size: 60%
+}
+
+/*view.toolbar.* */
+.view-toolbar-warehouseButton {
+    background-image: url("../images/view/header/warehousing-icon.png") !important;
+    background-size: 60%
+}
+
+.view-toolbar-clientsButton {
+    background-image: url("../images/view/header/clients.png") !important;
+    background-size: 60%
+}
+
+.view-toolbar-suppliersButton {
+    background-image: url("../images/view/header/suppliers.png") !important;
+    background-size: 60%
+}
+
+.view-toolbar-unitsButton {
+    background-image: url("../images/view/header/warehousing-unit.png") !important;
+    background-size: 60%;
+}
+
+.view-toolbar-settingsButton {
+    background-image: url("../images/view/header/settings.png") !important;
+    background-size: 60%
+}
+
+.view-toolbar-helpButton {
+    background-image: url("../images/view/header/help.png") !important;
+    background-size: 60%;
+}
+
+.view-toolbar-receiptButton {
+    background-image: url("../images/view/header/invoice.png") !important;
+    background-size: 60%;
+}
+
+.view-toolbar-releaseButton {
+    background-image: url("../images/view/header/invoice.png") !important;
+    background-size: 60%;
+}
+
+.view-toolbar-inventoryButton {
+    background-image: url("../images/view/header/inventory.png") !important;
+    background-size: 60%;
+}
+
+.view-footer-saveButton {
+    background-image: url("../images/view/footer/save.png") !important;
+    background-size: 60%;
+}
+
+.view-footer-refreshButton {
+    background-image: url("../images/view/footer/refresh.png") !important;
+    background-size: 60%;
+}
+
+/*view.wms* */
+.view-wms-inventory {
+    background-image: url("../images/view/wms/inventory.png") !important;
+    background-size: 70%;
+}
+
+.view-wms-unit {
+    background-image: url("../images/view/wms/unit.png") !important;
+    background-size: 70%;
+}
+
+.view-wms-unit-placement {
+    background-image: url("../images/view/wms/units/place.png") !important;
+    background-size: 70%;
+}
+
+.view-wms-statistics {
+    background-image: url("../images/view/wms/statistics.png") !important;
+    background-size: 70%;
+}
+
+.view-wms-overview {
+    background-image: url("../images/view/wms/overview.png") !important;
+    background-size: 70%;
+}
+
+/*view.wizard*/
+.view-wizard-submit {
+    background-image: url("../images/view/wizard/save-button.png") !important;
+    background-size: 70%;
+}
+
+.view-wizard-reset {
+    background-image: url("../images/view/wizard/reset-icon.png") !important;
+    background-size: 70%;
+}
+
+.view-wms-overview-unit-add-button {
+    background-image: url('../images/view/wms/warehouse/unit-add.png');
+    background-size: 100%;
+}
+
+.view-wms-overview-warehouse-panel {
+    text-align: left;
+    text-spacing: punctuation;
+    font-size: inherit;
+    background-color: #8bb8f3;
+}
+
+.view-wms-overview-warehouse-panel > p {
+    font-style: inherit;
+    font-weight: bolder;
+}
+
+.view-wms-overview-warehouse-panel > p > * {
+    font-style: italic;
+    font-weight: normal;
+}
+
+.wizard-company-summary {
+    margin: 2px 2px 2px 2px;
+    padding: 6px;
+    background-color: #ABCDEC;
+    border-radius: 10px;
+    height: 120px;
+    font-size: larger;
+    overflow: hidden;
+}
+
+.wizard-company-summary > .company {
+    width: 320px;
+    float: left;
+}
+
+.wizard-company-summary > .warehouse {
+    width: 320px;
+    overflow: hidden;
+}
+
+.wizard-company-summary > .warehouse > p.description {
+    width: 200px;
+    word-break: break-all;
+    line-break: strict;
+}
+
+.wizard-company-summary > .company:before {
+    content: 'Firma: ';
+    font-style: italic;
+    font-weight: bold;
+    border-bottom: 2px solid blue;
+}
+
+.wizard-company-summary > .warehouse:before {
+    content: 'Magazyn: ';
+    font-style: italic;
+    font-weight: bold;
+    border-bottom: 2px solid blue;
+}
