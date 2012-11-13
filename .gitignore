@@ -1,0 +1,14 @@
+# java files
+*.settings/*
+*.class*
+*.project
+
+# Package Files #
+#*.jar
+#*.war
+#*.ear
+
+# idea files
+/out/*
+/.idea/*
+*.iml
