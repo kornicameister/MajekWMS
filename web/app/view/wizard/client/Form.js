@@ -44,8 +44,8 @@ Ext.define('WMS.view.wizard.client.Form', {
                 fieldLabel   : 'Typ',
                 name         : 'type_id',
                 store        : 'ClientTypes',
-                valueField   : 'id',
-                displayField : 'name',
+                valueField   : 'type',
+                displayField : 'type',
                 typeAhead    : true,
                 triggerAction: 'all',
                 selectOnTab  : true

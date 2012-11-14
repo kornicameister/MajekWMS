@@ -28,10 +28,11 @@ Ext.define('WMS.controller.wizard.Client', {
     ],
     statics        : {
         MODE       : {
-            SUPPLIER : 1,
-            RECIPIENT: 2
+            SUPPLIER : 'supplier',
+            RECIPIENT: 'recipient',
+            CLIENT   : 'client'
         },
-        CURRENTMODE: 0
+        workingMode: undefined
     },
     init           : function () {
         console.init('WMS.controller.wizard.Client initializing...');
@@ -47,27 +48,30 @@ Ext.define('WMS.controller.wizard.Client', {
             'clientform button[itemId=cancel]': {
                 'click': me.onCancel
             }
-        })
+        }, me);
     },
     setModeInCombo : function () {
         var me = this,
             combo = me.getClientTypeCombo();
 
-        combo.setValue(me.workingMode);
+        combo.setValue(WMS.controller.wizard.Client.workingMode);
     },
     onClientSubmit : function (button) {
         console.log('wizard.Client :: Submit button has been clicked...');
         var me = this,
-            form = button.up('form')['form'];
+            form = button.up('form')['form'],
+            mode = WMS.controller.wizard.Client.workingMode,
+            formValid = form.isValid(),
+            values = form.getValues();
 
-        if (form.isValid()) {
+        if (formValid) {
             var client = undefined;
-            switch (WMS.controller.wizard.Client.CURRENTMODE) {
+            switch (mode) {
                 case WMS.controller.wizard.Client.MODE.RECIPIENT:
-                    client = me.getRecipientsStore().saveAssociatedClient(form.getValues());
+                    client = me.getRecipientsStore().saveAssociatedClient(values);
                     break;
                 case WMS.controller.wizard.Client.MODE.SUPPLIER:
-                    client = me.getSuppliersStore().saveAssociatedClient(form.getValues());
+                    client = me.getSuppliersStore().saveAssociatedClient(values);
                     break;
             }
             if (Ext.isDefined(client)) {
@@ -80,15 +84,14 @@ Ext.define('WMS.controller.wizard.Client', {
                     }
                 });
                 form.reset();
+                console.log('wizard.Client :: Client has been successfully added...');
             } else {
                 form.reset();
             }
-            console.log('wizard.Client :: Client has been successfully added...');
-            if (Ext.isDefined(me.getWizard())) {
-                me.getWizard().close();
-            }
         }
-
+        if (Ext.isDefined(me.getWizard())) {
+            me.getWizard().close();
+        }
     },
     onCancel       : function () {
         var me = this;
@@ -105,7 +108,7 @@ Ext.define('WMS.controller.wizard.Client', {
     openWizard     : function (mode) {
         var me = this,
             wizard = me.getView('wizard.client.Dialog');
-        WMS.controller.wizard.Client.CURRENTMODE = mode;
+        WMS.controller.wizard.Client.workingMode = mode;
         wizard.create().show();
     }
 });

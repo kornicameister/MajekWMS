@@ -66,10 +66,13 @@ Ext.define('WMS.controller.manager.Suppliers', {
             store = me.getSupplierList(),
             selection = me.getSelectedClients();
     },
-    onNewClientAddClick       : function (button) {
+    onNewClientAddClick       : function () {
         var me = this,
-            clientWizard = me.getView('wizard.client.Dialog');
-        clientWizard.create().show(button);
+            clientWizardCtrl = me.getController('WMS.controller.wizard.Client');
+
+        if(Ext.isDefined(clientWizardCtrl)){
+            clientWizardCtrl.openAsSupplier();
+        }
     },
     onEditClientClick         : function () {
 

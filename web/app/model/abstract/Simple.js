@@ -8,7 +8,7 @@
 Ext.define('WMS.model.abstract.Simple', {
     extend : 'Ext.data.Model',
     fields : [
-        { name: 'id', type: 'int'},
+        { name: 'id', type: 'int', defaultValue: null},
         { name: 'name', type: 'string' }
     ],
     sorters: [

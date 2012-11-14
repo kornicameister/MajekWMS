@@ -10,8 +10,9 @@
 
 Ext.define('WMS.controller.Master', {
     extend              : 'Ext.app.Controller',
-    views               : [
-        'Master'
+    uses                : [
+        'WMS.view.manager.recipient.Manager',
+        'WMS.view.manager.supplier.Manager'
     ],
     refs                : [
         {  ref: 'masterView', selector: 'masterview' }
