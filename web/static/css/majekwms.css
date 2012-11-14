@@ -180,3 +180,22 @@
     font-weight: bold;
     border-bottom: 2px solid blue;
 }
+
+/**********************************************/
+
+.manager-client-details > div {
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 20px;
+}
+
+.manager-client-details > .basic {
+    border-bottom: 2px solid blue;
+    font-size: larger;
+}
+
+.manager-client-details > .extended {
+    border-top: 4px solid #444444;
+    margin-top: 5px;
+}

@@ -8,7 +8,7 @@
 Ext.define('WMS.view.manager.abstract.ClientDetails', {
     extend: 'Ext.panel.Panel',
     tpl   : new Ext.XTemplate(
-        '<div class="clientDetails">',
+        '<div class="manager-client-details">',
         '<div class="basic">',
         '<p>Odbiorca: <b>{name}</b></p>',
         '<p>Firma: <b>{company}</b></p>',
