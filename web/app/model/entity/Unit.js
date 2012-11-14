@@ -45,7 +45,6 @@ Ext.define('WMS.model.entity.Unit', {
             model         : 'WMS.model.entity.Product',
             foreignKey    : 'unit_id',
             storeConfig   : {
-                autoSync   : true,
                 constructor: function (config) {
                     // Clone the config so we don't modify the original config object
                     config = Ext.Object.merge({}, config);
@@ -83,6 +82,7 @@ Ext.define('WMS.model.entity.Unit', {
                                 }
                             }
                         }
+                        store.sync();
                     }
                 }
             }

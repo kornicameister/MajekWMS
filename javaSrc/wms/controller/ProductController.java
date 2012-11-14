@@ -63,7 +63,7 @@ public class ProductController extends RequestController {
             Set<Product> dbProducts = unit.getProducts();
             dbProducts.addAll(products);
             unit.setProducts(dbProducts);
-            this.session.saveOrUpdate(unit);
+            this.affected.addAll(products);
         }
         this.session.getTransaction().commit();
     }

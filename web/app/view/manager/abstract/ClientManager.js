@@ -35,12 +35,6 @@ Ext.define('WMS.view.manager.abstract.ClientManager', {
             },
             items   : [
                 {
-                    itemId : 'releaseClient',
-                    text   : 'Nowe wydanie',
-                    iconCls: 'view-toolbar-releaseButton'
-                },
-                '-',
-                {
                     itemId : 'newClient',
                     text   : 'Dodaj',
                     iconCls: 'icon-add'
