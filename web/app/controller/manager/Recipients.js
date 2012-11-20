@@ -61,9 +61,6 @@ Ext.define('WMS.controller.manager.Recipients', {
         }
     },
     onReleaseClientClick      : function () {
-        var me = this,
-            store = me.getRecipientsStore(),
-            selection = me.getSelectedClients();
     },
     onNewClientAddClick       : function () {
         var me = this,
@@ -114,7 +111,8 @@ Ext.define('WMS.controller.manager.Recipients', {
         } else {
             console.log('manager.Recipients :: Failed to popup with statistics')
         }
-    }, /**
+    },
+    /**
      * Method used as wrapper for the right method which is
      * to process the request
      * @param grid

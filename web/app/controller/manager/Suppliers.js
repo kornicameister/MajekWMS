@@ -62,15 +62,12 @@ Ext.define('WMS.controller.manager.Suppliers', {
         }
     },
     onReleaseClientClick      : function () {
-        var me = this,
-            store = me.getSupplierList(),
-            selection = me.getSelectedClients();
     },
     onNewClientAddClick       : function () {
         var me = this,
             clientWizardCtrl = me.getController('WMS.controller.wizard.Client');
 
-        if(Ext.isDefined(clientWizardCtrl)){
+        if (Ext.isDefined(clientWizardCtrl)) {
             clientWizardCtrl.openAsSupplier();
         }
     },
@@ -79,7 +76,7 @@ Ext.define('WMS.controller.manager.Suppliers', {
     },
     onRemoveClientClick       : function () {
         var me = this,
-            store = me.getSupplierList(),
+            store = me.getSuppliersStore(),
             selection = me.getSelectedClients();
         if (selection) {
             store.remove(selection);
