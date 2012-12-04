@@ -36,7 +36,7 @@ abstract public class PersistenceObject extends BasicPersistentObject {
     }
 
     public synchronized final void setId(Long id) {
-        this.id = id;
+        this.id = null;
     }
 
     @Override
@@ -47,9 +47,8 @@ abstract public class PersistenceObject extends BasicPersistentObject {
 
         PersistenceObject that = (PersistenceObject) o;
 
-        if (id != null ? ! id.equals(that.id) : that.id != null) return false;
+        return !(id != null ? !id.equals(that.id) : that.id != null);
 
-        return true;
     }
 
     @Override

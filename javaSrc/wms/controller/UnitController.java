@@ -101,17 +101,15 @@ public class UnitController extends RequestController {
     }
 
     private ActionData extractActionData(BasicPersistentObject b, JSONObject payloadData) {
-        ActionData ad = new ActionData((Long) payloadData.get("unittype_id"),
+        return new ActionData((Long) payloadData.get("unittype_id"),
                 (Long) payloadData.get("warehouse_id"),
                 (Long) payloadData.get("id"), (Unit) b);
-        return ad;
     }
 
     @Override
     protected Object adjustValueType(Object value, String property) {
         if (property.equals("price") || property.equals("quantity")) {
-            Double desired = new Double(value.toString());
-            return desired;
+            return new Double(value.toString());
         }
         return value;
     }

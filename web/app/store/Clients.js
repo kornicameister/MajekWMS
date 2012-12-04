@@ -6,12 +6,10 @@
  */
 
 Ext.define('WMS.store.Clients', {
-    extend: 'Ext.data.Store',
-    model : 'WMS.model.entity.Client',
-
-    autoLoad: true,
-    autoSync: true,
-
+    extend              : 'Ext.data.Store',
+    model               : 'WMS.model.entity.Client',
+    autoLoad            : true,
+    autoSync            : true,
     saveAssociatedClient: function (client) {
         this.add(client);
     }

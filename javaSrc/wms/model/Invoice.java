@@ -9,12 +9,9 @@ import java.util.Set;
 @Entity
 @Table(name = "invoice", uniqueConstraints = {@UniqueConstraint(columnNames = {"refNumber"})})
 @AttributeOverride(name = "id", column = @Column(name = "idInvoice", updatable = false, insertable = true, nullable = false))
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue(value = "undefined")
 public class Invoice extends PersistenceObject {
     @Transient
-    private static final long serialVersionUID = - 3204092137188652431L;
+    private static final long serialVersionUID = -3204092137188652431L;
 
     @Column(name = "refNumber", updatable = false, insertable = true, nullable = false)
     private String invoiceNumber;
@@ -34,9 +31,13 @@ public class Invoice extends PersistenceObject {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.invoice")
     private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", referencedColumnName = "idClient")
     private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "invoiceType_id", referencedColumnName = "idInvoiceType", updatable = true, nullable = false)
+    private InvoiceType type;
 
     public Invoice() {
         super(); // hibernate
@@ -91,66 +92,46 @@ public class Invoice extends PersistenceObject {
         this.client = client;
     }
 
+    public InvoiceType getType() {
+        return type;
+    }
+
+    public void setType(InvoiceType type) {
+        this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Invoice)) return false;
+        if (!super.equals(o)) return false;
+
+        Invoice invoice = (Invoice) o;
+
+        if (!client.equals(invoice.client)) return false;
+        if (!createdDate.equals(invoice.createdDate)) return false;
+        if (!description.equals(invoice.description)) return false;
+        if (!dueDate.equals(invoice.dueDate)) return false;
+        if (!invoiceNumber.equals(invoice.invoiceNumber)) return false;
+        return invoiceProducts.equals(invoice.invoiceProducts) && type.equals(invoice.type);
+
+    }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((client == null) ? 0 : client.hashCode());
-        result = prime * result
-                + ((createdDate == null) ? 0 : createdDate.hashCode());
-        result = prime * result
-                + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
-        result = prime * result
-                + ((invoiceNumber == null) ? 0 : invoiceNumber.hashCode());
-        result = prime * result
-                + ((invoiceProducts == null) ? 0 : invoiceProducts.hashCode());
+        result = 31 * result + invoiceNumber.hashCode();
+        result = 31 * result + createdDate.hashCode();
+        result = 31 * result + dueDate.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + invoiceProducts.hashCode();
+        result = 31 * result + client.hashCode();
+        result = 31 * result + type.hashCode();
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (! super.equals(obj))
-            return false;
-        if (! (obj instanceof Invoice))
-            return false;
-        Invoice other = (Invoice) obj;
-        if (client == null) {
-            if (other.client != null)
-                return false;
-        } else if (! client.equals(other.client))
-            return false;
-        if (createdDate == null) {
-            if (other.createdDate != null)
-                return false;
-        } else if (! createdDate.equals(other.createdDate))
-            return false;
-        if (description == null) {
-            if (other.description != null)
-                return false;
-        } else if (! description.equals(other.description))
-            return false;
-        if (dueDate == null) {
-            if (other.dueDate != null)
-                return false;
-        } else if (! dueDate.equals(other.dueDate))
-            return false;
-        if (invoiceNumber == null) {
-            if (other.invoiceNumber != null)
-                return false;
-        } else if (! invoiceNumber.equals(other.invoiceNumber))
-            return false;
-        if (invoiceProducts == null) {
-            if (other.invoiceProducts != null)
-                return false;
-        } else if (! invoiceProducts.equals(other.invoiceProducts))
-            return false;
-        return true;
-    }
-
-    @Override public String toString() {
+    public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("Invoice");
         sb.append("{invoiceNumber='").append(invoiceNumber).append('\'');
@@ -159,6 +140,7 @@ public class Invoice extends PersistenceObject {
         sb.append(", description='").append(description).append('\'');
         sb.append(", invoiceProducts=").append(invoiceProducts);
         sb.append(", client=").append(client);
+        sb.append(", type=").append(type);
         sb.append('}');
         return sb.toString();
     }

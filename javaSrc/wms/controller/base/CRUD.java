@@ -5,12 +5,10 @@ package wms.controller.base;
  *
  * @author kornicameister
  * @created 01-10-2012
- * @file CRUD.java for project MajekWMS
- * @type CRUD
  */
 public enum CRUD {
     READ,
     UPDATE,
     DELETE,
-    CREATE;
+    CREATE
 }

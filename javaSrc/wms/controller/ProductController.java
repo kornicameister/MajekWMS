@@ -1,5 +1,6 @@
 package wms.controller;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import wms.controller.base.extractor.RData;
 import wms.model.BasicPersistentObject;
@@ -12,7 +13,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.logging.Logger;
 
 public class ProductController extends RequestController {
     private Map<Unit, HashSet<Product>> unitProduct;

@@ -10,8 +10,8 @@ public class AddressController extends RequestController {
 
     private class ActionData {
         @SuppressWarnings("unused")
-        Long city_id, address_id;
-        Address address;
+        final Long city_id, address_id;
+        final Address address;
 
         public ActionData(BasicPersistentObject b, JSONObject p) {
             super();

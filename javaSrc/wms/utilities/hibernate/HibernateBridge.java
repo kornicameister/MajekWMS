@@ -9,7 +9,7 @@ import wms.model.WMSModelConstants;
 public final class HibernateBridge {
     private static SessionFactory sessionFactory = null;
 
-    public static final SessionFactory getSessionFactory() {
+    public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 

@@ -1,7 +1,8 @@
 package wms.servlet;
 
-import wms.controller.base.CRUD;
+import org.apache.log4j.Logger;
 import wms.controller.RequestController;
+import wms.controller.base.CRUD;
 import wms.controller.base.extractor.RDExtractor;
 import wms.utilities.hibernate.HibernateBridge;
 import wms.utilities.hibernate.HibernateBridgeException;
@@ -12,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * {@link WMSDataAgent} acts as a middle-man between server and client in
@@ -33,15 +32,14 @@ public class WMSDataAgent extends HttpServlet {
             if (HibernateBridge.accessHibernate()) {
                 logger.info(String.format(
                         "Hibernate connection is up and running, status = %s",
-                        ! HibernateBridge.getSessionFactory().isClosed())
+                        !HibernateBridge.getSessionFactory().isClosed())
                 );
             } else {
-                logger.severe("No exception was caught, still connection is down");
+                logger.error("No exception was caught, still connection is down");
             }
         } catch (HibernateBridgeException e) {
             e.printStackTrace();
-            logger.log(Level.SEVERE,
-                    "Something went wrong when accessing Hibernate", e);
+            logger.error("Something went wrong when accessing Hibernate", e);
         }
         super.init();
     }
@@ -51,21 +49,21 @@ public class WMSDataAgent extends HttpServlet {
         if (HibernateBridge.closeHibernate()) {
             logger.info("Closed Hibernate connection");
         } else {
-            logger.warning("Failed to close Hibernate connection");
+            logger.warn("Failed to close Hibernate connection");
         }
         super.destroy();
     }
 
     private void processRequest(HttpServletRequest req,
                                 HttpServletResponse resp, CRUD action) throws IOException {
-        logger.info(String.format("Processing request ", action));
+        logger.info(String.format("Processing request %s", action));
         resp.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();
         RequestController controller;
 
         if ((controller = RequestController.pickController(RDExtractor.parse(
                 req, action))) == null) {
-            logger.warning(String.format(
+            logger.warn(String.format(
                     "Module not recognized, tried extract from URI=[%s]",
                     req.getRequestURI()));
             out.write(RequestController.buildErrorResponse());

@@ -101,10 +101,8 @@ public class Unit extends NamedPersistenceObject {
 
         if (description != null ? !description.equals(unit.description) : unit.description != null) return false;
         if (size != null ? !size.equals(unit.size) : unit.size != null) return false;
-        if (type != null ? !type.equals(unit.type) : unit.type != null) return false;
-        if (usage != null ? !usage.equals(unit.usage) : unit.usage != null) return false;
+        return !(type != null ? !type.equals(unit.type) : unit.type != null) && !(usage != null ? !usage.equals(unit.usage) : unit.usage != null);
 
-        return true;
     }
 
     @Override

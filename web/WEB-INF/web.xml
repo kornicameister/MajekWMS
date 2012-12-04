@@ -4,7 +4,7 @@
          id="WebApp_ID" version="3.0">
     <display-name>MajekWMS</display-name>
     <welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     <description>This application comes with simulator that shows WMS capabilities to support inventory management in
         warehouses.
@@ -16,30 +16,39 @@
         <param-name>webmaster</param-name>
         <param-value>kornicameister@gmail.com</param-value>
     </context-param>
-    
+
     <!-- servlet -->
     <servlet>
         <description>Middle man</description>
         <display-name>WMSDataAgent</display-name>
         <servlet-name>WMSDataAgent</servlet-name>
         <servlet-class>wms.servlet.WMSDataAgent</servlet-class>
-        <load-on-startup>0</load-on-startup>
+        <load-on-startup>4</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>log4j-init</servlet-name>
+        <servlet-class>wms.servlet.WMSLog4JInit</servlet-class>
+        <init-param>
+            <param-name>log4j-init-file</param-name>
+            <param-value>/WEB-INF/classes/wms/resources/log4j.properties</param-value>
+        </init-param>
+        <load-on-startup>3</load-on-startup>
     </servlet>
     <servlet>
         <description>Page controller</description>
         <display-name>WMSController</display-name>
         <servlet-name>WMSController</servlet-name>
         <servlet-class>wms.servlet.WMSController</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
         <description>Authorization agent</description>
         <display-name>WMSAuthAgent</display-name>
         <servlet-name>WMSAuthAgent</servlet-name>
         <servlet-class>wms.servlet.WMSAuthAgent</servlet-class>
-        <load-on-startup>2</load-on-startup>
+        <load-on-startup>1</load-on-startup>
     </servlet>
-    
+
     <!-- mappings -->
     <servlet-mapping>
         <servlet-name>WMSDataAgent</servlet-name>
@@ -52,5 +61,9 @@
     <servlet-mapping>
         <servlet-name>WMSAuthAgent</servlet-name>
         <url-pattern>/MajekWMS/wms/auth</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>log4j-init</servlet-name>
+        <url-pattern>/MajekWMS/log4j/init</url-pattern>
     </servlet-mapping>
 </web-app>

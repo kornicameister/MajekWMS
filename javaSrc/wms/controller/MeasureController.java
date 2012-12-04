@@ -11,8 +11,7 @@ public class MeasureController extends RequestController {
     @Override
     protected Object adjustValueType(Object value, String property) {
         if (property.equals("price") || property.equals("quantity")) {
-            Double desired = new Double(value.toString());
-            return desired;
+            return new Double(value.toString());
         }
         return value;
     }

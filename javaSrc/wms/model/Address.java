@@ -7,7 +7,8 @@ import javax.persistence.*;
 @Table(name = "address")
 @AttributeOverride(name = "id", column = @Column(name = "idAddress", updatable = false, insertable = true, nullable = false))
 public class Address extends PersistenceObject {
-    private static final long serialVersionUID = - 252544167932088793L;
+    @Transient
+    private static final long serialVersionUID = -252544167932088793L;
 
     @Basic
     @Column(name = "street", nullable = false, unique = true, length = 45, updatable = true)
@@ -19,7 +20,7 @@ public class Address extends PersistenceObject {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", referencedColumnName = "idCity", insertable = true, updatable = true)
-    private City city = null;
+    private City city;
 
     public Address() {
         super();
@@ -44,25 +45,25 @@ public class Address extends PersistenceObject {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (! super.equals(obj))
+        if (!super.equals(obj))
             return false;
-        if (! (obj instanceof Address))
+        if (!(obj instanceof Address))
             return false;
         Address other = (Address) obj;
         if (city == null) {
             if (other.city != null)
                 return false;
-        } else if (! city.equals(other.city))
+        } else if (!city.equals(other.city))
             return false;
         if (postcode == null) {
             if (other.postcode != null)
                 return false;
-        } else if (! postcode.equals(other.postcode))
+        } else if (!postcode.equals(other.postcode))
             return false;
         if (street == null) {
             if (other.street != null)
                 return false;
-        } else if (! street.equals(other.street))
+        } else if (!street.equals(other.street))
             return false;
         return true;
     }

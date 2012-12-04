@@ -5,8 +5,10 @@ import wms.controller.base.CRUD;
 import wms.model.BasicPersistentObject;
 import wms.model.PersistenceObject;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,59 +19,74 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class BaseFormat {
     @Expose
-    protected Long time;
+    private Long time;
 
     @Expose
-    protected String handler;
+    private String handler;
 
     @Expose
-    protected Boolean success;
+    private Boolean success;
 
     @Expose
-    protected CRUD action;
+    private CRUD action;
 
     @Expose
-    protected Set<BasicPersistentObject> data;
+    private Set<BasicPersistentObject> data;
 
     @Expose
-    protected Integer total;
+    private Integer total;
 
     @Expose
     protected String message;
 
     @Expose
-    protected String entity;
+    private String entity;
 
-    public BaseFormat(boolean success,
-                      Long time,
-                      String handler,
-                      String entity,
-                      Set<BasicPersistentObject> data,
-                      CRUD action) {
+    protected BaseFormat(boolean success,
+                         Long time,
+                         String handler,
+                         String entity,
+                         Set<BasicPersistentObject> data,
+                         CRUD action) {
         this.success = success;
         this.time = TimeUnit.NANOSECONDS.toMillis(time);
         this.handler = handler;
         this.action = action;
-        this.data = new HashSet<>(data);
+        this.data = new TreeSet<>(new Comparator<BasicPersistentObject>() {
+            @Override
+            public int compare(BasicPersistentObject a, BasicPersistentObject b) {
+                try {
+                    PersistenceObject aa = (PersistenceObject) a;
+                    PersistenceObject bb = (PersistenceObject) b;
+                    if (aa != null) {
+                        return aa.getId().compareTo(bb.getId());
+                    }
+                } catch (ClassCastException e) {
+                    return Integer.compare(a.hashCode(), b.hashCode());
+                }
+                return 0;
+            }
+        });
+        this.data.addAll(data);
         this.total = this.data.size();
         this.entity = entity;
-        this.message = new String(String.format(
+        this.message = String.format(
                 "%s took %dms and affected %d rows", this.action.name(),
-                this.time, this.total));
+                this.time, this.total);
     }
 
     public BaseFormat(boolean success, Long time, String handler,
-                      PersistenceObject obj, CRUD action) {
+                      PersistenceObject obj) {
         this.success = success;
         this.time = TimeUnit.NANOSECONDS.toMillis(time);
         this.handler = handler;
-        this.action = action;
+        this.action = CRUD.READ;
         this.data = new HashSet<>();
         this.data.add(obj);
         this.entity = "";
         this.total = this.data.size();
-        this.message = new String(String.format(
+        this.message = String.format(
                 "%s took %dms and affected %d rows", this.action.name(),
-                this.time, this.total));
+                this.time, this.total);
     }
 }

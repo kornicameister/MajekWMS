@@ -1,5 +1,8 @@
 package wms.servlet;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -7,21 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Servlet implementation class WMSIndexController
  */
 public class WMSController extends HttpServlet {
     private static final long serialVersionUID = 7938319981003758746L;
-    private static Logger log = Logger.getLogger(WMSController.class.getName());
+    private static Logger log = Logger.getLogger(WMSController.class);
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-        log.config(String.format(
-                "Controller ready to be used, init value = %d",
-                config.getInitParameter("page")));
+        try {
+            log.trace(String.format(
+                    "Controller ready to be used, init value = %d",
+                    config.getInitParameter("page")));
+        } catch (RuntimeException e) {
+            log.error(e);
+        }
     }
 
     @Override
@@ -30,16 +35,16 @@ public class WMSController extends HttpServlet {
         String pageReference = req.getParameter("page");
         if (pageReference != null) {
             if (pageReference.isEmpty()) {
-                log.warning("<page> param is empty");
+                log.warn("<page> param is empty");
             } else {
-                log.log(Level.INFO, "ResponseReadFormat for {0} page", pageReference);
+                log.info(String.format("ResponseReadFormat for %s page", pageReference));
             }
 
             res.setContentType("application/json");
             PrintWriter out = res.getWriter();
             out.write("ResponseReadFormat for " + pageReference);
         } else {
-            log.severe("<page> is null param within request body");
+            log.error("<page> is null param within request body");
         }
     }
 }

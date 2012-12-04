@@ -2,13 +2,13 @@
 <!DOCTYPE>
 <html>
 <head>
-    <meta http-equiv="Content-Language" content="pl"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Majek WMS In IntelliJ</title>
+    <meta http-equiv="content-language" content="pl"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Majek WMS In Intellij</title>
 
     <!-- Library entries -->
-    <script type="text/javascript" src="static/extjs/ext-all-debug.js"></script>
-    <link rel="stylesheet" type="text/css" href="static/extjs/resources/css/ext-all-debug.css">
+    <script type="text/javascript" src="static/extjs/ext-all-dev.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/extjs/resources/css/ext-all.css">
 
     <!-- MajekWMS entries -->
     <link rel="stylesheet" type="text/css" href="static/css/majekwms.css">

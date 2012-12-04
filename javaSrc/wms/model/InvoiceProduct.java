@@ -36,7 +36,7 @@ public class InvoiceProduct implements Serializable {
         super(); // hibernate
     }
 
-    public final InvoiceProductId getPk() {
+    final InvoiceProductId getPk() {
         return pk;
     }
 

@@ -5,13 +5,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "unitType", uniqueConstraints = {@UniqueConstraint(columnNames = {
-        "name", "abbreviation"})})
+        "type", "abbreviation"})})
 @AttributeOverrides(value = {
         @AttributeOverride(name = "id", column = @Column(name = "idUnitType", updatable = false, insertable = true, nullable = false)),
-        @AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = false, nullable = false, length = 20, unique = true))})
+        @AttributeOverride(name = "name", column = @Column(name = "type", insertable = true, updatable = false, nullable = false, length = 20, unique = true))})
 public class UnitType extends NamedPersistenceObject {
     @Transient
-    private static final long serialVersionUID = - 7479798313966564213L;
+    private static final long serialVersionUID = -7479798313966564213L;
 
     @Basic
     @Column(name = "abbreviation", length = 6, nullable = false, unique = true, insertable = true, updatable = true)
@@ -21,9 +21,9 @@ public class UnitType extends NamedPersistenceObject {
     @Column(name = "description", length = 120, insertable = true, updatable = true)
     private String description;
 
-    @Basic
-    @Column(name = "parentType", nullable = true, unique = false, insertable = true, updatable = true)
-    private Integer parentType;
+    @ManyToOne
+    @JoinColumn(name = "parentType", referencedColumnName = "idUnitType", nullable = true, insertable = true, updatable = true)
+    private UnitType parentType;
 
     public UnitType() {
         super();
@@ -45,11 +45,11 @@ public class UnitType extends NamedPersistenceObject {
         this.description = description;
     }
 
-    public synchronized final Integer getParentType() {
+    public synchronized final UnitType getParentType() {
         return parentType;
     }
 
-    public synchronized final void setParentType(Integer parentType) {
+    public synchronized final void setParentType(UnitType parentType) {
         this.parentType = parentType;
     }
 
@@ -70,25 +70,25 @@ public class UnitType extends NamedPersistenceObject {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (! super.equals(obj))
+        if (!super.equals(obj))
             return false;
-        if (! (obj instanceof UnitType))
+        if (!(obj instanceof UnitType))
             return false;
         UnitType other = (UnitType) obj;
         if (abbreviation == null) {
             if (other.abbreviation != null)
                 return false;
-        } else if (! abbreviation.equals(other.abbreviation))
+        } else if (!abbreviation.equals(other.abbreviation))
             return false;
         if (description == null) {
             if (other.description != null)
                 return false;
-        } else if (! description.equals(other.description))
+        } else if (!description.equals(other.description))
             return false;
         if (parentType == null) {
             if (other.parentType != null)
                 return false;
-        } else if (! parentType.equals(other.parentType))
+        } else if (!parentType.equals(other.parentType))
             return false;
         return true;
     }

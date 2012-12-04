@@ -22,6 +22,7 @@
             'Ext.ux.layout': 'app/ux'
         }
     });
+
     Ext.override('Ext.panel.Panel', {
         titleAlign: 'center',
         style     : {
@@ -37,8 +38,7 @@
                 appFolder         : 'app',
                 enableQuickTips   : true,
                 autoCreateViewport: true,
-
-                controllers: [
+                controllers       : [
                     // viewport WMSView underlying controller
                     'wms.Overview',
                     'wms.Statistics',

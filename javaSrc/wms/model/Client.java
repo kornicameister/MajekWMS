@@ -8,9 +8,6 @@ import javax.persistence.*;
 @AttributeOverrides(value = {
         @AttributeOverride(name = "id", column = @Column(name = "idClient", updatable = false, insertable = true, nullable = false)),
         @AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = true))})
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue(value = "client")
 public class Client extends NamedPersistenceObject {
     @Transient
     private static final long serialVersionUID = 1283426340575080285L;
@@ -30,73 +27,89 @@ public class Client extends NamedPersistenceObject {
     @JoinColumn(name = "address_id", referencedColumnName = "idAddress")
     private Address address;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "clientType_id", referencedColumnName = "idClientType")
+    private ClientType type;
+
     public Client() {
         super();
     }
 
-    public synchronized final ClientDetails getDetails() {
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ClientDetails getDetails() {
         return details;
     }
 
-    public synchronized final Address getAddress() {
+    public void setDetails(ClientDetails details) {
+        this.details = details;
+    }
+
+    public Address getAddress() {
         return address;
     }
 
-    public synchronized final void setAddress(Address address) {
+    public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public ClientType getType() {
+        return type;
+    }
+
+    public void setType(ClientType type) {
+        this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+        if (!super.equals(o)) return false;
+
+        Client client = (Client) o;
+
+        if (!address.equals(client.address)) return false;
+        if (!company.equals(client.company)) return false;
+        if (!description.equals(client.description)) return false;
+        return details.equals(client.details) && type.equals(client.type);
+
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((address == null) ? 0 : address.hashCode());
-        result = prime * result + ((company == null) ? 0 : company.hashCode());
-        result = prime * result
-                + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + ((details == null) ? 0 : details.hashCode());
+        result = 31 * result + company.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + details.hashCode();
+        result = 31 * result + address.hashCode();
+        result = 31 * result + type.hashCode();
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (! super.equals(obj))
-            return false;
-        if (! (obj instanceof Client))
-            return false;
-        Client other = (Client) obj;
-        if (address == null) {
-            if (other.address != null)
-                return false;
-        } else if (! address.equals(other.address))
-            return false;
-        if (company == null) {
-            if (other.company != null)
-                return false;
-        } else if (! company.equals(other.company))
-            return false;
-        if (description == null) {
-            if (other.description != null)
-                return false;
-        } else if (! description.equals(other.description))
-            return false;
-        if (details == null) {
-            if (other.details != null)
-                return false;
-        } else if (! details.equals(other.details))
-            return false;
-        return true;
-    }
-
-    @Override public String toString() {
+    public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("Client");
         sb.append("{company='").append(company).append('\'');
         sb.append(", description='").append(description).append('\'');
         sb.append(", details=").append(details);
         sb.append(", address=").append(address);
+        sb.append(", type=").append(type);
         sb.append('}');
         return sb.toString();
     }

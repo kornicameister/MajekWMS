@@ -5,13 +5,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "invoiceType",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"type"})})
 @AttributeOverrides(value = {
         @AttributeOverride(name = "id", column = @Column(name = "idInvoiceType", updatable = false, insertable = true, nullable = false)),
-        @AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = false, nullable = false, length = 10, unique = true))})
+        @AttributeOverride(name = "name", column = @Column(name = "type", insertable = true, updatable = false, nullable = false, length = 10, unique = true))})
 public class InvoiceType extends NamedPersistenceObject {
     @Transient
-    private static final long serialVersionUID = - 7345851338532573657L;
+    private static final long serialVersionUID = -7345851338532573657L;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idInvoiceType", referencedColumnName = "invoicetype_id", insertable = false, updatable = false)
@@ -41,15 +41,15 @@ public class InvoiceType extends NamedPersistenceObject {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (! super.equals(obj))
+        if (!super.equals(obj))
             return false;
-        if (! (obj instanceof InvoiceType))
+        if (!(obj instanceof InvoiceType))
             return false;
         InvoiceType other = (InvoiceType) obj;
         if (invoice == null) {
             if (other.invoice != null)
                 return false;
-        } else if (! invoice.equals(other.invoice))
+        } else if (!invoice.equals(other.invoice))
             return false;
         return true;
     }

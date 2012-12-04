@@ -14,6 +14,6 @@ public class CFormat extends BaseFormat {
             String handler,
             String entity,
             Set<BasicPersistentObject> affected) {
-        super(success, time, handler, entity, affected, CRUD.CREATE);
+        super(true, time, handler, entity, affected, CRUD.CREATE);
     }
 }

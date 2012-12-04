@@ -16,16 +16,16 @@ Ext.define('WMS.model.entity.Client', {
         'company',
         'type',
         { name: 'details_id', type: 'int', mapping: 'details.id'},
-        { name: 'address_id', type: 'int', mapping: 'address.id'},
+        { name: 'address_id', type: 'int', mapping: 'address.id'}
     ],
     associations: [
         {
+            type           : 'hasOne',
+            foreignKey     : 'address_id',
             associationName: 'address',
             associationKey : 'address',
             instanceName   : 'address',
             name           : 'address',
-            foreignKey     : 'address_id',
-            type           : 'hasOne',
             model          : 'WMS.model.entity.Address',
             getterName     : 'getAddress',
             setterName     : 'setAddress'

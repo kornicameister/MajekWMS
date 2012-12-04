@@ -2,6 +2,7 @@ package wms.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import wms.controller.base.extractor.RData;
 import wms.model.BasicPersistentObject;
@@ -17,6 +18,7 @@ import wms.model.Warehouse;
  * @author kornicameister
  */
 public class CompanyController extends RequestController {
+    private static final Logger logger = Logger.getLogger(CompanyController.class);
 
     public CompanyController(RData data) {
         super(data);
@@ -34,6 +36,8 @@ public class CompanyController extends RequestController {
 
         c.setWarehouse(w);
         w.setCompany(c);
+
+        logger.info(String.format("Saving company as object as follows [ %s ]", c.toString()));
 
         return c;
     }

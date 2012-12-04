@@ -1,5 +1,6 @@
 package wms.controller.base.extractor;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -16,8 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * RequestDataExtractor. Class with static method to utilize extracting required
@@ -94,7 +93,7 @@ public abstract class RDExtractor {
                     moduleEntityClass = (Class<? extends BasicPersistentObject>) Class.forName(module);
                     rm = new RequestModule(moduleEntityClass, RequestController.class);
                 } catch (ClassNotFoundException e1) {
-                    logger.log(Level.SEVERE, "Total disaster, I don't know what controller you want to use", e1);
+                    logger.error("Total disaster, I don't know what controller you want to use", e1);
                 }
             }
         }
@@ -128,7 +127,7 @@ public abstract class RDExtractor {
         StringBuilder payloadBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
         char[] charBuffer = new char[128];
-        int bytesRead = -1;
+        @SuppressWarnings("UnusedAssignment") int bytesRead = -1;
 
         try {
             InputStream inputStream = request.getInputStream();

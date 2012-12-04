@@ -57,7 +57,7 @@ Ext.define('WMS.controller.wms.Overview', {
     },
     onActiveWarehouseChange: function (store, activeWarehouse) {
         var me = this,
-            units = activeWarehouse.getUnits();
+            units = activeWarehouse.units();
 
         console.log('Overview:: Active warehouse changed, switching to ' + activeWarehouse.get('name'));
         me.mon(units, 'load', me.onUnitsStoreLoaded, me);
@@ -121,7 +121,7 @@ Ext.define('WMS.controller.wms.Overview', {
     onUnitDelete           : function () {
         var me = this,
             activeWarehouse = me.getWarehousesStore().getActive(),
-            store = activeWarehouse.getUnits(),
+            store = activeWarehouse.units(),
             grid = me.getUnitsGrid(),
             selection = grid.getView().getSelectionModel().getSelection();
 

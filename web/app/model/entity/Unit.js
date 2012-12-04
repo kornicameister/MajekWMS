@@ -33,8 +33,8 @@ Ext.define('WMS.model.entity.Unit', {
         },
         {
             type          : 'hasOne',
-            associationKey: 'type',
             model         : 'WMS.model.entity.UnitType',
+            associationKey: 'type',
             getterName    : 'getType',
             setterName    : 'setType',
             foreignKey    : 'unittype_id'

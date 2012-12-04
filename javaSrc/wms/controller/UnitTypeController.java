@@ -3,6 +3,7 @@ package wms.controller;
 import wms.controller.base.extractor.RData;
 
 public class UnitTypeController extends RequestController {
+
     public UnitTypeController(RData d) {
         super(d);
     }
@@ -12,8 +13,7 @@ public class UnitTypeController extends RequestController {
         switch (property) {
             case "price":
             case "quantity":
-                Double desired = new Double(value.toString());
-                return desired;
+                return new Double(value.toString());
         }
         return value;
     }

@@ -2,6 +2,7 @@ package wms.controller;
 
 import com.google.gson.*;
 import javassist.tools.reflect.Reflection;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.proxy.HibernateProxy;
@@ -28,8 +29,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This is base class for Controller, that implements all base-level method. And
@@ -37,16 +36,14 @@ import java.util.logging.Logger;
  *
  * @author kornicameister
  * @created 01-10-2012
- * @file RequestController.java for project MajekWMS
- * @type RequestController
  */
 public class RequestController implements Controller {
-    protected Session session;
+    Session session;
 
     // -----------RESPONSE----------------/
-    protected long processTime = 0l;
-    protected Set<BasicPersistentObject> affected = new HashSet<>();
-    protected final RData rdata;
+    private long processTime = 0l;
+    Set<BasicPersistentObject> affected = new HashSet<>();
+    final RData rdata;
     private static ExclusionStrategy HHExclusionStrategy = new ExclusionStrategy() {
         @Override
         public boolean shouldSkipField(FieldAttributes f) {
@@ -203,7 +200,7 @@ public class RequestController implements Controller {
      *
      * @return collection of persistent objects
      */
-    protected Collection<? extends BasicPersistentObject> parsePayload() {
+    Collection<? extends BasicPersistentObject> parsePayload() {
         RequestController.logger.info("Parsing payload started");
         Gson gson = new GsonBuilder().setDateFormat("y-M-d")
                 .setPrettyPrinting().create();
@@ -228,10 +225,8 @@ public class RequestController implements Controller {
 
                         if (entity instanceof PersistenceObject) {
                             PersistenceObject obj = (PersistenceObject) entity;
-                            if (obj != null) {
-                                obj.setId(null);
-                                entity = obj;
-                            }
+                            obj.setId(null);
+                            entity = obj;
                         }
 
                         break;
@@ -249,7 +244,7 @@ public class RequestController implements Controller {
                 }
             }
         } catch (Exception e) {
-            logger.log(Level.SEVERE,
+            logger.error(
                     "Something went wrong when decoding [CREATE] request", e);
         }
 
@@ -297,7 +292,7 @@ public class RequestController implements Controller {
                         e.printStackTrace();
                     }
                 } else if (!propertyName.equals("id")) {
-                    logger.warning(String.format(
+                    logger.warn(String.format(
                             "Unrecognized property [ %s ]", propertyName));
                 }
             }
@@ -309,7 +304,7 @@ public class RequestController implements Controller {
      * Method goes through methods declared in {@link wms.model.BasicPersistentObject}(persistentObject) and
      * cuts off all but setters.
      *
-     * @param persistentObject
+     * @param persistentObject object from which setters will be exported
      */
     private void extractSetters(BasicPersistentObject persistentObject) {
 
@@ -331,7 +326,7 @@ public class RequestController implements Controller {
                     return o1Name.compareTo(o2Name);
                 } else if (isO1Setter && !isO2Setter) {
                     return -1;
-                } else if (!isO1Setter && isO2Setter) {
+                } else if (isO2Setter) {
                     return 1;
                 }
                 return 0;
@@ -358,8 +353,8 @@ public class RequestController implements Controller {
      * @param payloadData
      * @return converted persistent object
      */
-    protected BasicPersistentObject preCreate(BasicPersistentObject b,
-                                              JSONObject payloadData) {
+    BasicPersistentObject preCreate(BasicPersistentObject b,
+                                    JSONObject payloadData) {
         return b;
     }
 
@@ -373,7 +368,7 @@ public class RequestController implements Controller {
      * @param payloadData
      * @return
      */
-    protected BasicPersistentObject preDelete(JSONObject payloadData) {
+    BasicPersistentObject preDelete(JSONObject payloadData) {
         BasicPersistentObject deletable = (BasicPersistentObject) this.session.byId(
                 this.rdata.getModule().getEntityClass()).load(
                 (Serializable) payloadData.get("id"));
@@ -389,8 +384,8 @@ public class RequestController implements Controller {
      * @param payloadData
      * @return object that composite properties had been updated
      */
-    protected BasicPersistentObject preUpdateNonPrimitives(BasicPersistentObject persistentObject,
-                                                           JSONObject payloadData) {
+    BasicPersistentObject preUpdateNonPrimitives(BasicPersistentObject persistentObject,
+                                                 JSONObject payloadData) {
         return persistentObject;
     }
 
@@ -401,7 +396,7 @@ public class RequestController implements Controller {
      * @param property must be known by extending controller
      * @return value that type meets requirements of the Hibernate's model
      */
-    protected Object adjustValueType(Object value, String property) {
+    Object adjustValueType(Object value, String property) {
         return value;
     }
 
@@ -436,7 +431,7 @@ public class RequestController implements Controller {
         } catch (InstantiationException | IllegalAccessException
                 | NoSuchMethodException | SecurityException
                 | IllegalArgumentException | InvocationTargetException e) {
-            logger.log(Level.SEVERE, String.format(
+            logger.error(String.format(
                     "Failed to load controller class for name = [%s]", respData
                     .getModule().toString()), e);
         }
@@ -452,7 +447,7 @@ public class RequestController implements Controller {
      * @author kornicameister
      * @see JsonSerializer
      */
-    public class HibernateProxySerializer implements
+    private class HibernateProxySerializer implements
             JsonSerializer<HibernateProxy> {
         @Override
         public JsonElement serialize(HibernateProxy src, Type typeOfSrc,

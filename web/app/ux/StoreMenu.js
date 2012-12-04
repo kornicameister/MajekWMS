@@ -80,6 +80,7 @@ Ext.define('Ext.ux.menu.StoreMenu', {
                 'id', 'itemId', 'storeItem', 'menuItem'
             ],
             proxy : {
+                id  : 'proxy_storeMenu_' + Ext.id(),
                 type: 'localstorage'
             }
         });
