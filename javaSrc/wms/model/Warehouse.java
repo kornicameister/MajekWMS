@@ -25,7 +25,7 @@ public class Warehouse extends BasicPersistentObject {
     private Long companyId;
 
     @Basic
-    @Column(name = "name", length = 20, unique = true, updatable = true, nullable = false)
+    @Column(name = "name", length = 20, updatable = true, nullable = false)
     private String name;
 
     @Basic
@@ -39,10 +39,10 @@ public class Warehouse extends BasicPersistentObject {
     private Float usage;
 
     @Basic
-    @Column(name = "size", nullable = false)
+    @Column(name = "size", nullable = false, updatable = true)
     private Long size;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     @HideAssociation
     private Company company;

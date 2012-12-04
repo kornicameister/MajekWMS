@@ -32,14 +32,37 @@ Ext.define('WMS.store.Warehouses', {
 
         this.callParent([config]);
     },
-    setActive      : function (wId) {
-        var me = this;
+    /**
+     * This method is responsible for setting active warehouse to be used for working
+     * with units and even deeper in hierarchy of associations.
+     *
+     * <b>Fires the <i>activechanged</it> event </b> as the result of change in the place
+     * of active warehouse.
+     *
+     * @param wId
+     * @param callback, method to be called as the result of successful setting active warehouse
+     * @return currently active warehouse or undefined
+     */
+    setActive      : function (wId, callback) {
+        var me = this,
+            success = false;
+
         if (Ext.isNumber(wId)) {
             me.activeWarehouse = this.getById(wId);
         } else {
             me.activeWarehouse = wId;
         }
-        me.fireEvent('activechanged', me, me.activeWarehouse);
+
+        if (Ext.isDefined(me.activeWarehouse)) {
+            me.fireEvent('activechanged', me, me.activeWarehouse);
+            success = true;
+        }
+
+        if (Ext.isDefined(callback)) {
+            callback.apply(callback, [success]);
+        }
+
+        return me.activeWarehouse;
     },
     getActive      : function () {
         return this.activeWarehouse;

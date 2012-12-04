@@ -14,17 +14,25 @@ Ext.define('WMS.model.entity.Warehouse', {
         'WMS.model.entity.Unit'
     ],
     fields      : [
-        { name: 'usage', type: 'float', defaultValue: 0.0, convert: convertUsage},
+        { name     : 'usage', type: 'float', defaultValue: 0.0,
+            convert: function (value) {
+                return (value * 100).toFixed(2);
+            }
+        },
         { name: 'size', type: 'int', defaultValue: 0},
-        { name: 'createdDate', type: 'date', serialize: serializeDate}
+        { name       : 'createdDate', type: 'date',
+            serialize: function (value) {
+                return Ext.Date.format(new Date(value), 'Y-m-d');
+            }
+        }
     ],
     associations: [
         {
-            type       : 'hasMany',
-            foreignKey : 'warehouse_id',
-            name       : 'getUnits',
-            model      : 'WMS.model.entity.Unit',
-            storeConfig: {
+            type          : 'hasMany',
+            model         : 'WMS.model.entity.Unit',
+            associatedName: 'units',
+            foreignKey    : 'warehouse_id',
+            storeConfig   : {
                 storeId   : 'Units',
                 groupField: 'unittype_id',
                 autoLoad  : true,
@@ -119,10 +127,3 @@ Ext.define('WMS.model.entity.Warehouse', {
         return source;
     }
 });
-
-function serializeDate(value) {
-    return Ext.Date.format(new Date(value), 'Y-m-d');
-}
-function convertUsage(value) {
-    return (value * 100).toFixed(2);
-}

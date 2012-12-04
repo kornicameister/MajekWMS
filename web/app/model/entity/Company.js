@@ -16,14 +16,12 @@ Ext.define('WMS.model.entity.Company', {
     ],
     associations: [
         {
-            type           : 'hasOne',
-            name           : 'warehouse',
-            associationName: 'warehouse',
-            instanceName   : 'warehouse',
-            foreignKey     : 'warehouse_id',
-            model          : 'WMS.model.entity.Warehouse',
-            getterName     : 'setWarehouse',
-            setterName     : 'getWarehouse'
+            type          : 'hasOne',
+            model         : 'WMS.model.entity.Warehouse',
+            associationKey: 'warehouse',
+            getterName    : 'getWarehouse',
+            setterName    : 'setWarehouse',
+            foreignKey    : 'warehouse_id'
         }
     ],
     proxy       : {

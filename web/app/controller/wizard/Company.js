@@ -6,14 +6,14 @@
  */
 
 Ext.define('WMS.controller.wizard.Company', {
-    extend          : 'Ext.app.Controller',
-    requires        : [
+    extend           : 'Ext.app.Controller',
+    requires         : [
         'WMS.view.wizard.company.Dialog'
     ],
-    views           : [
+    views            : [
         'wizard.company.Dialog'
     ],
-    refs            : [
+    refs             : [
         { ref: 'wizard', selector: 'companywizard' },
         { ref: 'welcomeStep', selector: 'companywizard panel[itemId=welcomeStep]' },
         { ref: 'companyStep', selector: 'companywizard companyform' },
@@ -23,10 +23,11 @@ Ext.define('WMS.controller.wizard.Company', {
         { ref: 'prevButton', selector: 'companywizard button[itemId=prev]' },
         { ref: 'nextButton', selector: 'companywizard button[itemId=next]' }
     ],
-    stores          : [
-        'Companies'
+    stores           : [
+        'Companies',
+        'Warehouses'
     ],
-    statics         : {
+    statics          : {
         STEP: {
             'WELCOME'  : 0,
             'COMPANY'  : 1,
@@ -38,12 +39,12 @@ Ext.define('WMS.controller.wizard.Company', {
             PREV: 'prev'
         }
     },
-    config          : {
+    config           : {
         stepToView : new Ext.util.MixedCollection(),
         currentStep: 0,
         company    : undefined
     },
-    init            : function () {
+    init             : function () {
         console.init('WMS.controller.wizard.Company initializing...');
         var me = this;
 
@@ -62,7 +63,7 @@ Ext.define('WMS.controller.wizard.Company', {
             }
         });
     },
-    initWizard      : function () {
+    initWizard       : function () {
         console.log('wizard.Company :: View rendered, wizard is ready to be used...');
         var me = this,
             stepToView = me.getStepToView();
@@ -73,7 +74,7 @@ Ext.define('WMS.controller.wizard.Company', {
         stepToView.add(WMS.controller.wizard.Company.STEP.WAREHOUSE, me.getWarehouseStep());
         stepToView.add(WMS.controller.wizard.Company.STEP.SUMMARY, me.getSummaryStep());
     },
-    openWizard      : function () {
+    openWizard       : function () {
         var me = this,
             wizardView = me.getWizard();
 
@@ -85,7 +86,7 @@ Ext.define('WMS.controller.wizard.Company', {
         me.mon(me.getCompaniesStore(), 'update', me.onCompaniesUpdate, me);
         wizardView.show();
     },
-    onCompanySave   : function () {
+    onCompanySave    : function () {
         var me = this,
             company = me.getCompany(),
             companies = me.getCompaniesStore();
@@ -95,18 +96,30 @@ Ext.define('WMS.controller.wizard.Company', {
             companies.add(company);
         }
     },
-    onCompaniesUpdate  : function (store, record,operation) {
+    onCompaniesUpdate: function (store, record) {
         var company = record,
-            warehouse = company.getWarehouse();
+            warehouse = company.getWarehouse(),
+            me = this,
+            wizardView = me.getWizard(),
+            warehouses = me.getWarehousesStore();
 
-        if(Ext.isDefined(warehouse)){
+        if (Ext.isDefined(warehouse)) {
             Ext.MessageBox.alert(
                 "Sukces",
                 "Utworzyłeś i zdefiniowałeś poprawnie nową firmę oraz magazyn"
             );
+            //@TODO very bad code here...should be something, different but
+            //I am afraid that it would require to remodel data-model.
+            //even worse
+            warehouses.load();
+            wizardView.close();
         }
     },
-    navigate        : function (dir) {
+    /**
+     * Navigator method designed to control {@link WMS.view.wizard.company.Dialog} steps.
+     * @param dir one of the following values [{@link WMS.controller.wizard.Company.DIR.NEXT},{@link WMS.controller.wizard.Company.DIR.PREV}]
+     */
+    navigate         : function (dir) {
         var me = this,
             wizard = me.getWizard(),
             layout = wizard.getLayout(),
@@ -151,7 +164,7 @@ Ext.define('WMS.controller.wizard.Company', {
             }
         }
     },
-    collectStepData : function () {
+    collectStepData  : function () {
         console.log('wizard.Company :: Collecting data steps');
         var me = this,
             dataView = me.stepToView.get(me.getCurrentStep()),
@@ -185,7 +198,7 @@ Ext.define('WMS.controller.wizard.Company', {
         }
         return false;
     },
-    purgeStepData   : function () {
+    purgeStepData    : function () {
         console.log('wizard.Company :: Purging data steps');
         var me = this,
             currentStep = me.getCurrentStep(),
@@ -203,11 +216,11 @@ Ext.define('WMS.controller.wizard.Company', {
         }
     },
     //---- CUSTOM WRAPPERS --- //
-    onWizardNextStep: function () {
+    onWizardNextStep : function () {
         var me = this;
         me.navigate(WMS.controller.wizard.Company.DIR.NEXT);
     },
-    onWizardPrevStep: function () {
+    onWizardPrevStep : function () {
         var me = this;
         me.navigate(WMS.controller.wizard.Company.DIR.PREV);
     }

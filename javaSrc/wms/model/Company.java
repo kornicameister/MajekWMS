@@ -6,7 +6,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "company",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
-@AttributeOverride(name = "id", column = @Column(name = "idCompany", updatable = false, insertable = true, nullable = false))
+@AttributeOverrides(value = {
+        @AttributeOverride(name = "id", column = @Column(name = "idCompany", updatable = false, insertable = true, nullable = false)),
+        @AttributeOverride(name = "name", column = @Column(name = "name", updatable = true, insertable = true, nullable = false, length = 20))
+})
 public class Company extends NamedPersistenceObject {
     private static final long serialVersionUID = 7696614972997266832L;
 
@@ -45,10 +48,8 @@ public class Company extends NamedPersistenceObject {
 
         Company company = (Company) o;
 
-        if (longName != null ? !longName.equals(company.longName) : company.longName != null) return false;
-        if (warehouse != null ? !warehouse.equals(company.warehouse) : company.warehouse != null) return false;
-
-        return true;
+        return !(longName != null ? !longName.equals(company.longName) : company.longName != null)
+                && !(warehouse != null ? !warehouse.equals(company.warehouse) : company.warehouse != null);
     }
 
     @Override
