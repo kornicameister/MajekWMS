@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import wms.controller.base.format.BaseFormat;
+import wms.controller.base.ResponseFormatBody;
 import wms.model.User;
 import wms.utilities.hibernate.HibernateBridge;
 
@@ -81,7 +81,7 @@ public class WMSAuthAgent extends HttpServlet {
         return responseString;
     }
 
-    public class AuthRespond extends BaseFormat {
+    public class AuthRespond extends ResponseFormatBody {
         public AuthRespond(User user, String message, boolean success,
                            Long time, String handler) {
             super(success, time, handler, user);

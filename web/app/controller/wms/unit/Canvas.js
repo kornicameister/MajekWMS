@@ -55,7 +55,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
         var me = this,
             surface = board['surface'],
             boardSize = board.getSize(),
-            unitsCount = me.getWarehousesStore().getActive().getUnits().getTotalCount(),
+            unitsCount = me.getWarehousesStore().getActive().units().getTotalCount(),
             xCount = Math.floor(boardSize['width'] / me['drawConfiguration']['tile']['width']),
             yCount = Math.floor(boardSize['height'] / me['drawConfiguration']['tile']['height']),
             tile = undefined;
@@ -93,7 +93,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
     drawUnits     : function (board) {
         console.log('Canvas :: Commencing sprites drawing...');
         var me = this,
-            units = me.getWarehousesStore().getActive().getUnits(),
+            units = me.getWarehousesStore().getActive().units(),
             unitSprites = me.getUnitSpritesStore(),
             unitWidth = me['drawConfiguration']['unit']['width'],
             unitHeight = me['drawConfiguration']['unit']['height'],

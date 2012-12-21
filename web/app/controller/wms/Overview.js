@@ -100,7 +100,7 @@ Ext.define('WMS.controller.wms.Overview', {
     onNewUnit              : function () {
         var me = this,
             activeWarehouse = me.getWarehousesStore().getActive(),
-            store = activeWarehouse.getUnits(),
+            store = activeWarehouse.units(),
             grid = me.getUnitsGrid(),
             record = store.add(Ext.create('WMS.model.entity.Unit'));
 

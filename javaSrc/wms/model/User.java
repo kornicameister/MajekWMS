@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AttributeOverride(name = "id", column = @Column(name = "idUser", updatable = false, insertable = true, nullable = false))
 public class User extends PersistenceObject {
     @Transient
-    private static final long serialVersionUID = - 1852439527741996474L;
+    private static final long serialVersionUID = -1852439527741996474L;
 
     @Basic
     @NaturalId
@@ -45,11 +45,9 @@ public class User extends PersistenceObject {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((login == null) ? 0 : login.hashCode());
-        result = prime * result
-                + ((password == null) ? 0 : password.hashCode());
+        result = 31 * result + login.hashCode();
+        result = 31 * result + password.hashCode();
         return result;
     }
 
@@ -57,20 +55,20 @@ public class User extends PersistenceObject {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (! super.equals(obj))
+        if (!super.equals(obj))
             return false;
-        if (! (obj instanceof User))
+        if (!(obj instanceof User))
             return false;
         User other = (User) obj;
         if (login == null) {
             if (other.login != null)
                 return false;
-        } else if (! login.equals(other.login))
+        } else if (!login.equals(other.login))
             return false;
         if (password == null) {
             if (other.password != null)
                 return false;
-        } else if (! password.equals(other.password))
+        } else if (!password.equals(other.password))
             return false;
         return true;
     }

@@ -108,8 +108,10 @@ public class UnitController extends RequestController {
 
     @Override
     protected Object adjustValueType(Object value, String property) {
-        if (property.equals("price") || property.equals("quantity")) {
-            return new Double(value.toString());
+        switch (property) {
+            case "price":
+            case "quantity":
+                return new Double(value.toString());
         }
         return value;
     }
