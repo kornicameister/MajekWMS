@@ -13,13 +13,11 @@ import wms.controller.base.annotations.HideAssociation;
 import wms.controller.base.annotations.HideField;
 import wms.controller.base.extractor.Entity;
 import wms.controller.base.extractor.RData;
-import wms.controller.base.format.response.CFormat;
-import wms.controller.base.format.response.DFormat;
-import wms.controller.base.format.response.RFormat;
-import wms.controller.base.format.response.UFormat;
+import wms.controller.base.ResponseFormatBody;
 import wms.model.BasicPersistentObject;
 import wms.model.PersistenceObject;
 import wms.model.Warehouse;
+import wms.utilities.Pair;
 import wms.utilities.StringUtils;
 import wms.utilities.hibernate.HibernateBridge;
 
@@ -57,6 +55,12 @@ public class RequestController implements Controller {
             return false;
         }
     };
+    /**
+     * this variable is placeholder for information
+     * about the error
+     * produced while processing the request
+     */
+    private Pair<Boolean, String> errorDataHolder = null;
     // -----------RESPONSE----------------/
 
     private Set<Method> setters;
@@ -110,6 +114,10 @@ public class RequestController implements Controller {
         Serializable savedID;
         Collection<? extends BasicPersistentObject> data = this.parsePayload();
 
+        if (data == null || data.isEmpty()) {
+            return;
+        }
+
         this.session.beginTransaction();
         for (BasicPersistentObject entity : data) {
             PersistenceObject object = (PersistenceObject) entity;
@@ -154,38 +162,17 @@ public class RequestController implements Controller {
                 .setExclusionStrategies(HHExclusionStrategy)
                 .registerTypeHierarchyAdapter(HibernateProxy.class,
                         new HibernateProxySerializer()).create();
-        return this.createResponseString(g);
-    }
-
-    /**
-     * Method makes the job with creating response to the client side
-     *
-     * @param g gson
-     * @return one of the CRUD responses
-     */
-    private String createResponseString(Gson g) {
         StringBuilder response = new StringBuilder();
-        String controller = this.rdata.getController();
-        String entity = this.rdata.getEntity();
 
-        switch (this.rdata.getAction()) {
-            case CREATE:
-                response.append(g.toJson(new CFormat(true, this.processTime,
-                        controller, entity, this.affected), CFormat.class));
-                break;
-            case READ:
-                response.append(g.toJson(new RFormat(true, this.processTime,
-                        controller, entity, this.affected), RFormat.class));
-                break;
-            case UPDATE:
-                response.append(g.toJson(new UFormat(true, this.processTime,
-                        controller, entity, this.affected), UFormat.class));
-                break;
-            case DELETE:
-                response.append(g.toJson(new DFormat(true, this.processTime,
-                        controller, entity, this.affected), DFormat.class));
-                break;
-        }
+        response.append(g.toJson(new ResponseFormatBody(
+                (this.errorDataHolder == null),
+                this.processTime,
+                this.rdata.getController(),
+                this.rdata.getEntity(),
+                this.errorDataHolder == null ? null : this.errorDataHolder.getSecond(),
+                this.affected,
+                this.rdata.getAction()
+        ), ResponseFormatBody.class));
 
         this.session.close();
         this.session = null;
@@ -246,6 +233,7 @@ public class RequestController implements Controller {
         } catch (Exception e) {
             logger.error(
                     "Something went wrong when decoding [CREATE] request", e);
+            this.errorDataHolder = new Pair<>(true, e.getMessage());
         }
 
         RequestController.logger
@@ -324,7 +312,7 @@ public class RequestController implements Controller {
 
                 if (isO1Setter && isO2Setter) {
                     return o1Name.compareTo(o2Name);
-                } else if (isO1Setter && !isO2Setter) {
+                } else if (isO1Setter) {
                     return -1;
                 } else if (isO2Setter) {
                     return 1;
@@ -380,8 +368,8 @@ public class RequestController implements Controller {
      * Method updates model specific fields, fields that needs getting data out
      * of database.
      *
-     * @param persistentObject
-     * @param payloadData
+     * @param persistentObject already fixed object
+     * @param payloadData object that holds information about currently processed object
      * @return object that composite properties had been updated
      */
     BasicPersistentObject preUpdateNonPrimitives(BasicPersistentObject persistentObject,
