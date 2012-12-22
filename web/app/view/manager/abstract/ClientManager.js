@@ -44,6 +44,12 @@ Ext.define('WMS.view.manager.abstract.ClientManager', {
                     text   : 'Edytuj',
                     iconCls: 'icon-edit'
                 },
+                '->',
+                {
+                    itemId : 'newInvoice',
+                    text   : 'Nowa faktura',
+                    iconCls: 'invoice-add'
+                },
                 {
                     itemId : 'removeClient',
                     text   : 'Usuń',

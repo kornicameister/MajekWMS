@@ -26,6 +26,11 @@
     background-size: 60%
 }
 
+.invoice-add {
+    background-image: url("../images/invoice-icon.png") !important;
+    background-size: 60%
+}
+
 /*view.toolbar.* */
 .view-toolbar-warehouseButton {
     background-image: url("../images/view/header/warehousing-icon.png") !important;

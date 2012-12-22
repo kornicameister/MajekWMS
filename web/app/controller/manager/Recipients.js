@@ -36,10 +36,19 @@ Ext.define('WMS.controller.manager.Recipients', {
             'recipientmanager toolbar button[itemId=releaseClient]': {
                 'click': me.onReleaseClientClick
             },
+            'recipientmanager toolbar button[itemId=newInvoice]'   : {
+                'click': me.onNewInvoiceClick
+            },
             'recipientmanager clientgrid'                          : {
                 'itemdblclick': me.onDetailsClientClickGrid
             }
         });
+    },
+    onNewInvoiceClick         : function () {
+        var me = this,
+            invoiceWizardCtrl = me.getController('WMS.controller.wizard.Invoice');
+
+        invoiceWizardCtrl.openAsReceipt();
     },
     onDetailsClientRequest    : function (client) {
         var me = this,

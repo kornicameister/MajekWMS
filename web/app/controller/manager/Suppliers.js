@@ -36,11 +36,20 @@ Ext.define('WMS.controller.manager.Suppliers', {
             'suppliermanager toolbar button[itemId=releaseClient]': {
                 'click': me.onReleaseClientClick
             },
+            'suppliermanager toolbar button[itemId=newInvoice]'   : {
+                'click': me.onNewInvoiceClick
+            },
             'suppliermanager clientgrid'                          : {
                 'itemdblclick': me.onDetailsClientClickGrid
             }
         });
         me.callParent(arguments);
+    },
+    onNewInvoiceClick         : function () {
+        var me = this,
+            invoiceWizardCtrl = me.getController('WMS.controller.wizard.Invoice');
+
+        invoiceWizardCtrl.openAsSupply();
     },
     onDetailsClientRequest    : function (client) {
         var me = this,

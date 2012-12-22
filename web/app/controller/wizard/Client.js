@@ -109,6 +109,6 @@ Ext.define('WMS.controller.wizard.Client', {
         var me = this,
             wizard = me.getView('wizard.client.Dialog');
         WMS.controller.wizard.Client.workingMode = mode;
-        wizard.create().show();
+        wizard.create({}).show();
     }
 });
