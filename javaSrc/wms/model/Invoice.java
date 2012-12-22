@@ -13,7 +13,7 @@ public class Invoice extends PersistenceObject {
     @Transient
     private static final long serialVersionUID = -3204092137188652431L;
 
-    @Column(name = "refNumber", updatable = false, insertable = true, nullable = false)
+    @Column(name = "refNumber", length = 18, updatable = false, insertable = true, nullable = false)
     private String invoiceNumber;
 
     @Basic

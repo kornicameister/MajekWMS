@@ -6,31 +6,32 @@
  */
 
 Ext.define('WMS.controller.wizard.Invoice', {
-    extend               : 'Ext.app.Controller',
-    requires             : [
+    extend           : 'Ext.app.Controller',
+    requires         : [
         'Ext.ux.WMSColumnRenderers',
         'WMS.view.wizard.invoice.Invoice',
         'WMS.model.entity.Product'
     ],
-    views                : [
+    views            : [
         'wizard.invoice.Invoice'
     ],
-    stores               : [
+    stores           : [
         'InvoiceTypes',
         'Invoices'  // <-- this store entity is InvoiceProduct !!! -->
     ],
-    refs                 : [
+    refs             : [
         { ref: 'invoiceTypesComboBox', selector: 'invoiceform combo[itemId=invoiceTypeCB]'},
-        { ref: 'clientComboBox', selector: 'invoiceform combo[itemId=clientsCB]' }
+        { ref: 'clientComboBox', selector: 'invoiceform combo[itemId=clientsCB]' },
+        { ref: 'invoiceNumberTextField', selector: 'invoiceform textfield[itemId=invoiceNumber]' }
     ],
-    statics              : {
+    statics          : {
         MODE: {
             SUPPLY : 'supply',
             RECEIPT: 'receipt',
             RETURN : 'return'
         }
     },
-    config               : {
+    config           : {
         /**
          * This indicates current working mode,
          * it can be either Supplier or Recipient like.
@@ -73,7 +74,7 @@ Ext.define('WMS.controller.wizard.Invoice', {
          */
         invoice        : undefined
     },
-    init                 : function () {
+    init             : function () {
         console.init('WMS.controller.wizard.Invoice initializing...');
         var me = this;
 
@@ -93,16 +94,24 @@ Ext.define('WMS.controller.wizard.Invoice', {
 
         me.control({
             '#invoiceWindow': {
-                'afterrender': me.reconfigureComboBoxes
+                'afterrender': me.updateMetaData
             }
         }, me);
 
     },
-    reconfigureComboBoxes: function () {
+    updateMetaData   : function () {
         var me = this,
             invoiceTypeCB = me.getInvoiceTypesComboBox(),
             clientsCB = me.getClientComboBox(),
+            iNumberTF = me.getInvoiceNumberTextField(),
             wMode = me.getWorkingMode();
+
+        // generating invoice number
+        iNumberTF.setValue((function () {
+            var dt = new Date();
+            dt = 'F' + Ext.Date.format(dt, 'n/j/Y') + '/' + Ext.Date.format(dt, 'g_i[s]');
+            return dt;
+        }()));
 
         wMode.getStore().reload({
             callback: function () {
@@ -112,15 +121,15 @@ Ext.define('WMS.controller.wizard.Invoice', {
         });
     },
     // OPEN POINTS
-    openAsReceipt        : function () {
+    openAsReceipt    : function () {
         var me = this;
         me.openInvoiceWizard(WMS.controller.wizard.Invoice.MODE.RECEIPT);
     },
-    openAsSupply         : function () {
+    openAsSupply     : function () {
         var me = this;
         me.openInvoiceWizard(WMS.controller.wizard.Invoice.MODE.SUPPLY);
     },
-    openInvoiceWizard    : function (mode) {
+    openInvoiceWizard: function (mode) {
 
         if (Ext.getCmp('invoiceWindow')) {
             Ext.MessageBox.alert(
