@@ -79,8 +79,13 @@ Ext.define('WMS.view.toolbar.Header', {
                 itemId     : 'clientsMenu',
                 items      : [
                     {
-                        itemId : 'addClient',
+                        itemId : 'addRecipient',
                         text   : 'Nowy odbiorca',
+                        iconCls: 'icon-add'
+                    },
+                    {
+                        itemId : 'addReceiptInvoice',
+                        text   : 'Nowe wydanie magazynowe',
                         iconCls: 'icon-add'
                     }
                 ]
@@ -98,6 +103,11 @@ Ext.define('WMS.view.toolbar.Header', {
                     {
                         itemId : 'addSupplier',
                         text   : 'Nowy dostawca',
+                        iconCls: 'icon-add'
+                    },
+                    {
+                        itemId : 'addSupplyInvoice',
+                        text   : 'Nowa przyjęcie magazynowe',
                         iconCls: 'icon-add'
                     }
                 ]

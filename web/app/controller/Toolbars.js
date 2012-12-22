@@ -48,16 +48,23 @@ Ext.define('WMS.controller.Toolbars', {
         });
     },
     onClientMenuClick       : function (menu, item) {
-        console.log('Toolbars :: ' + Ext.String.format('{0} button clicked...', item['itemId']));
-        var me = this,
-            clientWizardManager = me.getController('WMS.controller.wizard.Client');
+        var itemId = item['itemId'],
+            me = this,
+            clientWizardManager = me.getController('WMS.controller.wizard.Client'),
+            invoiceManager = me.getController('WMS.controller.wizard.Invoice');
 
-        if (item['itemId'] === 'addClient') {
+        console.log('Toolbars :: ' + Ext.String.format('{0} button clicked...', itemId));
+
+        if (itemId === 'addRecipient') {
             clientWizardManager.openAsRecipient();
-        } else if (item['itemId'] === 'addSupplier') {
+        } else if (itemId === 'addSupplier') {
             clientWizardManager.openAsSupplier();
+        } else if (itemId === 'addReceiptInvoice') {
+            invoiceManager.openAsReceipt();
+        } else if (itemId === 'addSupplyInvoice') {
+            invoiceManager.openAsSupply();
         } else {
-            console.log('Toolbars :: ' + Ext.String.format('{0} button has not ben recognized...', item['itemId']))
+            console.log('Toolbars :: ' + Ext.String.format('{0} button has not ben recognized...', itemId))
         }
     },
     onSuppliersManagerClick : function () {

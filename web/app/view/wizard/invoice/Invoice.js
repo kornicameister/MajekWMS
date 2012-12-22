@@ -20,11 +20,11 @@ Ext.define('WMS.view.wizard.invoice.Invoice', {
     ],
     alternateClassName: 'WMS.wizard.Invoice',
     title             : 'Nowa faktura',
+    id                : 'invoiceWindow',
     items             : {
         xtype: 'invoiceform'
     },
     resizable         : false,
-    closable          : true,
     plain             : true,
     border            : false,
     headerPosition    : 'left'
