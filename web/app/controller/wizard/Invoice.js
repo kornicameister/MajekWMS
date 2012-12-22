@@ -6,25 +6,31 @@
  */
 
 Ext.define('WMS.controller.wizard.Invoice', {
-    extend           : 'Ext.app.Controller',
-    requires         : [
+    extend               : 'Ext.app.Controller',
+    requires             : [
         'Ext.ux.WMSColumnRenderers',
-        'WMS.view.wizard.invoice.Invoice'
+        'WMS.view.wizard.invoice.Invoice',
+        'WMS.model.entity.Product'
     ],
-    views            : [
+    views                : [
         'wizard.invoice.Invoice'
     ],
-    stores           : [
+    stores               : [
         'InvoiceTypes',
         'Invoices'  // <-- this store entity is InvoiceProduct !!! -->
     ],
-    statics          : {
+    refs                 : [
+        { ref: 'invoiceTypesComboBox', selector: 'invoiceform combo[itemId=invoiceTypeCB]'},
+        { ref: 'clientComboBox', selector: 'invoiceform combo[itemId=clientsCB]' }
+    ],
+    statics              : {
         MODE: {
-            SUPPLY : 'Suppliers',
-            RECEIPT: 'Recipients'
+            SUPPLY : 'supply',
+            RECEIPT: 'receipt',
+            RETURN : 'return'
         }
     },
-    config           : {
+    config               : {
         /**
          * This indicates current working mode,
          * it can be either Supplier or Recipient like.
@@ -32,7 +38,22 @@ Ext.define('WMS.controller.wizard.Invoice', {
          * It is an object that references requires stores.
          * Choice highly depends on provided mode.
          */
-        workingMode    : {},
+        workingMode    : {
+            mode    : undefined,
+            store   : undefined,
+            getMode : function () {
+                return this.mode;
+            },
+            getStore: function () {
+                return this.store;
+            },
+            setStore: function (store) {
+                this.store = store;
+            },
+            setMode : function (mode) {
+                this.mode = mode;
+            }
+        },
         /**
          * @author kornicameister
          * @type Ext.data.Store
@@ -41,16 +62,7 @@ Ext.define('WMS.controller.wizard.Invoice', {
          * used for holding products object that will be associated
          * with the invoice
          */
-        productsStorage: Ext.create('Ext.data.Store', {
-            model      : 'WMS.model.entity.Product',
-            autoLoad   : false,
-            autoSync   : false,
-            autoDestroy: true,
-            proxy      : {
-                type: 'localstorage',
-                id  : 'invoiceProductsTemporaryStorage'
-            }
-        }),
+        productsStorage: undefined,
         /**
          * @type Object
          * @author kornicameister
@@ -59,47 +71,97 @@ Ext.define('WMS.controller.wizard.Invoice', {
          * that hold information about the invoice being currently
          * created.
          */
-        invoice        : {}
+        invoice        : undefined
     },
-    init             : function () {
+    init                 : function () {
         console.init('WMS.controller.wizard.Invoice initializing...');
+        var me = this;
+
+        /**
+         * Initializing products' storage
+         */
+        me.setProductsStorage(Ext.create('Ext.data.Store', {
+            model      : 'WMS.model.entity.Product',
+            autoLoad   : false,
+            autoSync   : false,
+            autoDestroy: true,
+            proxy      : {
+                type: 'localstorage',
+                id  : 'invoiceProductsTemporaryStorage'
+            }
+        }));
+
+        me.control({
+            '#invoiceWindow': {
+                'afterrender': me.reconfigureComboBoxes
+            }
+        }, me);
+
+    },
+    reconfigureComboBoxes: function () {
+        var me = this,
+            invoiceTypeCB = me.getInvoiceTypesComboBox(),
+            clientsCB = me.getClientComboBox(),
+            wMode = me.getWorkingMode();
+
+        wMode.getStore().reload({
+            callback: function () {
+                invoiceTypeCB.setValue(wMode.getMode());
+                clientsCB.bindStore(wMode.getStore());
+            }
+        });
     },
     // OPEN POINTS
-    openAsReceipt    : function () {
+    openAsReceipt        : function () {
         var me = this;
         me.openInvoiceWizard(WMS.controller.wizard.Invoice.MODE.RECEIPT);
     },
-    openAsSupply     : function () {
+    openAsSupply         : function () {
         var me = this;
         me.openInvoiceWizard(WMS.controller.wizard.Invoice.MODE.SUPPLY);
     },
-    openInvoiceWizard: function (mode) {
+    openInvoiceWizard    : function (mode) {
+
+        if (Ext.getCmp('invoiceWindow')) {
+            Ext.MessageBox.alert(
+                'Błąd',
+                'Już edytujesz jedną fakturę. ' +
+                    'Aby móc utworzyć nową fakturę ' +
+                    'musisz zakończyć tworzenie obecnej'
+            );
+            return;
+        }
+
         var me = this,
             wizard = me.getView('wizard.invoice.Invoice'),
             title = '',
-            storeLooker = Ext.StoreManager.lookup,
-            wMode = {
-                clientStore: storeLooker(mode)
-            };
+            wMode = me.getWorkingMode(),
+            store = undefined;
 
         // setting meta-data for invoice processing
         {
             switch (mode) {
                 case  WMS.controller.wizard.Invoice.MODE.RECEIPT:
                     title = 'Nowe wydanie magazynowe';
+                    store = Ext.StoreManager.lookup('Recipients');
                     break;
                 case WMS.controller.wizard.Invoice.MODE.SUPPLY:
                     title = 'Nowe przyjęcie magazynowe';
+                    store = Ext.StoreManager.lookup('Suppliers');
                     break;
             }
+            wMode.setStore(store);
+            wMode.setMode(mode);
             me.setWorkingMode(wMode);
         }
         // setting meta-data for invoice processing
 
         try {
-            wizard.create({
-                title: title
-            }).show();
+            wizard.create(
+                {
+                    title: title
+                }
+            ).show();
         } catch (e) {
             console.error(e);
         }

@@ -38,9 +38,9 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
             align: 'stretch'
         },
         defaults     : {
-            maxLength  : 45,
-            minWidth   : 150,
-            allowBlank : false
+            maxLength : 45,
+            minWidth  : 150,
+            allowBlank: false
         }
     },
     //defaults applied to all underlying fieldset
@@ -51,8 +51,9 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
     },
     items       : [
         {
-            title: 'Dane podstawowe',
-            items: [
+            title : 'Dane podstawowe',
+            itemId: 'basicInformation',
+            items : [
                 {
                     xtype     : 'textfield',
                     fieldLabel: 'Numer faktury',
@@ -62,27 +63,50 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
                 },
                 {
                     xtype        : 'combo',
-                    itemId       : 'invoiceTypeId',
+                    store        : 'InvoiceTypes',
+                    itemId       : 'invoiceTypeCB',
                     fieldLabel   : 'Typ',
                     name         : 'type_id',
-                    store        : undefined,
                     valueField   : 'id',
                     displayField : 'name',
                     typeAhead    : true,
                     triggerAction: 'all',
-                    selectOnTab  : true
+                    selectOnTab  : true,
+                    tpl          : Ext.create('Ext.XTemplate',
+                        '<tpl for=".">',
+                            '<div class="x-boundlist-item">',
+                                '<strong>',
+                                    '<tpl switch="name">',
+                                        '<tpl case="receipt">',
+                                            '<p>Wydanie</p>',
+                                        '<tpl case="supply">',
+                                            '<p>Dostawa</p>',
+                                        '<tpl case="return">',
+                                            '<p>Zwrot</p>',
+                                        '<tpl default>',
+                                            '<p>Nieznany</p>',
+                                    '</tpl>',
+                                '</strong>',
+                            '</div>',
+                        '</tpl>'
+                    )
                 },
                 {
                     xtype        : 'combo',
-                    itemId       : 'clientId',
+                    itemId       : 'clientsCB',
                     fieldLabel   : 'Klient',
-                    name         : 'client_id',
                     store        : undefined,
+                    name         : 'client_id',
                     valueField   : 'id',
-                    displayField : 'company',
+                    displayField : 'name',
                     typeAhead    : true,
                     triggerAction: 'all',
-                    selectOnTab  : true
+                    selectOnTab  : true,
+                    tpl          : Ext.create('Ext.XTemplate',
+                        '<tpl for=".">',
+                        '<div class="x-boundlist-item">{name}  </br><strong style="color: darkblue">[ {company} ]</strong></div>',
+                        '</tpl>'
+                    )
                 }
             ]
         },
