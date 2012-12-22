@@ -166,7 +166,8 @@
             // loading content of app/ux folder, see above for setting paths
             'Ext.ux.*',
             // Must be loaded manually, otherwise Ext fails to find it
-            'Ext.ux.WMSColumnRenderers'
+            'Ext.ux.WMSColumnRenderers',
+            'Ext.ux.proxy.WMSProxy'
         ],
         function () {
             console.log('Ext.Loader :: Loaded all Ext.ux.* files');

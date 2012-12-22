@@ -60,14 +60,14 @@ Ext.define('WMS.view.wizard.client.Form', {
                     fieldLabel: 'Nazwa',
                     name      : 'name',
                     emptyText : 'Nazwa użytkownika [skrót]',
-//                    vtype     : 'capitalizedString',
+                    vtype     : 'capitalizedString',
                     maxLength : 45
                 },
                 {
                     fieldLabel: 'Firma',
                     name      : 'company',
                     emptyText : 'Firma [właściwa nazwa]',
-//                    vtype     : 'capitalizedString',
+                    vtype     : 'capitalizedString',
                     maxLength : 45
                 },
                 {

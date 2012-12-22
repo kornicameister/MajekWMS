@@ -12,6 +12,7 @@ Ext.define('WMS.view.wizard.client.Dialog', {
     title             : 'Dodawanie nowego klienta',
     width             : 400,
     requires          : [
+        'WMS.view.abstract.BaseDialog',
         'WMS.view.wizard.client.Form'
     ],
     items             : {
