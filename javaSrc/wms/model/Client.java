@@ -13,7 +13,7 @@ public class Client extends NamedPersistenceObject {
     private static final long serialVersionUID = 1283426340575080285L;
 
     @Basic
-    @Column(name = "company", insertable = true, nullable = false, unique = true, length = 45, updatable = true)
+    @Column(name = "company", insertable = true, nullable = false, length = 45, updatable = false)
     private String company = null;
 
     @Basic
