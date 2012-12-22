@@ -88,10 +88,10 @@
          * @return {Boolean} true is passed string is a good match
          */
         postalCodePL         : function (val) {
-            return /^[0-9][0-9]-[0-9][0-9][0-9]$/gi.test(val);
+            return /^\d{2}(-\d{3}){1}$/i.test(val);
         },
         postalCodePLText     : 'Wprowadź kod pocztowy w formacie XX-XXX',
-        postalCodePLMask     : /[0-9]/i,
+        postalCodePLMask     : /./i,
         /**
          * @author kornicameister
          * @version 0.1
@@ -108,26 +108,30 @@
          * @return {Boolean} true is passed string is a good match
          */
         phoneNumber          : function (val) {
-            return /^\+\(\d{2,}\)\d{3}(-\d{2}){2}$/gi.test(val);
+            return /^\+\(\d{2}\)\d{3}(-\d{2}){2}$/gi.test(val);
         },
         phoneNumberText      : 'Numer telefonu musi być wprowadzony w formacie ' +
             '+(XX)XXX-XX-XX',
-        phoneNumberMask      : '/[+]/gi',
+        phoneNumberMask      : '/[0-9-\(\)\+]/gi',
         /**
          * @author kornicameister
          * @version 0.1
          * @description Use this vtype to check whether or not
          * provided NIP number is correct or not.
-         * Regex matches for both know format 8 | 14 char
+         * Regex matches both
+         * XXX-XXX-XX-XX
+         * and
+         * XXX-XX-XX-XXX
+         * formats
          *
          * @param val string to be tested against this vtype's regex
          * @return {Boolean} true is passed string is a good match
          */
         nipNumber            : function (val) {
-            return /^(\(d{3}-\d{3}-\d{2}-\d{2})|(d{3}-\d{2}-\d{2}-\d{3})$/.test(val);
+            return /^[0-9-]{13}$/i.test(val);
         },
         nipNumberText        : 'Niepoprawny format numeru NIP',
-        nipNumberMask        : '/[0-9/i',
+        nipNumberMask        : /[0-9-]/i,
         /**
          * @author kornicameister
          * @version 0.1
@@ -144,7 +148,7 @@
             return /^36(-\d{4}){6}$/i.test(val);
         },
         accountNumberText    : 'Niepoprawny numer IBAN konta',
-        accountNumberMask    : '/^36/i'
+        accountNumberMask    : /[0-9-]/i
     });
     //noinspection JSUnusedGlobalSymbols
     /**creating custom validators for text fields*/
