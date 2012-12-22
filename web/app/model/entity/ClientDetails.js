@@ -11,7 +11,6 @@ Ext.define('WMS.model.entity.ClientDetails', {
         'id',
         'nip',
         'phone',
-        'fax',
         'account'
     ],
     associations: [

@@ -38,6 +38,7 @@ Ext.define('WMS.view.wizard.client.Form', {
         {
             title   : 'Typ',
             disabled: true,
+            hidden  : true,
             items   : {
                 xtype        : 'combo',
                 itemId       : 'typeId',
@@ -58,12 +59,16 @@ Ext.define('WMS.view.wizard.client.Form', {
                 {
                     fieldLabel: 'Nazwa',
                     name      : 'name',
-                    emptyText : 'Nazwa użytkownika [skrót]'
+                    emptyText : 'Nazwa użytkownika [skrót]',
+//                    vtype     : 'capitalizedString',
+                    maxLength : 45
                 },
                 {
                     fieldLabel: 'Firma',
                     name      : 'company',
-                    emptyText : 'Firma [właściwa nazwa]'
+                    emptyText : 'Firma [właściwa nazwa]',
+//                    vtype     : 'capitalizedString',
+                    maxLength : 45
                 },
                 {
                     xtype     : 'textarea',
@@ -80,11 +85,13 @@ Ext.define('WMS.view.wizard.client.Form', {
             items: [
                 {
                     fieldLabel: 'Ulica',
-                    name      : 'street'
+                    name      : 'street',
+                    vtype     : 'streetAddress'
                 },
                 {
                     fieldLabel: 'Kod pocztowy',
-                    name      : 'postcode'
+                    name      : 'postcode',
+                    vtype     : 'postalCodePL'
                 },
                 {
                     xtype        : 'combo',
@@ -104,19 +111,18 @@ Ext.define('WMS.view.wizard.client.Form', {
             items: [
                 {
                     fieldLabel: 'NIP',
-                    name      : 'nip'
+                    name      : 'nip',
+                    vtype     : 'nipNumber'
                 },
                 {
                     fieldLabel: 'Telefon',
-                    name      : 'phone'
-                },
-                {
-                    fieldLabel: 'Fax',
-                    name      : 'fax'
+                    name      : 'phone',
+                    vtype     : 'phoneNumber'
                 },
                 {
                     fieldLabel: 'Numer konta',
-                    name      : 'account'
+                    name      : 'account',
+                    vtype     : 'accountNumber'
                 }
             ]
         }

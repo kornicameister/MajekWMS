@@ -6,7 +6,7 @@
  */
 
 Ext.define('WMS.store.Suppliers', {
-    extend              : 'Ext.data.Store',
+    extend              : 'WMS.store.Clients',
     model               : 'WMS.model.entity.Supplier',
     autoLoad            : true,
     autoSync            : true,
@@ -14,13 +14,14 @@ Ext.define('WMS.store.Suppliers', {
         var me = this,
             address = WMS.model.entity.Address.extract(rawClient),
             client = WMS.model.entity.Client.extract(rawClient),
-            clientDetails = WMS.model.entity.ClientDetails.extract(rawClient);
+            clientDetails = WMS.model.entity.ClientDetails.extract(rawClient),
+            clientType = WMS.model.entity.Client.findClientTypeRecord('supplier').getData();
 
         client = Ext.create('WMS.model.entity.Supplier', client);
         client['address'] = address;
         client['details'] = clientDetails;
-        client['type'] = {id: "supplier"};
+        client['type'] = clientType;
 
-        me.add(client);
+        me.callParent([client]);
     }
 });

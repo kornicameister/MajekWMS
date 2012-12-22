@@ -6,7 +6,7 @@
  */
 
 Ext.define('WMS.store.Recipients', {
-    extend              : 'Ext.data.Store',
+    extend              : 'WMS.store.Clients',
     model               : 'WMS.model.entity.Recipient',
     autoLoad            : true,
     autoSync            : true,
@@ -14,13 +14,14 @@ Ext.define('WMS.store.Recipients', {
         var me = this,
             address = WMS.model.entity.Address.extract(rawClient),
             client = WMS.model.entity.Client.extract(rawClient),
-            clientDetails = WMS.model.entity.ClientDetails.extract(rawClient);
+            clientDetails = WMS.model.entity.ClientDetails.extract(rawClient),
+            clientType = WMS.model.entity.Client.findClientTypeRecord('recipient').getData();
 
         client = Ext.create('WMS.model.entity.Recipient', client);
         client['address'] = address;
         client['details'] = clientDetails;
-        client['type'] = {id: "recipient"};
+        client['type'] = clientType;
 
-        me.add(client);
+        me.callParent([client]);
     }
 });

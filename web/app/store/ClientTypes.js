@@ -11,9 +11,8 @@
  * to operate directly on Measure
  */
 Ext.define('WMS.store.ClientTypes', {
-    extend: 'Ext.data.Store',
-    model : 'WMS.model.entity.ClientType',
-
+    extend  : 'Ext.data.Store',
+    model   : 'WMS.model.entity.ClientType',
     autoLoad: true,
     autoSync: false
 });

@@ -14,7 +14,7 @@ Ext.define('WMS.model.entity.Client', {
     ],
     fields      : [
         'company',
-        'type',
+        { name: 'type_id', type: 'int', mapping: 'type.id'},
         { name: 'details_id', type: 'int', mapping: 'details.id'},
         { name: 'address_id', type: 'int', mapping: 'address.id'}
     ],
@@ -29,6 +29,17 @@ Ext.define('WMS.model.entity.Client', {
             model          : 'WMS.model.entity.Address',
             getterName     : 'getAddress',
             setterName     : 'setAddress'
+        },
+        {
+            type           : 'hasOne',
+            foreignKey     : 'type_id',
+            associationName: 'type',
+            associationKey : 'type',
+            instanceName   : 'type',
+            name           : 'type',
+            model          : 'WMS.model.entity.ClientType',
+            getterName     : 'getType',
+            setterName     : 'setType'
         },
         {
             associationName: 'details',
@@ -47,7 +58,7 @@ Ext.define('WMS.model.entity.Client', {
         url : 'wms/agent/client'
     },
     statics     : {
-        extract      : function (raw) {
+        extract             : function (raw) {
             var fields = ['address_id', 'type_id', 'details_id', 'description', 'name', 'company'],
                 client = {};
             Ext.each(fields, function (chunk) {
@@ -64,7 +75,7 @@ Ext.define('WMS.model.entity.Client', {
          * @param operation
          * @return {*|String}
          */
-        getRecordData: function (record, operation) {
+        getRecordData       : function (record, operation) {
             if (operation['action'] === 'create') {
                 var toBeSent = record.getData();
                 toBeSent['address'] = record['address'];
@@ -78,6 +89,13 @@ Ext.define('WMS.model.entity.Client', {
                 return toBeSent;
             }
             return record.getData();
+        },
+        findClientTypeRecord: function (cType) {
+            var clientTypeStore = Ext.StoreManager.lookup('ClientTypes'),
+                clientTypeIndex = clientTypeStore.find('name', cType),
+                clientType = clientTypeStore.getAt(clientTypeIndex)
+
+            return clientType;
         }
     }
 });
