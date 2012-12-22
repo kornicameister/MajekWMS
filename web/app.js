@@ -14,22 +14,6 @@
         console.log('INIT :: ' + str);
     };
 
-    Ext.Loader.setConfig({
-        enabled: true,
-        paths  : {
-            'Ext.ux'       : 'app/ux',
-            'Ext.ux.menu'  : 'app/ux',
-            'Ext.ux.layout': 'app/ux'
-        }
-    });
-
-    Ext.override('Ext.panel.Panel', {
-        titleAlign: 'center',
-        style     : {
-            marginBottom: '5px'
-        }
-    });
-
     /**creating custom validators for text fields*/
     Ext.apply(Ext.form.field.VTypes, {
         /**
@@ -166,9 +150,28 @@
     /**creating custom validators for text fields*/
 
 
-    Ext.Loader.loadScript({
-        url   : 'app/ux/WMSProxy.js',
-        onLoad: function () {
+    Ext.Loader.setConfig({
+        enabled: true,
+        paths  : {
+            'Ext.ux'          : 'app/ux',
+            'Ext.ux.menu'     : 'app/ux',
+            'Ext.ux.layout'   : 'app/ux',
+            'Ext.ux.proxy'    : 'app/ux',
+            'Ext.ux.statusbar': 'app/ux'
+        }
+    });
+
+    Ext.Loader.require(
+        [
+            // loading content of app/ux folder, see above for setting paths
+            'Ext.ux.*',
+            // Must be loaded manually, otherwise Ext fails to find it
+            'Ext.ux.WMSColumnRenderers'
+        ],
+        function () {
+            console.log('Ext.Loader :: Loaded all Ext.ux.* files');
+
+            // triggering application start.
             Ext.application({
                 name              : 'WMS',
                 appFolder         : 'app',
@@ -185,6 +188,7 @@
                     'manager.Suppliers',
                     'manager.Recipients',
 
+                    'wizard.Invoice',
                     'wizard.Client',
                     'wizard.Company',
 
@@ -193,7 +197,5 @@
                     'Master'
                 ]
             });
-        }
-    });
-
+        });
 }());

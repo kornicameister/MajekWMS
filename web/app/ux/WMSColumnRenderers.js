@@ -6,15 +6,14 @@
  */
 
 /**
- * This class utilizes commonly reused method to
+ * @author kornicameister
+ * @version 0.1
+ * @description This class utilizes commonly reused method to
  * render data for grids basing on past id.
  */
-Ext.define('WMS.utilities.ColumnRenderers', {
-    alternateClassName: 'ColumnRenderers',
-    uses              : [
-        'Ext.data.Store'
-    ],
-    statics           : {
+Ext.define('Ext.ux.WMSColumnRenderers', {
+    extend : 'Ext.Base',
+    statics: {
         measureColumnRenderer: function (measure_id) {
             if (!Ext.isNumber(measure_id)) {
                 return 'unknown';
