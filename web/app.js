@@ -112,7 +112,7 @@
         },
         phoneNumberText      : 'Numer telefonu musi być wprowadzony w formacie ' +
             '+(XX)XXX-XX-XX',
-        phoneNumberMask      : '/[0-9-\(\)\+]/gi',
+        phoneNumberMask      : /./i,
         /**
          * @author kornicameister
          * @version 0.1
