@@ -55,43 +55,17 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
             itemId: 'basicInformation',
             items : [
                 {
-                    xtype     : 'textfield',
                     itemId    : 'invoiceNumber',
                     fieldLabel: 'Numer faktury',
                     name      : 'invoiceNumber',
                     allowBlank: false,
-                    disabled  : true,
-                    value     : '...'
+                    disabled  : true
                 },
                 {
-                    xtype        : 'combo',
-                    store        : 'InvoiceTypes',
-                    itemId       : 'invoiceTypeCB',
-                    fieldLabel   : 'Typ',
-                    name         : 'type_id',
-                    valueField   : 'id',
-                    displayField : 'name',
-                    typeAhead    : true,
-                    triggerAction: 'all',
-                    selectOnTab  : true,
-                    tpl          : Ext.create('Ext.XTemplate',
-                        '<tpl for=".">',
-                        '<div class="x-boundlist-item">',
-                        '<strong>',
-                        '<tpl switch="name">',
-                        '<tpl case="receipt">',
-                        '<p>Wydanie</p>',
-                        '<tpl case="supply">',
-                        '<p>Dostawa</p>',
-                        '<tpl case="return">',
-                        '<p>Zwrot</p>',
-                        '<tpl default>',
-                        '<p>Nieznany</p>',
-                        '</tpl>',
-                        '</strong>',
-                        '</div>',
-                        '</tpl>'
-                    )
+                    xtype     : 'combo',
+                    itemId    : 'invoiceTypeCB',
+                    disabled  : true,
+                    allowBlank: false
                 },
                 {
                     xtype        : 'combo',
@@ -104,6 +78,7 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
                     typeAhead    : true,
                     triggerAction: 'all',
                     selectOnTab  : true,
+                    allowBlank   : false,
                     tpl          : Ext.create('Ext.XTemplate',
                         '<tpl for=".">',
                         '<div class="x-boundlist-item">{name}  </br><strong style="color: darkblue">[ {company} ]</strong></div>',
@@ -115,7 +90,8 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
         {
             title   : 'Daty',
             defaults: {
-                xtype: 'datefield'
+                xtype     : 'datefield',
+                altFormats: 'd-m-Y'
             },
             items   : [
                 {
@@ -138,70 +114,56 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
                 flex     : 2,
                 columns  : [
                     {
-                        header   : 'ID',
-                        dataIndex: 'id',
-                        width    : 20,
-                        editable : false,
-                        hidden   : true
+                        xtype: 'rownumberer'
                     },
                     {
-                        header     : 'Nazwa',
-                        dataIndex  : 'name',
-                        summaryType: 'count',
-                        field      : {
-                            xtype: 'textfield',
-                            name : 'name'
-                        }
-                    },
-                    {
-                        header     : 'PJŁ',
-                        dataIndex  : 'pallets',
-                        summaryType: 'sum',
-                        sortable   : true,
-                        field      : {
-                            xtype   : 'navnumberfield',
-                            name    : 'pallets',
-                            value   : 1,
-                            maxValue: Number.MAX_VALUE,
-                            step    : 1
-                        }
-                    },
-                    {
-                        header     : 'Ilość',
-                        dataIndex  : 'quantity',
-                        summaryType: 'average',
-                        field      : {
-                            xtype   : 'navnumberfield',
-                            name    : 'maximumSize',
-                            value   : 100,
-                            maxValue: Number.MAX_VALUE,
-                            step    : 200
-                        }
-                    },
-                    {
-                        header   : 'Jednostka',
-                        dataIndex: 'measure_id',
-                        width    : 120,
-                        renderer : Ext.ux.WMSColumnRenderers.measureColumnRenderer,
+                        header   : 'Produkt',
+                        dataIndex: 'product_id',
                         editor   : {
                             xtype        : 'combo',
-                            store        : 'Measures',
+                            id           : 'productInvoiceCB',
+                            store        : undefined,
                             valueField   : 'id',
                             displayField : 'name',
                             typeAhead    : true,
                             triggerAction: 'all',
                             selectOnTab  : true,
                             lazyRender   : true,
-                            listClass    : 'x-combo-list-small'
+                            listClass    : 'x-combo-list-small',
+                            tpl          : Ext.create('Ext.XTemplate',
+                                '<tpl for=".">',
+                                '<div class="x-boundlist-item">{name}  </br>' +
+                                    '<strong style="color: #0000cc; font-weight:bold">' +
+                                    '[ Cena: {price} zł]</br>[ Podatek: {tax} %]' +
+                                    '</strong></div>',
+                                '</tpl>'
+                            )
+                        }
+                    },
+                    {
+                        header     : 'Sztuk',
+                        dataIndex  : 'quantity',
+                        summaryType: 'sum',
+                        width      : 50,
+                        field      : {
+                            xtype   : 'navnumberfield',
+                            name    : 'quantity',
+                            value   : 1,
+                            maxValue: Number.MAX_VALUE,
+                            step    : 10
                         }
                     },
                     {
                         header         : 'Cena',
                         dataIndex      : 'price',
                         summaryType    : 'average',
+                        renderer       : function (val) {
+                            return val + ' zł'
+                        },
                         summaryRenderer: function (value) {
                             return value + ' zł';
                         },
+                        width          : 50,
                         field          : {
                             xtype   : 'navnumberfield',
                             name    : 'price',
@@ -216,6 +178,7 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
                         renderer : function (value) {
                             return value + ' %';
                         },
+                        width    : 60,
                         field    : {
                             xtype   : 'navnumberfield',
                             name    : 'tax',
@@ -226,12 +189,17 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
                         }
                     },
                     {
+                        header   : 'Cena VAT',
+                        dataIndex: 'summaryPrice',
+                        width    : 70
+                    },
+                    {
                         header   : 'Opis',
-                        dataIndex: 'description',
+                        dataIndex: 'comment',
                         flex     : 3,
                         field    : {
                             xtype    : 'textarea',
-                            name     : 'description',
+                            name     : 'comment',
                             maxLength: 250
                         }
                     }
