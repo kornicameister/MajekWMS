@@ -13,7 +13,7 @@ public abstract class NamedPersistenceObject extends PersistenceObject {
     private static final long serialVersionUID = - 4491787496758100976L;
 
     @Basic
-    private String name;
+    private String name = null;
 
     public NamedPersistenceObject() {
         super();

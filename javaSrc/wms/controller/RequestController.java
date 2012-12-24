@@ -9,14 +9,12 @@ import org.hibernate.proxy.HibernateProxy;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import wms.controller.base.Controller;
+import wms.controller.base.ResponseFormatBody;
 import wms.controller.base.annotations.HideAssociation;
 import wms.controller.base.annotations.HideField;
 import wms.controller.base.extractor.Entity;
 import wms.controller.base.extractor.RData;
-import wms.controller.base.ResponseFormatBody;
-import wms.model.BasicPersistentObject;
-import wms.model.PersistenceObject;
-import wms.model.Warehouse;
+import wms.model.*;
 import wms.utilities.Pair;
 import wms.utilities.StringUtils;
 import wms.utilities.hibernate.HibernateBridge;
@@ -369,7 +367,7 @@ public class RequestController implements Controller {
      * of database.
      *
      * @param persistentObject already fixed object
-     * @param payloadData object that holds information about currently processed object
+     * @param payloadData      object that holds information about currently processed object
      * @return object that composite properties had been updated
      */
     BasicPersistentObject preUpdateNonPrimitives(BasicPersistentObject persistentObject,

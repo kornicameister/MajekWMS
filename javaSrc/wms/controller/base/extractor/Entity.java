@@ -9,6 +9,7 @@ import wms.model.*;
  * @author kornicameister
  */
 public enum Entity {
+    INVOICE(InvoiceController.class, Invoice.class),
     UNIT(UnitController.class, Unit.class),
     COMPANY(CompanyController.class, Company.class),
     UNITTYPE(UnitTypeController.class, UnitType.class),
