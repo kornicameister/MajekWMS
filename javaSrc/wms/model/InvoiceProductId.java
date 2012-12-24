@@ -1,17 +1,19 @@
 package wms.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 
 @Embeddable
 public class InvoiceProductId implements Serializable {
-    private static final long serialVersionUID = - 614537106939514217L;
+    private static final long serialVersionUID = -614537106939514217L;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Invoice invoice;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Product product;
 
     public final Invoice getInvoice() {
@@ -34,8 +36,8 @@ public class InvoiceProductId implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((invoice == null) ? 0 : invoice.hashCode());
-        result = prime * result + ((product == null) ? 0 : product.hashCode());
+        result = prime * result + ((invoice == null) ? 0 : invoice.getId().hashCode());
+        result = prime * result + ((product == null) ? 0 : product.getId().hashCode());
         return result;
     }
 
@@ -45,18 +47,18 @@ public class InvoiceProductId implements Serializable {
             return true;
         if (obj == null)
             return false;
-        if (! (obj instanceof InvoiceProductId))
+        if (!(obj instanceof InvoiceProductId))
             return false;
         InvoiceProductId other = (InvoiceProductId) obj;
         if (invoice == null) {
             if (other.invoice != null)
                 return false;
-        } else if (! invoice.equals(other.invoice))
+        } else if (!invoice.equals(other.invoice))
             return false;
         if (product == null) {
             if (other.product != null)
                 return false;
-        } else if (! product.equals(other.product))
+        } else if (!product.equals(other.product))
             return false;
         return true;
     }

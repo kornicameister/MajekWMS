@@ -18,26 +18,23 @@ public class Product extends NamedPersistenceObject {
 
     @Basic
     @Column(name = "description", nullable = true, length = 250)
-    private String description;
+    private String description = null;
 
     @Basic
     @Column(name = "pallets", nullable = false, insertable = true, updatable = true)
-    private Integer pallets;
+    private Integer pallets = null;
 
     @Basic
     @Column(name = "quantity", nullable = false, insertable = true, updatable = true)
-    private Double quantity;
+    private Double quantity = null;
 
     @Basic
     @Column(name = "price", nullable = false, insertable = true, updatable = true)
-    private Double price;
+    private Double price = null;
 
     @Basic
     @Column(name = "tax", nullable = false, insertable = true, updatable = true)
-    private Float tax;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.product")
-    private Set<InvoiceProduct> invoiceProducts = new HashSet<>(0);
+    private Float tax = null;
 
     @JoinColumn(name = "measure_id", referencedColumnName = "idMeasure")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
@@ -47,150 +44,47 @@ public class Product extends NamedPersistenceObject {
         super();
     }
 
-    public synchronized final String getDescription() {
-        return description;
-    }
-
-    public synchronized final void setDescription(String description) {
-        this.description = description;
-    }
-
-    public synchronized final Double getQuantity() {
-        return quantity;
-    }
-
-    public synchronized final void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public synchronized final Double getPrice() {
-        return price;
-    }
-
-    public synchronized final void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public synchronized final Float getTax() {
-        return tax;
-    }
-
-    public synchronized final void setTax(Float tax) {
-        this.tax = tax;
-    }
-
-    public synchronized final Set<InvoiceProduct> getInvoiceProducts() {
-        return invoiceProducts;
-    }
-
-    public synchronized final void setInvoiceProducts(
-            Set<InvoiceProduct> invoiceProducts) {
-        this.invoiceProducts = invoiceProducts;
-    }
-
-    public synchronized final Measure getMeasure() {
-        return measure;
-    }
-
     public synchronized final void setMeasure(Measure measure) {
         this.measure = measure;
     }
 
-    public synchronized final Integer getPallets() {
-        return pallets;
-    }
-
-    public synchronized final void setPallets(Integer pallets) {
-        this.pallets = pallets;
-    }
-
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result
-                + ((description == null) ? 0 : description.hashCode());
-        result = prime * result
-                + ((invoiceProducts == null) ? 0 : invoiceProducts.hashCode());
-        result = prime * result + ((measure == null) ? 0 : measure.hashCode());
-        result = prime * result + ((pallets == null) ? 0 : pallets.hashCode());
-        result = prime * result + ((price == null) ? 0 : price.hashCode());
-        result = prime * result
-                + ((quantity == null) ? 0 : quantity.hashCode());
-        result = prime * result + ((tax == null) ? 0 : tax.hashCode());
-        return result;
-    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        if (!super.equals(o)) return false;
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (! super.equals(obj))
-            return false;
-        if (! (obj instanceof Product))
-            return false;
-        Product other = (Product) obj;
-        if (description == null) {
-            if (other.description != null)
-                return false;
-        } else if (! description.equals(other.description))
-            return false;
-        if (invoiceProducts == null) {
-            if (other.invoiceProducts != null)
-                return false;
-        } else if (! invoiceProducts.equals(other.invoiceProducts))
-            return false;
-        if (measure == null) {
-            if (other.measure != null)
-                return false;
-        } else if (! measure.equals(other.measure))
-            return false;
-        if (pallets == null) {
-            if (other.pallets != null)
-                return false;
-        } else if (! pallets.equals(other.pallets))
-            return false;
-        if (price == null) {
-            if (other.price != null)
-                return false;
-        } else if (! price.equals(other.price))
-            return false;
-        if (quantity == null) {
-            if (other.quantity != null)
-                return false;
-        } else if (! quantity.equals(other.quantity))
-            return false;
-        if (tax == null) {
-            if (other.tax != null)
-                return false;
-        } else if (! tax.equals(other.tax))
-            return false;
+        Product product = (Product) o;
+
+        if (description != null ? !description.equals(product.description) : product.description != null) return false;
+        if (!measure.equals(product.measure)) return false;
+        if (!price.equals(product.price)) return false;
+        if (!tax.equals(product.tax)) return false;
+
         return true;
     }
 
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Product [");
-        if (description != null)
-            builder.append("description=").append(description).append(", ");
-        if (pallets != null)
-            builder.append("pallets=").append(pallets).append(", ");
-        if (quantity != null)
-            builder.append("quantity=").append(quantity).append(", ");
-        if (price != null)
-            builder.append("price=").append(price).append(", ");
-        if (tax != null)
-            builder.append("tax=").append(tax).append(", ");
-        if (invoiceProducts != null)
-            builder.append("invoiceProducts=").append(invoiceProducts)
-                    .append(", ");
-        if (measure != null)
-            builder.append("measure=").append(measure).append(", ");
-        if (super.toString() != null)
-            builder.append("toString()=").append(super.toString());
-        builder.append("]");
-        return builder.toString();
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + price.hashCode();
+        result = 31 * result + tax.hashCode();
+        result = 31 * result + measure.hashCode();
+        return result;
     }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Product");
+        sb.append("{description='").append(description).append('\'');
+        sb.append(", pallets=").append(pallets);
+        sb.append(", quantity=").append(quantity);
+        sb.append(", price=").append(price);
+        sb.append(", tax=").append(tax);
+        sb.append(", measure=").append(measure);
+        sb.append('}');
+        return sb.toString();
+    }
 }
