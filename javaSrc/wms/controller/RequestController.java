@@ -14,7 +14,9 @@ import wms.controller.base.annotations.HideAssociation;
 import wms.controller.base.annotations.HideField;
 import wms.controller.base.extractor.Entity;
 import wms.controller.base.extractor.RData;
-import wms.model.*;
+import wms.model.BasicPersistentObject;
+import wms.model.PersistenceObject;
+import wms.model.Warehouse;
 import wms.utilities.Pair;
 import wms.utilities.StringUtils;
 import wms.utilities.hibernate.HibernateBridge;
@@ -118,9 +120,11 @@ public class RequestController implements Controller {
 
         this.session.beginTransaction();
         for (BasicPersistentObject entity : data) {
-            PersistenceObject object = (PersistenceObject) entity;
-            if (object != null) {
-                object.setId(null);
+            if (entity instanceof PersistenceObject) {
+                PersistenceObject object = (PersistenceObject) entity;
+                if (object != null) {
+                    object.setId(null);
+                }
             }
             savedID = this.session.save(entity);
             if (savedID != null) {

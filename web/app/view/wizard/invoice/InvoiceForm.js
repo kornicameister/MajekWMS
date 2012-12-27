@@ -58,14 +58,7 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
                     itemId    : 'invoiceNumber',
                     fieldLabel: 'Numer faktury',
                     name      : 'invoiceNumber',
-                    allowBlank: false,
-                    disabled  : true
-                },
-                {
-                    xtype     : 'combo',
-                    itemId    : 'invoiceTypeCB',
-                    disabled  : true,
-                    allowBlank: false
+                    readOnly  : true
                 },
                 {
                     xtype        : 'combo',
@@ -91,7 +84,9 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
             title   : 'Daty',
             defaults: {
                 xtype     : 'datefield',
-                altFormats: 'd-m-Y'
+                altFormats: 'd-m-Y',
+                format    : 'm-d-Y',
+                minValue  : new Date()
             },
             items   : [
                 {
@@ -119,6 +114,7 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
                     {
                         header   : 'Produkt',
                         dataIndex: 'product_id',
+                        width    : 130,
                         editor   : {
                             xtype        : 'combo',
                             id           : 'productInvoiceCB',
@@ -215,8 +211,9 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
             title: 'Opis',
             items: {
                 xtype     : 'textarea',
-                flex      : 2,
                 itemId    : 'invoiceDescription',
+                name      : 'description',
+                flex      : 2,
                 fieldLabel: 'Opcjonalny opis',
                 emptyText : 'Wprowadź tutaj opcjonalny opis...'
             }

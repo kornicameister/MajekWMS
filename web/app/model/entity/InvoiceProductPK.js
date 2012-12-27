@@ -17,22 +17,26 @@ Ext.define('WMS.model.entity.InvoiceProductPK', {
     ],
     associations: [
         {
-            type           : 'hasOne',
-            model          : 'WMS.model.entity.Invoice',
-            associationKey : 'invoice',
-            associationName: 'invoice',
-            getterName     : 'getInvoice',
-            setterName     : 'setInvoice',
-            foreignKey     : 'invoice_id'
+            type          : 'hasOne',
+            model         : 'WMS.model.entity.Invoice',
+            associationKey: 'invoice',
+            associatedName: 'invoice',
+            instanceName  : 'invoice',
+            name          : 'invoice',
+            getterName    : 'getInvoice',
+            setterName    : 'setInvoice',
+            foreignKey    : 'invoice_id'
         },
         {
-            type           : 'hasOne',
-            model          : 'WMS.model.entity.Product',
-            associationKey : 'product',
-            associationName: 'product',
-            getterName     : 'getProduct',
-            setterName     : 'setProduct',
-            foreignKey     : 'product_id'
+            type          : 'hasOne',
+            model         : 'WMS.model.entity.Product',
+            associationKey: 'product',
+            associatedName: 'product',
+            instanceName  : 'product',
+            name          : 'product',
+            getterName    : 'getProduct',
+            setterName    : 'setProduct',
+            foreignKey    : 'product_id'
         }
     ]
 });

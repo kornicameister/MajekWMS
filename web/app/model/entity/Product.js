@@ -20,11 +20,6 @@ Ext.define('WMS.model.entity.Product', {
     ],
     associations: [
         {
-            name : 'invoiceProducts',
-            type : 'hasMany',
-            model: 'WMS.model.entity.InvoiceProduct'
-        },
-        {
             associationName: 'measure',
             type           : 'hasOne',
             model          : 'WMS.model.entity.Measure',

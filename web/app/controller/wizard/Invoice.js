@@ -7,10 +7,9 @@
 
 Ext.define('WMS.controller.wizard.Invoice', {
     extend                   : 'Ext.app.Controller',
-    requires                 : [
+    uses                     : [
         'Ext.ux.WMSColumnRenderers',
         'WMS.view.wizard.invoice.Invoice',
-        'WMS.model.entity.Product',
         'WMS.model.entity.InvoiceProduct'
     ],
     views                    : [
@@ -18,15 +17,17 @@ Ext.define('WMS.controller.wizard.Invoice', {
     ],
     stores                   : [
         'InvoiceTypes',
-        'Invoices'  // <-- this store entity is InvoiceProduct !!! -->
+        'Invoices'              // <-- this store entity is InvoiceProduct !!! -->
     ],
     refs                     : [
-        { ref: 'invoiceTypesComboBox', selector: 'invoiceform combo[itemId=invoiceTypeCB]'},
-        { ref: 'clientComboBox', selector: 'invoiceform combo[itemId=clientsCB]' },
-        { ref: 'invoiceNumberTextField', selector: 'invoiceform textfield[itemId=invoiceNumber]' },
-        { ref: 'productsGrid', selector: 'invoiceform egrid[itemId=invoiceProductsGrid]' },
-        { ref: 'startDateField', selector: 'invoiceform datefield[name=createdDate]'},
-        { ref: 'endDateField', selector: 'invoiceform datefield[name=dueDate]'}
+        { ref: 'invoiceTypesComboBox', selector: '#invoiceWindow invoiceform combo[itemId=invoiceTypeCB]'},
+        { ref: 'clientComboBox', selector: '#invoiceWindow invoiceform combo[itemId=clientsCB]' },
+        { ref: 'invoiceNumberTextField', selector: '#invoiceWindow invoiceform textfield[itemId=invoiceNumber]' },
+        { ref: 'productsGrid', selector: '#invoiceWindow invoiceform egrid[itemId=invoiceProductsGrid]' },
+        { ref: 'startDateField', selector: '#invoiceWindow invoiceform datefield[name=createdDate]'},
+        { ref: 'endDateField', selector: '#invoiceWindow invoiceform datefield[name=dueDate]'},
+        { ref: 'form', selector: '#invoiceWindow invoiceform'},
+        { ref: 'wizard', selector: '#invoiceWindow'}
     ],
     statics                  : {
         MODE: {
@@ -44,26 +45,19 @@ Ext.define('WMS.controller.wizard.Invoice', {
          * Choice highly depends on provided mode.
          */
         workingMode           : {
-            mode     : undefined,
-            store    : undefined,
-            plName   : undefined,
-            getMode  : function () {
+            mode    : undefined,
+            store   : undefined,
+            getMode : function () {
                 return this.mode;
             },
-            getStore : function () {
+            getStore: function () {
                 return this.store;
             },
-            getPLMode: function () {
-                return this.plName;
-            },
-            setStore : function (store) {
+            setStore: function (store) {
                 this.store = store;
             },
-            setMode  : function (mode) {
+            setMode : function (mode) {
                 this.mode = mode;
-            },
-            setPLMode: function (name) {
-                this.plName = name;
             }
         },
         /**
@@ -83,66 +77,26 @@ Ext.define('WMS.controller.wizard.Invoice', {
          * ability to select product he would like to add to
          * his invoice.
          */
-        productsStorage       : undefined,
-        /**
-         * @type Object
-         * @author kornicameister
-         * @since 0.1
-         * @description This variable is at the beginning the object literal
-         * that hold information about the invoice being currently
-         * created.
-         */
-        invoice               : undefined
+        productsStorage       : undefined
     },
     init                     : function () {
         console.init('WMS.controller.wizard.Invoice initializing...');
         var me = this;
 
-        // initializing products storage
-        me.setInvoiceProductsStorage(Ext.create('Ext.data.Store', {
-            model      : 'WMS.model.entity.InvoiceProduct',
-            autoLoad   : false,
-            autoSync   : false,
-            autoDestroy: true,
-            proxy      : {
-                type: 'localstorage',
-                id  : 'invoiceProductsTemporaryStorage'
-            },
-            listeners  : {
-                'update': function (store, record) {
-                    var price = record.get('price'),
-                        tax = record.get('tax'),
-                        quantity = record.get('quantity'),
-                        summaryPrice = price + (price * (tax / 100)),
-                        product_id = record.get('product_id');
-
-                    if ((price === 0 && tax === 22) && product_id !== 0) {
-                        // first time triggered, setting price price
-                        // tax from selected product
-                        var product = me.getProductsStorage().getById(product_id);
-
-                        record.set('price', product.get('price'));
-                        record.set('tax', product.get('tax'));
-                    }
-
-                    summaryPrice *= quantity;
-                    record.set('summaryPrice', summaryPrice);
-                }
-            }
-        }));
-        me.setProductsStorage(Ext.create('Ext.data.Store', {
-            model      : 'WMS.model.entity.Product',
-            autoLoad   : true,
-            autoSync   : true,
-            autoDestroy: true
-        }));
-        // initializing products storage
-
         me.control({
             '#invoiceWindow'                               : {
-                'afterrender': me.updateMetaData
+                'afterrender': me.onAfterRenderAction
             },
             '#productInvoiceCB'                            : {
+                /**
+                 * This it hack, At the moment of writing this part
+                 * of the code, I was unable to bind the store to
+                 * appropriate combo box (here -> productInvoiceCB)
+                 * which is a part of the editor in the first column
+                 * of the productsGrid
+                 *
+                 * @param combo reference to the target combo
+                 */
                 'afterrender': function (combo) {
                     combo.bindStore(me.getProductsStorage());
                 }
@@ -154,10 +108,121 @@ Ext.define('WMS.controller.wizard.Invoice', {
                 'click': me.onProductDelete
             },
             'invoiceform egrid[itemId=invoiceProductsGrid]': {
-                selectionchange: me.onProductSelectionChanged
+                'selectionchange': me.onProductSelectionChanged
+            },
+            'invoiceform button[itemId=submit]'            : {
+                'click': me.onInvoiceSubmitClick
+            },
+            'invoiceform button[itemId=reset]'             : {
+                'click': me.onInvoiceReset
+            },
+            'invoiceform button[itemId=cancel]'            : {
+                'click': me.onInvoiceCancel
             }
         }, me);
 
+    },
+    /**
+     * @description handler for click event
+     * coming from submit button of the invoice
+     * wizard
+     */
+    onInvoiceSubmitClick     : function (button) {
+        var me = this,
+            form = button.up('form').getForm(),
+            values = form.getValues(),
+            isValid = form.isValid(),
+            type = (function () {
+                var store = me.getInvoiceTypesStore(),
+                    mode = me.getWorkingMode().getMode(),
+                    typeIndex = store.find('name', mode);
+
+                return store.getAt(typeIndex);
+            }());
+
+        if (!isValid) {
+            Ext.MessageBox.warn(
+                'Błąd',
+                'Niepoprawnie wypełniony formularz'
+            );
+        }
+
+        /*
+         * Creation process
+         * 1) create invoice
+         * 2) send invoice to the server, get the respond
+         * 3) associate that invoice with each product
+         *    by creating InvoiceProductPK object
+         * 4) add all InvoiceProduct objects into Invoices store
+         */
+
+        var invoice = Ext.create('WMS.model.entity.Invoice', values);
+        invoice.setType(type);
+
+        // step [1]
+        invoice.save({
+            callback: function (iRecord) {
+                if (Ext.isArray(iRecord)) {
+                    iRecord = iRecord[0];
+                }
+
+                var invoiceProductsStore = me.getInvoiceProductsStorage(),
+                    invoices = me.getInvoicesStore();
+
+                // step [2]
+                invoiceProductsStore.each(function (rec) {
+                    // step 3
+                    rec['invoiceProduct'] = Ext.create('WMS.model.entity.InvoiceProductPK', {
+                        product_id: rec.get('product_id'),
+                        invoice_id: iRecord.getId()
+                    });
+                    rec['phantom'] = true;
+                    invoices.add(rec);
+                });
+
+                // step [4]
+                invoices.sync({
+                    callback: function () {
+                        me.closeWizard();
+                    },
+                    success : function () {
+                        Ext.MessageBox.alert(
+                            'Faktura utworzona',
+                            'Nowa faktura została właśnie dodana'
+                        )
+                    },
+                    failure : function () {
+                        Ext.MessageBox.warn(
+                            'Błąd',
+                            'Nie udało się utworzyć nowej faktury'
+                        );
+                    }
+                })
+            }
+        });
+    },
+    /**
+     * @description handler for click event
+     * coming from cancel button of this wizard
+     */
+    onInvoiceCancel          : function () {
+        var me = this;
+        me.closeWizard();
+    },
+    /**
+     * @description handler for click event
+     * coming from reset action...must reset
+     * form and purge all data from temporary
+     * store holding information about invoiceProducts
+     *
+     */
+    onInvoiceReset           : function () {
+        var me = this,
+            form = me.getForm(),
+            store = me.getInvoiceProductsStorage();
+
+        form.reset();
+        store.removeAll();
     },
     // product list handlers
     onProductAdd             : function () {
@@ -210,17 +275,53 @@ Ext.define('WMS.controller.wizard.Invoice', {
         grid.down('#delete').setDisabled(selections.length === 0);
     },
     // product list handlers
-    updateMetaData           : function () {
+    onAfterRenderAction      : function () {
         var me = this,
-            invoiceTypeCB = me.getInvoiceTypesComboBox(),
             clientsCB = me.getClientComboBox(),
             iNumberTF = me.getInvoiceNumberTextField(),
             wMode = me.getWorkingMode(),
             productsGrid = me.getProductsGrid(),
-            invoiceProductsStorage = me.getInvoiceProductsStorage(),
-            productsStorage = me.getProductsStorage(),
             sDateDF = me.getStartDateField(),
             eDateDF = me.getEndDateField();
+
+        // initializing products storage
+        me.setInvoiceProductsStorage(Ext.create('Ext.data.Store', {
+            model      : 'WMS.model.entity.InvoiceProduct',
+            autoSync   : true,
+            autoDestroy: true,
+            proxy      : {
+                type: 'localstorage',
+                id  : 'invoiceProductsTemporaryStorage'
+            },
+            listeners  : {
+                'update': function (store, record) {
+                    var price = record.get('price'),
+                        tax = record.get('tax'),
+                        quantity = record.get('quantity'),
+                        summaryPrice = price + (price * (tax / 100)),
+                        product_id = record.get('product_id');
+
+                    if ((price === 0 && tax === 22) && product_id !== 0) {
+                        // first time triggered, setting price price
+                        // tax from selected product
+                        var product = me.getProductsStorage().getById(product_id);
+
+                        record.set('price', product.get('price'));
+                        record.set('tax', product.get('tax'));
+                    }
+
+                    summaryPrice *= quantity;
+                    record.set('summaryPrice', summaryPrice);
+                }
+            }
+        }));
+        me.setProductsStorage(Ext.create('Ext.data.Store', {
+            model      : 'WMS.model.entity.Product',
+            autoLoad   : true,
+            autoSync   : true,
+            autoDestroy: true
+        }));
+        // initializing products storage
 
         // generating invoice number
         iNumberTF.setValue((function () {
@@ -228,32 +329,46 @@ Ext.define('WMS.controller.wizard.Invoice', {
             dt = 'F' + Ext.Date.format(dt, 'n/j/Y') + '/' + Ext.Date.format(dt, 'g_i[s]');
             return dt;
         }()));
+        // generating invoice number
 
         wMode.getStore().reload({
             callback: function () {
-                invoiceTypeCB.setValue(wMode.getPLMode());
                 clientsCB.bindStore(wMode.getStore());
-                productsGrid.reconfigure(invoiceProductsStorage);
+                productsGrid.reconfigure(me.getInvoiceProductsStorage());
 
                 // settings date
-                sDateDF.setValue(new Date());
-                eDateDF.setValue(Ext.Date.add(new Date(), Ext.Date.DAY, 14)); //fourteen days to pay
+                {
+                    sDateDF.setValue(new Date());
+                    /**
+                     * This listeners updates field value
+                     * in the eDateDF so it would match
+                     * minimum difference between
+                     * the start day and end day of the invoice.
+                     */
+                    me.mon(sDateDF, 'select', function (combo, nVal) {
+                        eDateDF.setValue(Ext.Date.add(nVal, Ext.Date.DAY, 14)); //fourteen days to pay
+                        eDateDF['minValue'] = Ext.Date.add(nVal, Ext.Date.DAY, 14);
+                    });
+                    eDateDF['minValue'] = Ext.Date.add(new Date(), Ext.Date.DAY, 14);
+                    eDateDF.setValue(Ext.Date.add(new Date(), Ext.Date.DAY, 14)); //fourteen days to pay
+                }
+                // settings date
 
                 // setting columns renderers
-                productsGrid.columns[1]['renderer'] = function (product_id) {
-                    if (!Ext.isDefined(product_id)) {
-                        return '';
-                    } else if (Ext.isString(product_id)) {
-                        product_id = parseInt(product_id);
-                    }
-                    if (product_id === 0) {
-                        return;
-                    }
-                    return productsStorage.getById(product_id).get('name');
+                {
+                    productsGrid.columns[1]['renderer'] = function (product_id) {
+                        if (!Ext.isDefined(product_id) || product_id === 0) {
+                            return '';
+                        } else if (Ext.isString(product_id)) {
+                            product_id = parseInt(product_id);
+                        }
+                        return me.getProductsStorage().getById(product_id).get('name');
+                    };
+                    productsGrid.columns[5]['renderer'] = function (val) {
+                        return val + ' zł';
+                    };
                 }
-                productsGrid.columns[5]['renderer'] = function (val) {
-                    return val + ' zł';
-                }
+                // setting columns renderers
             }
         });
     },
@@ -282,8 +397,7 @@ Ext.define('WMS.controller.wizard.Invoice', {
             wizard = me.getView('wizard.invoice.Invoice'),
             title = '',
             wMode = me.getWorkingMode(),
-            store = undefined,
-            plName = undefined;
+            store = undefined;
 
         // setting meta-data for invoice processing
         {
@@ -291,17 +405,14 @@ Ext.define('WMS.controller.wizard.Invoice', {
                 case  WMS.controller.wizard.Invoice.MODE.RECEIPT:
                     title = 'Nowe wydanie magazynowe';
                     store = Ext.StoreManager.lookup('Recipients');
-                    plName = 'Wydanie';
                     break;
                 case WMS.controller.wizard.Invoice.MODE.SUPPLY:
                     title = 'Nowe przyjęcie magazynowe';
                     store = Ext.StoreManager.lookup('Suppliers');
-                    plName = 'Przyjęcie';
                     break;
             }
             wMode.setStore(store);
             wMode.setMode(mode);
-            wMode.setPLMode(plName);
             me.setWorkingMode(wMode);
         }
         // setting meta-data for invoice processing
@@ -315,6 +426,14 @@ Ext.define('WMS.controller.wizard.Invoice', {
         } catch (e) {
             console.error(e);
         }
+    },
+    // OPEN POINTS,
+    closeWizard              : function () {
+        var me = this,
+            store = me.getInvoiceProductsStorage(),
+            wizard = me.getWizard();
+
+        store.removeAll(true);
+        wizard.close();
     }
-    // OPEN POINTS
 });

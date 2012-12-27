@@ -20,19 +20,10 @@ Ext.define('WMS.model.entity.Invoice', {
         'description',
         { name: 'client_id', type: 'int'},
         { name: 'type_id', type: 'int'},
-        { name: 'invoiceProduct_id', type: 'int'},
         { name: 'createdDate', type: 'date'},
         { name: 'dueDate', type: 'date'}
     ],
     associations: [
-        {
-            type          : 'belongsTo',
-            associationKey: 'invoiceProduct',
-            model         : 'WMS.model.entity.InvoiceProduct',
-            getterName    : 'getInvoiceProduct',
-            setterName    : 'setInvoiceProduct',
-            foreignKey    : 'invoiceProduct_id'
-        },
         {
             type          : 'hasOne',
             model         : 'WMS.model.entity.InvoiceType',

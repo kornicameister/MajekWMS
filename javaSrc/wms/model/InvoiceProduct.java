@@ -1,7 +1,8 @@
 package wms.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 
 @Entity
@@ -14,6 +15,7 @@ public class InvoiceProduct extends BasicPersistentObject {
     private static final long serialVersionUID = 1269575448414133565L;
 
     @EmbeddedId
+    @SerializedName("invoiceProduct")
     private InvoiceProductId pk = new InvoiceProductId();
 
     @Basic
@@ -34,6 +36,7 @@ public class InvoiceProduct extends BasicPersistentObject {
 
     public InvoiceProduct() {
         super(); // hibernate
+        this.pk = new InvoiceProductId();
     }
 
     public final InvoiceProductId getPk() {
