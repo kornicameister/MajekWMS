@@ -1,8 +1,8 @@
 package wms.model;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @SuppressWarnings("deprecation")
@@ -20,13 +20,8 @@ public class Product extends NamedPersistenceObject {
     @Column(name = "description", nullable = true, length = 250)
     private String description = null;
 
-    @Basic
-    @Column(name = "pallets", nullable = false, insertable = true, updatable = true)
-    private Integer pallets = null;
-
-    @Basic
-    @Column(name = "quantity", nullable = false, insertable = true, updatable = true)
-    private Double quantity = null;
+    @Formula("(select sum(up.pallets) from unitProduct up where up.product_id = idProduct)")
+    private Long pallets = null;
 
     @Basic
     @Column(name = "price", nullable = false, insertable = true, updatable = true)
@@ -44,8 +39,16 @@ public class Product extends NamedPersistenceObject {
         super();
     }
 
-    public synchronized final void setMeasure(Measure measure) {
+    public void setMeasure(Measure measure) {
         this.measure = measure;
+    }
+
+    public Long getPallets() {
+        return pallets;
+    }
+
+    public void setPallets(long pallets) {
+        this.pallets = pallets;
     }
 
     @Override
@@ -56,12 +59,11 @@ public class Product extends NamedPersistenceObject {
 
         Product product = (Product) o;
 
-        if (description != null ? !description.equals(product.description) : product.description != null) return false;
-        if (!measure.equals(product.measure)) return false;
-        if (!price.equals(product.price)) return false;
-        if (!tax.equals(product.tax)) return false;
-
-        return true;
+        return !(description != null ? !description.equals(product.description) :
+                product.description != null) &&
+                measure.equals(product.measure) &&
+                price.equals(product.price) &&
+                tax.equals(product.tax);
     }
 
     @Override
@@ -80,7 +82,6 @@ public class Product extends NamedPersistenceObject {
         sb.append("Product");
         sb.append("{description='").append(description).append('\'');
         sb.append(", pallets=").append(pallets);
-        sb.append(", quantity=").append(quantity);
         sb.append(", price=").append(price);
         sb.append(", tax=").append(tax);
         sb.append(", measure=").append(measure);

@@ -19,18 +19,21 @@ public class Unit extends NamedPersistenceObject {
     private static final long serialVersionUID = 2437063899438647082L;
 
     @Column(name = "description", nullable = true, length = 666)
-    private String description;
+    private String description = null;
 
     @Basic
     @Column(name = "size", nullable = false)
-    private Long size;
+    private Long size = 0l;
 
-    @Formula("(select sum(p.pallets) / (select u.size from unit u where u.idUnit=idUnit) from product p where p.idProduct in (select up.product_id from unitProduct up where up.unit_id=idUnit))")
-    private Float usage = null;
+    @Formula("(select sum(up.pallets) / size from unitProduct up where up.unit_id = idUnit)")
+    private Float usage = 0f;
+
+    @Formula("(select size - sum(up.pallets) from unitProduct up where up.unit_id = idUnit)")
+    private Long leftSize = 0l;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "warehouse_id", referencedColumnName = "idWarehouse")
-    private Warehouse warehouse;
+    private Warehouse warehouse = null;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
@@ -47,48 +50,28 @@ public class Unit extends NamedPersistenceObject {
         super();
     }
 
-    public synchronized final String getDescription() {
-        return description;
-    }
-
-    public synchronized final void setDescription(String description) {
-        this.description = description;
-    }
-
-    public synchronized final Long getSize() {
-        return size;
-    }
-
-    public synchronized final void setSize(Long size) {
-        this.size = size;
-    }
-
-    public synchronized final Float getUsage() {
-        return usage;
-    }
-
-    public synchronized final Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public synchronized final void setWarehouse(Warehouse warehouse) {
+    public final void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
-    public synchronized final UnitType getType() {
-        return type;
-    }
-
-    public synchronized final void setType(UnitType type) {
+    public final void setType(UnitType type) {
         this.type = type;
     }
 
-    public synchronized final Set<Product> getProducts() {
+    public final Set<Product> getProducts() {
         return products;
     }
 
-    public synchronized final void setProducts(Set<Product> products) {
+    public final void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public Long getLeftSize() {
+        return (leftSize == null ? 0l : leftSize);
+    }
+
+    public void setLeftSize(Long leftSize) {
+        this.leftSize = leftSize;
     }
 
     @Override

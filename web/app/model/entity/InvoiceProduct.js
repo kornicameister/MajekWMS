@@ -16,7 +16,7 @@ Ext.define('WMS.model.entity.InvoiceProduct', {
     fields      : [
         'id',
         'comment',
-        { name: 'quantity', type: 'float', defaultValue: 0.0},
+        { name: 'pallets', type: 'int', defaultValue: 0},
         { name: 'price', type: 'float', defaultValue: 0.0},
         { name: 'tax', type: 'int', defaultValue: 22},
         { name: 'summaryPrice', type: 'float', persist: false},

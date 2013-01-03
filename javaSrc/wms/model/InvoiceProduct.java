@@ -1,6 +1,7 @@
 package wms.model;
 
 import com.google.gson.annotations.SerializedName;
+import wms.model.embeddable.InvoiceProductPK;
 
 import javax.persistence.*;
 
@@ -16,11 +17,11 @@ public class InvoiceProduct extends BasicPersistentObject {
 
     @EmbeddedId
     @SerializedName("invoiceProduct")
-    private InvoiceProductId pk = new InvoiceProductId();
+    private InvoiceProductPK pk = new InvoiceProductPK();
 
     @Basic
-    @Column(name = "quantity", insertable = true, nullable = false, updatable = true)
-    private Double quantity = null;
+    @Column(name = "pallets", insertable = true, nullable = false, updatable = true)
+    private Double pallets = null;
 
     @Basic
     @Column(name = "price", insertable = true, nullable = false, updatable = true)
@@ -36,10 +37,10 @@ public class InvoiceProduct extends BasicPersistentObject {
 
     public InvoiceProduct() {
         super(); // hibernate
-        this.pk = new InvoiceProductId();
+        this.pk = new InvoiceProductPK();
     }
 
-    public final InvoiceProductId getPk() {
+    public final InvoiceProductPK getPk() {
         return pk;
     }
 
@@ -80,7 +81,7 @@ public class InvoiceProduct extends BasicPersistentObject {
         final StringBuilder sb = new StringBuilder();
         sb.append("InvoiceProduct");
         sb.append("{pk=").append(pk);
-        sb.append(", quantity=").append(quantity);
+        sb.append(", quantity=").append(pallets);
         sb.append(", price=").append(price);
         sb.append(", tax=").append(tax);
         sb.append(", comment='").append(comment).append('\'');

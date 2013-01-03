@@ -8,6 +8,9 @@
  * Created: 24-09-2012
  */
 
+/**
+ * @class WMS.model.entity.Unit
+ */
 Ext.define('WMS.model.entity.Unit', {
     extend          : 'WMS.model.abstract.DescribedSimple',
     requires        : [

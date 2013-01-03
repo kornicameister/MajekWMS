@@ -1,4 +1,7 @@
-package wms.model;
+package wms.model.embeddable;
+
+import wms.model.Invoice;
+import wms.model.Product;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
@@ -8,7 +11,7 @@ import java.io.Serializable;
 
 
 @Embeddable
-public class InvoiceProductId implements Serializable {
+public class InvoiceProductPK implements Serializable {
     private static final long serialVersionUID = -614537106939514217L;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -47,9 +50,9 @@ public class InvoiceProductId implements Serializable {
             return true;
         if (obj == null)
             return false;
-        if (!(obj instanceof InvoiceProductId))
+        if (!(obj instanceof InvoiceProductPK))
             return false;
-        InvoiceProductId other = (InvoiceProductId) obj;
+        InvoiceProductPK other = (InvoiceProductPK) obj;
         if (invoice == null) {
             if (other.invoice != null)
                 return false;

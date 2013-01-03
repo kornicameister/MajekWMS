@@ -137,13 +137,13 @@ Ext.define('WMS.view.wizard.invoice.InvoiceForm', {
                         }
                     },
                     {
-                        header     : 'Sztuk',
-                        dataIndex  : 'quantity',
+                        header     : 'Palet',
+                        dataIndex  : 'pallets',
                         summaryType: 'sum',
                         width      : 50,
                         field      : {
                             xtype   : 'navnumberfield',
-                            name    : 'quantity',
+                            name    : 'pallets',
                             value   : 1,
                             maxValue: Number.MAX_VALUE,
                             step    : 10

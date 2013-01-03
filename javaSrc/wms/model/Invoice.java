@@ -48,6 +48,10 @@ public class Invoice extends PersistenceObject {
         this.type = type;
     }
 
+    public InvoiceType getType() {
+        return this.type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

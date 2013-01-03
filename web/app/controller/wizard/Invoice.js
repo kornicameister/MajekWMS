@@ -297,7 +297,7 @@ Ext.define('WMS.controller.wizard.Invoice', {
                 'update': function (store, record) {
                     var price = record.get('price'),
                         tax = record.get('tax'),
-                        quantity = record.get('quantity'),
+                        pallets = record.get('pallets'),
                         summaryPrice = price + (price * (tax / 100)),
                         product_id = record.get('product_id');
 
@@ -310,7 +310,7 @@ Ext.define('WMS.controller.wizard.Invoice', {
                         record.set('tax', product.get('tax'));
                     }
 
-                    summaryPrice *= quantity;
+                    summaryPrice *= pallets;
                     record.set('summaryPrice', summaryPrice);
                 }
             }
