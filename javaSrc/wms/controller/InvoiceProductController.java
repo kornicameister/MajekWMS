@@ -1,5 +1,6 @@
 package wms.controller;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.json.simple.JSONObject;
 import wms.controller.base.extractor.RData;
@@ -30,6 +31,8 @@ public class InvoiceProductController extends RequestController {
         }
     }
     );
+    private final static Logger logger = Logger
+            .getLogger(InvoiceProductController.class.getName());
 
     public InvoiceProductController(RData data) {
         super(data);
@@ -45,21 +48,23 @@ public class InvoiceProductController extends RequestController {
          * 2. get units (sort them by size in descending order)
          * 3. start putting products per unit
          */
-        class AllocationAlgorithmExecutor implements Runnable {
+        class AllocationAlgorithmExecutor {
             InvoiceType type = invoiceCache.getType();
-            Queue<Unit> units = new SortedList<>(new Comparator<Unit>() {
+            Queue<Pair<Unit, Long>> units = new SortedList<>(new Comparator<Pair<Unit, Long>>() {
                 @Override
-                public int compare(Unit unit, Unit unit2) {
-                    return unit.getLeftSize().compareTo(unit2.getLeftSize()) * (-1);
+                public int compare(Pair<Unit, Long> unitLongPair, Pair<Unit, Long> unitLongPair2) {
+                    return unitLongPair.getSecond().compareTo(unitLongPair2.getSecond()) * (-1);
                 }
             });
             List<Pair<Product, Long>> allocatedProducts = new ArrayList<>();
 
             AllocationAlgorithmExecutor(Session session) {
-                this.units.addAll(session.createQuery("from Unit").list());
+                List<? extends Unit> data = session.createQuery("from Unit").list();
+                for (Unit u : data) {
+                    this.units.add(new Pair(u, u.getLeftSize()));
+                }
             }
 
-            @Override
             public void run() {
                 session.beginTransaction();
                 switch (this.type.getName()) {
@@ -75,6 +80,7 @@ public class InvoiceProductController extends RequestController {
             }
 
             void allocateByReceipt() {
+                logger.info(String.format("%d products to be dislocated", unallocatedProducts.size()));
             }
 
             /**
@@ -83,15 +89,40 @@ public class InvoiceProductController extends RequestController {
              * by addition.
              */
             void allocateBySupply() {
+                logger.info(String.format("%d products to be allocated", unallocatedProducts.size()));
                 for (Pair<Product, Long> product : unallocatedProducts) {
                     this.supply(product.getSecond(), product.getFirst());
                     this.allocatedProducts.add(product);
                 }
             }
 
+            /**
+             * This method is a convenient method that handles
+             * updating unit's stocks status, by associating
+             * products with particular unit.
+             *
+             * At the moment supply algorithm supports the most
+             * basic allocation:
+             * <pre>
+             *     Products are allocated starting from the one which
+             *     {@link Product#pallets} is the greatest.
+             *     The same rule is applied to units.
+             *     <p>
+             *          Allocations start from the unit
+             *          which usage is the smallest.
+             *     </p>
+             * </pre>
+             *
+             * <b style="color: red">
+             *     This method uses recursion, stops
+             *     when productPallets equals to 0
+             * </b>
+             * @param productPallets how many pallets should be allocated
+             * @param product product which we allocate
+             */
             void supply(Long productPallets, final Product product) {
-                Long unitSize = units.element().getLeftSize();
-                if (productPallets > 0) {
+                Long unitSize = units.element().getSecond();
+                if (productPallets > 0 && unitSize > 0) {
                     boolean fullLoad = ((unitSize - productPallets) >= 0);
                     UnitProduct unitProduct = new UnitProduct();
 
@@ -99,21 +130,27 @@ public class InvoiceProductController extends RequestController {
 
                     if (fullLoad) {
                         unitProduct.setPallets(productPallets);
-                        unitProduct.setUnit(units.element());
+                        unitProduct.setUnit(units.element().getFirst());
 
-                        unitSize = units.element().getLeftSize() - productPallets;
-                        units.element().setLeftSize(unitSize);
+                        unitSize = units.element().getSecond() - productPallets;
+                        units.element().setSecond(unitSize);
 
                         productPallets = 0l;
                     } else {
-                        unitProduct.setPallets(units.peek().getLeftSize());
-                        unitProduct.setUnit(units.remove());
+                        unitProduct.setPallets(units.peek().getSecond());
+                        unitProduct.setUnit(units.remove().getFirst());
 
                         productPallets -= unitProduct.getUnit().getLeftSize();
                     }
 
                     session.saveOrUpdate(unitProduct);
                     this.supply(productPallets, product);
+
+                    logger.info(String.format("Updated stocks at %s", fullLoad ? "full load" : "partial load"));
+                } else if (unitSize == 0l) {
+                    logger.info(String.format("%d has no left stocks available...", units.remove().getFirst().getId()));
+                } else {
+                    logger.info(String.format("Finished allocating [ %d ]", product.getId()));
                 }
             }
         }
