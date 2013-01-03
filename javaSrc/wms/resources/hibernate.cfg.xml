@@ -42,7 +42,7 @@
         <!-- invoice -->
         <mapping class="wms.model.Invoice"/>
         <mapping class="wms.model.InvoiceProduct"/>
-        <mapping class="wms.model.InvoiceProductId"/>
+        <mapping class="wms.model.embeddable.InvoiceProductPK"/>
         <mapping class="wms.model.InvoiceType"/>
 
         <!-- product -->
@@ -52,6 +52,8 @@
         <!-- unit -->
         <mapping class="wms.model.Unit"/>
         <mapping class="wms.model.UnitType"/>
+        <mapping class="wms.model.embeddable.UnitProductPK"/>
+        <mapping class="wms.model.UnitProduct"/>
 
         <mapping class="wms.model.Warehouse"/>
         <mapping class="wms.model.User"/>

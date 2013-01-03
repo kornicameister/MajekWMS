@@ -6,8 +6,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * This is the most basic superclass
+ * that provides two fields commonly reused throughout
+ * the whole database-hibernate layer.
+ *
+ * @author kornicameister
+ * @since 0.0.1
+ */
 @MappedSuperclass
-public class BasicPersistentObject implements Serializable {
+public abstract class BasicPersistentObject implements Serializable {
     private static final long serialVersionUID = - 2635091318105029639L;
 
     @Version

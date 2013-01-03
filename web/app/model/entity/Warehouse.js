@@ -33,31 +33,43 @@ Ext.define('WMS.model.entity.Warehouse', {
             associatedName: 'units',
             foreignKey    : 'warehouse_id',
             storeConfig   : {
-                storeId   : 'Units',
-                groupField: 'unittype_id',
-                autoLoad  : true,
-                activeUnit: undefined,
+                storeId    : 'Units',
+                groupField : 'unittype_id',
+                autoLoad   : true,
+                activeUnit : undefined,
                 /**
                  * Method returns unit that is set as active. In other
                  * words it is about the unit chosen from units' grid.
                  * @return WMS.model.entity.Unit
                  */
-                getActive : function () {
+                getActive  : function () {
                     return this.activeUnit;
                 },
                 /**
                  * Method to set new unit as active
                  * @param unit
                  */
-                setActive : function (unit) {
+                setActive  : function (unit) {
                     this.activeUnit = unit;
+                },
+                getProducts: function (unit_id) {
+                    var me = this,
+                        products = [];
+
+                    if (!Ext.isDefined(unit_id)) {
+                        return undefined;
+                    } else if (Ext.isDefined(unit_id['isModel'])) {
+                        unit_id = unit_id.getId();
+                    }
+
+                    return me.getById(unit_id).products();
                 },
                 /**
                  * @override Ext.data.Store.sync
                  * @description Overridden version of old sync method that is extend for unit's store
                  * to call for sync method for each underlying product's store
                  */
-                sync      : function () {
+                sync       : function () {
                     var me = this,
                         products = undefined;
 
@@ -72,7 +84,7 @@ Ext.define('WMS.model.entity.Warehouse', {
 
                     me.superclass.sync.call(me);
                 },
-                listeners : {
+                listeners  : {
                     'update': function (store, unit, ops, modifiedFields) {
                         if (ops !== Ext.data.Model.EDIT) {
                             return;
