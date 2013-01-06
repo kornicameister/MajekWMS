@@ -9,6 +9,10 @@
 #*.ear
 
 # idea files
-/out/*
-/.idea/*
-*.iml
+/application/out/*
+/application/.idea/*
+/application/*.iml
+
+# tex files
+/diploma/*.tex.bak
+/diploma/build/*

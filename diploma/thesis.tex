@@ -1,0 +1,102 @@
+\documentclass[12pt,a4paper,notitlepage]{report}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Packages 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% pl
+		\usepackage[utf8x]{inputenc}
+		\usepackage[T1]{fontenc}
+		\usepackage[polish]{babel}
+	% pl
+	\usepackage{chngcntr}
+	\usepackage[pdftex]{graphicx}
+	\usepackage[strict]{changepage}
+	\usepackage{tocloft}
+	\usepackage{url}
+	\usepackage{array}
+	\usepackage[	pdftex,
+					plainpages=false,
+					pdfpagelabels,
+					pdfstartpage=1,
+					pdfstartview=FitH,
+					colorlinks=true,
+					linkcolor=black,
+					anchorcolor=blue,
+					citecolor=blue,
+					filecolor=blue,
+					menucolor=blue,
+					urlcolor=blue
+				]{hyperref}
+	\usepackage[all]{hypcap}
+	\usepackage{floatrow}
+	\usepackage{multirow}
+	\usepackage{listings}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Packages 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{language=sh}
+
+\floatsetup[table]{position=top}
+
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
+% indents defintions
+	\cftsetindents{figure}{1.5em}{1.1em}
+	\cftsetindents{table}{1.5em}{1.1em}
+	\cftsetindents{chapter}{0em}{1.25em}
+	\cftsetindents{section}{1.60em}{1.75em}
+	\cftsetindents{subsection}{3.7em}{2.5em}
+% indents defintions
+
+\setlength{\cftbeforechapskip}{0.3em}
+
+% author information
+	\def\author_name{Tomasz Trębski}
+	\def\thesis_title{Projekt wspomagający zarządzanie magazynem}
+	
+	\hypersetup{
+		  colorlinks = true,
+		  urlcolor = black,
+		  pdfauthor = {\author_name},
+		  pdfkeywords = {logistyka, wms, magazyn, zarządzanie, informatyka, wspomagania, narzędzia},
+		  pdftitle = {\thesis_title},
+		  pdfsubject = {Praca Dyplomowa Inżynierska},
+		  pdfpagemode = UseNone
+	}
+% author information
+
+% TODO fix bellow styling
+% \pagestyle{empty}
+
+% commands
+	\newcommand{\includeWithClear}[1]{\clearpage \include{#1}}
+	\renewcommand{\labelitemi}{$\bullet$}
+% commands
+
+
+\begin{document}
+
+% strona tytułowa
+	\includeWithClear{title_page}
+	\includeWithClear{table_of_contents}
+	
+	% chapters
+	\pagenumbering{arabic}
+	\includeWithClear{ch1}
+	\includeWithClear{ch2}
+	\includeWithClear{ch3}
+	\includeWithClear{ch4}
+	\includeWithClear{ch5}
+	% chapters
+	
+	% bibliography
+	\phantomsection
+	\bibliographystyle{these}
+	\bibliography{books}
+	% bibliography	
+	
+% strona tytułowa
+
+\end{document}
