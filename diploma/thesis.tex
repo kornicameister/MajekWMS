@@ -72,6 +72,7 @@
 
 % commands
 	\newcommand{\includeWithClear}[1]{\clearpage \include{#1}}
+	\newcommand{\referenceSource}[2]{\begin{center} \textbf{źródło:} \textsl{#1} \cite{#2} \end{center} }
 	\renewcommand{\labelitemi}{$\bullet$}
 % commands
 
@@ -92,10 +93,6 @@
 	\includeWithClear{ch5}
 	% chapters
 	
-	% bibliography
-	\phantomsection
-	\bibliographystyle{these}
-	\bibliography{books}
-	% bibliography	
+	\includeWithClear{bottom_part}
 
 \end{document}
