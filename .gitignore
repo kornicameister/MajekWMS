@@ -15,4 +15,15 @@
 
 # tex files
 /diploma/*.tex.bak
-/diploma/build/*
+/diploma/*.aux
+/diploma/*.bib.bak
+diploma/*.log   
+/diploma/*.lof
+/diploma/*.lot
+/diploma/*.out
+/diploma/*.toc
+/diploma/*.pdf
+/diploma/*.synctex.gz
+/diploma/.fuse*
+/diploma/.log
+/diploma/build/
