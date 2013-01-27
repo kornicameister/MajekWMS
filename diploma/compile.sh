@@ -12,7 +12,7 @@ if [ "$COMPILE_MODE" = "bib" ]
 then
 	cd build
 		echo "Bibliography";
-		bibtex $TARGET.aux
+		bibtex $TARGET.aux >> /dev/null
 	cd ../
 
 	echo "Compile Three";
