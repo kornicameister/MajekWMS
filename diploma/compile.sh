@@ -6,7 +6,7 @@ COMPILE_MODE=$2;
 echo "Compiling file $TARGET in mode $COMPILE_MODE"
 
 echo "Compile One";
-pdflatex -output-director build $TARGET.tex # >> /dev/null;
+pdflatex -output-director build $TARGET.tex >> /dev/null;
 
 if [ "$COMPILE_MODE" = "bib" ]
 then

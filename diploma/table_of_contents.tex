@@ -1,10 +1,20 @@
-\small
-\pagenumbering{roman}
+%formatting table of contents look & feel
+    \renewcommand{\cftbeforesecskip}{8pt} 
+    \renewcommand{\cftsecafterpnum}{\vskip 8pt} 
+    \renewcommand{\cftparskip}{3pt} 
+    \renewcommand{\cfttoctitlefont}{\Large\bfseries\sffamily} 
+    \renewcommand{\cftsecfont}{\bfseries\sffamily} 
+    \renewcommand{\cftsubsecfont}{\sffamily} 
+    \renewcommand{\cftsubsubsecfont}{\sffamily} 
+    \renewcommand{\cftparafont}{\sffamily} 
+    \renewcommand{\chaptername}{}
+%formatting table of contents look & feel
 
-% table of contents
-	\tableofcontents
-	\thispagestyle{empty}
-	\clearpage
-% table of contents
+\small
+\pagenumbering{arabic}
+
+\tableofcontents
+\thispagestyle{empty}
+\clearpage
 
 \normalsize
