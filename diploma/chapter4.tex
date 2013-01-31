@@ -4,22 +4,21 @@
 \section{Magazynowanie}
 	Gospodarka magazynowa zajmuje się głównie procesami decyzyjnymi, w wyniku których następuje 
 	zmiana struktury zapasów w magazynie. Magazyn utożsamiany jest jako bufor znajdujący się
-	między strefą przyjęć do magazynu, a strefą wydań, którego głównym celem jest niwelowanie
+	między strefą przyjęć, a strefą wydań, którego głównym celem jest niwelowanie
 	różnic wynikających z przewagi podaży nad popytem lub sytuacji odwrotnej. Sytuacja idealna
 	oczywiście zakłada brak konieczności posiadania magazynu i ciągłego, jednolitego przepływu
-	produktów od strefy przyjęć do strefy wydań. Niestety sytuacja taka jest niemożliwa i bardzo
+	produktów od strefy przyjęć do strefy wydań. Niestety jest ona jest niemożliwa i bardzo
 	rzadko można obserwować aby podaż i popyt były jednakowe. Tak więc magazyn - bufor jest
 	wynikiem różnic w strukturze przepływu dóbr na wejściu i wyjściu. 
 	Jeśli zdefiniować magazyn jako element niepożądany w łańcuchu dostaw, można dojść do wniosku, 
-	że zapasy same w sobie są niepożądane. Niemniej jest to jednocześnie podejście nieprawidłowe i
-	będące definicją magazynowania - gospodarki magazynowej.
+	że zapasy same w sobie są niepożądane.
 
-	\paragraph{Funkcje zapasów, czyli zadania magazynowania}
+	\paragraph{Funkcje zapasów, czyli zadania magazynowania}:
 	\begin{itemize}
-		\item niwelowanie różnic między popytem a podążą,
+		\item niwelowanie różnic między popytem a podążą;
 		\item wykorzystanie efektu skali, czyli zamówienie / odbiór większej ilości towaru celem uzyskania
-		rabatów,
-		\item zabezpieczenie przed niepewnością, nieprzewidywanymi zmianami na rynku
+		rabatów;
+		\item zabezpieczenie przed niepewnością, nieprzewidywanymi zmianami na rynku;
 		\item spekulacje, gromadzi się większe ilości towaru niż to potrzebne, które następnie sprzedaje się
 		w okresie tzw. dołka za ceny wyższe, ale wciąż mniejsze niż konkurenci \cite{systemyLogistyczne_pfohl}.
 	\end{itemize}		
@@ -31,9 +30,8 @@
 		Magazyn jest jednostką funkcjonalno-organizacyjną, przeznaczoną do magazynowania
 		dóbr materialnych (zapasów) w wyodrębnionej przestrzeni, budowli magazynowej, według ustalonej
 		technologii, wyposażoną w odpowiednie urządzenia i środki techniczne, zarządzaną i obsługiwaną
-		przez zespół ludzi, wyposażonych w odpowiednia umiejętności.
+		przez zespół ludzi, wyposażonych w odpowiednia umiejętności \footnote{PN-N-01800:1984 \cite{norm_warehouse_defintion}}.
 	\end{quotation}
-	\referenceSource{PN-N-01800:1984}{norm_warehouse_defintion}
 	
 	Wobec tego magazyn nie jest jedynie statycznym bytem łańcuchów logistycznych, ale jego integralną
 	częścią bez której żadne przedsiębiorstwo, w szczególności produkcyjne, nie mogłoby sprawnie
@@ -154,15 +152,6 @@
 			\item uporządkowanie według zadanego kryterium,
 			\item kierowanie operacją załadunku.
 		\end{itemize}
-		
-		\paragraph{Układy technologiczne} są innym podejściem dla strukturalnego opisania magazynu i odnoszą się
-		one do fizycznego przepływu produktów w magazynie. W układzie liniowym \footnote{Rysunek \ref{fig:linear_warehouse}} 
-		charakterystyczne jest to, że zarówno strefy wydań, jak i przyjęć znajdują się po przeciwnych stronach. Dla kontrastu,
-		w układzie workowym \footnote{Rysunek \ref{fig:baggy_warehouse}} te strefy znajdują się obok siebie i niejednokrotnie
-		stanowią jedność. Nie jest to błąd, a nawet można uznać to za całkiem przydatne rozwiązanie. Korzyścią, jaka 
-		wynika z takiego rozmieszczenia jest możliwość używania tych samych urządzeń transportowo-przeładunkowych zarówno
-		podczas przyjęć, jak i wydań. 
-		
 		\begin{figure}[h]
 			\centering
 			\begin{subfigure}[b]{0.3\textwidth}
@@ -189,6 +178,41 @@
 				Układy technologiczne magazynów, źródło: \cite{PL_FM}        	
         	}
 		\end{figure}
+		\paragraph{Układy technologiczne} są innym podejściem dla strukturalnego opisania magazynu i odnoszą się
+		one do fizycznego przepływu produktów w magazynie. W układzie liniowym \footnote{Rysunek \ref{fig:linear_warehouse}} 
+		charakterystyczne jest to, że zarówno strefy wydań, jak i przyjęć znajdują się po przeciwnych stronach. Dla kontrastu,
+		w układzie workowym \footnote{Rysunek \ref{fig:baggy_warehouse}} te strefy znajdują się obok siebie i niejednokrotnie
+		stanowią jedność. Nie jest to błąd, a nawet można uznać to za całkiem przydatne rozwiązanie. Korzyścią, jaka 
+		wynika z takiego rozmieszczenia jest możliwość używania tych samych urządzeń transportowo-przeładunkowych zarówno
+		podczas przyjęć, jak i wydań. 
 	
 \section{Zarządzanie magazynem}
-	na razie nie wiem, co tu wpisać
+	Zarządzanie magazynem sprowadza się do spełnienia wszystkich jego parametrów użytkowych, jakimi są:
+	zapewnienie wymaganego poziomu obsługi klienta, przy jednoczesnym akceptowalnym poziomie kosztów magazynowanie.
+	W tym wypadku akceptowalny, nie znaczy najniższy. Ważne jest to, aby nie dopuścić do uszkodzenia magazynowanych
+	dóbr i jednocześnie utrzymać pożądanych poziom kosztów.
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=0.95\textwidth]{images/warehouse_management_algorithm}
+		\end{center}
+		\caption[Algorytm zarządzania magazynem]{
+			Algorytm zarządzania magazynem w oparciu o teorię systemów \\
+			źródło: opracowanie własne na podstawie \cite{PZMW}
+		}
+		\label{fig:warehouse_management_algorithm}
+	\end{figure}
+	Realizacja tego celu jest możliwa jeśli \textbf{zarządzanie magazynem} odbywa się zgodnie z następującym algorytmem,
+	przedstawionym na schemacie \ref{fig:warehouse_management_algorithm}.\\
+	
+	Samo działanie magazynu opiera się na realizacji czynności czysto fizycznych, związanych z zadaniami transportowymi, 
+	i towarzyszących im informacji \cite{PZMW}. Organizacja faz procesów magazynowania jest ukierunkowana głównie na
+	optymalizację wykorzystania przestrzeni magazynowej, racjonalizację rozmieszczenia procesów magazynowania oraz
+	ostatecznie minimalizację strat powstających podczas samej fazy składowania. Racjonalne wykorzystanie
+	przestrzeni magazynowej jest możliwe jedynie, gdy spełnione są następujące warunki:
+	\begin{enumerate}
+		\item Jednocześnie wysokie są wskaźniki wykorzystania powierzchni, wysokości strefy składowania;
+		\item Zapewniony jest jak najprostszy dostęp do wszystkich pozycji asortymentowych. Ten postulat
+		realizowany jest poprzez dobranie odpowiednich rodzajów regałów oraz struktury samego magazynu;
+		\item Swobodne oraz, co ważniejsze, bezpieczne procesy przemieszczenia dóbr stosowanymi
+		w procesie magazynowania urządzeniami do transportu w strefie składowania \cite{logistyka_w_przedsiebiorstwie}.
+	\end{enumerate}

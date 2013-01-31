@@ -1,0 +1,38 @@
+\lstset{language=sh}
+
+\floatsetup[table]{position=top}
+
+% indents defintions
+	\cftsetindents{figure}{1.5em}{1.1em}
+	\cftsetindents{table}{1.5em}{1.1em}
+	\cftsetindents{chapter}{0em}{1.25em}
+	\cftsetindents{section}{1.60em}{1.75em}
+	\cftsetindents{subsection}{3.7em}{2.5em}
+% indents defintions
+
+% author information
+	\def\author_name{Tomasz Trębski}
+	\def\thesis_title{Projekt wspomagający zarządzanie magazynem}
+	
+	\hypersetup{
+		  colorlinks = true,
+		  urlcolor = black,
+		  pdfauthor = {\author_name},
+		  pdfkeywords = {logistyka, wms, magazyn, zarządzanie, informatyka, wspomagania, narzędzia},
+		  pdftitle = {\thesis_title},
+		  pdfsubject = {Praca Dyplomowa Inżynierska},
+		  pdfpagemode = UseNone
+	}
+% author information
+
+% commands
+	\renewcommand{\labelitemi}{$\bullet$}
+	\newcommand{\includeWithClear}[1]{\clearpage \include{#1}}
+% commands
+
+\pagestyle{outer}
+
+% settings for list of all tables and figures
+	\counterwithout{figure}{chapter}
+	\counterwithout{table}{chapter}
+% settings for list of all tables and figures
