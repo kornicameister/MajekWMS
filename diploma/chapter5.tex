@@ -4,9 +4,127 @@
 \section{Definicja systemu wspomagania gospodarki magazynowej}
 	Głównym powodem stosowania systemów magazynowych w przedsiębiorstwach jest chęć optymalizacji
 	operacji magazynowych oraz funkcjonowania samego magazynu i co za tym idzie uzyskania
-	znaczących oszczędności. 
-	Zadaniem kompleksowego systemu wspomagającego zarządzanie magazynem jest dać możliwość
+	znaczących oszczędności. Zadaniem kompleksowego systemu wspomagającego zarządzanie magazynem jest dać możliwość
 	nadzorowanie i kontrolowania procesów magazynowych, od momentu przyjęcia jednostki na magazyn,
-	aż  do 
+	aż do momentu opuszczenia przez nią strefy wydań. Bardzo często zdarza się, że systemy tego rodzaju
+	nie działają samodzielnie, a są ściśle zintegrowane z co najmniej jednym innym. Systemem tym na 
+	ogół jest system należący do klasy ERP. Jest to wynikiem skomplikowania procesów
+	magazynowych, które potrzebują odrębnych algorytmów, w które standardowy system informatyczny 
+	działający w firmie, wyposażony nie jest, ale przedsiębiorstwie pragnie utrzymać kompleksową 
+	kontrolę nad wszystkimi operacjami występującymi w systemie jako całości.\\
+	
+	Wyodrębnienie aspektów logistyki magazynowej było konieczne, ponieważ \textbf{systemy ERP}
+	logistykę magazynową obsługują w zbyt wąskim zakresie, który kończy się na ustaleniu:
+	\begin{itemize}
+		\item stany magazynowe w ujęciu \textbf{ilościowym};
+		\item stany magazynowe w ujęciu \textbf{jakościowym}.
+	\end{itemize}
+	Niestety wciąż pozostaje problem ujęcia fizycznej struktury zapasów, czyli cech takich jak
+	\begin{itemize}
+		\item logistyczne parametry opakowań;
+		\item klasy miejsc składowania;
+		\item oznaczenie miejsc w magazynie;
+		\item oznaczenia poprzez kody kreskowe lub RFID 
+			\footnote{Technika zastępująca tradycyjne czytniki laserowe, służy do przenoszenia
+			informacji o produktach i możliwości ich odczytu przez czytniki oparte o technologie
+			radiowe.} składowanych dóbr.
+	\end{itemize}
+	Tak więc z praktycznego punktu widzenia system klasy WMS jest rozbudowanym narzędziem
+	wspierającym łańcuch dostaw na etapie magazynowanie i umożliwiającym monitorowanie
+	oraz zarządzania składowanymi dobrami w sposób nie tylko jakościowy / ilościowy, ale i
+	automatyczny dzięki utrzymaniu danych o fizycznej strukturze opakowań itp. 	
+	
 \section{Potrzeba korzystania z systemu WMS}
+	Kompleksowość świadczenia usług logistycznych wymaga racjonalnego i szczegółowego podejścia
+	do organizacji procesów magazynowych przy jednoczesnym zachowaniu możliwości zarządzaniami
+	nimi w podejściu dającym pole do późniejszej rozbudowy i / lub re-definicji istniejącego
+	rozwiązania. Argumentem przemawiającym za takim podejściem jest szerokie spektrum 
+	produktów, materiałów jakie można znaleźć w strefach składowania dzisiejszych magazynów.
+	Często dzieje się tak, że przykładowe przedsiębiorstwo produkcyjne posiada więcej niż jeden
+	magazyn i to zlokalizowany w tym samym budynku. Niezbędne jest nie tyle obsłużenia
+	wyjścia linii produkcyjnej i umieszczenia produktu gotowego na miejscach, do tego celu wyznaczonych.
+	Wciąż pozostaje problem surowców, które również muszą być składowane i ewidencjonowane. Dzisiejsza
+	logistyka i jej filozofia skłania się między innymi ku ciągłemu obniżaniu kosztów, bez obniżenia
+	standardów jakości. \\
+	
+	Co jeszcze przemawia za system tej klasy, jaką jest \textbf{Warehouse Management System}. Otóż 
+	wiele przedsiębiorstw wyszło już poza ramy lokalne, w jakich do tej pory się znajdowało. Rynek zbytu
+	z lokalnego przeistoczył się w krajowy, czy też europejski. Zmiany jakie się z tym wiązały, to chociażby:
+	\begin{itemize}
+		\item wzrost ilości punktów dystrybucji gotowego produktu, koniecznych do zaopatrzenia;
+		\item zdecentralizowanie magazynowych procesów logistycznych;
+		\item zmniejszająca się wydolność magazynów opartych o niekompleksowego systemy
+		obsługiwanego głównie przez człowieka.
+	\end{itemize}
+	Okazuje się, że dobrze skonfigurowany oraz gotowy na modyfikacje system wspomagający gospodarkę magazynową
+	jest odpowiedzią na te wymagania. Ważne jest tutaj, że zarówno podejście autorskie, jak i uniwersalne są
+	odpowiednio zbyt czasochłonne i zbyt sztywne. Dobry WMS charakteryzuję się wypośrodkowaniem oby tych 
+	cech, w zależności od potrzeb klienta. \\
+	
+	\subsection{System WMS szyty na miarę}
+	Należałoby się spodziewać, że \textbf{,,szyty na miarę''} oznacza w podejście skoncentrowane
+	na stworzeniu systemu informatycznego od podstaw zgodnie ze specyfikacją otrzymaną od klienta.
+	Mimo, że podejście to ma zalety, lepszym rozwiązaniem jest dostarczenie systemu, który 
+	będzie można skonfigurować dla konkretnego odbiorcy. Właściwie sytuacja inna niż właśnie opisana,
+	jest praktycznie niemożliwa, a systemu WMS działającego out-of-the-box\footnote{system gotowy do
+	uruchomienia zaraz po instalacji} próżno szukać.\\
+
+	W tym miejscu warto przywołać pojęcie \textbf{analizy logistycznej}. Pojęcie to opisuje w stopniu
+	bardziej lub mniej dokładnym dwie proste czynności: \textbf{zdefiniowania potrzeb i problemów} 
+	danego przedsiębiorstwa. W tym procesie powinny aktywnie uczestniczyć obie zainteresowane strony, 
+	zarówno ta chcąca uzyskać działający i gotowy do użytku system, jak i firma dostarczająca
+	rozwiązania. Ważne jest aby zdefiniować jak najwięcej zachować oraz cech magazynowania, jako całości,
+	i uzgodnić je między stronami. 	
+		
+	Unikatowość procesów zachodzących w różnych magazynach, ich zmienny zakres generują popyt
+	na program gotowy do spełniania tych funkcji. Podejście aspektowe \footnote{
+		Podczas projektowania systemu, aplikacji nacisk kładzie się na rozpoznanie i
+		zgrupowanie elementów odpowiedzialnych ze ten sam aspekt produktu końcowego	
+	} wydaje się tutaj najbardziej trafnym wyborem. Gotowy produkt składa się z szeregów
+	powiązanych ze sobą modułów, których funkcjonalność łatwo jest rozszerzać dodając nowe
+	aspekty.
+
+	\subsection{Samo rozwiązanie oparte o system nie wystarczy}
+	Nieważne jak skomplikowany system można by wprowadzić w danym przedsiębiorstwie, okaże się
+	bezużyteczny jeśli nie będzie wspierał łączności z urządzeniami zewnętrznymi. Mimo wciąż 
+	postępującej automatyzacji procesów magazynów, udział czynnika ludzkiego nie pozostaje bez 
+	znaczenia. I tak mamy na przykład strefę wydań, gdzie potrzeba magazyniera z umiejętnością
+	obsługi wózka widłowego, aby przenieść towar na podstawiony samochód transportowy. 
+	Magazynier po odebraniu, np. paletowej jednostki ładunkowej, musi ją zeskanować - czyli
+	wprowadzić dane, że dokładnie ta paleta i znajdująca się na niej towary zostały załadowane.
+	Taka kontrola nie byłaby możliwa dla systemu wspomagającego, jeśli nie zostałby on wyposażony
+	w tę cenną umiejętność, jak obsługa urządzeń peryferyjnych. \\
+	
+	Nie tylko czytniki obsługiwane przez ludzi okazują się ważne. Jeśli spojrzeć na proces składowanie,
+	jako nie na proces, gdzie człowiek jest tym, kto umieszcza daną jednostkę ładunkową w konkretnej lokacji
+	magazynowej, ale na fazę kompletnie obsługiwaną przez maszynę, okaże się że rola pewnego
+	rodzaju urządzeń jest również niezaprzeczalna. Magazynu wysokiego składu połączone muszę być w stanie
+	informować system WMS o ruchach pozycji towarowych. Jest to ważne, ponieważ w tym wypadku, operator
+	logistyczny może wydać polecenie wydania określonej liczby palet produktu X na bandę Y, ale to program
+	komputerowy musi wiedzieć, skąd, jak i gdzie poprowadzić jednostki ładunkowe, aby stan
+	końcowy był zgodny ze stanem oczekiwanym. Wspomniane urządzenia peryferyjne mają tutaj jeszcze jedno
+	dodatkowe zastosowanie. Pozwalają śledzić, jak zamówienia jest kompletowane i jak poszczególne
+	jego pozycje przesuwają się ku strefie kompletacji / wydań. 
+	
 \section{Funkcje systemu WMS}
+	\subsection{Zarządzanie wieloma magazynami przez jeden interfejs}
+	\subsection{Obszar magazynowy - jak zarządzać strukturą}
+	\subsection{Miejsca magazynowy - kolejny poziom układu}
+	\subsection{Zawartość magazynu - sposoby eksploracji}
+	\subsection{Eksploracja magazynu}
+	\subsection{Dokumenty logistyczne - jako element niezbędny w zarządzaniu}
+	\subsection{Obsługa zamówień oraz zleceń}
+	\subsection{Zamówienia dla dostawców}
+	\subsection{Zlecenia od klientów}
+	\subsection{Rezerwacja towarów}
+	\subsection{Potwierdzanie dokumentów wydania}
+	\subsection{Generacja ładunków}
+	\subsection{Dostawy do magazynu}
+		\subsubsection{Ewidencjonowanie dostaw zewnętrznych}
+		\subsubsection{Ewidencjonowanie dostaw wewnętrznych}
+	\subsection{Wysyłki z magazynu}
+		\subsubsection{Ręczne planowanie wysyłek}
+		\subsubsection{Automatyzacja planowania wysyłek}
+	\subsection{Realizacja problemu kompletacji}
+	\subsection{Problem operacji magazynowych}
+	\subsection{Wsparcia dla planowania transportu i/lub spedycji}
