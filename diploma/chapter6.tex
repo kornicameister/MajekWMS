@@ -60,7 +60,11 @@
 		serwer \textbf{MySQL}. Było to rozwiązanie podyktowane szerokim użyciem tego silnika w 
 		na wielu serwisach, które umożliwiają hosting strong, czyniąc warstwę modelu danych możliwą
 		do ponownego wykorzystania, bez konieczności, często problematycznego, migrowania danych do
-		nowego silnika.
+		nowego silnika. \\
+		Warto w tym miejscu wspomnieć o kolejnym narzędziu, które mimo, że działa na poziomie serwera, 
+		odpowiada za dostarczenie odpowiedniej abstrakcji dla warstwy modelu danych i ułatwienia
+		operacji nań. Wspomnianym narzędziem jest ogólnodostępne i otwarto źródłowy projekt Hibernate. 
+		Konfiguracja jest oparta na co najmniej jednym pliku, tak jak na załączniku \ref{appendix:hibernateCfg}. 
 		\paragraph{Serwer} został napisany w całości w języku Java i oparty o kontener aplikacji webowych 
 		\textbf{Tomcat}\footnote{
 			\textbf{Apache Tomcat} - serwer aplikacji internetowych, którego główną częścią jest interakacja
@@ -68,8 +72,27 @@
 			jaką oferuje serwer przez standardowy protokół \textit{HTTP} i żądania \textit{CRUD}		
 		}, a sama podstawową zasadą przy jego tworzeniu było oparcie centralny punkt wejściowy - fasadę, która dawała
 		dostęp do całej funkcjonalności aplikacji przez zwarty interfejs, decydujący o wyborze konkretnego rozwiązania.
-	
-		\begin{listing}[H]
+		
+		Parametr typu \textbf{CRUD} przyjmuje jedną z 4 wartości:
+		\textit{Create, Read, Update, Delete} zależnie od metody żądania HTTP, która go wywoła. Jest to najprostsza rzecz
+		do ustalenia, ale prawdopodobnie jedna z najważniejszych. Znając jej wartość algorytm jest w stanie wywołać
+		odpowiednie metody odpowiedzialne za obsługę zgłoszenia. Przykładowo, sytuacją oczekiwaną na żądania 
+		\textit{GET} byłoby wystosowanie zgłoszenia do warstwy modelu danych, aby ta zwróciła zbiór wartości odpowiadających
+		warunkom, jakie serwer odebrał od aplikacji klienckiej. 
+		
+		\begin{table}
+			\begin{tabular}[c]{l*{2}{c}}
+				Żądanie HTTP	& 	wartość zmiennej typu CRUD	\\
+				\hline
+				POST			&	CREATE						\\
+				PUT				& 	UPDATE						\\
+				DELETE			&	DELETE						\\
+				GET				& 	READ						\\
+			\end{tabular}
+			\label{c6:tab:CRUD_matches}
+			\caption[Żądania HTTP a enum CRUD]{Odpowiednie wartości enuma \textit{CRUD}, a żądania HTTP}
+		\end{table}
+		\begin{listing}[h]
 			\inputminted[
 				linenos=true,
 				fontsize=\tiny,
@@ -78,8 +101,21 @@
 	            numbersep=15pt
 			]{java}{../application/javaSrc/wms/servlet/WMSDataAgent.java}	
 			\label{c6:listing:WMSDataAgent}
-			\caption[WMSDataAgent - processRequest]{Metoda rozdzielająca zadania na podstawie adresu}
-		\end{listing}	
+			\caption[WMSDataAgent - \textbf{processRequest}]{\textit{WMSDataAgent-processRequest} - 
+			metoda rozdzielająca zadania na podstawie adresu oraz metody CRUD}
+		\end{listing}
+		\begin{listing}[h]
+			\inputminted[
+				linenos=true,
+				fontsize=\tiny,
+				firstline=32, 
+				lastline=45,
+	            numbersep=15pt
+			]{java}{../application/javaSrc/wms/controller/base/extractor/RDExtractor.java}	
+			\label{c6:listing:WMSDataAgent}
+			\caption[RDExtractor - \textbf{parse}]{\textit{RDExtractor-parse} - metoda parsująca żądania HTTP i zwracające 
+			potrzebne opcje jako obiekt}
+		\end{listing}		
 		
 		\paragraph{Klient}
 \section{Diagramy, zrzuty ekranowe oraz funkcje}
