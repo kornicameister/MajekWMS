@@ -14,6 +14,12 @@
 	\subsection{Dostępna funkcjonalność aplikacji}
 		Istniejąca funkcjonalność zapewnia:
 		\begin{itemize}
+			\item Dostęp do funkcji aplikacji jedynie dla osób upoważnionych
+			\begin{itemize}
+				\item aplikacja rozpoznaje czy użytkownik jest już zalogowany
+				\item użytkownik może w każdej chwili zakończyć pracę
+				\item użytkownik jest automatycznie wylogowywane po 30 minutach 
+			\end{itemize}
 			\item Rejestracja nowego przedsiębiorstwa oraz pojedynczego magazynu;
 			\item Rejestracje dowolnej ilości stref wydzielonych w magazynie, a także organizowania
 			stref w strukturę drzew. Takie rozwiązanie jest elastycznym podejściem, które
@@ -29,9 +35,56 @@
 		ewidencji towarów, podziału magazyny na logiczne jednostki oraz utrzymania informacji
 		o wydaniach / przyjęciach produktów. Odpowiednio wydanie towaru implikuje zmniejszenie stanów
 		magazynowych, a przyjęcie zmniejszenie oraz alokację w strefach odkładczych.
+	\subsection{Aplikacja widziana oczami programisty}
+		Aplikacja wspomagająca zarządzanie magazynem została zaprojektowana i zbudowana jako aplikacja
+		dostępna przez przeglądarkę. W założeniu istniało przygotowanie programu, którego będzie można
+		używać na dowolnej z przeglądarek, obecnie istniejących na rynku, dzięki zastosowaniu
+		narzędzi zapewniających taką kompatybilność. Cały program korzysta z architektury
+		\textbf{klient - serwer - baza danych}, z silnikiem naciskiem położonym na funkcjonalność
+		serwera. Część kliencka została zaprojektowana na wzór aplikacji desktop\footnote{
+			\textbf{Aplikacja desktop} - aplikacja, którą można uruchomić na komputerach klasy PC,
+			nie wymaga przeglądarki jako środowiska pracy, tylko odpowiednio przygotowane
+			środowiska uruchomieniowego na docelowej platformie		
+		} oraz zaimplementowana, w całości, przy użyciu kompletnego i zwartego framework'a\footnote{
+			\textbf{Framework} - jest to całościowy zestaw bibliotek, narzędzi, a także zasad i wytycznych
+			ułatwiających w znacznym sposób przygotowanie gotowej aplikacji		
+		} JavaScript'owego \footnote{
+			\textbf{JavaScript} - język wspierający idee programowania obiektowego i prototypowego, mający
+			szerokie zastosowanie jako narzędzie wspierające wprowadzanie dynamiki do stron
+			internetowych. 		
+		}.
+	\subsection{Architektura klient - serwer - baza danych oraz Model - Widok - Kontroler}
+		\paragraph{Baza danych} jest warstwą danych dla projektu. Oparta o wolny i otwarty \footnote{
+			Dostępny na licencji \href{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html}{GPLv2}
+		}
+		serwer \textbf{MySQL}. Było to rozwiązanie podyktowane szerokim użyciem tego silnika w 
+		na wielu serwisach, które umożliwiają hosting strong, czyniąc warstwę modelu danych możliwą
+		do ponownego wykorzystania, bez konieczności, często problematycznego, migrowania danych do
+		nowego silnika.
+		\paragraph{Serwer} został napisany w całości w języku Java i oparty o kontener aplikacji webowych 
+		\textbf{Tomcat}\footnote{
+			\textbf{Apache Tomcat} - serwer aplikacji internetowych, którego główną częścią jest interakacja
+			ze specjalnymi klasami znanymi jako \textit{servlety}, umożliwiających korzystanie z funkcjonalności
+			jaką oferuje serwer przez standardowy protokół \textit{HTTP} i żądania \textit{CRUD}		
+		}, a sama podstawową zasadą przy jego tworzeniu było oparcie centralny punkt wejściowy - fasadę, która dawała
+		dostęp do całej funkcjonalności aplikacji przez zwarty interfejs, decydujący o wyborze konkretnego rozwiązania.
+	
+		\begin{listing}[H]
+			\inputminted[
+				linenos=true,
+				fontsize=\tiny,
+				firstline=57, 
+				lastline=75,
+	            numbersep=15pt
+			]{java}{../application/javaSrc/wms/servlet/WMSDataAgent.java}	
+			\label{c6:listing:WMSDataAgent}
+			\caption[WMSDataAgent - processRequest]{Metoda rozdzielająca zadania na podstawie adresu}
+		\end{listing}	
+		
+		\paragraph{Klient}
 \section{Diagramy, zrzuty ekranowe oraz funkcje}
 	\subsection{Logowanie do aplikacji przy pierwszym uruchomieniu}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/login}
 			\caption[Aplikacja - Logowanie do programu]{Zrzut ekranu pokazują aplikację w stanie tuż po uruchomieniu}
@@ -39,7 +92,7 @@
 		\end{figure}
 		
 	\subsection{Zarządzanie strukturą magazynu}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/unit_preview}
 			\caption[Aplikacja - Zarządzania strukturą magazynu]{Zrzut ekranu z widokiem na strukturę magazynu}
@@ -47,13 +100,13 @@
 		\end{figure}
 		
 	\subsection{Zarządzanie klientami - dodawanie, usuwaniu, edycja oraz podgląd}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/supplier_preview}
 			\caption[Aplikacja - Dostęp do danych klientów]{Zrzut ekranu z widokiem na dostępnych dostawców}
 			\label{c7:fig:app:supplier_preview}
 		\end{figure}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.6\textwidth]{images/app/new_receipient_dialog}
 			\caption[Aplikacja - Dodawania nowego klienta - odbiorcy]{Zrzut ekranu z widokiem na okno dialogowe dla tworzenia nowego odbiorcy}
@@ -61,13 +114,13 @@
 		\end{figure}
 		
 	\subsection{Wydanie, przyjęcia oraz ewidencja produktów}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/new_supply_preview}
 			\caption[Aplikacja - Dodanie nowego dokumentu wydania]{Zrzut ekranu z widokiem na kreator nowego wydania magazynowego}
 			\label{c7:fig:app:new_supply_preview}
 		\end{figure}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{images/app/unit_products_preview}
 			\caption[Aplikacja - Ewidencja towarów w poszczególnych strefach]{Zrzut ekranu z widokiem listy produktów w wybranej strefie}
