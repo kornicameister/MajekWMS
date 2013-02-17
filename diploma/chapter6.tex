@@ -57,67 +57,75 @@
 		\paragraph{Baza danych} jest warstwą danych dla projektu. Oparta o wolny i otwarty \footnote{
 			Dostępny na licencji \href{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html}{GPLv2}
 		}
-		serwer \textbf{MySQL}. Było to rozwiązanie podyktowane szerokim użyciem tego silnika w 
-		na wielu serwisach, które umożliwiają hosting strong, czyniąc warstwę modelu danych możliwą
-		do ponownego wykorzystania, bez konieczności, często problematycznego, migrowania danych do
-		nowego silnika. \\
-		Warto w tym miejscu wspomnieć o kolejnym narzędziu, które mimo, że działa na poziomie serwera, 
-		odpowiada za dostarczenie odpowiedniej abstrakcji dla warstwy modelu danych i ułatwienia
-		operacji nań. Wspomnianym narzędziem jest ogólnodostępne i otwarto źródłowy projekt Hibernate. 
-		Konfiguracja jest oparta na co najmniej jednym pliku, tak jak na załączniku \ref{appendix:hibernateCfg}. 
+			serwer \textbf{MySQL}. Było to rozwiązanie podyktowane szerokim użyciem tego silnika w 
+			na wielu serwisach, które umożliwiają hosting strong, czyniąc warstwę modelu danych możliwą
+			do ponownego wykorzystania, bez konieczności, często problematycznego, migrowania danych do
+			nowego silnika. \\
+			Warto w tym miejscu wspomnieć o kolejnym narzędziu, które mimo, że działa na poziomie serwera, 
+			odpowiada za dostarczenie odpowiedniej abstrakcji dla warstwy modelu danych i ułatwienia
+			operacji nań. Wspomnianym narzędziem jest ogólnodostępne i otwarto źródłowy projekt Hibernate. 
+			Konfiguracja jest oparta na co najmniej jednym pliku, tak jak na załączniku \ref{ca:hibernatecfg},
+			który jest bezwzględnie wymagany. Niemniej można dodatkowo dodać wiele plików, również XML, z których
+			każdy będzie opisem translacji danej klasy na odpowiadającą jej tabelę w systemie bazy danych. 
 		\paragraph{Serwer} został napisany w całości w języku Java i oparty o kontener aplikacji webowych 
-		\textbf{Tomcat}\footnote{
-			\textbf{Apache Tomcat} - serwer aplikacji internetowych, którego główną częścią jest interakacja
-			ze specjalnymi klasami znanymi jako \textit{servlety}, umożliwiających korzystanie z funkcjonalności
-			jaką oferuje serwer przez standardowy protokół \textit{HTTP} i żądania \textit{CRUD}		
-		}, a sama podstawową zasadą przy jego tworzeniu było oparcie centralny punkt wejściowy - fasadę, która dawała
-		dostęp do całej funkcjonalności aplikacji przez zwarty interfejs, decydujący o wyborze konkretnego rozwiązania.
-		
-		Parametr typu \textbf{CRUD} przyjmuje jedną z 4 wartości:
-		\textit{Create, Read, Update, Delete} zależnie od metody żądania HTTP, która go wywoła. Jest to najprostsza rzecz
-		do ustalenia, ale prawdopodobnie jedna z najważniejszych. Znając jej wartość algorytm jest w stanie wywołać
-		odpowiednie metody odpowiedzialne za obsługę zgłoszenia. Przykładowo, sytuacją oczekiwaną na żądania 
-		\textit{GET} byłoby wystosowanie zgłoszenia do warstwy modelu danych, aby ta zwróciła zbiór wartości odpowiadających
-		warunkom, jakie serwer odebrał od aplikacji klienckiej. 
-		
-		\begin{table}
-			\begin{tabular}[c]{l*{2}{c}}
-				Żądanie HTTP	& 	wartość zmiennej typu CRUD	\\
-				\hline
-				POST			&	CREATE						\\
-				PUT				& 	UPDATE						\\
-				DELETE			&	DELETE						\\
-				GET				& 	READ						\\
-			\end{tabular}
-			\label{c6:tab:CRUD_matches}
-			\caption[Żądania HTTP a enum CRUD]{Odpowiednie wartości enuma \textit{CRUD}, a żądania HTTP}
-		\end{table}
-		\begin{listing}[h]
-			\inputminted[
-				linenos=true,
-				fontsize=\tiny,
-				firstline=57, 
-				lastline=75,
-	            numbersep=15pt
-			]{java}{../application/javaSrc/wms/servlet/WMSDataAgent.java}	
-			\label{c6:listing:WMSDataAgent}
-			\caption[WMSDataAgent - \textbf{processRequest}]{\textit{WMSDataAgent-processRequest} - 
-			metoda rozdzielająca zadania na podstawie adresu oraz metody CRUD}
-		\end{listing}
-		\begin{listing}[h]
-			\inputminted[
-				linenos=true,
-				fontsize=\tiny,
-				firstline=32, 
-				lastline=45,
-	            numbersep=15pt
-			]{java}{../application/javaSrc/wms/controller/base/extractor/RDExtractor.java}	
-			\label{c6:listing:WMSDataAgent}
-			\caption[RDExtractor - \textbf{parse}]{\textit{RDExtractor-parse} - metoda parsująca żądania HTTP i zwracające 
-			potrzebne opcje jako obiekt}
-		\end{listing}		
-		
-		\paragraph{Klient}
+			\textbf{Tomcat}\footnote{
+				\textbf{Apache Tomcat} - serwer aplikacji internetowych, którego główną częścią jest interakcja
+				ze specjalnymi klasami znanymi jako \textit{servlety}, umożliwiających korzystanie z funkcjonalności
+				jaką oferuje serwer przez standardowy protokół \textit{HTTP} i żądania \textit{CRUD}		
+			}, a sama podstawową zasadą przy jego tworzeniu było oparcie centralny punkt wejściowy - fasadę, która dawała
+			dostęp do całej funkcjonalności aplikacji przez zwarty interfejs, decydujący o wyborze konkretnego rozwiązania.
+			\begin{table}[H]
+				\begin{tabular}[c]{l*{2}{c}}
+					Żądanie HTTP	& 	wartość zmiennej typu CRUD	\\
+					\hline
+					POST			&	CREATE						\\
+					PUT				& 	UPDATE						\\
+					DELETE			&	DELETE						\\
+					GET				& 	READ						\\
+				\end{tabular}
+				\label{c6:tab:CRUD_matches}
+				\caption[Żądania HTTP a typ wyliczeniowy CRUD]{Odpowiednie wartości typu wyliczeniowego \textit{CRUD}, a żądania HTTP}
+			\end{table}
+			Parametr typu \textbf{CRUD} przyjmuje jedną z 4 wartości:
+			\textit{Create, Read, Update, Delete} zależnie od metody żądania HTTP, która go wywoła. Jest to najprostsza rzecz
+			do ustalenia, ale prawdopodobnie jedna z najważniejszych. Znając jej wartość algorytm jest w stanie wywołać
+			odpowiednie metody odpowiedzialne za obsługę zgłoszenia. Przykładowo, sytuacją oczekiwaną na żądania 
+			\textit{GET} byłoby wystosowanie zgłoszenia do warstwy modelu danych, aby ta zwróciła zbiór wartości odpowiadających
+			warunkom, jakie serwer odebrał od aplikacji klienckiej. 
+			\begin{listing}[H]
+				\inputminted[
+					linenos=true,
+					fontsize=\tiny,
+					firstline=57, 
+					lastline=75,
+		            numbersep=15pt
+				]{java}{../application/javaSrc/wms/servlet/WMSDataAgent.java}	
+				\label{c6:listing:WMSDataAgent}
+				\caption[WMSDataAgent - \textbf{processRequest}]{\textit{WMSDataAgent-processRequest} - 
+				metoda rozdzielająca zadania na podstawie adresu oraz metody CRUD}
+			\end{listing}
+			\begin{listing}[H]
+				\inputminted[
+					linenos=true,
+					fontsize=\tiny,
+					firstline=32, 
+					lastline=45,
+		            numbersep=15pt
+				]{java}{../application/javaSrc/wms/controller/base/extractor/RDExtractor.java}	
+				\label{c6:listing:WMSDataAgent}
+				\caption[RDExtractor - \textbf{parse}]{\textit{RDExtractor-parse} - metoda parsująca żądania HTTP i zwracające 
+				potrzebne opcje jako obiekt}
+			\end{listing}
+		\paragraph{Klient} jest warstwą reprezentują funkcjonalność serwera. Część ta dostępna jest przez praktycznie
+		dowolną przeglądarkę internetową, więc działa jako tak zwana \emph{aplikacja internetowa}. Bardzo
+		dużą zaletą takiego rozwiązania jest możliwość uruchomienia aplikacji na dowolnym urządzeniu klasy PC z zainstalowaną
+		odpowiednią przeglądarką. Jako inne zalety można z pewnością wymienić: 
+		\begin{itemize}
+			\item większe możliwości rozbudowy, napraw i aktualizacji;
+			\item aktualizacje dokonywane są w sposób transparentny dla użytkownika.
+		\end{itemize}
+		Ponadto praktycznym skutkiem było uzyskanie dostępu dla wszystkich żądań HTTP, które stanowią podstawę
+		komunikacji między urządzeniami, a człowiekiem w dobie Internetu, jaki dzisiaj obowiązuje.
 \section{Diagramy, zrzuty ekranowe oraz funkcje}
 	\subsection{Logowanie do aplikacji przy pierwszym uruchomieniu}
 		\begin{figure}[H]
@@ -126,6 +134,35 @@
 			\caption[Aplikacja - Logowanie do programu]{Zrzut ekranu pokazują aplikację w stanie tuż po uruchomieniu}
 			\label{c7:fig:app:login}
 		\end{figure}
+		Aplikacja wspiera identyfikacje oraz autoryzacje użytkownik, jeszcze przed uruchomieniem programu. Praktycznie
+		na każdym kroku, system sprawdza, czy użytkownik jest wciąż zalogowany, czy też nie. W drugim wypadku
+		wystosowywane jest okno, takie jak na rysunku \label{c7:fig:app::login}. Mechanizm został zaimplementowany
+		po stronie klienta, dzięki użytecznym i gotowym obiektom klas, które dają możliwość utrzymania 
+		wiedzy o aktualnie zalogowanym użytkowniku pomiędzy kolejnymi odświeżeniami witryny. \\
+		Samo logowanie został oparte o prosty, ale rozszerzalny mechanizm weryfikacja nazwy użytkownika
+		oraz jego hasła. Można to łatwo zmienić, ponieważ operacja autoryzacja została wyodrębniona
+		do samodzielnej \textbf{klasy servlet}. Korzyścią tego, a zaraz wytłumaczeniem prostoty rozszerzenia
+		operacji autentyfikacji, jest zawsze występująca operacja:
+		\begin{listing}[H]
+			\inputminted[
+				linenos=true,
+				fontsize=\tiny,
+				firstline=27, 
+				lastline=62,
+	            numbersep=10pt
+			]{java}{../application/javaSrc/wms/servlet/WMSAuthAgent.java}	
+			\label{c6:listing:WMSAuthAgent}
+			\caption[WMSAuthAgent - \textbf{doPost}]{\textit{WMSAuthAgent-doPost} - metoda parsująca żądania POST, dokonująca
+			autentyfikacji użytkownika na podstawie przekazanego loginu i hasła}
+		\end{listing}
+		W tym momencie uzyskujemy praktyczne wykorzystanie wzorca projektowego, znanego jako \textbf{fasada} lub bardziej
+		w tym miejscu adekwatnego \textbf{mostu}. W oby wypadkach chodzi o dostarczenie zwartego i raczej 
+		niezmiennego \textbf{API} - interfejsu programistycznego, gdzie tutaj, ten termin odnosi się
+		do niezmiennej postaci funkcji obsługujących konkretne żądania HTTP.
+		Istotnym więc jest jedynie aby wartość zwracana do klienta, była
+		z nim kompatybilna i aplikacja kliencka była w stanie poprawnie ją odczytać, podczas gdy warstwa
+		implementacji, dzięki której uzyskujemy pożądaną funkcjonalność,
+		może zostać zmieniona w sposób transparenty dla części klienta. 
 		
 	\subsection{Zarządzanie strukturą magazynu}
 		\begin{figure}[H]
