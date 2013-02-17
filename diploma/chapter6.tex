@@ -99,7 +99,7 @@
 					firstline=57, 
 					lastline=75,
 		            numbersep=15pt
-				]{java}{../application/javaSrc/wms/servlet/WMSDataAgent.java}	
+				]{java}{../application/src/main/java/org/kornicameister/wms/servlet/WMSDataAgent.java}	
 				\label{c6:listing:WMSDataAgent}
 				\caption[WMSDataAgent - \textbf{processRequest}]{\textit{WMSDataAgent-processRequest} - 
 				metoda rozdzielająca zadania na podstawie adresu oraz metody CRUD}
@@ -111,7 +111,7 @@
 					firstline=32, 
 					lastline=45,
 		            numbersep=15pt
-				]{java}{../application/javaSrc/wms/controller/base/extractor/RDExtractor.java}	
+				]{java}{../application/src/main/java/org/kornicameister/wms/controller/base/extractor/RDExtractor.java}	
 				\label{c6:listing:WMSDataAgent}
 				\caption[RDExtractor - \textbf{parse}]{\textit{RDExtractor-parse} - metoda parsująca żądania HTTP i zwracające 
 				potrzebne opcje jako obiekt}
@@ -126,6 +126,25 @@
 		\end{itemize}
 		Ponadto praktycznym skutkiem było uzyskanie dostępu dla wszystkich żądań HTTP, które stanowią podstawę
 		komunikacji między urządzeniami, a człowiekiem w dobie Internetu, jaki dzisiaj obowiązuje.
+		\subparagraph{AJAX oraz REST} są wyznacznikami, które stały się głównym powodem wykorzystania
+		framework'a ExtJS w wersji 4.1.3. AJAX jest technologią, która pozwala na wykonywania asynchronicznych
+		zapytań pod wskazany adres i uaktualnianie stron internetowych bez konieczności ich przeładowania. 
+		Z drugiej strony REST wprowadził dużo przejrzystości, potrzebnej przy budowanie tak rozbudowanej aplikacji,
+		przy budowaniu adresów zapytań i ich obsłudze. W obecnej formie, zapytania różnią się, ta poziomie
+		wskazania jaki rodzaj encji z bazy danych, klient chce obsłużyć. W efekcie, konfiguracja modeli ExtJS
+		sprowadzała się do następujących 2 linijek:
+		\begin{listing}[H]
+			\inputminted[
+				linenos=true,
+				fontsize=\tiny,
+				firstline=94, 
+				lastline=97,
+	            numbersep=10pt
+			]{java}{../application/src/main/webapp/resources/app/model/entity/Unit.js}	
+			\label{c6:listing:Unit.js}
+			\caption[Unit.js - \textbf{model danych}]{\textit{Unit.js} - konfiguracja proxy
+			modelu danych odpowiadającego podejściu REST}
+		\end{listing} 
 \section{Diagramy, zrzuty ekranowe oraz funkcje}
 	\subsection{Logowanie do aplikacji przy pierwszym uruchomieniu}
 		\begin{figure}[H]
@@ -136,21 +155,19 @@
 		\end{figure}
 		Aplikacja wspiera identyfikacje oraz autoryzacje użytkownik, jeszcze przed uruchomieniem programu. Praktycznie
 		na każdym kroku, system sprawdza, czy użytkownik jest wciąż zalogowany, czy też nie. W drugim wypadku
-		wystosowywane jest okno, takie jak na rysunku \label{c7:fig:app::login}. Mechanizm został zaimplementowany
-		po stronie klienta, dzięki użytecznym i gotowym obiektom klas, które dają możliwość utrzymania 
-		wiedzy o aktualnie zalogowanym użytkowniku pomiędzy kolejnymi odświeżeniami witryny. \\
-		Samo logowanie został oparte o prosty, ale rozszerzalny mechanizm weryfikacja nazwy użytkownika
-		oraz jego hasła. Można to łatwo zmienić, ponieważ operacja autoryzacja została wyodrębniona
-		do samodzielnej \textbf{klasy servlet}. Korzyścią tego, a zaraz wytłumaczeniem prostoty rozszerzenia
+		wystosowywane jest okno, takie jak na rysunku \label{c7:fig:app::login}. Mechanizm logowania został oparty
+		o własne rozwiązanie zaimplementowane po stronie serwera, a wymagające podanie jedynie hasła oraz 
+		nazwy użytkownika.\\ Można to łatwo zmienić, ponieważ operacja autoryzacji została wyodrębniona
+		do samodzielnej \textbf{klasy servlet}. Korzyścią tego, a zarazem wytłumaczeniem prostoty rozszerzenia
 		operacji autentyfikacji, jest zawsze występująca operacja:
 		\begin{listing}[H]
 			\inputminted[
 				linenos=true,
 				fontsize=\tiny,
-				firstline=27, 
-				lastline=62,
+				firstline=46, 
+				lastline=97,
 	            numbersep=10pt
-			]{java}{../application/javaSrc/wms/servlet/WMSAuthAgent.java}	
+			]{java}{../application/src/main/java/org/kornicameister/wms/servlet/WMSAuthAgent.java}	
 			\label{c6:listing:WMSAuthAgent}
 			\caption[WMSAuthAgent - \textbf{doPost}]{\textit{WMSAuthAgent-doPost} - metoda parsująca żądania POST, dokonująca
 			autentyfikacji użytkownika na podstawie przekazanego loginu i hasła}
@@ -162,7 +179,11 @@
 		Istotnym więc jest jedynie aby wartość zwracana do klienta, była
 		z nim kompatybilna i aplikacja kliencka była w stanie poprawnie ją odczytać, podczas gdy warstwa
 		implementacji, dzięki której uzyskujemy pożądaną funkcjonalność,
-		może zostać zmieniona w sposób transparenty dla części klienta. 
+		może zostać zmieniona w sposób transparenty dla części klienta. \\
+		Ostatecznie aplikacja wymaga jednorazowego podania danych identyfikujących użytkownika oraz
+		jest ona w stanie zapamiętać tę informację pomiędzy odświeżeniami aplikacji, jednocześnie
+		dając możliwość zakończenia korzystania z programu w dowolnym momencie, poprzez operację
+		wylogowania.
 		
 	\subsection{Zarządzanie strukturą magazynu}
 		\begin{figure}[H]
