@@ -33,10 +33,15 @@ Ext.define('WMS.controller.Master', {
     onMasterRender      : function () {
         console.log('Master :: Opening login.Dialog...');
         var me = this,
-            loginController = me.getController('WMS.controller.Login');
+            loginController = me.getController('WMS.controller.Login'),
+            toolbarController = me.getController('WMS.controller.Toolbars'),
+            user = loginController.getUserFromSesssion();
 
-        if (Ext.isDefined(loginController)) {
+        if (Ext.isDefined(loginController) && !(Ext.isDefined(user))) {
             loginController.openLoginDialog();
+        } else if (Ext.isDefined(user) && Ext.isDefined(toolbarController)) {
+            toolbarController.setLoggedUserInformation(user);
+            loginController.checkCompanies();
         }
     },
     openRecipientManager: function () {

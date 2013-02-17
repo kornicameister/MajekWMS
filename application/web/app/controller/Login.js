@@ -10,21 +10,21 @@
  *
  */
 Ext.define('WMS.controller.Login', {
-    extend              : 'Ext.app.Controller',
-    views               : [
+    extend                  : 'Ext.app.Controller',
+    views                   : [
         'login.Dialog'
     ],
-    stores              : [
+    stores                  : [
         'Companies'
     ],
-    refs                : [
+    refs                    : [
         { ref: 'dialog', selector: 'logindialog' },
         { ref: 'loginForm', selector: 'logindialog loginform' }
     ],
-    config              : {
+    config                  : {
         loadMask: undefined
     },
-    init                : function () {
+    init                    : function () {
         console.init('WMS.controller.Login initializing...');
         var me = this;
 
@@ -37,7 +37,7 @@ Ext.define('WMS.controller.Login', {
             }
         });
     },
-    maskViewport        : function (view) {
+    maskViewport            : function (view) {
         if (Ext.isDefined(view)) {
             var me = this;
             me.setLoadMask(new Ext.LoadMask(view.el, { msg: 'Loading content...'}));
@@ -46,7 +46,7 @@ Ext.define('WMS.controller.Login', {
             console.log('Login :: Can not mask viewport, view undefined');
         }
     },
-    onLoginButtonClicked: function (button) {
+    onLoginButtonClicked    : function (button) {
         console.log('Login :: Login button has been clicked...');
         var me = this,
             formRef = button.up('form');
@@ -73,6 +73,7 @@ Ext.define('WMS.controller.Login', {
                     });
                     me.closeLoginDialog();
                     me.checkCompanies();
+                    me.saveInformationToSession(user);
                 } else {
                     Ext.Msg.alert('Logowanie nieudane',
                         'Podany login lub hasło są błędne !!!'
@@ -94,7 +95,16 @@ Ext.define('WMS.controller.Login', {
             }
         });
     },
-    checkCompanies      : function () {
+    getUserFromSesssion     : function () {
+        var session = Ext.state.Manager,
+            user = session.get('user', undefined);
+        return user;
+    },
+    saveInformationToSession: function (user) {
+        var session = Ext.state.Manager;
+        session.set("user", user);
+    },
+    checkCompanies          : function () {
         var me = this,
             companies = me.getCompaniesStore();
 
@@ -118,7 +128,7 @@ Ext.define('WMS.controller.Login', {
         });
         me.getLoadMask().hide();
     },
-    openCompanyWizard   : function () {
+    openCompanyWizard       : function () {
         var me = this,
             companyWizardCtrl = me.getController('WMS.controller.wizard.Company');
 
@@ -126,12 +136,12 @@ Ext.define('WMS.controller.Login', {
             companyWizardCtrl.openWizard();
         }
     },
-    openLoginDialog     : function () {
+    openLoginDialog         : function () {
         var me = this,
             loginDialog = me.getView('WMS.view.login.Dialog');
         loginDialog.create().show();
     },
-    closeLoginDialog    : function () {
+    closeLoginDialog        : function () {
         var me = this,
             loginDialog = me.getDialog();
         loginDialog.close();

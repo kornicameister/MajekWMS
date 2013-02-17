@@ -18,7 +18,8 @@ Ext.define('WMS.controller.Toolbars', {
     refs                    : [
         { ref: 'tBar', selector: 'headbar' },
         { ref: 'fBar', selector: 'footbar' },
-        { ref: 'unitMenu', selector: 'headbar storemenu' }
+        { ref: 'unitMenu', selector: 'headbar storemenu' },
+        { ref: 'loggedUserTF', selector: 'headbar textfield' }
     ],
     init                    : function () {
         console.init('WMS.controller.Toolbars initializing...');
@@ -89,5 +90,11 @@ Ext.define('WMS.controller.Toolbars', {
     },
     onRefreshAction         : function () {
         console.log('Refresh action called, revert changes, reload from server');
+    },
+    setLoggedUserInformation: function (user) {
+        var me = this,
+            loggedTF = me.getLoggedUserTF();
+
+        loggedTF.setValue(user['login']);
     }
 });

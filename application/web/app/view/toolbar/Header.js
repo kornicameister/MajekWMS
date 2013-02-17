@@ -28,6 +28,13 @@ Ext.define('WMS.view.toolbar.Header', {
     },
     items      : [
         {
+            xtype   : 'textfield',
+            itemId  : 'loggedInUserTextField',
+            editable: false,
+            width   : 167
+        },
+        '-',
+        {
             xtype  : 'button',
             itemId : 'receiptButton',
             text   : 'Przyjęcia',

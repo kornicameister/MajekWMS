@@ -200,7 +200,10 @@
                     'Toolbars',
                     'Login',
                     'Master'
-                ]
+                ],
+                launch            : function () {
+                    Ext.state.Manager.setProvider(new Ext.state.LocalStorageProvider());
+                }
             });
         });
 }());
