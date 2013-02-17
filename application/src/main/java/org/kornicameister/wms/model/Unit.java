@@ -26,10 +26,14 @@ public class Unit extends NamedPersistenceObject {
     private Long size = 0l;
 
     @Formula("(select sum(up.pallets) / size from unitProduct up where up.unit_id = idUnit)")
-    private Float usage = 0f;
+    private Double usage = 0.0;
 
     @Formula("(select size - sum(up.pallets) from unitProduct up where up.unit_id = idUnit)")
     private Long leftSize = 0l;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "warehouse_id", referencedColumnName = "idWarehouse")
+    private Warehouse warehouse = null;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
@@ -46,20 +50,32 @@ public class Unit extends NamedPersistenceObject {
         super();
     }
 
-    public  void setType(UnitType type) {
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public Warehouse getWarehouse() {
+        return this.warehouse;
+    }
+
+    public void setType(UnitType type) {
         this.type = type;
     }
 
-    public  Set<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public  void setProducts(Set<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
     }
 
     public Long getLeftSize() {
         return (leftSize == null ? 0l : leftSize);
+    }
+
+    public Double getUsage() {
+        return (this.usage == null ? 0l : this.usage);
     }
 
     @Override
@@ -70,10 +86,10 @@ public class Unit extends NamedPersistenceObject {
 
         Unit unit = (Unit) o;
 
-        return !(description != null ? !description.equals(unit.description) : unit.description != null)
-                && !(size != null ? !size.equals(unit.size) : unit.size != null)
-                && !(type != null ? !type.equals(unit.type) : unit.type != null)
-                && !(usage != null ? !usage.equals(unit.usage) : unit.usage != null);
+        if (description != null ? !description.equals(unit.description) : unit.description != null) return false;
+        if (size != null ? !size.equals(unit.size) : unit.size != null) return false;
+        return !(type != null ? !type.equals(unit.type) : unit.type != null) && !(usage != null ? !usage.equals(unit.usage) : unit.usage != null);
+
     }
 
     @Override

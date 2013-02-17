@@ -5,6 +5,7 @@ import org.kornicameister.wms.model.BasicPersistentObject;
 import org.kornicameister.wms.model.PersistenceObject;
 
 import javax.persistence.Transient;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ResponseFormatBody {
     @Transient
-    private static final String S_TOOK_DMS_AND_AFFECTED_D_ROWS = "%s took %dms and affected %d rows";
+    public static final String S_TOOK_DMS_AND_AFFECTED_D_ROWS = "%s took %dms and affected %d rows";
 
     @Expose
     private final Long time;
@@ -32,18 +33,21 @@ public class ResponseFormatBody {
     private final CRUD action;
 
     @Expose
-    private final Set<BasicPersistentObject> data = new TreeSet<>((a, b) -> {
-        try {
-            PersistenceObject aa = (PersistenceObject) a;
-            PersistenceObject bb = (PersistenceObject) b;
-            if (aa != null) {
-                return aa.getId().compareTo(bb.getId());
+    private final Set<BasicPersistentObject> data = new TreeSet<>(new Comparator<BasicPersistentObject>() {
+        @Override
+        public int compare(BasicPersistentObject a, BasicPersistentObject b) {
+            try {
+                PersistenceObject aa = (PersistenceObject) a;
+                PersistenceObject bb = (PersistenceObject) b;
+                if (aa != null) {
+                    return aa.getId().compareTo(bb.getId());
+                }
+            } catch (ClassCastException e) {
+                assert a != null;
+                return Integer.compare(a.hashCode(), b.hashCode());
             }
-        } catch (ClassCastException e) {
-            assert a != null;
-            return Integer.compare(a.hashCode(), b.hashCode());
+            return 0;
         }
-        return 0;
     });
 
     @Expose

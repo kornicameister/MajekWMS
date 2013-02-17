@@ -193,12 +193,40 @@ public class RequestController implements Controller {
                 .setPrettyPrinting().create();
         List<BasicPersistentObject> data = new ArrayList<>();
 
+        JSONObject dataElement;
         BasicPersistentObject entity = null;
 
         try {
             JSONArray jsonArray = (JSONArray) this.rdata.getPayload().get("data");
             for (Object internalArray : jsonArray) {
-                if ((entity = this.getBasicPersistentObjectByCrud(gson, (JSONObject) internalArray, entity)) != null) {
+                dataElement = (JSONObject) internalArray;
+
+                switch (this.rdata.getAction()) {
+                    case UPDATE:
+                        entity = this.preUpdateByReflection(dataElement);
+                        break;
+                    case CREATE:
+                        entity = gson.fromJson(dataElement.toJSONString(),
+                                this.rdata.getModule().getEntityClass());
+                        entity = this.preCreate(entity, dataElement);
+
+                        if (entity instanceof PersistenceObject) {
+                            PersistenceObject obj = (PersistenceObject) entity;
+                            obj.setId(null);
+                            entity = obj;
+                        }
+
+                        break;
+                    case DELETE:
+                        entity = this.preDelete(dataElement);
+                        break;
+                    default:
+                        break;
+                    case READ:
+                        break;
+                }
+
+                if (entity != null) {
                     data.add(entity);
                 }
             }
@@ -212,34 +240,6 @@ public class RequestController implements Controller {
                 .info("Payload parsed, extracted entities count = [ "
                         + data.size() + " ]");
         return data;
-    }
-
-    private BasicPersistentObject getBasicPersistentObjectByCrud(Gson gson, JSONObject dataElement, BasicPersistentObject entity) {
-        switch (this.rdata.getAction()) {
-            case UPDATE:
-                entity = this.preUpdateByReflection(dataElement);
-                break;
-            case CREATE:
-                entity = gson.fromJson(dataElement.toJSONString(),
-                        this.rdata.getModule().getEntityClass());
-                entity = this.preCreate(entity, dataElement);
-
-                if (entity instanceof PersistenceObject) {
-                    PersistenceObject obj = (PersistenceObject) entity;
-                    obj.setId(null);
-                    entity = obj;
-                }
-
-                break;
-            case DELETE:
-                entity = this.preDelete(dataElement);
-                break;
-            default:
-                break;
-            case READ:
-                break;
-        }
-        return entity;
     }
 
     /**
@@ -301,20 +301,24 @@ public class RequestController implements Controller {
         }
 
         Method methods[] = persistentObject.getClass().getMethods();
-        Arrays.sort(methods, (o1, o2) -> {
-            String o1Name = o1.getName(), o2Name = o2.getName();
+        Arrays.sort(methods, new Comparator<Method>() {
 
-            boolean isO1Setter = o1Name.contains("set"), isO2Setter = o2Name
-                    .contains("set");
+            @Override
+            public int compare(Method o1, Method o2) {
+                String o1Name = o1.getName(), o2Name = o2.getName();
 
-            if (isO1Setter && isO2Setter) {
-                return o1Name.compareTo(o2Name);
-            } else if (isO1Setter) {
-                return -1;
-            } else if (isO2Setter) {
-                return 1;
+                boolean isO1Setter = o1Name.contains("set"), isO2Setter = o2Name
+                        .contains("set");
+
+                if (isO1Setter && isO2Setter) {
+                    return o1Name.compareTo(o2Name);
+                } else if (isO1Setter) {
+                    return -1;
+                } else if (isO2Setter) {
+                    return 1;
+                }
+                return 0;
             }
-            return 0;
         });
 
         Set<Method> setters = new HashSet<>();
