@@ -62,11 +62,9 @@ public class InvoiceProduct extends BasicPersistentObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof InvoiceProduct)) return false;
-        if (!super.equals(o)) return false;
-
-        return pk.equals(((InvoiceProduct) o).pk);
+        return this == o || o instanceof InvoiceProduct
+                && super.equals(o)
+                && pk.equals(((InvoiceProduct) o).pk);
     }
 
     @Override

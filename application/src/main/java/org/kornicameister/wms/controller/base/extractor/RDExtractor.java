@@ -73,7 +73,7 @@ public abstract class RDExtractor {
      * @return {@link Entity} that describes module used in request
      */
     @SuppressWarnings("unchecked")
-    public static RequestModule getModuleAction(String[] uri) {
+    private static RequestModule getModuleAction(String[] uri) {
         String module = uri[uri.length - 1];
         Entity entity = null;
         RequestModule rm = null;
@@ -110,7 +110,7 @@ public abstract class RDExtractor {
      * @param request current client's request
      * @return map with parameters extracted from {@link HttpServletRequest} request.
      */
-    public static Map getParameter(HttpServletRequest request) {
+    private static Map getParameter(HttpServletRequest request) {
         return request.getParameterMap();
     }
 
@@ -123,7 +123,7 @@ public abstract class RDExtractor {
      * @return wrapped payload data
      * @throws IOException
      */
-    public static JSONObject getPayload(HttpServletRequest request)
+    private static JSONObject getPayload(HttpServletRequest request)
             throws IOException {
         StringBuilder payloadBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;

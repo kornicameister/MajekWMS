@@ -9,7 +9,6 @@ import org.kornicameister.wms.utilities.Pair;
 import org.kornicameister.wms.utilities.SortedList;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Queue;
 
@@ -23,13 +22,8 @@ import java.util.Queue;
  */
 public class InvoiceProductController extends RequestController {
     private Invoice invoiceCache;
-    private final List<Pair<Product, Long>> unallocatedProducts = new SortedList<>(new Comparator<Pair<Product, Long>>() {
-
-        @Override
-        public int compare(Pair<Product, Long> a, Pair<Product, Long> b) {
-            return a.getSecond().compareTo(b.getSecond());
-        }
-    }
+    private final List<Pair<Product, Long>> unallocatedProducts = new SortedList<>(
+            (a, b) -> a.getSecond().compareTo(b.getSecond())
     );
     private final static Logger logger = Logger
             .getLogger(InvoiceProductController.class.getName());
@@ -50,12 +44,8 @@ public class InvoiceProductController extends RequestController {
          */
         class AllocationAlgorithmExecutor {
             InvoiceType type = invoiceCache.getType();
-            Queue<Pair<Unit, Long>> units = new SortedList<>(new Comparator<Pair<Unit, Long>>() {
-                @Override
-                public int compare(Pair<Unit, Long> unitLongPair, Pair<Unit, Long> unitLongPair2) {
-                    return unitLongPair.getSecond().compareTo(unitLongPair2.getSecond()) * (-1);
-                }
-            });
+            Queue<Pair<Unit, Long>> units = new SortedList<>(
+                    (unitLongPair, unitLongPair2) -> unitLongPair.getSecond().compareTo(unitLongPair2.getSecond()) * (-1));
             List<Pair<Product, Long>> allocatedProducts = new ArrayList<>();
 
             AllocationAlgorithmExecutor(Session session) {

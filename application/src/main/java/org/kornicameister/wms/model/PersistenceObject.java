@@ -31,19 +31,19 @@ abstract public class PersistenceObject extends BasicPersistentObject {
         super();
     }
 
-    public synchronized Long getId() {
+    public Long getId() {
         return id;
     }
 
-    public synchronized final void setId(Long id) {
-        this.id = null;
+    public final void setId(Long id) {
+        this.id = id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (! (o instanceof PersistenceObject)) return false;
-        if (! super.equals(o)) return false;
+        if (!(o instanceof PersistenceObject)) return false;
+        if (!super.equals(o)) return false;
 
         PersistenceObject that = (PersistenceObject) o;
 

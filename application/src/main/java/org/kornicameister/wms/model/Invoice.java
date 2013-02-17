@@ -58,10 +58,9 @@ public class Invoice extends PersistenceObject {
 
         Invoice invoice = (Invoice) o;
 
-        if (client != null ? !client.equals(invoice.client) : invoice.client != null) return false;
-        if (!invoiceNumber.equals(invoice.invoiceNumber)) return false;
-
-        return type.equals(invoice.type);
+        return !(client != null ? !client.equals(invoice.client) : invoice.client != null)
+                && invoiceNumber.equals(invoice.invoiceNumber)
+                && type.equals(invoice.type);
     }
 
     @Override

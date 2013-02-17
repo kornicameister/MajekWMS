@@ -32,10 +32,6 @@ public class Unit extends NamedPersistenceObject {
     private Long leftSize = 0l;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "warehouse_id", referencedColumnName = "idWarehouse")
-    private Warehouse warehouse = null;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
     private UnitType type;
 
@@ -50,28 +46,20 @@ public class Unit extends NamedPersistenceObject {
         super();
     }
 
-    public final void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
-    }
-
-    public final void setType(UnitType type) {
+    public  void setType(UnitType type) {
         this.type = type;
     }
 
-    public final Set<Product> getProducts() {
+    public  Set<Product> getProducts() {
         return products;
     }
 
-    public final void setProducts(Set<Product> products) {
+    public  void setProducts(Set<Product> products) {
         this.products = products;
     }
 
     public Long getLeftSize() {
         return (leftSize == null ? 0l : leftSize);
-    }
-
-    public void setLeftSize(Long leftSize) {
-        this.leftSize = leftSize;
     }
 
     @Override
@@ -82,10 +70,10 @@ public class Unit extends NamedPersistenceObject {
 
         Unit unit = (Unit) o;
 
-        if (description != null ? !description.equals(unit.description) : unit.description != null) return false;
-        if (size != null ? !size.equals(unit.size) : unit.size != null) return false;
-        return !(type != null ? !type.equals(unit.type) : unit.type != null) && !(usage != null ? !usage.equals(unit.usage) : unit.usage != null);
-
+        return !(description != null ? !description.equals(unit.description) : unit.description != null)
+                && !(size != null ? !size.equals(unit.size) : unit.size != null)
+                && !(type != null ? !type.equals(unit.type) : unit.type != null)
+                && !(usage != null ? !usage.equals(unit.usage) : unit.usage != null);
     }
 
     @Override
