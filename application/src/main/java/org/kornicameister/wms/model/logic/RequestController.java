@@ -104,7 +104,10 @@ public class RequestController implements Controller {
         this.session.getTransaction().commit();
 
         if ((data != null) && (!data.isEmpty())) {
-            this.affected.add((BasicPersistentObject) data.iterator().next());
+            final Iterator iterator = data.iterator();
+            while (iterator.hasNext()) {
+                this.affected.add((BasicPersistentObject) iterator.next());
+            }
         }
     }
 

@@ -20,9 +20,9 @@ import java.io.Serializable;
  */
 @Embeddable
 public class UnitProductPK implements Serializable {
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Unit unit;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Product product;
 
     public Unit getUnit() {

@@ -102,18 +102,17 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
 
         function drawUnitShape(unitRecord, tileBBox) {
             var rectShape = board['surface'].add({
-                type          : 'rect',
-                text          : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
-                width         : unitWidth,
-                height        : unitHeight,
-                x             : Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
-                y             : Math.floor(tileBBox['y'] + ((tileBBox['height'] - unitWidth) / 2)),
-                radius        : 12,
-                fill          : 'green',
-                stroke        : 'red',
-                'stroke-width': 2,
-                draggable     : true,
-                group         : unitRecord.get('name')
+                type     : 'rect',
+                text     : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
+                width    : unitWidth,
+                height   : unitHeight,
+                x        : Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
+                y        : Math.floor(tileBBox['y'] + ((tileBBox['height'] - unitWidth) / 2)),
+                radius   : 12,
+                fill     : 'green',
+                stroke   : 'red',
+                draggable: true,
+                group    : unitRecord.get('name')
             });
 //            var textShape = board['surface'].add({
 //                type     : 'text',
