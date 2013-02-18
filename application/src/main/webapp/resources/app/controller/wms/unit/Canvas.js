@@ -103,6 +103,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
         function drawUnitShape(unitRecord, tileBBox) {
             var rectShape = board['surface'].add({
                 type          : 'rect',
+                text          : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
                 width         : unitWidth,
                 height        : unitHeight,
                 x             : Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
@@ -114,20 +115,20 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
                 draggable     : true,
                 group         : unitRecord.get('name')
             });
-            var textShape = board['surface'].add({
-                type     : 'text',
-                text     : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
-                fill     : 'black',
-                font     : '10px monospace',
-                width    : unitWidth,
-                height   : unitHeight,
-                x        : Math.floor(rectShape['x'] + (rectShape['width'] / 3)),
-                y        : Math.floor(rectShape['y'] + (rectShape['height'] / 4)),
-                draggable: true,
-                group    : unitRecord.get('name')
-            });
+//            var textShape = board['surface'].add({
+//                type     : 'text',
+//                text     : unitRecord.get('name') + '\n[' + unitRecord.get('size') + ']',
+//                fill     : 'black',
+//                font     : '10px monospace',
+//                width    : unitWidth,
+//                height   : unitHeight,
+//                x        : Math.floor(rectShape['x'] + (rectShape['width'] / 3)),
+//                y        : Math.floor(rectShape['y'] + (rectShape['height'] / 4)),
+//                draggable: true,
+//                group    : unitRecord.get('name')
+//            });
             rectShape.show(true);
-            textShape.show(true);
+//            textShape.show(true);
             return rectShape;
         }
 

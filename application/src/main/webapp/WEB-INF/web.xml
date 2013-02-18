@@ -24,21 +24,21 @@
         <description>Middle man</description>
         <display-name>WMSDataAgent</display-name>
         <servlet-name>WMSDataAgent</servlet-name>
-        <servlet-class>org.kornicameister.wms.servlet.WMSDataAgent</servlet-class>
+        <servlet-class>org.kornicameister.wms.server.servlet.WMSDataAgent</servlet-class>
         <load-on-startup>4</load-on-startup>
     </servlet>
     <servlet>
         <description>Page controller</description>
         <display-name>WMSController</display-name>
         <servlet-name>WMSController</servlet-name>
-        <servlet-class>org.kornicameister.wms.servlet.WMSController</servlet-class>
+        <servlet-class>org.kornicameister.wms.server.servlet.WMSController</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
         <description>Authorization agent</description>
         <display-name>WMSAuthAgent</display-name>
         <servlet-name>WMSAuthAgent</servlet-name>
-        <servlet-class>org.kornicameister.wms.servlet.WMSAuthAgent</servlet-class>
+        <servlet-class>org.kornicameister.wms.server.servlet.WMSAuthAgent</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 

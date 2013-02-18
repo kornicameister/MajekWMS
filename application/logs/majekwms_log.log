@@ -6017,3 +6017,328 @@
 2013-02-17 23:07:28 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
 2013-02-17 23:07:28 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Unit, entityControllerClass=class org.kornicameister.wms.controller.UnitController} ]
 2013-02-17 23:07:28 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.UnitController ] request, started
+2013-02-18 00:17:00 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-18 00:17:02 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-18 00:17:02 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-18 00:17:02 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-18 00:17:02 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-18 00:17:03 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-18 00:17:03 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-18 00:17:04 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-18 00:17:05 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-18 00:17:05 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-18 00:17:05 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-18 00:17:05 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-18 00:17:05 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-18 00:17:08 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-18 00:17:08 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-18 00:17:10 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-18 00:17:11 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-18 00:17:13 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-18 00:17:14 INFO  WMSDataAgent:33 - Hibernate connection is up and running, status = true
+2013-02-18 00:18:04 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:18:05 INFO  WMSAuthAgent:39 - Failed to found any user attached to the session
+2013-02-18 00:18:05 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:18:04 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:18:04 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:18:04 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:18:04 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:18:05 INFO  RDExtractor:88 - Trial 2 :: Using UNITTYPE as source
+2013-02-18 00:18:05 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-18 00:18:05 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-18 00:18:05 INFO  RDExtractor:88 - Trial 2 :: Using CLIENTTYPE as source
+2013-02-18 00:18:05 INFO  RDExtractor:88 - Trial 2 :: Using CITY as source
+2013-02-18 00:18:05 INFO  RDExtractor:88 - Trial 2 :: Using MEASURE as source
+2013-02-18 00:18:06 INFO  RDExtractor:91 - Trial 3 :: Using ClientType as source
+2013-02-18 00:18:06 INFO  RDExtractor:91 - Trial 3 :: Using City as source
+2013-02-18 00:18:06 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:18:06 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:18:06 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:18:06 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:18:06 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:18:06 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:18:06 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Client, entityControllerClass=class org.kornicameister.wms.controller.ClientController} ]
+2013-02-18 00:18:06 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.ClientController ] request, started
+2013-02-18 00:18:06 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Client, entityControllerClass=class org.kornicameister.wms.controller.ClientController} ]
+2013-02-18 00:18:06 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.City, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 00:18:06 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 00:18:06 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.ClientController ] request, started
+2013-02-18 00:18:06 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.UnitType, entityControllerClass=class org.kornicameister.wms.controller.UnitTypeController} ]
+2013-02-18 00:18:06 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.ClientType, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 00:18:06 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.UnitTypeController ] request, started
+2013-02-18 00:18:06 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Measure, entityControllerClass=class org.kornicameister.wms.controller.MeasureController} ]
+2013-02-18 00:18:06 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.MeasureController ] request, started
+2013-02-18 00:18:06 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 00:18:09 INFO  WMSAuthAgent:141 - User is missing and could have been located in the session
+2013-02-18 00:18:11 INFO  ClientController:33 - Client's type supplier READ request is being processed
+2013-02-18 00:18:11 INFO  ClientController:33 - Client's type recipient READ request is being processed
+2013-02-18 00:18:13 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:18:13 INFO  RDExtractor:88 - Trial 2 :: Using INVOICEPRODUCT as source
+2013-02-18 00:18:13 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:18:13 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:18:13 INFO  RDExtractor:88 - Trial 2 :: Using INVOICETYPE as source
+2013-02-18 00:18:13 INFO  RDExtractor:91 - Trial 3 :: Using InvoiceType as source
+2013-02-18 00:18:13 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:18:13 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.InvoiceType, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 00:18:13 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 00:18:13 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.InvoiceProduct, entityControllerClass=class org.kornicameister.wms.controller.InvoiceProductController} ]
+2013-02-18 00:18:13 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.InvoiceProductController ] request, started
+2013-02-18 00:19:19 INFO  WMSAuthAgent:39 - Failed to found any user attached to the session
+2013-02-18 00:19:19 INFO  WMSAuthAgent:141 - User is missing and could have been located in the session
+2013-02-18 00:19:21 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:21 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:21 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:21 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:21 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:21 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:22 INFO  RDExtractor:88 - Trial 2 :: Using UNITTYPE as source
+2013-02-18 00:19:22 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-18 00:19:22 INFO  RDExtractor:88 - Trial 2 :: Using CLIENTTYPE as source
+2013-02-18 00:19:22 INFO  RDExtractor:88 - Trial 2 :: Using CITY as source
+2013-02-18 00:19:22 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-18 00:19:22 INFO  RDExtractor:88 - Trial 2 :: Using MEASURE as source
+2013-02-18 00:19:22 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:22 INFO  RDExtractor:91 - Trial 3 :: Using City as source
+2013-02-18 00:19:22 INFO  RDExtractor:91 - Trial 3 :: Using ClientType as source
+2013-02-18 00:19:22 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:22 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Client, entityControllerClass=class org.kornicameister.wms.controller.ClientController} ]
+2013-02-18 00:19:22 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.ClientController ] request, started
+2013-02-18 00:19:22 INFO  ClientController:33 - Client's type supplier READ request is being processed
+2013-02-18 00:19:22 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:22 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:22 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:23 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.City, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 00:19:22 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Client, entityControllerClass=class org.kornicameister.wms.controller.ClientController} ]
+2013-02-18 00:19:22 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:23 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.ClientController ] request, started
+2013-02-18 00:19:23 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 00:19:23 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.ClientType, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 00:19:23 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.UnitType, entityControllerClass=class org.kornicameister.wms.controller.UnitTypeController} ]
+2013-02-18 00:19:23 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.UnitTypeController ] request, started
+2013-02-18 00:19:23 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 00:19:23 INFO  ClientController:33 - Client's type recipient READ request is being processed
+2013-02-18 00:19:23 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Measure, entityControllerClass=class org.kornicameister.wms.controller.MeasureController} ]
+2013-02-18 00:19:23 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.MeasureController ] request, started
+2013-02-18 00:19:27 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:28 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:28 INFO  RDExtractor:88 - Trial 2 :: Using INVOICEPRODUCT as source
+2013-02-18 00:19:29 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:29 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.InvoiceProduct, entityControllerClass=class org.kornicameister.wms.controller.InvoiceProductController} ]
+2013-02-18 00:19:28 INFO  RDExtractor:88 - Trial 2 :: Using INVOICETYPE as source
+2013-02-18 00:19:29 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.InvoiceProductController ] request, started
+2013-02-18 00:19:31 INFO  RDExtractor:91 - Trial 3 :: Using InvoiceType as source
+2013-02-18 00:19:31 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:31 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.InvoiceType, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 00:19:31 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 00:19:45 INFO  WMSAuthAgent:49 - Authorization initialized, looking for provided credentials
+2013-02-18 00:19:51 INFO  WMSAuthAgent:83 - User's credentials seems to be valid
+2013-02-18 00:19:51 INFO  WMSAuthAgent:152 - User provided good credentials and will be logged in
+2013-02-18 00:19:53 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:19:54 INFO  RDExtractor:88 - Trial 2 :: Using COMPANY as source
+2013-02-18 00:19:54 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:19:54 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Company, entityControllerClass=class org.kornicameister.wms.controller.CompanyController} ]
+2013-02-18 00:19:55 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.CompanyController ] request, started
+2013-02-18 00:20:00 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:20:00 INFO  RDExtractor:88 - Trial 2 :: Using WAREHOUSE as source
+2013-02-18 00:20:00 INFO  RDExtractor:91 - Trial 3 :: Using Warehouse as source
+2013-02-18 00:20:00 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:20:00 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Warehouse, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 00:20:01 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 00:20:02 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 00:20:02 INFO  RDExtractor:88 - Trial 2 :: Using UNIT as source
+2013-02-18 00:20:02 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 00:20:03 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Unit, entityControllerClass=class org.kornicameister.wms.controller.UnitController} ]
+2013-02-18 00:20:03 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.UnitController ] request, started
+2013-02-18 00:22:48 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-18 00:22:49 INFO  WMSDataAgent:50 - Closed Hibernate connection
+2013-02-18 08:59:12 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-18 08:59:12 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-18 08:59:12 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-18 08:59:12 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-18 08:59:12 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-18 08:59:12 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-18 08:59:12 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-18 08:59:12 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-18 08:59:13 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-18 08:59:13 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-18 08:59:13 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-18 08:59:13 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-18 08:59:13 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-18 08:59:13 WARN  JdbcServicesImpl:169 - HHH000342: Could not obtain connection to query metadata : Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 08:59:13 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-18 08:59:13 INFO  LobCreatorBuilder:85 - HHH000422: Disabling contextual LOB creation as connection was null
+2013-02-18 08:59:13 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-18 08:59:13 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-18 08:59:14 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-18 08:59:14 INFO  WMSDataAgent:33 - Hibernate connection is up and running, status = true
+2013-02-18 08:59:31 INFO  WMSAuthAgent:39 - Failed to found any user attached to the session
+2013-02-18 08:59:31 INFO  WMSAuthAgent:141 - User is missing and could have been located in the session
+2013-02-18 08:59:31 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 08:59:31 INFO  RDExtractor:88 - Trial 2 :: Using UNITTYPE as source
+2013-02-18 08:59:31 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 08:59:31 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.UnitType, entityControllerClass=class org.kornicameister.wms.controller.UnitTypeController} ]
+2013-02-18 08:59:31 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.UnitTypeController ] request, started
+2013-02-18 08:59:31 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 08:59:31 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-18 08:59:31 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 08:59:31 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 08:59:31 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 08:59:31 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 08:59:31 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 08:59:31 INFO  RDExtractor:88 - Trial 2 :: Using CLIENTTYPE as source
+2013-02-18 08:59:31 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-18 08:59:31 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 08:59:31 INFO  RDExtractor:88 - Trial 2 :: Using MEASURE as source
+2013-02-18 08:59:31 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 08:59:31 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Measure, entityControllerClass=class org.kornicameister.wms.controller.MeasureController} ]
+2013-02-18 08:59:31 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.MeasureController ] request, started
+2013-02-18 08:59:31 INFO  RDExtractor:88 - Trial 2 :: Using CITY as source
+2013-02-18 08:59:31 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Client, entityControllerClass=class org.kornicameister.wms.controller.ClientController} ]
+2013-02-18 08:59:31 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.Client, entityControllerClass=class org.kornicameister.wms.controller.ClientController} ]
+2013-02-18 08:59:31 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.ClientController ] request, started
+2013-02-18 08:59:31 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.ClientController ] request, started
+2013-02-18 08:59:31 INFO  RDExtractor:91 - Trial 3 :: Using City as source
+2013-02-18 08:59:31 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 08:59:31 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.City, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 08:59:31 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 08:59:31 INFO  RDExtractor:91 - Trial 3 :: Using ClientType as source
+2013-02-18 08:59:31 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 08:59:31 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.ClientType, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 08:59:31 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 08:59:32 WARN  SqlExceptionHelper:143 - SQL Error: 1045, SQLState: 28000
+2013-02-18 08:59:32 ERROR SqlExceptionHelper:144 - Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 08:59:32 WARN  SqlExceptionHelper:143 - SQL Error: 1045, SQLState: 28000
+2013-02-18 08:59:32 ERROR SqlExceptionHelper:144 - Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 08:59:32 WARN  SqlExceptionHelper:143 - SQL Error: 1045, SQLState: 28000
+2013-02-18 08:59:32 ERROR SqlExceptionHelper:144 - Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 08:59:32 WARN  SqlExceptionHelper:143 - SQL Error: 1045, SQLState: 28000
+2013-02-18 08:59:32 ERROR SqlExceptionHelper:144 - Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 08:59:32 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 08:59:32 INFO  RDExtractor:88 - Trial 2 :: Using INVOICETYPE as source
+2013-02-18 08:59:32 INFO  RDExtractor:91 - Trial 3 :: Using InvoiceType as source
+2013-02-18 08:59:32 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 08:59:32 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.InvoiceType, entityControllerClass=class org.kornicameister.wms.controller.RequestController} ]
+2013-02-18 08:59:32 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.RequestController ] request, started
+2013-02-18 08:59:32 WARN  SqlExceptionHelper:143 - SQL Error: 1045, SQLState: 28000
+2013-02-18 08:59:32 ERROR SqlExceptionHelper:144 - Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 08:59:32 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 08:59:32 INFO  RDExtractor:88 - Trial 2 :: Using INVOICEPRODUCT as source
+2013-02-18 08:59:32 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 08:59:32 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.InvoiceProduct, entityControllerClass=class org.kornicameister.wms.controller.InvoiceProductController} ]
+2013-02-18 08:59:32 INFO  RequestController:79 - Processing [ READ ][ org.kornicameister.wms.controller.InvoiceProductController ] request, started
+2013-02-18 08:59:32 WARN  SqlExceptionHelper:143 - SQL Error: 1045, SQLState: 28000
+2013-02-18 08:59:32 ERROR SqlExceptionHelper:144 - Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 08:59:32 INFO  ClientController:33 - Client's type supplier READ request is being processed
+2013-02-18 08:59:32 INFO  ClientController:33 - Client's type recipient READ request is being processed
+2013-02-18 08:59:32 WARN  SqlExceptionHelper:143 - SQL Error: 1045, SQLState: 28000
+2013-02-18 08:59:32 ERROR SqlExceptionHelper:144 - Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 08:59:32 WARN  SqlExceptionHelper:143 - SQL Error: 1045, SQLState: 28000
+2013-02-18 08:59:32 ERROR SqlExceptionHelper:144 - Access denied for user 'majekWMS'@'localhost' (using password: YES)
+2013-02-18 20:08:57 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-18 20:08:59 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-18 20:08:59 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-18 20:08:59 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-18 20:08:59 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-18 20:09:00 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-18 20:09:00 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-18 20:09:00 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-18 20:09:02 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-18 20:09:02 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-18 20:09:02 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-18 20:09:02 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-18 20:09:02 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-18 20:09:05 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-18 20:09:05 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-18 20:09:05 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-18 20:09:05 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-18 20:09:06 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-18 20:09:06 INFO  WMSDataAgent:33 - Hibernate connection is up and running, status = true
+2013-02-18 20:09:39 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-18 20:09:39 INFO  WMSDataAgent:50 - Closed Hibernate connection
+2013-02-18 20:10:34 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-18 20:10:35 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-18 20:10:35 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-18 20:10:35 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-18 20:10:35 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-18 20:10:35 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-18 20:10:35 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-18 20:10:35 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-18 20:10:36 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-18 20:10:36 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-18 20:10:36 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-18 20:10:36 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-18 20:10:36 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-18 20:10:37 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-18 20:10:37 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-18 20:10:37 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-18 20:10:37 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-18 20:10:39 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-18 20:10:39 INFO  WMSDataAgent:33 - Hibernate connection is up and running, status = true
+2013-02-18 20:10:52 INFO  WMSAuthAgent:39 - Failed to found any user attached to the session
+2013-02-18 20:10:52 INFO  WMSAuthAgent:141 - User is missing and could have been located in the session
+2013-02-18 20:10:52 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:10:52 INFO  RDExtractor:88 - Trial 2 :: Using MEASURE as source
+2013-02-18 20:10:52 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:10:52 INFO  RDExtractor:88 - Trial 2 :: Using UNITTYPE as source
+2013-02-18 20:10:52 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:10:52 INFO  RDExtractor:88 - Trial 2 :: Using CITY as source
+2013-02-18 20:10:52 INFO  RDExtractor:91 - Trial 3 :: Using City as source
+2013-02-18 20:10:52 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:10:52 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:10:52 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.City, entityControllerClass=class org.kornicameister.wms.model.logic.RequestController} ]
+2013-02-18 20:10:52 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.RequestController ] request, started
+2013-02-18 20:10:52 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:10:52 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.UnitType, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.unit.UnitTypeController} ]
+2013-02-18 20:10:52 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.controllers.unit.UnitTypeController ] request, started
+2013-02-18 20:10:52 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Measure, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.measure.MeasureController} ]
+2013-02-18 20:10:52 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.controllers.measure.MeasureController ] request, started
+2013-02-18 20:10:52 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:10:52 INFO  RDExtractor:88 - Trial 2 :: Using CLIENTTYPE as source
+2013-02-18 20:10:52 INFO  RDExtractor:91 - Trial 3 :: Using ClientType as source
+2013-02-18 20:10:52 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:10:52 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.ClientType, entityControllerClass=class org.kornicameister.wms.model.logic.RequestController} ]
+2013-02-18 20:10:52 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.RequestController ] request, started
+2013-02-18 20:10:53 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:10:53 INFO  RDExtractor:88 - Trial 2 :: Using INVOICEPRODUCT as source
+2013-02-18 20:10:53 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:10:53 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.InvoiceProduct, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.invoice.InvoiceProductController} ]
+2013-02-18 20:10:53 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.controllers.invoice.InvoiceProductController ] request, started
+2013-02-18 20:10:53 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:10:53 INFO  RDExtractor:88 - Trial 2 :: Using INVOICETYPE as source
+2013-02-18 20:10:53 INFO  RDExtractor:91 - Trial 3 :: Using InvoiceType as source
+2013-02-18 20:10:53 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:10:53 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.InvoiceType, entityControllerClass=class org.kornicameister.wms.model.logic.RequestController} ]
+2013-02-18 20:10:53 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.RequestController ] request, started
+2013-02-18 20:10:55 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:10:55 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-18 20:10:55 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:10:55 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:10:55 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-18 20:10:55 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:10:55 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Client, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.client.ClientController} ]
+2013-02-18 20:10:55 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.controllers.client.ClientController ] request, started
+2013-02-18 20:10:55 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Client, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.client.ClientController} ]
+2013-02-18 20:10:55 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.controllers.client.ClientController ] request, started
+2013-02-18 20:10:55 INFO  ClientController:34 - Client's type recipient READ request is being processed
+2013-02-18 20:10:55 INFO  ClientController:34 - Client's type supplier READ request is being processed
+2013-02-18 20:11:01 INFO  WMSAuthAgent:49 - Authorization initialized, looking for provided credentials
+2013-02-18 20:11:01 INFO  WMSAuthAgent:83 - User's credentials seems to be valid
+2013-02-18 20:11:01 INFO  WMSAuthAgent:152 - User provided good credentials and will be logged in
+2013-02-18 20:11:01 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:11:01 INFO  RDExtractor:88 - Trial 2 :: Using COMPANY as source
+2013-02-18 20:11:01 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:11:01 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Company, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.company.CompanyController} ]
+2013-02-18 20:11:01 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.controllers.company.CompanyController ] request, started
+2013-02-18 20:11:02 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:11:02 INFO  RDExtractor:88 - Trial 2 :: Using WAREHOUSE as source
+2013-02-18 20:11:02 INFO  RDExtractor:91 - Trial 3 :: Using Warehouse as source
+2013-02-18 20:11:02 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:11:02 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Warehouse, entityControllerClass=class org.kornicameister.wms.model.logic.RequestController} ]
+2013-02-18 20:11:02 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.RequestController ] request, started
+2013-02-18 20:11:02 INFO  WMSDataAgent:59 - Processing request READ
+2013-02-18 20:11:02 INFO  RDExtractor:88 - Trial 2 :: Using UNIT as source
+2013-02-18 20:11:02 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-18 20:11:02 INFO  RequestController:416 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Unit, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.unit.UnitController} ]
+2013-02-18 20:11:02 INFO  RequestController:77 - Processing [ READ ][ org.kornicameister.wms.model.logic.controllers.unit.UnitController ] request, started
+2013-02-18 20:11:15 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-18 20:11:15 INFO  WMSDataAgent:50 - Closed Hibernate connection

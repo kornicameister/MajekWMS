@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
-import org.kornicameister.wms.model.WMSModelConstants;
+import org.kornicameister.wms.model.hibernate.WMSModelConstants;
 
 public final class HibernateBridge {
     private static SessionFactory sessionFactory = null;
@@ -28,7 +28,7 @@ public final class HibernateBridge {
         HibernateBridge.sessionFactory = configuration
                 .buildSessionFactory(serviceRegistry);
 
-        return ! HibernateBridge.sessionFactory.isClosed();
+        return !HibernateBridge.sessionFactory.isClosed();
     }
 
     public static boolean closeHibernate() {

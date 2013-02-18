@@ -26,36 +26,36 @@
 
         <!-- mapping -->
         <!-- basic -->
-        <mapping class="org.kornicameister.wms.model.BasicPersistentObject"/>
-        <mapping class="org.kornicameister.wms.model.PersistenceObject"/>
-        <mapping class="org.kornicameister.wms.model.NamedPersistenceObject"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.BasicPersistentObject"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.PersistenceObject"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.NamedPersistenceObject"/>
 
-        <mapping class="org.kornicameister.wms.model.Company"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.Company"/>
 
         <!-- client -->
-        <mapping class="org.kornicameister.wms.model.City"/>
-        <mapping class="org.kornicameister.wms.model.Address"/>
-        <mapping class="org.kornicameister.wms.model.ClientDetails"/>
-        <mapping class="org.kornicameister.wms.model.ClientType"/>
-        <mapping class="org.kornicameister.wms.model.Client"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.City"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.Address"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.ClientDetails"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.ClientType"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.Client"/>
 
         <!-- invoice -->
-        <mapping class="org.kornicameister.wms.model.Invoice"/>
-        <mapping class="org.kornicameister.wms.model.InvoiceProduct"/>
-        <mapping class="org.kornicameister.wms.model.embeddable.InvoiceProductPK"/>
-        <mapping class="org.kornicameister.wms.model.InvoiceType"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.Invoice"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.InvoiceProduct"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.embeddable.InvoiceProductPK"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.InvoiceType"/>
 
         <!-- product -->
-        <mapping class="org.kornicameister.wms.model.Product"/>
-        <mapping class="org.kornicameister.wms.model.Measure"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.Product"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.Measure"/>
 
         <!-- unit -->
-        <mapping class="org.kornicameister.wms.model.Unit"/>
-        <mapping class="org.kornicameister.wms.model.UnitType"/>
-        <mapping class="org.kornicameister.wms.model.embeddable.UnitProductPK"/>
-        <mapping class="org.kornicameister.wms.model.UnitProduct"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.Unit"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.UnitType"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.embeddable.UnitProductPK"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.UnitProduct"/>
 
-        <mapping class="org.kornicameister.wms.model.Warehouse"/>
-        <mapping class="org.kornicameister.wms.model.User"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.Warehouse"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.User"/>
     </session-factory>
 </hibernate-configuration>

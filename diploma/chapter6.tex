@@ -44,7 +44,7 @@
 		serwera. Część kliencka została zaprojektowana na wzór aplikacji desktop\footnote{
 			\textbf{Aplikacja desktop} - aplikacja, którą można uruchomić na komputerach klasy PC,
 			nie wymaga przeglądarki jako środowiska pracy, tylko odpowiednio przygotowane
-			środowiska uruchomieniowego na docelowej platformie		
+			środowiska uruchomieniowe na docelowej platformie		
 		} oraz zaimplementowana, w całości, przy użyciu kompletnego i zwartego framework'a\footnote{
 			\textbf{Framework} - jest to całościowy zestaw bibliotek, narzędzi, a także zasad i wytycznych
 			ułatwiających w znacznym sposób przygotowanie gotowej aplikacji		
@@ -194,27 +194,66 @@
 		\end{figure}
 		
 	\subsection{Zarządzanie klientami - dodawanie, usuwaniu, edycja oraz podgląd}
-		\begin{figure}[H]
+		\begin{figure}[h]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/supplier_preview}
 			\caption[Aplikacja - Dostęp do danych klientów]{Zrzut ekranu z widokiem na dostępnych dostawców}
 			\label{c7:fig:app:supplier_preview}
 		\end{figure}
-		\begin{figure}[H]
+		\begin{figure}[h]
 			\centering
 			\includegraphics[width=0.6\textwidth]{images/app/new_receipient_dialog}
 			\caption[Aplikacja - Dodawania nowego klienta - odbiorcy]{Zrzut ekranu z widokiem na okno dialogowe dla tworzenia nowego odbiorcy}
 			\label{c7:fig:app:new_receipient_dialog}
 		\end{figure}
 		
+		\paragraph{Zarządzanie klientami} odbywa się z wydzielonych zakładek, z których jedna przeznaczona jest
+		dla \textbf{dostawców}, a druga dla \textbf{odbiorców}. Podejście takie pozwoliło na zobrazowanie problemu,
+		kiedy jedna instytucja istnieje w systemie jednocześnie jako dostawca i klient. Podstawowa funkcjonalność tego
+		modułu obejmuje:
+		\begin{itemize}
+			\item dodawanie oraz usuwanie danych o klientach (rysunki: \ref{c7:fig:app:supplier_preview} oraz \ref{c7:fig:app:new_receipient_dialog});
+			\item pogląd (uproszczony) listy wszystkich dostawców oraz odbiorców (rysunek \ref{c7:fig:app:supplier_preview});
+			\item podgląd na dokumenty wydań/przyjęć dla wybranej pozycji.
+		\end{itemize}
+		Podzielenie widoku na listy zarejestrowanych klientów zwiększa czytelność, a także daje możliwość edycji dowolnej pozycji,
+		niezależnie od tego czy jest to kontrahent, czy też jedna z przypisanych doń pozycji w dokumentach.		
+		
 	\subsection{Wydanie, przyjęcia oraz ewidencja produktów}
-		\begin{figure}[H]
+		\begin{figure}[h]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/new_supply_preview}
 			\caption[Aplikacja - Dodanie nowego dokumentu wydania]{Zrzut ekranu z widokiem na kreator nowego wydania magazynowego}
 			\label{c7:fig:app:new_supply_preview}
 		\end{figure}
-		\begin{figure}[H]
+		
+		\paragraph{Operacja wydania} jest operacją, która może zostać wykonana jedynie dla tych kontrahentów, którzy są odbiorcami
+		produktów, składowanych w magazynie. Zgodnie z rysunkiem \textbf{\ref{c7:fig:app:new_supply_preview}} każdy z dokumentów
+		magazynowych składa się z następujących pozycji:
+		\begin{itemize}
+			\item numeru faktury, nadawanego arbitralnie aby uniknąć pomyłek oraz zapewnić, że każda z faktur jest 
+			jednoznacznie identyfikowana przez klucz, jakim jest numer faktury;
+			\item klienta (w tym wypadku odbiorcy), który jest odbiorcą\footnote{Jedynie tacy kontrahenci będący odbiorcami mogą
+			zostać wybrani i są dostępni na liście rozwijanej};
+			\item daty wystawienia oraz odbioru, które muszą różnić się o co najmniej \textbf{14 dni};
+			\item listy produktów\footnote{Produkty pobierane są z bazy danych. Wynika z tego, że zarówno dla operacji przyjęcia, jak i wydania
+			produkt musi być obecny w bazie};
+			\item dodatkowych uwag, przeznaczonych dla odbiorcy odnośnie danego dokumentu oraz jego zawartości.
+		\end{itemize}
+		Zatwierdzenie takiego dokumentu powoduje, że dla danego odbiorcy zapisana zostaje informacja o utworzonym dla niego
+		wydania magazynowym,a stany magazynowe zostają zmniejszone, zgodnie z informacją podaną na fakturze. 
+		
+		\paragraph{Operacja przyjęcia} jest operacją prawie identyczną różniącą się w następujących miejscach:
+		\begin{itemize}
+			\item klientami, są jedynie ci kontrahenci, którzy w systemie istnieją jako dostawcy i tylko tacy są widoczni
+			w liście rozwijanej;
+			\item zatwierdzenie dokumentu przyjęcia magazynowego, powoduje uruchomienie odpowiedniego algorytmu alokującego
+			\footnote{Algorytmy alokacji można znaleźć w załączniku \ref{ca:allocationAlgorithms}}
+			produkty i zwiększenie stanów magazynowych dla każdego z produktów, tak jak to podano na fakturze.
+		\end{itemize}
+		
+		\paragraph{Ewidencja produktów}
+		\begin{figure}[h]
 			\centering
 			\includegraphics[width=0.8\textwidth]{images/app/unit_products_preview}
 			\caption[Aplikacja - Ewidencja towarów w poszczególnych strefach]{Zrzut ekranu z widokiem listy produktów w wybranej strefie}
