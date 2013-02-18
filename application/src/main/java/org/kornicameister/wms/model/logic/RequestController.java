@@ -100,10 +100,11 @@ public class RequestController implements Controller {
     @Override
     public void read() {
         this.session.beginTransaction();
-        List<?> data = this.session.createQuery(this.rdata.getReadQuery()).list();
+        Collection data = this.session.createQuery(this.rdata.getReadQuery()).list();
         this.session.getTransaction().commit();
-        for (Object o : data) {
-            this.affected.add((BasicPersistentObject) o);
+
+        if ((data != null) && (!data.isEmpty())) {
+            this.affected.add((BasicPersistentObject) data.iterator().next());
         }
     }
 
