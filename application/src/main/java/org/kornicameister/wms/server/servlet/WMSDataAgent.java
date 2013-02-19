@@ -68,8 +68,7 @@ public class WMSDataAgent extends HttpServlet {
                     req.getRequestURI()));
             out.write(RequestController.buildErrorResponse());
         } else {
-            controller.process();
-            out.write(controller.buildResponse());
+            out.write(controller.process());
         }
 
     }

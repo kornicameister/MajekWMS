@@ -1,18 +1,17 @@
 package org.kornicameister.wms.model.logic.controllers.invoice;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.json.simple.JSONObject;
-import org.kornicameister.wms.model.logic.RequestController;
-import org.kornicameister.wms.server.extractor.RData;
 import org.kornicameister.wms.model.hibernate.*;
+import org.kornicameister.wms.model.logic.RequestController;
+import org.kornicameister.wms.model.logic.algorithms.*;
+import org.kornicameister.wms.model.logic.algorithms.exception.AvailableUnitProcessingException;
+import org.kornicameister.wms.model.logic.algorithms.exception.InsufficientAlgorithmConfigurationException;
+import org.kornicameister.wms.server.extractor.RData;
 import org.kornicameister.wms.utilities.Pair;
 import org.kornicameister.wms.utilities.SortedList;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author kornicameister
@@ -23,140 +22,144 @@ import java.util.Queue;
  * @created 27.12.12
  */
 public class InvoiceProductController extends RequestController {
+    private final static Logger logger = Logger.getLogger(InvoiceProductController.class.getName());
     private Invoice invoiceCache;
-    private final List<Pair<Product, Long>> unallocatedProducts = new SortedList<>(new Comparator<Pair<Product, Long>>() {
-
-        @Override
-        public int compare(Pair<Product, Long> a, Pair<Product, Long> b) {
-            return a.getSecond().compareTo(b.getSecond());
-        }
-    }
-    );
-    private final static Logger logger = Logger
-            .getLogger(InvoiceProductController.class.getName());
+    private List<Pair<Product, Long>> unallocatedProducts;
 
     public InvoiceProductController(RData data) {
         super(data);
+        this.unallocatedProducts = new SortedList<>(new Comparator<Pair<Product, Long>>() {
+            @Override
+            public int compare(Pair<Product, Long> a, Pair<Product, Long> b) {
+                return a.getSecond().compareTo(b.getSecond());
+            }
+        });
     }
 
     @Override
     public void create() {
-        super.create();
+        try {
 
-        /**
-         * Allocation algorithm
-         * 1. check invoices type
-         * 2. get units (sort them by size in descending order)
-         * 3. start putting products per unit
-         */
-        class AllocationAlgorithmExecutor {
-            InvoiceType type = invoiceCache.getType();
-            Queue<Pair<Unit, Long>> units = new SortedList<>(new Comparator<Pair<Unit, Long>>() {
-                @Override
-                public int compare(Pair<Unit, Long> unitLongPair, Pair<Unit, Long> unitLongPair2) {
-                    return unitLongPair.getSecond().compareTo(unitLongPair2.getSecond()) * (-1);
-                }
-            });
-            List<Pair<Product, Long>> allocatedProducts = new ArrayList<>();
+            this.parsePayload();
 
-            AllocationAlgorithmExecutor(Session session) {
-                List<? extends Unit> data = session.createQuery("from Unit").list();
-                for (Unit u : data) {
-                    this.units.add(new Pair(u, u.getLeftSize()));
+            List<Unit> units = new ArrayList<>();
+            List data = this.session.createQuery("from Unit").list();
+            for (Object object : data) {
+                if (object instanceof Unit) {
+                    units.add((Unit) object);
                 }
             }
 
-            public void run() {
-                session.beginTransaction();
-                switch (this.type.getName()) {
-                    case "supply":
-                        this.allocateBySupply();
-                        break;
-                    case "receipt":
-                        this.allocateByReceipt();
-                        break;
-                }
-                unallocatedProducts.removeAll(this.allocatedProducts);
-                session.getTransaction().commit();
+            Allocatable allocator = new AlgorithmExecutor()
+                    .setAvailableUnits(units)
+                    .setUnallocatedProducts(this.unallocatedProducts)
+                    .setByReceiptAlgorithm(new AlgorithmProcessable() {
+                        @Override
+                        public boolean execute(Queue<AvailableUnit> availableUnits, List<Pair<Product, Long>> unallocatedProducts) {
+                            return false;
+                        }
+
+                        @Override
+                        public Set<UnitProduct> getResult() {
+                            return null;
+                        }
+                    })
+                    .setBySupplyAlgorithm(new AlgorithmProcessable() {
+                        private List<Product> allocatedProducts = new ArrayList<>();
+                        private Queue<AvailableUnit> availableUnits;
+                        private Set<UnitProduct> results = new HashSet<>();
+
+                        @Override
+                        public boolean execute(Queue<AvailableUnit> availableUnits,
+                                               List<Pair<Product, Long>> unallocatedProducts) {
+
+                            this.availableUnits = availableUnits;
+
+                            for (Pair<Product, Long> productLongPair : unallocatedProducts) {
+                                this.supply(productLongPair.getSecond(), productLongPair.getFirst());
+                                this.allocatedProducts.add(productLongPair.getFirst());
+                            }
+
+                            return this.allocatedProducts.size() > 0;
+                        }
+
+                        /**
+                         * This method is a convenient method that handles
+                         * updating unit's stocks status, by associating
+                         * products with particular unit.
+                         *
+                         * At the moment supply algorithm supports the most
+                         * basic allocation:
+                         * <pre>
+                         *     Products are allocated starting from the one which
+                         *     {@link org.kornicameister.wms.model.hibernate.Product#pallets} is the greatest.
+                         *     The same rule is applied to units.
+                         *     <p>
+                         *          Allocations start from the unit
+                         *          which usage is the smallest.
+                         *     </p>
+                         * </pre>
+                         *
+                         * <b style="color: red">
+                         *     This method uses recursion, stops
+                         *     when productPallets equals to 0
+                         * </b>
+                         * @param productPallets how many pallets should be allocated
+                         * @param product product which we allocate
+                         */
+                        void supply(Long productPallets, final Product product) {
+                            Long unitSize = this.availableUnits.element().getSize();
+
+                            if (productPallets > 0 && unitSize > 0) {
+                                boolean fullLoad = ((unitSize - productPallets) >= 0);
+                                UnitProduct unitProduct = new UnitProduct();
+
+                                unitProduct.setProduct(product);
+
+                                if (fullLoad) {
+                                    unitProduct.setPallets(productPallets);
+                                    unitProduct.setUnit(this.availableUnits.element().getUnit());
+
+                                    unitSize = this.availableUnits.element().getSize() - productPallets;
+                                    this.availableUnits.element().setSize(unitSize);
+
+                                    productPallets = 0l;
+                                } else {
+                                    unitProduct.setPallets(this.availableUnits.peek().getSize());
+                                    unitProduct.setUnit(this.availableUnits.remove().getUnit());
+
+                                    productPallets -= unitProduct.getUnit().getLeftSize();
+                                }
+
+                                logger.info(String.format("Updated stocks at %s", fullLoad ? "full load" : "partial load"));
+                                this.results.add(unitProduct);
+
+                                this.supply(productPallets, product);
+                            } else if (unitSize == 0l) {
+                                logger.info(String.format("%d has no left stocks available...", this.availableUnits.remove().getUnit().getId()));
+                            } else {
+                                logger.info(String.format("Finished allocating [ %d ]", product.getId()));
+                            }
+                        }
+
+                        @Override
+                        public Set<UnitProduct> getResult() {
+                            return this.results;
+                        }
+                    });
+
+            Set<UnitProduct> allocatedUnitProducts = allocator
+                    .run((this.invoiceCache.getType().getName().equals("supply") ? AlgorithmTarget.SUPPLY : AlgorithmTarget.RECEIPT));
+
+            for (UnitProduct unitProduct : allocatedUnitProducts) {
+                this.session.saveOrUpdate(unitProduct);
             }
-
-            void allocateByReceipt() {
-                logger.info(String.format("%d products to be dislocated", unallocatedProducts.size()));
-            }
-
-            /**
-             * This method allocates resources by supply.
-             * It means that will update warehouse stacks
-             * by addition.
-             */
-            void allocateBySupply() {
-                logger.info(String.format("%d products to be allocated", unallocatedProducts.size()));
-                for (Pair<Product, Long> product : unallocatedProducts) {
-                    this.supply(product.getSecond(), product.getFirst());
-                    this.allocatedProducts.add(product);
-                }
-            }
-
-            /**
-             * This method is a convenient method that handles
-             * updating unit's stocks status, by associating
-             * products with particular unit.
-             *
-             * At the moment supply algorithm supports the most
-             * basic allocation:
-             * <pre>
-             *     Products are allocated starting from the one which
-             *     {@link Product#pallets} is the greatest.
-             *     The same rule is applied to units.
-             *     <p>
-             *          Allocations start from the unit
-             *          which usage is the smallest.
-             *     </p>
-             * </pre>
-             *
-             * <b style="color: red">
-             *     This method uses recursion, stops
-             *     when productPallets equals to 0
-             * </b>
-             * @param productPallets how many pallets should be allocated
-             * @param product product which we allocate
-             */
-            void supply(Long productPallets, final Product product) {
-                Long unitSize = units.element().getSecond();
-                if (productPallets > 0 && unitSize > 0) {
-                    boolean fullLoad = ((unitSize - productPallets) >= 0);
-                    UnitProduct unitProduct = new UnitProduct();
-
-                    unitProduct.setProduct(product);
-
-                    if (fullLoad) {
-                        unitProduct.setPallets(productPallets);
-                        unitProduct.setUnit(units.element().getFirst());
-
-                        unitSize = units.element().getSecond() - productPallets;
-                        units.element().setSecond(unitSize);
-
-                        productPallets = 0l;
-                    } else {
-                        unitProduct.setPallets(units.peek().getSecond());
-                        unitProduct.setUnit(units.remove().getFirst());
-
-                        productPallets -= unitProduct.getUnit().getLeftSize();
-                    }
-
-                    session.saveOrUpdate(unitProduct);
-                    this.supply(productPallets, product);
-
-                    logger.info(String.format("Updated stocks at %s", fullLoad ? "full load" : "partial load"));
-                } else if (unitSize == 0l) {
-                    logger.info(String.format("%d has no left stocks available...", units.remove().getFirst().getId()));
-                } else {
-                    logger.info(String.format("Finished allocating [ %d ]", product.getId()));
-                }
-            }
+        } catch (AvailableUnitProcessingException processingException) {
+            logger.warn("Failed to initialize available unit list", processingException);
+        } catch (InsufficientAlgorithmConfigurationException configurationException) {
+            logger.error("Insufficient algorithm configuration detected", configurationException);
         }
 
-        new AllocationAlgorithmExecutor(this.session).run();
     }
 
     @Override

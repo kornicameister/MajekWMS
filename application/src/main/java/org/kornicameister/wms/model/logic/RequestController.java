@@ -4,7 +4,6 @@ import com.google.gson.*;
 import javassist.tools.reflect.Reflection;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.proxy.HibernateProxy;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,6 +24,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This is base class for Controller, that implements all base-level method. And
@@ -59,6 +59,7 @@ public class RequestController implements Controller {
      * produced while processing the request
      */
     private Pair<Boolean, String> errorDataHolder = null;
+    private String response;
     // -----------RESPONSE----------------/
 
     private Set<Method> setters;
@@ -73,12 +74,38 @@ public class RequestController implements Controller {
     /**
      * Method wraps CRUD action and commence request processing.
      */
-    public void process() {
+    public String process() {
         logger.info(String.format("Processing [ %s ][ %s ] request, started",
-                this.rdata.getAction().toString(), this.rdata.getController()));
-        Long startTime = System.nanoTime();
-        this.session = HibernateBridge.getSessionFactory().openSession();
-        switch (this.rdata.getAction()) {
+                this.rdata.getAction().toString(),
+                this.rdata.getController().getClass().getSimpleName()));
+        {
+            Long startTime = System.nanoTime();
+            {
+                this.session = HibernateBridge.getSessionFactory().openSession();
+                logger.info(String.format("process :: Session [ %s ] executing tasks...", session.toString()));
+                {
+                    this.session.beginTransaction();
+                    this.startCRUDJob();
+                    this.buildResponse();
+                    this.session.getTransaction().commit();
+                }
+                this.session.clear();
+                this.session.close();
+                logger.info(String.format("process :: Session [ %s ] finished with success...", session.toString()));
+            }
+            this.processTime = System.nanoTime() - startTime;
+        }
+        logger.info(String.format("Processing [ %s ][ %s ] request, finished took [ %d ms ]",
+                this.rdata.getAction().toString(),
+                this.rdata.getController().getClass().getSimpleName(),
+                TimeUnit.NANOSECONDS.toSeconds(this.processTime)));
+        return this.response;
+    }
+
+    private void startCRUDJob() {
+        final CRUD action = this.rdata.getAction();
+        logger.info(String.format("startCRUDJob :: %s executing in progress...", action.toString()));
+        switch (action) {
             case CREATE:
                 this.create();
                 break;
@@ -92,21 +119,19 @@ public class RequestController implements Controller {
                 this.update();
                 break;
         }
-        this.session.flush();
-        this.processTime = System.nanoTime() - startTime;
+        logger.info(String.format("startCRUDJob :: %s execution finished...", action.toString()));
     }
 
     // CRUD
     @Override
     public void read() {
-        this.session.beginTransaction();
         Collection data = this.session.createQuery(this.rdata.getReadQuery()).list();
-        this.session.getTransaction().commit();
 
         if ((data != null) && (!data.isEmpty())) {
-            final Iterator iterator = data.iterator();
-            while (iterator.hasNext()) {
-                this.affected.add((BasicPersistentObject) iterator.next());
+            for (Object aData : data) {
+                if (aData instanceof BasicPersistentObject) {
+                    this.affected.add((BasicPersistentObject) aData);
+                }
             }
         }
     }
@@ -120,7 +145,6 @@ public class RequestController implements Controller {
             return;
         }
 
-        this.session.beginTransaction();
         for (BasicPersistentObject entity : data) {
             if (entity instanceof PersistenceObject) {
                 PersistenceObject object = (PersistenceObject) entity;
@@ -131,34 +155,27 @@ public class RequestController implements Controller {
                 this.affected.add(entity);
             }
         }
-        this.session.getTransaction().commit();
     }
 
     @Override
     public void update() {
-        Transaction t = this.session.beginTransaction();
-        this.session.flush();
         for (Object entity : this.parsePayload()) {
             this.session.update(entity);
             this.affected.add((BasicPersistentObject) entity);
         }
-        t.commit();
     }
 
     @Override
     public void delete() {
-        Transaction t = this.session.beginTransaction();
         for (Object obj : this.parsePayload()) {
             this.session.delete(obj);
             this.affected.add((BasicPersistentObject) obj);
         }
-        t.commit();
     }
 
     // CRUD
 
-    @Override
-    public String buildResponse() {
+    private void buildResponse() {
         Gson g = new GsonBuilder()
                 .setDateFormat("m-D-y")
                 .setExclusionStrategies(HHExclusionStrategy)
@@ -176,10 +193,7 @@ public class RequestController implements Controller {
                 this.rdata.getAction()
         ), ResponseFormatBody.class));
 
-        this.session.close();
-        this.session = null;
-
-        return response.toString();
+        this.response = response.toString();
     }
 
     /**

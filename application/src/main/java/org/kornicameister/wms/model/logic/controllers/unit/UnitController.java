@@ -1,14 +1,13 @@
 package org.kornicameister.wms.model.logic.controllers.unit;
 
 import org.hibernate.Query;
-import org.hibernate.Transaction;
 import org.json.simple.JSONObject;
-import org.kornicameister.wms.model.logic.RequestController;
-import org.kornicameister.wms.server.extractor.RData;
 import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
 import org.kornicameister.wms.model.hibernate.Unit;
 import org.kornicameister.wms.model.hibernate.UnitType;
 import org.kornicameister.wms.model.hibernate.Warehouse;
+import org.kornicameister.wms.model.logic.RequestController;
+import org.kornicameister.wms.server.extractor.RData;
 import org.kornicameister.wms.utilities.Pair;
 
 import java.util.List;
@@ -41,15 +40,11 @@ public class UnitController extends RequestController {
         if (queryKey == null) {
             super.read();
         } else {
-            Transaction transaction = this.session.beginTransaction();
             Query query = this.session
                     .createQuery((this.rdata.getReadQuery() + String.format(
                             WHERE_S_WFK, queryKey.getFirst())));
             query.setParameter("wfk", queryKey.getSecond());
             List<?> data = query.list();
-            transaction.commit();
-
-            this.session.flush();
 
             for (Object o : data) {
                 this.affected.add((BasicPersistentObject) o);

@@ -20,14 +20,4 @@ public interface Controller {
     void delete();
 
     void create();
-
-    // RESPONSE
-
-    /**
-     * This method, implemented in classes, builds response that is valid in
-     * context of called CRUD action.
-     *
-     * @return
-     */
-    String buildResponse();
 }

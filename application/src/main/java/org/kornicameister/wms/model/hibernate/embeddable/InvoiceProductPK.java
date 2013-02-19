@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class InvoiceProductPK implements Serializable {
     private static final long serialVersionUID = -614537106939514217L;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Invoice invoice;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Product product;
 
     public final Invoice getInvoice() {

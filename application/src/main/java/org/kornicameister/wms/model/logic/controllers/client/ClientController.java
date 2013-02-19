@@ -3,14 +3,12 @@ package org.kornicameister.wms.model.logic.controllers.client;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.json.simple.JSONObject;
+import org.kornicameister.wms.model.hibernate.*;
 import org.kornicameister.wms.model.logic.RequestController;
 import org.kornicameister.wms.server.extractor.RData;
-import org.kornicameister.wms.model.hibernate.*;
 import org.kornicameister.wms.utilities.Pair;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 public class ClientController extends RequestController {
@@ -34,13 +32,11 @@ public class ClientController extends RequestController {
             logger.info(String.format(
                     "Client's type %s READ request is being processed", type));
 
-            this.session.beginTransaction();
-            List<?> data = query.list();
-            this.session.getTransaction().commit();
-
-            //saving !
-            //noinspection unchecked
-            this.affected.addAll((Collection<? extends BasicPersistentObject>) data);
+            for (Object object : query.list()) {
+                if (object instanceof BasicPersistentObject) {
+                    this.affected.add((BasicPersistentObject) object);
+                }
+            }
         }
     }
 
