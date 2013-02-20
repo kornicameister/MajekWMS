@@ -68,10 +68,10 @@ public class ServerControllerClassResolver {
             } catch (ClassNotFoundException exception) {
                 LOGGER.warn(String.format(
                         "Error during resolving of server controller for [ %s ]", fileName), exception);
-            } catch (InstantiationException e) {
-                LOGGER.warn("Failed to create new instance of controller", e);
-            } catch (IllegalAccessException e) {
-                LOGGER.warn("No class property access at this level", e);
+            } catch (InstantiationException instantiationException) {
+                LOGGER.warn("Failed to create new instance of controller", instantiationException);
+            } catch (IllegalAccessException illegalAccessException) {
+                LOGGER.warn("No class property access at this level", illegalAccessException);
             }
 
             if (method != null) {

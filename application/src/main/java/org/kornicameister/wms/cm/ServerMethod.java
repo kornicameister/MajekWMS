@@ -42,8 +42,7 @@ public class ServerMethod {
     }
 
     private void loadControllers() throws NotDirectoryException {
-        String controllersPackage = "src/main/java/" + this.properties.getProperty(PropertyKeyring.CONTROLLER_PACKAGE.getValue())
-                .replaceAll("\\.", File.separator);
+        String controllersPackage = this.assemblePackagePath();
         {
             LOGGER.info(String.format("Resolving initiated, entry path point [ %s ]", controllersPackage));
 
@@ -70,6 +69,35 @@ public class ServerMethod {
                     TimeUnit.NANOSECONDS.toSeconds(endTime),
                     this.mappedControllers.size()));
         }
+    }
+
+    private String assemblePackagePath() {
+        StringBuilder coreBuilder = new StringBuilder();
+        StringBuilder packagePathBuilder = new StringBuilder();
+        StringBuilder prefixBuilder = new StringBuilder();
+
+        String dirtyPrefix = this.properties.getProperty(PropertyKeyring.SRC_PREFIX.getValue());
+        for (int i = 0; i < dirtyPrefix.length(); i++) {
+            if (dirtyPrefix.charAt(i) != File.separatorChar
+                    && (dirtyPrefix.charAt(i) == '\\' || dirtyPrefix.charAt(i) == '/')) {
+                prefixBuilder.append(File.separatorChar);
+            } else {
+                prefixBuilder.append(dirtyPrefix.charAt(i));
+            }
+        }
+
+        String dirtyPath = this.properties.getProperty(PropertyKeyring.CONTROLLER_PACKAGE.getValue());
+        for (int i = 0; i < dirtyPath.length(); i++) {
+            if (dirtyPath.charAt(i) == '.') {
+                packagePathBuilder.append(File.separatorChar);
+            } else {
+                packagePathBuilder.append(dirtyPath.charAt(i));
+            }
+        }
+
+        coreBuilder.append(prefixBuilder.toString());
+        coreBuilder.append(packagePathBuilder.toString());
+        return coreBuilder.toString();
     }
 
     public ServerControllerDescriptor get(String uriMapping) {
