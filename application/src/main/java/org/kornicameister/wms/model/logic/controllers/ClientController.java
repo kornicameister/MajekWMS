@@ -1,20 +1,27 @@
-package org.kornicameister.wms.model.logic.controllers.client;
+package org.kornicameister.wms.model.logic.controllers;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.json.simple.JSONObject;
+import org.kornicameister.wms.cm.annotations.ServerController;
+import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.model.hibernate.*;
-import org.kornicameister.wms.model.logic.RequestController;
 import org.kornicameister.wms.server.extractor.RData;
 import org.kornicameister.wms.utilities.Pair;
 
 import java.util.HashMap;
 import java.util.Set;
 
+@ServerController(mapping = "wms/agent/client", model = Client.class)
 public class ClientController extends RequestController {
     public Set<Pair<Client, ClientDetails>> data;
     private final static Logger logger = Logger
             .getLogger(ClientController.class.getName());
+
+
+    public ClientController() {
+
+    }
 
     public ClientController(RData data) {
         super(data);

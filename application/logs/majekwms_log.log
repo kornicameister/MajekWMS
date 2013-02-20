@@ -279,3 +279,1167 @@
 2013-02-19 21:34:21 INFO  RequestController:122 - startCRUDJob :: CREATE execution finished...
 2013-02-19 21:34:21 INFO  RequestController:94 - process :: Session [ SessionImpl(<closed>) ] finished with success...
 2013-02-19 21:34:21 INFO  RequestController:98 - Processing [ CREATE ][ String ] request, finished took [ 4 ms ]
+2013-02-20 02:19:50 INFO  ServerMethodMapper:40 - Loading properties from path [ majekwms.properties ]
+2013-02-20 02:20:35 INFO  ServerMethodMapper:40 - Loading properties from path [ /majekwms.properties ]
+2013-02-20 02:21:01 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:21:05 INFO  ServerMethodMapper:48 - Resolving initiated, entry path point [ org.kornicameister.wms.model.logic.controllers ]
+2013-02-20 02:22:17 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:22:23 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ :::::::::::::::::::::::::::::::::::::::::::::: ]
+2013-02-20 02:23:09 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:23:20 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ org:kornicameister:wms:model:logic:controllers ]
+2013-02-20 02:23:27 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:23:31 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:23:35 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:27:41 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:27:49 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ classpath:org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:31:53 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:32:13 INFO  ServerMethodMapper:50 - Resolving initiated, entry path point [ /media/kornicameister/Dane/Dropbox/Programming/Projects/MajekWMS/application/target/test-classes/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:32:48 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:37:02 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:37:03 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:37:03 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:37:03 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:37:03 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:37:04 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:37:04 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:37:04 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:37:04 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:37:04 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:37:04 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:37:04 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:37:04 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:37:05 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:37:05 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:37:05 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:37:05 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:37:06 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:37:06 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:37:12 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:37:23 INFO  ServerMethodMapper:50 - Resolving initiated, entry path point [ /media/kornicameister/Dane/Dropbox/Programming/Projects/MajekWMS/application/target/classes/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:38:03 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:38:04 INFO  ControllerClassResolver:57 - Resolving server controller for [ AddressController$ActionData.class ]
+2013-02-20 02:38:06 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:38:06 INFO  ControllerClassResolver:57 - Resolving server controller for [ AddressController.class ]
+2013-02-20 02:38:08 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ AddressController$ActionData.class ]
+java.lang.ClassNotFoundException: AddressController$ActionData.class
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:38:09 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ AddressController.class ]
+java.lang.ClassNotFoundException: AddressController.class
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:38:09 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:38:10 INFO  ControllerClassResolver:57 - Resolving server controller for [ ClientController.class ]
+2013-02-20 02:38:10 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ ClientController.class ]
+java.lang.ClassNotFoundException: ClientController.class
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:39:30 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:39:30 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:39:30 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:39:30 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:39:30 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:39:30 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:39:30 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:39:30 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:39:31 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:39:31 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:39:31 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:39:31 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:39:31 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:39:31 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:39:31 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:39:31 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:39:31 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:39:32 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:39:32 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:39:36 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:39:38 INFO  ServerMethodMapper:50 - Resolving initiated, entry path point [ /media/kornicameister/Dane/Dropbox/Programming/Projects/MajekWMS/application/target/classes/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:39:46 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:39:50 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:39:50 INFO  ControllerClassResolver:57 - Resolving server controller for [ AddressController$ActionData.class ]
+2013-02-20 02:39:51 INFO  ControllerClassResolver:57 - Resolving server controller for [ AddressController.class ]
+2013-02-20 02:39:59 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:08 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ AddressController$ActionData.class ]
+java.lang.ClassNotFoundException: AddressController$ActionData
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:08 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ AddressController.class ]
+java.lang.ClassNotFoundException: AddressController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:08 INFO  ControllerClassResolver:57 - Resolving server controller for [ ClientController.class ]
+2013-02-20 02:40:17 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:19 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ ClientController.class ]
+java.lang.ClassNotFoundException: ClientController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:19 INFO  ControllerClassResolver:57 - Resolving server controller for [ CompanyController.class ]
+2013-02-20 02:40:20 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:21 INFO  ControllerClassResolver:57 - Resolving server controller for [ InvoiceController.class ]
+2013-02-20 02:40:21 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ CompanyController.class ]
+java.lang.ClassNotFoundException: CompanyController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:21 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:22 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ InvoiceController.class ]
+java.lang.ClassNotFoundException: InvoiceController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:22 INFO  ControllerClassResolver:57 - Resolving server controller for [ InvoiceProductController$1.class ]
+2013-02-20 02:40:22 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:27 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ InvoiceProductController$1.class ]
+java.lang.ClassNotFoundException: InvoiceProductController$1
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:27 INFO  ControllerClassResolver:57 - Resolving server controller for [ InvoiceProductController$2.class ]
+2013-02-20 02:40:27 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:31 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ InvoiceProductController$2.class ]
+java.lang.ClassNotFoundException: InvoiceProductController$2
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:31 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:31 INFO  ControllerClassResolver:57 - Resolving server controller for [ InvoiceProductController$3.class ]
+2013-02-20 02:40:32 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ InvoiceProductController$3.class ]
+java.lang.ClassNotFoundException: InvoiceProductController$3
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:32 INFO  ControllerClassResolver:57 - Resolving server controller for [ InvoiceProductController.class ]
+2013-02-20 02:40:33 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:34 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ InvoiceProductController.class ]
+java.lang.ClassNotFoundException: InvoiceProductController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:34 INFO  ControllerClassResolver:57 - Resolving server controller for [ MeasureController.class ]
+2013-02-20 02:40:35 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:35 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ MeasureController.class ]
+java.lang.ClassNotFoundException: MeasureController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:36 INFO  ControllerClassResolver:57 - Resolving server controller for [ ProductController$ActionData.class ]
+2013-02-20 02:40:36 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:36 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ ProductController$ActionData.class ]
+java.lang.ClassNotFoundException: ProductController$ActionData
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:37 INFO  ControllerClassResolver:57 - Resolving server controller for [ ProductController.class ]
+2013-02-20 02:40:41 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:41 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:41 INFO  ControllerClassResolver:57 - Resolving server controller for [ UnitController$ActionData.class ]
+2013-02-20 02:40:41 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:40:41 INFO  ControllerClassResolver:57 - Resolving server controller for [ UnitController.class ]
+2013-02-20 02:40:41 INFO  ControllerClassResolver:57 - Resolving server controller for [ UnitTypeController.class ]
+2013-02-20 02:40:42 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ UnitTypeController.class ]
+java.lang.ClassNotFoundException: UnitTypeController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:42 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ ProductController.class ]
+java.lang.ClassNotFoundException: ProductController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:42 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ UnitController$ActionData.class ]
+java.lang.ClassNotFoundException: UnitController$ActionData
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:42 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ UnitController.class ]
+java.lang.ClassNotFoundException: UnitController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:40:42 INFO  ServerMethodMapper:69 - Resolving initiated, finished with [ 63098 ms ][ 0 controllers]
+2013-02-20 02:41:27 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:41:28 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:41:28 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:41:28 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:41:28 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:41:28 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:41:28 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:41:28 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:41:28 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:41:28 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:41:28 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:41:28 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:41:28 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:41:29 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:41:29 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:41:29 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:41:29 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:41:29 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:41:29 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:41:29 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:41:31 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:44:20 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:44:20 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:44:20 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:44:20 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:44:20 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:44:20 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:44:20 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:44:20 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:44:21 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:44:21 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:44:21 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:44:21 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:44:21 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:44:21 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:44:21 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:44:21 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:44:21 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:44:22 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:44:22 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:44:22 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:44:26 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:45:59 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:45:59 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:45:59 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:45:59 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:45:59 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:46:00 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:46:00 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:46:00 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:46:00 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:46:00 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:46:00 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:46:00 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:46:00 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:46:01 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:46:01 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:46:01 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:46:01 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:46:01 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:46:01 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:46:01 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:46:35 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:46:35 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:46:35 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:46:35 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:46:35 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:46:35 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:46:35 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:46:36 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:46:36 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:46:36 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:46:36 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:46:36 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:46:36 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:46:37 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:46:37 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:46:37 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:46:37 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:46:37 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:46:37 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:46:37 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:46:39 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:46:44 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:46:49 INFO  ControllerClassResolver:57 - Resolving server controller for [ AddressController.java ]
+2013-02-20 02:46:50 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:46:50 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:46:55 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:46:55 INFO  ControllerClassResolver:57 - Resolving server controller for [ ClientController.java ]
+2013-02-20 02:46:55 INFO  ControllerClassResolver:57 - Resolving server controller for [ CompanyController.java ]
+2013-02-20 02:46:55 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:46:55 INFO  ControllerClassResolver:57 - Resolving server controller for [ InvoiceController.java ]
+2013-02-20 02:46:55 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:46:55 INFO  ControllerClassResolver:57 - Resolving server controller for [ InvoiceProductController.java ]
+2013-02-20 02:46:55 WARN  ControllerClassResolver:46 - File not recognized as java source file...
+2013-02-20 02:46:58 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ AddressController.java ]
+java.lang.ClassNotFoundException: AddressController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:46:58 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ ClientController.java ]
+java.lang.ClassNotFoundException: ClientController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:46:58 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ InvoiceController.java ]
+java.lang.ClassNotFoundException: InvoiceController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:46:58 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ InvoiceProductController.java ]
+java.lang.ClassNotFoundException: InvoiceProductController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:46:58 INFO  ControllerClassResolver:57 - Resolving server controller for [ MeasureController.java ]
+2013-02-20 02:46:55 WARN  ControllerClassResolver:84 - Error during resolving of server controller for [ CompanyController.java ]
+java.lang.ClassNotFoundException: CompanyController
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:63)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:46:58 INFO  ControllerClassResolver:57 - Resolving server controller for [ ProductController.java ]
+2013-02-20 02:47:55 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:47:55 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:47:55 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:47:55 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:47:55 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:47:55 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:47:55 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:47:55 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:47:56 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:47:56 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:47:56 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:47:56 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:47:56 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:47:56 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:47:56 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:47:57 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:47:57 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:47:57 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:47:57 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:47:57 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:48:04 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:48:04 INFO  ControllerClassResolver:49 - Resolving server controller for [ AddressController.java ]
+2013-02-20 02:48:05 INFO  ControllerClassResolver:49 - Resolving server controller for [ UnitController.java ]
+2013-02-20 02:48:04 INFO  ControllerClassResolver:49 - Resolving server controller for [ CompanyController.java ]
+2013-02-20 02:48:04 INFO  ControllerClassResolver:49 - Resolving server controller for [ MeasureController.java ]
+2013-02-20 02:48:12 INFO  ControllerClassResolver:49 - Resolving server controller for [ UnitTypeController.java ]
+2013-02-20 02:48:04 INFO  ControllerClassResolver:49 - Resolving server controller for [ ClientController.java ]
+2013-02-20 02:48:04 INFO  ControllerClassResolver:49 - Resolving server controller for [ InvoiceController.java ]
+2013-02-20 02:48:05 INFO  ControllerClassResolver:49 - Resolving server controller for [ InvoiceProductController.java ]
+2013-02-20 02:48:05 INFO  ControllerClassResolver:49 - Resolving server controller for [ ProductController.java ]
+2013-02-20 02:48:12 INFO  ServerMethodMapper:66 - Resolving initiated, finished with [ 5 ms ][ 0 controllers]
+2013-02-20 02:48:15 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ UnitTypeController.java ]
+java.lang.ClassNotFoundException: UnitTypeController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:48:19 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ UnitController.java ]
+java.lang.ClassNotFoundException: UnitController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:48:15 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ CompanyController.java ]
+java.lang.ClassNotFoundException: CompanyController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:48:15 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ MeasureController.java ]
+java.lang.ClassNotFoundException: MeasureController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:48:15 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ AddressController.java ]
+java.lang.ClassNotFoundException: AddressController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:48:15 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ InvoiceController.java ]
+java.lang.ClassNotFoundException: InvoiceController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:48:15 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ InvoiceProductController.java ]
+java.lang.ClassNotFoundException: InvoiceProductController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:48:15 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ ProductController.java ]
+java.lang.ClassNotFoundException: ProductController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:48:15 WARN  ControllerClassResolver:76 - Error during resolving of server controller for [ ClientController.java ]
+java.lang.ClassNotFoundException: ClientController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:55:01 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:55:02 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:55:02 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:55:02 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:55:02 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:55:02 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:55:02 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:55:02 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:55:03 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:55:03 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:55:03 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:55:03 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:55:03 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:55:03 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:55:03 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:55:03 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:55:03 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:55:03 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:55:03 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:55:03 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:55:08 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:55:09 INFO  ControllerClassResolver:49 - Resolving server controller for [ AddressController.java ]
+2013-02-20 02:55:09 INFO  ControllerClassResolver:49 - Resolving server controller for [ ClientController.java ]
+2013-02-20 02:55:09 INFO  ControllerClassResolver:49 - Resolving server controller for [ ProductController.java ]
+2013-02-20 02:55:09 INFO  ControllerClassResolver:49 - Resolving server controller for [ InvoiceProductController.java ]
+2013-02-20 02:55:09 INFO  ControllerClassResolver:49 - Resolving server controller for [ CompanyController.java ]
+2013-02-20 02:55:19 INFO  ControllerClassResolver:49 - Resolving server controller for [ UnitTypeController.java ]
+2013-02-20 02:55:09 INFO  ControllerClassResolver:49 - Resolving server controller for [ MeasureController.java ]
+2013-02-20 02:55:19 INFO  ControllerClassResolver:49 - Resolving server controller for [ UnitController.java ]
+2013-02-20 02:55:19 INFO  ControllerClassResolver:49 - Resolving server controller for [ InvoiceController.java ]
+2013-02-20 02:55:19 WARN  ControllerClassResolver:77 - Error during resolving of server controller for [ UnitController.java ]
+java.lang.ClassNotFoundException: UnitController.java
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1714)
+	at org.apache.catalina.loader.WebappClassLoader.loadClass(WebappClassLoader.java:1559)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:188)
+	at org.kornicameister.wms.cm.resolver.ControllerClassResolver$1.run(ControllerClassResolver.java:55)
+	at java.lang.Thread.run(Thread.java:722)
+2013-02-20 02:57:35 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:57:36 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:57:36 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:57:36 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:57:36 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:57:36 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:57:36 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:57:36 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:57:37 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:57:37 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:57:37 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:57:37 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:57:37 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:57:37 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:57:37 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:57:37 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:57:37 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:57:37 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:57:37 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:57:37 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:57:40 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:57:40 INFO  ControllerClassResolver:50 - Resolving server controller for [ src/main/java/org/kornicameister/wms/model/logic/controllers.ClientController ]
+2013-02-20 02:57:48 INFO  ControllerClassResolver:50 - Resolving server controller for [ src/main/java/org/kornicameister/wms/model/logic/controllers.UnitTypeController ]
+2013-02-20 02:57:48 INFO  ServerMethodMapper:66 - Resolving initiated, finished with [ 7 ms ][ 0 controllers]
+2013-02-20 02:58:34 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:58:34 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:58:34 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:58:34 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:58:34 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:58:34 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:58:34 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:58:34 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:58:35 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:58:35 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:58:35 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:58:35 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:58:35 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:58:35 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:58:35 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:58:35 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:58:35 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:58:35 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:58:36 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:58:36 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:58:43 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 02:58:43 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 02:58:43 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 02:58:43 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 02:58:43 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 02:58:43 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 02:58:43 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 02:58:47 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 02:58:47 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 02:58:48 INFO  ServerMethodMapper:66 - Resolving initiated, finished with [ 0 ms ][ 0 controllers]
+2013-02-20 02:58:52 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 02:59:41 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 02:59:41 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 02:59:41 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 02:59:41 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 02:59:41 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 02:59:41 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 02:59:41 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 02:59:41 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 02:59:42 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 02:59:42 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 02:59:42 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 02:59:42 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 02:59:42 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 02:59:42 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 02:59:42 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 02:59:42 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 02:59:42 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 02:59:43 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 02:59:43 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 02:59:43 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 02:59:55 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:00:26 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:00:29 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:00:30 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:00:31 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:00:31 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:00:32 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:00:33 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:00:33 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:00:34 INFO  ControllerClassResolver:50 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:00:36 INFO  ServerMethodMapper:66 - Resolving initiated, finished with [ 40 ms ][ 0 controllers]
+2013-02-20 03:02:24 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:02:24 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:02:24 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:02:24 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:02:24 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:02:24 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:02:24 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:02:24 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:02:25 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:02:25 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:02:25 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:02:25 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:02:25 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:02:25 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:02:25 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:02:25 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:02:25 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:02:26 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:02:26 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 03:02:26 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 03:02:29 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:02:34 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:02:40 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:02:51 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:02:52 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:02:53 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:02:54 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:02:55 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:02:58 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:03:22 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:03:43 INFO  ServerMethodMapper:66 - Resolving initiated, finished with [ 72 ms ][ 0 controllers]
+2013-02-20 03:04:27 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:04:27 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:04:28 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:04:28 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:04:28 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:04:28 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:04:28 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:04:28 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:04:28 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:04:28 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:04:28 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:04:28 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:04:28 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:04:29 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:04:29 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:04:29 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:04:29 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:04:29 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:04:29 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 03:04:29 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 03:04:32 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:04:39 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:04:40 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:04:41 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:04:41 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:04:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:04:43 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:04:43 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:04:44 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:04:46 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:05:01 INFO  ControllerClassResolver:55 - Annotation and interface test passed
+2013-02-20 03:05:07 INFO  ControllerClassResolver:65 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/unittype', mappedClazz=class org.kornicameister.wms.model.hibernate.UnitType, filePath='org.kornicameister.wms.model.logic.controllers.UnitTypeController', controller=org.kornicameister.wms.model.logic.controllers.UnitTypeController@df2eb2e} ]
+2013-02-20 03:05:43 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:05:44 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:05:44 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:05:44 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:05:44 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:05:44 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:05:44 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:05:44 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:05:45 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:05:45 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:05:45 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:05:45 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:05:45 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:05:45 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:05:45 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:05:45 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:05:46 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:05:46 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:05:46 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 03:05:46 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 03:06:06 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:06:06 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:06:06 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:06:06 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:06:06 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:06:06 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:06:06 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:06:06 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:06:07 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:06:07 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:06:07 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:06:07 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:06:07 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:06:07 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:06:07 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:06:07 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:06:07 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:06:07 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:06:07 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 03:06:07 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 03:06:07 INFO  ServerMethodMapper:49 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:06:07 INFO  ControllerClassResolver:55 - Annotation and interface test passed
+2013-02-20 03:06:07 INFO  ControllerClassResolver:65 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/unittype', mappedClazz=class org.kornicameister.wms.model.hibernate.UnitType, filePath='/media/kornicameister/Dane/Dropbox/Programming/Projects/MajekWMS/application/src/main/java/org/kornicameister/wms/model/logic/controllers/UnitTypeController.java', controller=org.kornicameister.wms.model.logic.controllers.UnitTypeController@5fc459b6} ]
+2013-02-20 03:06:07 INFO  ServerMethodMapper:66 - Resolving initiated, finished with [ 0 ms ][ 1 controllers]
+2013-02-20 03:09:18 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:09:18 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:09:18 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:09:18 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:09:18 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:09:18 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:09:18 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:09:18 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:09:19 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:09:19 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:09:19 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:09:19 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:09:19 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:09:19 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:09:19 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:09:19 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:09:19 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:09:20 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:09:20 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 03:09:20 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 03:09:20 INFO  ServerMethodMapper:48 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:55 - Annotation and interface test passed
+2013-02-20 03:09:20 INFO  ControllerClassResolver:65 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/invoice', mappedClazz=class org.kornicameister.wms.model.hibernate.Invoice, filePath='/media/kornicameister/Dane/Dropbox/Programming/Projects/MajekWMS/application/src/main/java/org/kornicameister/wms/model/logic/controllers/InvoiceController.java', controller=org.kornicameister.wms.model.logic.controllers.InvoiceController@1a5c2f5b} ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:09:20 INFO  ControllerClassResolver:55 - Annotation and interface test passed
+2013-02-20 03:09:20 INFO  ControllerClassResolver:65 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/unittype', mappedClazz=class org.kornicameister.wms.model.hibernate.UnitType, filePath='/media/kornicameister/Dane/Dropbox/Programming/Projects/MajekWMS/application/src/main/java/org/kornicameister/wms/model/logic/controllers/UnitTypeController.java', controller=org.kornicameister.wms.model.logic.controllers.UnitTypeController@635d1003} ]
+2013-02-20 03:09:20 INFO  ServerMethodMapper:69 - Resolving initiated, finished with [ 0 ms ][ 2 controllers]
+2013-02-20 03:09:23 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:09:23 INFO  WMSDataAgent:58 - Closed Hibernate connection
+2013-02-20 03:09:26 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:09:26 INFO  WMSDataAgent:58 - Closed Hibernate connection
+2013-02-20 03:09:40 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:09:40 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:09:40 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:09:40 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:09:40 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:09:40 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:09:40 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:09:40 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:09:41 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:09:41 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:09:41 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:09:41 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:09:41 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:09:41 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:09:41 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:09:41 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:09:41 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:09:42 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:09:42 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 03:09:42 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 03:09:42 INFO  ServerMethodMapper:48 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:55 - Annotation and interface test passed
+2013-02-20 03:09:42 INFO  ControllerClassResolver:65 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/invoice', mappedClazz=class org.kornicameister.wms.model.hibernate.Invoice, filePath='/media/kornicameister/Dane/Dropbox/Programming/Projects/MajekWMS/application/src/main/java/org/kornicameister/wms/model/logic/controllers/InvoiceController.java', controller=org.kornicameister.wms.model.logic.controllers.InvoiceController@e5c7e17} ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:09:42 INFO  ControllerClassResolver:55 - Annotation and interface test passed
+2013-02-20 03:09:42 INFO  ControllerClassResolver:65 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/unittype', mappedClazz=class org.kornicameister.wms.model.hibernate.UnitType, filePath='/media/kornicameister/Dane/Dropbox/Programming/Projects/MajekWMS/application/src/main/java/org/kornicameister/wms/model/logic/controllers/UnitTypeController.java', controller=org.kornicameister.wms.model.logic.controllers.UnitTypeController@5a3770d2} ]
+2013-02-20 03:09:42 INFO  ServerMethodMapper:69 - Resolving initiated, finished with [ 0 ms ][ 2 controllers ]
+2013-02-20 03:10:32 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:10:32 INFO  WMSDataAgent:58 - Closed Hibernate connection
+2013-02-20 03:10:46 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:10:46 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:10:46 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:10:46 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:10:46 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:10:46 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:10:46 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:10:46 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:10:47 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:10:47 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:10:47 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:10:47 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:10:47 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:10:47 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:10:47 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:10:47 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:10:47 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:10:48 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:10:48 INFO  WMSDataAgent:35 - Hibernate connection is up and running, status = true
+2013-02-20 03:10:48 INFO  ServerMethodMapper:40 - Loading properties from path [ /home/kornicameister/Dropbox/Programming/Projects/MajekWMS/application/src/main/resources/majekwms.properties ]
+2013-02-20 03:10:48 INFO  ServerMethodMapper:48 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:64 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/invoice', mappedClazz=class org.kornicameister.wms.model.hibernate.Invoice, controller=org.kornicameister.wms.model.logic.controllers.InvoiceController@5a1232e2} ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:10:48 INFO  ControllerClassResolver:64 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/unittype', mappedClazz=class org.kornicameister.wms.model.hibernate.UnitType, controller=org.kornicameister.wms.model.logic.controllers.UnitTypeController@7751186e} ]
+2013-02-20 03:10:48 INFO  ServerMethodMapper:69 - Resolving initiated, finished with [ 0 ms ][ 2 controllers ]
+2013-02-20 03:14:04 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:14:04 INFO  WMSDataAgent:58 - Closed Hibernate connection
+2013-02-20 03:14:18 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:14:19 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:14:19 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:14:19 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:14:19 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:14:19 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:14:19 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:14:19 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:14:20 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:14:20 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:14:20 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:14:20 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:14:20 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:14:20 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:14:20 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:14:20 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:14:20 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:14:20 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:14:20 INFO  WMSDataAgent:36 - Hibernate connection is up and running, status = true
+2013-02-20 03:16:44 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:16:44 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:16:44 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:16:44 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:16:44 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:16:45 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:16:45 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:16:45 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:16:45 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:16:45 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:16:45 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:16:45 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:16:45 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:16:46 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:16:46 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:16:46 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:16:46 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:16:46 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:16:46 INFO  WMSDataAgent:36 - Hibernate connection is up and running, status = true
+2013-02-20 03:16:46 INFO  WMSDataAgent:50 - Configuring from resources/majekwms.properties
+2013-02-20 03:16:46 INFO  ServerMethod:40 - Loading properties from path [ resources/majekwms.properties ]
+2013-02-20 03:17:00 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:17:00 INFO  WMSDataAgent:63 - Closed Hibernate connection
+2013-02-20 03:17:13 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:17:13 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:17:13 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:17:13 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:17:13 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:17:13 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:17:13 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:17:13 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:17:14 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:17:14 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:17:14 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:17:14 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:17:14 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:17:14 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:17:14 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:17:14 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:17:14 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:17:14 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:17:14 INFO  WMSDataAgent:36 - Hibernate connection is up and running, status = true
+2013-02-20 03:17:14 INFO  WMSDataAgent:50 - Configuring from /resources/majekwms.properties
+2013-02-20 03:17:14 INFO  ServerMethod:40 - Loading properties from path [ /resources/majekwms.properties ]
+2013-02-20 03:17:27 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:17:27 INFO  WMSDataAgent:63 - Closed Hibernate connection
+2013-02-20 03:17:38 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:17:38 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:17:38 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:17:38 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:17:38 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:17:38 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:17:38 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:17:39 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:17:39 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:17:39 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:17:39 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:17:39 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:17:39 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:17:40 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:17:40 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:17:40 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:17:40 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:17:40 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:17:40 INFO  WMSDataAgent:36 - Hibernate connection is up and running, status = true
+2013-02-20 03:17:40 INFO  WMSDataAgent:50 - Configuring from classpath:resources/majekwms.properties
+2013-02-20 03:17:40 INFO  ServerMethod:40 - Loading properties from path [ classpath:resources/majekwms.properties ]
+2013-02-20 03:17:50 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:17:50 INFO  WMSDataAgent:63 - Closed Hibernate connection
+2013-02-20 03:18:00 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:18:00 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:18:00 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:18:00 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:18:00 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:18:00 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:18:00 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:18:01 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:18:01 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:18:01 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:18:01 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:18:01 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:18:01 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:18:01 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:18:01 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:18:01 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:18:01 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:18:02 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:18:02 INFO  WMSDataAgent:36 - Hibernate connection is up and running, status = true
+2013-02-20 03:18:02 INFO  WMSDataAgent:50 - Configuring from src/main/resources/majekwms.properties
+2013-02-20 03:18:02 INFO  ServerMethod:40 - Loading properties from path [ src/main/resources/majekwms.properties ]
+2013-02-20 03:18:02 INFO  ServerMethod:48 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:64 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/invoice', mappedClazz=class org.kornicameister.wms.model.hibernate.Invoice, controller=org.kornicameister.wms.model.logic.controllers.InvoiceController@608bb473} ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:45 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:18:02 INFO  ServerControllerClassResolver:64 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/unittype', mappedClazz=class org.kornicameister.wms.model.hibernate.UnitType, controller=org.kornicameister.wms.model.logic.controllers.UnitTypeController@39f5ec0d} ]
+2013-02-20 03:18:02 INFO  ServerMethod:69 - Resolving initiated, finished with [ 0 ms ][ 2 controllers ]
+2013-02-20 03:22:44 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:22:44 INFO  WMSDataAgent:63 - Closed Hibernate connection
+2013-02-20 03:22:59 INFO  WMSAuthAgent:25 - Authorization module is up and running
+2013-02-20 03:22:59 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-02-20 03:22:59 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-02-20 03:22:59 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-02-20 03:22:59 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-02-20 03:22:59 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-02-20 03:22:59 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-02-20 03:22:59 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-02-20 03:23:00 INFO  DriverManagerConnectionProviderImpl:96 - HHH000402: Using Hibernate built-in connection pool (not for production use!)
+2013-02-20 03:23:00 INFO  DriverManagerConnectionProviderImpl:130 - HHH000115: Hibernate connection pool size: 20
+2013-02-20 03:23:00 INFO  DriverManagerConnectionProviderImpl:133 - HHH000006: Autocommit mode: true
+2013-02-20 03:23:00 INFO  DriverManagerConnectionProviderImpl:147 - HHH000401: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/majekwms]
+2013-02-20 03:23:00 INFO  DriverManagerConnectionProviderImpl:152 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-02-20 03:23:00 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2013-02-20 03:23:00 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-02-20 03:23:00 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-02-20 03:23:00 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-02-20 03:23:01 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-02-20 03:23:01 INFO  WMSDataAgent:36 - Hibernate connection is up and running, status = true
+2013-02-20 03:23:01 INFO  WMSDataAgent:49 - Configuring from src/main/resources/server_methods.properties
+2013-02-20 03:23:01 INFO  ServerMethod:40 - Loading properties from path [ src/main/resources/server_methods.properties ]
+2013-02-20 03:23:01 INFO  ServerMethod:48 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:63 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/invoice', mappedClazz=class org.kornicameister.wms.model.hibernate.Invoice, controller=org.kornicameister.wms.model.logic.controllers.InvoiceController@48f2ad21} ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:44 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-02-20 03:23:01 INFO  ServerControllerClassResolver:63 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/unittype', mappedClazz=class org.kornicameister.wms.model.hibernate.UnitType, controller=org.kornicameister.wms.model.logic.controllers.UnitTypeController@394b5c1e} ]
+2013-02-20 03:23:01 INFO  ServerMethod:69 - Resolving initiated, finished with [ 0 ms ][ 2 controllers ]
+2013-02-20 03:23:12 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:12 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:12 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:12 INFO  WMSAuthAgent:39 - Failed to found any user attached to the session
+2013-02-20 03:23:12 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:12 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:12 INFO  RDExtractor:88 - Trial 2 :: Using CITY as source
+2013-02-20 03:23:12 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-20 03:23:12 INFO  RDExtractor:88 - Trial 2 :: Using CLIENTTYPE as source
+2013-02-20 03:23:12 INFO  RDExtractor:88 - Trial 2 :: Using UNITTYPE as source
+2013-02-20 03:23:12 INFO  RDExtractor:88 - Trial 2 :: Using MEASURE as source
+2013-02-20 03:23:12 INFO  RDExtractor:91 - Trial 3 :: Using City as source
+2013-02-20 03:23:12 INFO  RDExtractor:91 - Trial 3 :: Using ClientType as source
+2013-02-20 03:23:12 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:12 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.UnitType, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.UnitTypeController} ]
+2013-02-20 03:23:12 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:12 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:12 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Client, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.ClientController} ]
+2013-02-20 03:23:12 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:12 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:12 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:12 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.City, entityControllerClass=class org.kornicameister.wms.cm.impl.RequestController} ]
+2013-02-20 03:23:12 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:12 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.ClientType, entityControllerClass=class org.kornicameister.wms.cm.impl.RequestController} ]
+2013-02-20 03:23:12 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:12 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:12 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Measure, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.MeasureController} ]
+2013-02-20 03:23:12 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:12 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:13 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-20 03:23:13 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:13 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Client, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.ClientController} ]
+2013-02-20 03:23:13 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:14 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:14 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:14 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:14 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:14 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:14 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:14 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:14 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:14 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:14 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:14 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:14 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:15 INFO  WMSAuthAgent:141 - User is missing and could have been located in the session
+2013-02-20 03:23:16 INFO  ClientController:39 - Client's type supplier READ request is being processed
+2013-02-20 03:23:16 INFO  ClientController:39 - Client's type recipient READ request is being processed
+2013-02-20 03:23:16 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:16 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:16 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:16 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:16 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:16 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:16 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:16 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 4 ms ]
+2013-02-20 03:23:16 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:16 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:16 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 4 ms ]
+2013-02-20 03:23:16 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:16 INFO  RDExtractor:88 - Trial 2 :: Using INVOICEPRODUCT as source
+2013-02-20 03:23:16 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:16 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:16 INFO  RDExtractor:88 - Trial 2 :: Using INVOICETYPE as source
+2013-02-20 03:23:16 INFO  RDExtractor:91 - Trial 3 :: Using InvoiceType as source
+2013-02-20 03:23:16 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:16 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.InvoiceType, entityControllerClass=class org.kornicameister.wms.cm.impl.RequestController} ]
+2013-02-20 03:23:16 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:16 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:16 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 4 ms ]
+2013-02-20 03:23:16 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.InvoiceProduct, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.InvoiceProductController} ]
+2013-02-20 03:23:16 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:16 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:16 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:16 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:16 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:17 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:17 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 3 ms ]
+2013-02-20 03:23:17 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:17 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
+2013-02-20 03:23:17 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:17 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 4 ms ]
+2013-02-20 03:23:17 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:17 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 4 ms ]
+2013-02-20 03:23:17 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:18 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:18 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 1 ms ]
+2013-02-20 03:23:35 INFO  WMSAuthAgent:39 - Failed to found any user attached to the session
+2013-02-20 03:23:35 INFO  WMSAuthAgent:141 - User is missing and could have been located in the session
+2013-02-20 03:23:36 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:36 INFO  RDExtractor:88 - Trial 2 :: Using UNITTYPE as source
+2013-02-20 03:23:36 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:36 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.UnitType, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.UnitTypeController} ]
+2013-02-20 03:23:36 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:36 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:36 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:36 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:36 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:36 INFO  RDExtractor:88 - Trial 2 :: Using MEASURE as source
+2013-02-20 03:23:36 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:36 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Measure, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.MeasureController} ]
+2013-02-20 03:23:36 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:36 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:36 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:36 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:36 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:36 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
+2013-02-20 03:23:36 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:36 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
+2013-02-20 03:23:36 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:36 INFO  RDExtractor:88 - Trial 2 :: Using CITY as source
+2013-02-20 03:23:36 INFO  RDExtractor:91 - Trial 3 :: Using City as source
+2013-02-20 03:23:36 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:36 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.City, entityControllerClass=class org.kornicameister.wms.cm.impl.RequestController} ]
+2013-02-20 03:23:36 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:36 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:36 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:36 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:36 INFO  RDExtractor:88 - Trial 2 :: Using CLIENTTYPE as source
+2013-02-20 03:23:36 INFO  RDExtractor:91 - Trial 3 :: Using ClientType as source
+2013-02-20 03:23:36 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:36 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.ClientType, entityControllerClass=class org.kornicameister.wms.cm.impl.RequestController} ]
+2013-02-20 03:23:36 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:36 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:36 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:36 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:36 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:36 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
+2013-02-20 03:23:36 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:36 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-20 03:23:36 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:36 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Client, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.ClientController} ]
+2013-02-20 03:23:36 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:36 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:36 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:36 INFO  ClientController:39 - Client's type supplier READ request is being processed
+2013-02-20 03:23:36 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:36 INFO  RDExtractor:88 - Trial 2 :: Using CLIENT as source
+2013-02-20 03:23:36 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:36 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.Client, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.ClientController} ]
+2013-02-20 03:23:36 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:36 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:36 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:36 INFO  ClientController:39 - Client's type recipient READ request is being processed
+2013-02-20 03:23:36 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:36 INFO  RDExtractor:88 - Trial 2 :: Using INVOICETYPE as source
+2013-02-20 03:23:36 INFO  RDExtractor:91 - Trial 3 :: Using InvoiceType as source
+2013-02-20 03:23:36 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:36 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:36 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:36 INFO  WMSDataAgent:70 - Processing request READ
+2013-02-20 03:23:36 INFO  RDExtractor:88 - Trial 2 :: Using INVOICEPRODUCT as source
+2013-02-20 03:23:36 INFO  RDExtractor:162 - Extracted payload data, size = [ 0 ]
+2013-02-20 03:23:36 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.InvoiceProduct, entityControllerClass=class org.kornicameister.wms.model.logic.controllers.InvoiceProductController} ]
+2013-02-20 03:23:36 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:36 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:36 INFO  RequestController:440 - Successfully loaded controller for name [ RequestModule{entityClass=class org.kornicameister.wms.model.hibernate.InvoiceType, entityControllerClass=class org.kornicameister.wms.cm.impl.RequestController} ]
+2013-02-20 03:23:36 INFO  RequestController:84 - Processing [ READ ][ String ] request, started
+2013-02-20 03:23:36 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:36 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:36 INFO  RequestController:91 - process :: Session [ SessionImpl(PersistenceContext[entityKeys=[],collectionKeys=[]];ActionQueue[insertions=[] updates=[] deletions=[] collectionCreations=[] collectionRemovals=[] collectionUpdates=[] unresolvedInsertDependencies=UnresolvedEntityInsertActions[]]) ] executing tasks...
+2013-02-20 03:23:36 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:36 INFO  RequestController:113 - startCRUDJob :: READ executing in progress...
+2013-02-20 03:23:36 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:36 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
+2013-02-20 03:23:36 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:36 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
+2013-02-20 03:23:36 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:36 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
+2013-02-20 03:23:36 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:36 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
+2013-02-20 03:23:36 INFO  RequestController:128 - startCRUDJob :: READ execution finished...
+2013-02-20 03:23:38 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
+2013-02-20 03:23:38 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 1 ms ]
+2013-02-20 03:25:10 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-02-20 03:25:10 INFO  WMSDataAgent:61 - Closed Hibernate connection

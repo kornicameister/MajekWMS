@@ -1,13 +1,11 @@
-package org.kornicameister.wms.model.logic.controllers.product;
+package org.kornicameister.wms.model.logic.controllers;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
-import org.kornicameister.wms.model.logic.RequestController;
+import org.kornicameister.wms.cm.annotations.ServerController;
+import org.kornicameister.wms.cm.impl.RequestController;
+import org.kornicameister.wms.model.hibernate.*;
 import org.kornicameister.wms.server.extractor.RData;
-import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
-import org.kornicameister.wms.model.hibernate.Measure;
-import org.kornicameister.wms.model.hibernate.Product;
-import org.kornicameister.wms.model.hibernate.Unit;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,10 +13,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+@ServerController(mapping = "wms/agent/product", model = Product.class)
 public class ProductController extends RequestController {
     private Map<Unit, HashSet<Product>> unitProduct;
     private final static Logger logger = Logger
             .getLogger(ProductController.class.getName());
+
+    public ProductController() {
+
+    }
 
     private class ActionData {
         @SuppressWarnings("unused")

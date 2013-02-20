@@ -1,12 +1,14 @@
-package org.kornicameister.wms.model.logic.controllers.adress;
+package org.kornicameister.wms.model.logic.controllers;
 
 import org.json.simple.JSONObject;
-import org.kornicameister.wms.model.logic.RequestController;
-import org.kornicameister.wms.server.extractor.RData;
+import org.kornicameister.wms.cm.annotations.ServerController;
+import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.model.hibernate.Address;
 import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
 import org.kornicameister.wms.model.hibernate.City;
+import org.kornicameister.wms.server.extractor.RData;
 
+@ServerController(mapping = "wms/agent/address", model = Address.class)
 public class AddressController extends RequestController {
 
     private class ActionData {
@@ -20,6 +22,10 @@ public class AddressController extends RequestController {
             this.address_id = (Long) p.get("id");
             this.address = (Address) b;
         }
+    }
+
+    public AddressController() {
+        super();
     }
 
     public AddressController(RData data) {

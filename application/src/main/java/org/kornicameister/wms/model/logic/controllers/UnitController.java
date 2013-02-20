@@ -1,19 +1,25 @@
-package org.kornicameister.wms.model.logic.controllers.unit;
+package org.kornicameister.wms.model.logic.controllers;
 
 import org.hibernate.Query;
 import org.json.simple.JSONObject;
+import org.kornicameister.wms.cm.annotations.ServerController;
 import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
 import org.kornicameister.wms.model.hibernate.Unit;
 import org.kornicameister.wms.model.hibernate.UnitType;
 import org.kornicameister.wms.model.hibernate.Warehouse;
-import org.kornicameister.wms.model.logic.RequestController;
+import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.server.extractor.RData;
 import org.kornicameister.wms.utilities.Pair;
 
 import java.util.List;
 
+@ServerController(mapping = "wms/agent/unit", model = Unit.class)
 public class UnitController extends RequestController {
     private static final String WHERE_S_WFK = " where %s = :wfk";
+
+    public UnitController() {
+
+    }
 
     private class ActionData {
         @SuppressWarnings("unused")

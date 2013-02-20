@@ -1,7 +1,7 @@
 package org.kornicameister.wms.server.extractor;
 
 import org.json.simple.JSONObject;
-import org.kornicameister.wms.model.logic.CRUD;
+import org.kornicameister.wms.cm.CRUD;
 import org.kornicameister.wms.utilities.Pair;
 
 import java.util.Map;

@@ -25,6 +25,10 @@
         <display-name>WMSDataAgent</display-name>
         <servlet-name>WMSDataAgent</servlet-name>
         <servlet-class>org.kornicameister.wms.server.servlet.WMSDataAgent</servlet-class>
+        <init-param>
+            <param-name>serverMethods</param-name>
+            <param-value>src/main/resources/server_methods.properties</param-value>
+        </init-param>
         <load-on-startup>4</load-on-startup>
     </servlet>
     <servlet>

@@ -3,7 +3,7 @@ package org.kornicameister.wms.server.responses;
 import com.google.gson.annotations.Expose;
 import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
 import org.kornicameister.wms.model.hibernate.PersistenceObject;
-import org.kornicameister.wms.model.logic.CRUD;
+import org.kornicameister.wms.cm.CRUD;
 
 import javax.persistence.Transient;
 import java.util.Comparator;

@@ -1,4 +1,4 @@
-package org.kornicameister.wms.model.logic;
+package org.kornicameister.wms.cm.impl;
 
 import com.google.gson.*;
 import javassist.tools.reflect.Reflection;
@@ -9,6 +9,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.kornicameister.wms.annotations.HideAssociation;
 import org.kornicameister.wms.annotations.HideField;
+import org.kornicameister.wms.cm.CRUD;
+import org.kornicameister.wms.cm.ServerControllable;
 import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
 import org.kornicameister.wms.model.hibernate.PersistenceObject;
 import org.kornicameister.wms.model.hibernate.Warehouse;
@@ -33,13 +35,13 @@ import java.util.concurrent.TimeUnit;
  * @author kornicameister
  * @created 01-10-2012
  */
-public class RequestController implements Controller {
+public class RequestController implements ServerControllable {
     protected Session session;
 
     // -----------RESPONSE----------------/
     private long processTime = 0l;
     protected Set<BasicPersistentObject> affected = new HashSet<>();
-    protected final RData rdata;
+    protected RData rdata;
     private static ExclusionStrategy HHExclusionStrategy = new ExclusionStrategy() {
         @Override
         public boolean shouldSkipField(FieldAttributes f) {
@@ -69,6 +71,10 @@ public class RequestController implements Controller {
     public RequestController(RData data) {
         super();
         this.rdata = data;
+    }
+
+    public RequestController() {
+        //To change body of created methods use File | Settings | File Templates.
     }
 
     /**
@@ -417,9 +423,9 @@ public class RequestController implements Controller {
      *
      * @param respData {@link RData} object, as the data source
      * @return valid instance of the {@link RequestController} derived class
-     * @see org.kornicameister.wms.model.logic.controllers.unit.UnitController
+     * @see org.kornicameister.wms.model.logic.controllers.UnitController
      * @see Warehouse
-     * @see org.kornicameister.wms.model.logic.controllers.unit.UnitTypeController
+     * @see org.kornicameister.wms.model.logic.controllers.UnitTypeController
      */
     public static RequestController pickController(RData respData) {
         RequestController controller = null;

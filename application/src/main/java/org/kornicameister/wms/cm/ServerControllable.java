@@ -1,4 +1,4 @@
-package org.kornicameister.wms.model.logic;
+package org.kornicameister.wms.cm;
 
 
 /**
@@ -8,11 +8,8 @@ package org.kornicameister.wms.model.logic;
  *
  * @author kornicameister
  * @created 01-10-2012
- * @file Controller.java for project MajekWMS
- * @type Controller
  */
-public interface Controller {
-    // CRUD
+public interface ServerControllable {
     void read();
 
     void update();

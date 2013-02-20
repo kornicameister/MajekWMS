@@ -1,6 +1,6 @@
 package org.kornicameister.wms.server.extractor;
 
-import org.kornicameister.wms.model.logic.RequestController;
+import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
 
 /**

@@ -1,8 +1,9 @@
 package org.kornicameister.wms.server.servlet;
 
 import org.apache.log4j.Logger;
-import org.kornicameister.wms.model.logic.RequestController;
-import org.kornicameister.wms.model.logic.CRUD;
+import org.kornicameister.wms.cm.CRUD;
+import org.kornicameister.wms.cm.ServerMethod;
+import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.server.extractor.RDExtractor;
 import org.kornicameister.wms.utilities.hibernate.HibernateBridge;
 import org.kornicameister.wms.utilities.hibernate.HibernateBridgeException;
@@ -25,9 +26,11 @@ public class WMSDataAgent extends HttpServlet {
     private static final long serialVersionUID = -217845239414591742L;
     private static Logger logger = Logger.getLogger(WMSDataAgent.class
             .getName());
+    private ServerMethod serverMethod;
 
     @Override
     public void init() throws ServletException {
+        super.init();
         try {
             if (HibernateBridge.accessHibernate()) {
                 logger.info(String.format(
@@ -38,10 +41,18 @@ public class WMSDataAgent extends HttpServlet {
                 logger.error("No exception was caught, still connection is down");
             }
         } catch (HibernateBridgeException e) {
-            e.printStackTrace();
             logger.error("Something went wrong when accessing Hibernate", e);
         }
-        super.init();
+
+        try {
+            final String configurationFile = this.getInitParameter("serverMethods");
+            logger.info(String.format("Configuring from %s", configurationFile));
+
+            this.serverMethod = new ServerMethod(configurationFile);
+            serverMethod.loadInstances();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -60,6 +71,10 @@ public class WMSDataAgent extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();
         RequestController controller;
+
+        if (this.serverMethod.get(req.getRequestURI()) != null) {
+            System.out.println("Yeahhh for " + req.getRequestURI());
+        }
 
         if ((controller = RequestController.pickController(RDExtractor.parse(
                 req, action))) == null) {

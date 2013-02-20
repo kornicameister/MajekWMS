@@ -1,4 +1,4 @@
-package org.kornicameister.wms.model.logic;
+package org.kornicameister.wms.cm;
 
 /**
  * Enum describes all CRUD actions possible to be taken.

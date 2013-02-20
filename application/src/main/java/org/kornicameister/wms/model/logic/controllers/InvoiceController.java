@@ -1,11 +1,10 @@
-package org.kornicameister.wms.model.logic.controllers.invoice;
+package org.kornicameister.wms.model.logic.controllers;
 
 import org.json.simple.JSONObject;
-import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
-import org.kornicameister.wms.model.hibernate.Client;
-import org.kornicameister.wms.model.hibernate.Invoice;
-import org.kornicameister.wms.model.hibernate.InvoiceType;
-import org.kornicameister.wms.model.logic.RequestController;
+import org.kornicameister.wms.cm.ServerControllable;
+import org.kornicameister.wms.cm.annotations.ServerController;
+import org.kornicameister.wms.model.hibernate.*;
+import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.server.extractor.RData;
 
 /**
@@ -21,9 +20,14 @@ import org.kornicameister.wms.server.extractor.RData;
  *
  * @author kornicameister
  * @version 0.1
- * @see {@link org.kornicameister.wms.model.logic.RequestController}
+ * @see {@link org.kornicameister.wms.cm.impl.RequestController}
  */
-public class InvoiceController extends RequestController {
+@ServerController(mapping = "wms/agent/invoice", model = Invoice.class)
+public class InvoiceController extends RequestController implements ServerControllable {
+
+    public InvoiceController() {
+
+    }
 
     public InvoiceController(RData data) {
         super(data);

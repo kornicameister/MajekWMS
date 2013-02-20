@@ -1,16 +1,16 @@
 package org.kornicameister.wms.server.extractor;
 
 import org.kornicameister.wms.model.hibernate.*;
-import org.kornicameister.wms.model.logic.RequestController;
-import org.kornicameister.wms.model.logic.controllers.adress.AddressController;
-import org.kornicameister.wms.model.logic.controllers.client.ClientController;
-import org.kornicameister.wms.model.logic.controllers.company.CompanyController;
-import org.kornicameister.wms.model.logic.controllers.invoice.InvoiceController;
-import org.kornicameister.wms.model.logic.controllers.invoice.InvoiceProductController;
-import org.kornicameister.wms.model.logic.controllers.measure.MeasureController;
-import org.kornicameister.wms.model.logic.controllers.product.ProductController;
-import org.kornicameister.wms.model.logic.controllers.unit.UnitController;
-import org.kornicameister.wms.model.logic.controllers.unit.UnitTypeController;
+import org.kornicameister.wms.cm.impl.RequestController;
+import org.kornicameister.wms.model.logic.controllers.AddressController;
+import org.kornicameister.wms.model.logic.controllers.ClientController;
+import org.kornicameister.wms.model.logic.controllers.CompanyController;
+import org.kornicameister.wms.model.logic.controllers.InvoiceController;
+import org.kornicameister.wms.model.logic.controllers.InvoiceProductController;
+import org.kornicameister.wms.model.logic.controllers.MeasureController;
+import org.kornicameister.wms.model.logic.controllers.ProductController;
+import org.kornicameister.wms.model.logic.controllers.UnitController;
+import org.kornicameister.wms.model.logic.controllers.UnitTypeController;
 
 /**
  * This enum is used mainly when creating

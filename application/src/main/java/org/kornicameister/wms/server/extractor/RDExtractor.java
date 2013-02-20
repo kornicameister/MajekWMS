@@ -6,8 +6,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 import org.kornicameister.wms.model.hibernate.BasicPersistentObject;
-import org.kornicameister.wms.model.logic.CRUD;
-import org.kornicameister.wms.model.logic.RequestController;
+import org.kornicameister.wms.cm.CRUD;
+import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.utilities.Pair;
 import org.kornicameister.wms.utilities.StringUtils;
 

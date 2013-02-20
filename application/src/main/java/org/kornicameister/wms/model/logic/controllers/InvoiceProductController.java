@@ -1,9 +1,10 @@
-package org.kornicameister.wms.model.logic.controllers.invoice;
+package org.kornicameister.wms.model.logic.controllers;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.kornicameister.wms.cm.annotations.ServerController;
+import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.model.hibernate.*;
-import org.kornicameister.wms.model.logic.RequestController;
 import org.kornicameister.wms.model.logic.algorithms.*;
 import org.kornicameister.wms.model.logic.algorithms.exception.AvailableUnitProcessingException;
 import org.kornicameister.wms.model.logic.algorithms.exception.InsufficientAlgorithmConfigurationException;
@@ -21,10 +22,15 @@ import java.util.*;
  *          related to {@link org.kornicameister.wms.model.hibernate.InvoiceProduct} class.
  * @created 27.12.12
  */
+@ServerController(mapping = "wms/agent/invoiceproduct", model = InvoiceProduct.class)
 public class InvoiceProductController extends RequestController {
     private final static Logger logger = Logger.getLogger(InvoiceProductController.class.getName());
     private Invoice invoiceCache;
     private List<Pair<Product, Long>> unallocatedProducts;
+
+    public InvoiceProductController() {
+
+    }
 
     public InvoiceProductController(RData data) {
         super(data);
