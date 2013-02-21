@@ -145,7 +145,6 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 surface.add(unitSprite);
 
                 // 5. attach listeners
-                self.mon(unitSprite, 'click', privateListeners.unitSpriteClick, self);
                 self.mon(unitSprite, 'mousedown', privateListeners.unitSpriteMousedown, self);
                 self.mon(unitSprite, 'mouseup', privateListeners.unitSpriteMouseup, self);
 
@@ -210,21 +209,35 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             return tilesSprites.length > 0;
         },
         privateListeners = {
-            boardContextMenu     : function (event, target) {
+            boardContextMenu   : function (event, target) {
                 console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event, '\ntarget=', target);
                 var sprite_id = target['id'],
                     sprite = USS.findBySprite(sprite_id);
 
                 event.preventDefault();
-                me.fireEvent('unitmenu', event['currentTarget'], event.getXY(), sprite.get('unit_id'));
+                if (Ext.isDefined(sprite)) {
+                    spriteHandlers.selectSprite(sprite_id);
+                    me.fireEvent('unitmenu', event['currentTarget'], event.getXY(), sprite.get('unit_id'));
+                }
             },
-            unitSpriteClick      : function (sprite) {
-                console.log('CanvasProcessor :: Lister -> sprite -> click -> triggered...\nsprite=', sprite);
+            unitSpriteMousedown: function (event, htmlTarget) {
+                console.log('CanvasProcessor :: Lister -> sprite -> mousedown -> triggered...');
+            },
+            unitSpriteMouseup  : function (event, htmlTarget) {
+                console.log('CanvasProcessor :: Lister -> sprite -> mouseup -> triggered...');
+            },
+            surfaceMousemove   : function (event, htmlTarget) {
+                console.log('CanvasProcessor :: Lister -> surface -> mousemove -> triggered...');
+            }
+        },
+        spriteHandlers = {
+            selectSprite: function (sprite) {
+                console.log('CanvasProcessor :: SpriteHandler -> sprite -> click -> triggered...\nsprite=', sprite);
                 var record = USS.findBySprite(sprite),
                     markedRecord = USS.findRecord('marked', true),
                     markedSprite = null;
                 if (!Ext.isDefined(record) || record === null) {
-                    console.log('CanvasProcessor :: Lister -> sprite -> click -> record not found');
+                    console.log('CanvasProcessor :: SpriteHandler -> sprite -> click -> record not found');
                 }
 
                 sprite = SPRITES.get(record.getId()).getAt(0);
@@ -244,22 +257,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                         }, true);
                         markedRecord.set('marked', false);
                     }
-                    me.fireEvent('unitclick', record.get('unit_id'));
                 } else {
                     sprite.setAttributes({
                         fill: 'green'
                     }, true);
                     record.set('marked', false);
                 }
-            },
-            'unitSpriteMousedown': function (event, htmlTarget) {
-                console.log('CanvasProcessor :: Lister -> sprite -> mousedown -> triggered...');
-            },
-            'unitSpriteMouseup'  : function (event, htmlTarget) {
-                console.log('CanvasProcessor :: Lister -> sprite -> mouseup -> triggered...');
-            },
-            'surfaceMousemove'   : function (event, htmlTarget) {
-                console.log('CanvasProcessor :: Lister -> surface -> mousemove -> triggered...');
             }
         };
     return {

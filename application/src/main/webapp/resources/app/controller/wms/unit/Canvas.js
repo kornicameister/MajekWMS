@@ -56,8 +56,9 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                         text  : 'Edit'
                     },
                     {
-                        itemId: 2,
-                        text  : 'Products'
+                        itemId : 2,
+                        text   : 'Products',
+                        iconCls: 'view-wms-inventory'
                     },
                     {
                         itemId: 3,
@@ -111,10 +112,9 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             var me = this;
             switch (item['itemId']) {
                 case 1:
-                    privateListeners.onUnitSelected(me.getCachedUnit());
                     break;
                 case 2:
-                    break;
+                    privateListeners.onUnitSelected(me.getCachedUnit());
                 case 3:
                     break;
                 case 4:
