@@ -33,7 +33,8 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
     },
     onBoxReady    : function (board) {
         console.log('Canvas :: Drawing chart initialized, board=', board);
-        var me = this;
+        var me = this,
+            canvasProcessor;
 
         me.setCanvasProcessor(Ext.create('WMS.utilities.CanvasProcessor', {
             board    : board,
@@ -49,19 +50,23 @@ Ext.define('WMS.controller.wms.unit.Canvas', {
                 }
             }
         }));
-        me.getCanvasProcessor().draw();
+
+        canvasProcessor = me.getCanvasProcessor();
+        // listeners
+        {
+            me.mon(canvasProcessor, 'unitclick', me.onUnitSelected, me);
+        }
+        // listeners
+
+        // drawing
+        canvasProcessor.draw();
     },
-    onUnitSelected: function (eventTarget) {
+    onUnitSelected: function (unit_id) {
         console.log('UnitDDManager :: Unit has been selected, loading products in progress...');
         var me = this,
             unitStore = me.getStore('Units');
 
-        var unit = unitStore.getById(
-                me
-                    .getStore('UnitSprites')
-                    .getById(eventTarget['id'])
-                    .get('unit_id')
-            ),
+        var unit = unitStore.getById(unit_id),
             controller = me.getController('wms.unit.Inventory');
 
         unitStore.setActive(unit);

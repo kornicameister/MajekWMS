@@ -12,21 +12,90 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         board = undefined,
         sizes = undefined,
         unitStore = undefined,
+        sprites = new Ext.util.MixedCollection(),
+        USS = Ext.define('CanvasProcessorStorage', {
+            extend      : 'Ext.data.Store',
+            fields      : [
+                'id', 'rect_id', 'text_id', 'unit_id', 'marked'
+            ],
+            sorters     : [
+                {
+                    property : 'rect_id',
+                    direction: 'ASC'
+                },
+                {
+                    property : 'text_id',
+                    direction: 'ASC'
+                }
+            ],
+            autoSync    : true,
+            proxy       : {
+                type: 'localstorage',
+                id  : 'canvas_processor_storage'
+            },
+            findBySprite: function (sprite) {
+                var self = this,
+                    matchedSprite,
+                    sprite_id = sprite['id'];
+
+                if ((matchedSprite = self.findByRect(sprite_id)) !== null) {
+                    return matchedSprite;
+                } else if ((matchedSprite = self.findByText(sprite_id)) != null) {
+                    return matchedSprite;
+                } else {
+                    return undefined;
+                }
+            },
+            findByRect  : function (rect) {
+                var self = this,
+                    record = undefined;
+                if (rect.indexOf('ext-') >= 0) {
+                    record = self.findRecord('rect_id', rect);
+                } else {
+                    record = self.findRecord('rect_id', rect['id']);
+                }
+                return record;
+            },
+            findByText  : function (text) {
+                var self = this,
+                    record = undefined;
+                if (text.indexOf('ext-') >= 0) {
+                    record = self.findRecord('text_id', text);
+                } else {
+                    record = self.findRecord('text_id', text['id']);
+                }
+                return record;
+            }
+        }),
         clearCanvas = function () {
 
         },
         drawCanvas = function () {
             var stepResult = drawHostTiles();
-            if (stepResult == true) {
+            if (stepResult === true) {
                 stepResult = drawUnitSprites();
             }
+            if (stepResult === true) {
+                stepResult = setSurfaceListeners();
+            }
             return stepResult;
+        },
+        setSurfaceListeners = function () {
+            var surface = board['surface'];
+
+            if (!Ext.isDefined(surface)) {
+                console.error('CanvasProcessor :: Global listeners -> setting failed, no surface...');
+                return false;
+            }
+
+            me.mon(surface, 'mousemove', privateListeners['surfaceMousemove'], me);
+
+            return true;
         },
         drawUnitSprites = function () {
             //@TODO add reading cached drawing from database
             console.log('CanvasProcessor :: Drawing - > unit sprites -> in progress...');
             var self = me,
-                unitSpriteStore = self.getSpritesStore(),
                 drawnUnitSprites = [],
                 surface = board['surface'],
                 unitWidth = sizes['unit']['width'],
@@ -70,30 +139,34 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     });
 
                 // 4. save shapes onto the surface and into the group
-                surface.add(unitRecord.getId(), rectPart);
-                surface.add(unitRecord.getId(), textPart);
+                unitSprite.add(rectPart);
+                unitSprite.add(textPart);
+                surface.add(unitSprite);
 
                 // 5. attach listeners
-                self.mon(rectPart, 'dblclick', privateListeners['dblclick'], self);
-                self.mon(surface, 'mousedown', privateListeners['mousedown'], self);
-                self.mon(surface, 'mouseup', privateListeners['mouseup'], self);
+                self.mon(unitSprite, 'click', privateListeners.unitSpriteClick, self);
+                self.mon(unitSprite, 'mousedown', privateListeners.unitSpriteMousedown, self);
+                self.mon(unitSprite, 'mouseup', privateListeners.unitSpriteMouseup, self);
 
-                // 6. push them to array
+                // 6. push them to array, fields ['id', 'rect_id', 'text_id', 'unit', 'marked']
                 drawnUnitSprites.push({
-                    id    : unitSprite['id'],
-                    sprite: unitSprite,
-                    unit  : unitRecord
+                    id     : unitSprite['id'],
+                    rect_id: rectPart['id'],
+                    text_id: textPart['id'],
+                    unit_id: unitRecord.getId(),
+                    marked : false
                 });
+                sprites.add(unitSprite['id'], unitSprite);
 
                 // 7. show them
-                rectPart.show(true);
-                textPart.show(true);
+                unitSprite.show(true);
             }, self);
 
             // 8. save them to local storage
-            unitSpriteStore.add(drawnUnitSprites);
+            USS.add(drawnUnitSprites);
 
             console.log('CanvasProcessor :: Drawing - > unit sprites -> finished...');
+            return true;
         },
         drawHostTiles = function () {
             console.log('CanvasProcessor :: Drawing - > host tiles -> in progress...');
@@ -136,14 +209,48 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             return tilesSprites.length > 0;
         },
         privateListeners = {
-            'dblclick' : function (event) {
-                console.log('CanvasProcessor :: Lister -> dblclick -> triggered...')
+            unitSpriteClick      : function (sprite) {
+                console.log('CanvasProcessor :: Lister -> sprite -> click -> triggered... sprite=', sprite);
+                var record = USS.findBySprite(sprite),
+                    markedRecord = USS.findRecord('marked', true),
+                    markedSprite = null;
+                if (!Ext.isDefined(record) || record === null) {
+                    console.log('CanvasProcessor :: Lister -> sprite -> click -> record not found');
+                }
+
+                sprite = sprites.get(record.getId()).getAt(0);
+                if (markedRecord !== null) {
+                    markedSprite = sprites.get(markedRecord.getId()).getAt(0);
+                }
+
+                if (record.get('marked') === false) {
+                    sprite.setAttributes({
+                        fill: 'yellow'
+                    }, true);
+                    record.set('marked', true);
+
+                    if (markedSprite !== null) {
+                        markedSprite.setAttributes({
+                            fill: 'green'
+                        }, true);
+                        markedRecord.set('marked', false);
+                    }
+                    me.fireEvent('unitclick', record.get('unit_id'));
+                } else {
+                    sprite.setAttributes({
+                        fill: 'green'
+                    }, true);
+                    record.set('marked', false);
+                }
             },
-            'mousedown': function (event, htmlTarget) {
-                console.log('CanvasProcessor :: Lister -> mousedown -> triggered...')
+            'unitSpriteMousedown': function (event, htmlTarget) {
+                console.log('CanvasProcessor :: Lister -> sprite -> mousedown -> triggered...');
             },
-            'mouseup'  : function (event, htmlTarget) {
-                console.log('CanvasProcessor :: Lister -> mouseup -> triggered...')
+            'unitSpriteMouseup'  : function (event, htmlTarget) {
+                console.log('CanvasProcessor :: Lister -> sprite -> mouseup -> triggered...');
+            },
+            'surfaceMousemove'   : function (event, htmlTarget) {
+                console.log('CanvasProcessor :: Lister -> surface -> mousemove -> triggered...');
             }
         };
     return {
@@ -153,24 +260,18 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         mixins     : {
             observable: 'Ext.util.Observable'
         },
-        config     : {
-            spritesStore: undefined
-        },
         constructor: function (config) {
             me = this;
 
+            // init block
             me.mixins.observable.constructor.call(me, config);
-            me.setSpritesStore(Ext.create('Ext.data.Store', {
-                model   : 'WMS.model.sprite.Unit',
-                autoLoad: true,
-                autoSync: true
-            }));
             board = config['board'];
             sizes = config['sizes'];
             unitStore = config['unitStore'];
+            USS = Ext.create('CanvasProcessorStorage');
+            // init block
 
             me.addEvents(
-                'unitdblclick',
                 'unitclick',
                 'unitrelease'
             );
