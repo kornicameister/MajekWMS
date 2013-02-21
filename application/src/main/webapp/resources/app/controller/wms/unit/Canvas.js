@@ -109,15 +109,20 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             me.setCachedUnit(unit_id);
         },
         onContextMenuClick: function (menu, item) {
-            var me = this;
+            var me = this,
+                canvasProcessor = me.getCanvasProcessor();
             switch (item['itemId']) {
                 case 1:
                     break;
                 case 2:
                     privateListeners.onUnitSelected(me.getCachedUnit());
+                    break;
                 case 3:
+                    canvasProcessor.releaseLockOn(me.getCachedUnit());
                     break;
                 case 4:
+                    canvasProcessor.lockOn(me.getCachedUnit());
+                    break;
                     break;
             }
         }

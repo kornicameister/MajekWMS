@@ -16,7 +16,9 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         USS = Ext.define('CanvasProcessorStorage', {
             extend      : 'Ext.data.Store',
             fields      : [
-                'id', 'rect_id', 'text_id', 'unit_id', 'marked'
+                'id', 'rect_id', 'text_id', 'unit_id', 'lock_id',
+                { name: 'marked', type: 'boolean', defaultValue: false},
+                { name: 'locked', type: 'boolean', defaultValue: true}
             ],
             sorters     : [
                 {
@@ -26,11 +28,15 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 {
                     property : 'text_id',
                     direction: 'ASC'
+                },
+                {
+                    property : 'unit_id',
+                    direction: 'ASC'
                 }
             ],
             autoSync    : true,
             proxy       : {
-                type: 'localstorage',
+                type: 'memory',
                 id  : 'canvas_processor_storage'
             },
             findBySprite: function (sprite) {
@@ -123,6 +129,16 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                         fill  : 'green',
                         stroke: 'red'
                     }),
+                    lockPart = surface.add({
+                        type  : 'rect',
+                        width : unitWidth / 5,
+                        height: unitHeight / 5,
+                        x     : rectX - 3,
+                        y     : rectY - 3,
+                        radius: 36,
+                        stroke: 'red',
+                        fill  : 'black'
+                    }),
                 // 2. create text shape
                     textPart = surface.add({
                         type  : 'text',
@@ -142,6 +158,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 // 4. save shapes onto the surface and into the group
                 unitSprite.add(rectPart);
                 unitSprite.add(textPart);
+                unitSprite.add(lockPart);
                 surface.add(unitSprite);
 
                 // 5. attach listeners
@@ -153,8 +170,8 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     id     : unitSprite['id'],
                     rect_id: rectPart['id'],
                     text_id: textPart['id'],
-                    unit_id: unitRecord.getId(),
-                    marked : false
+                    lock_id: lockPart['id'],
+                    unit_id: unitRecord.getId()
                 });
                 SPRITES.add(unitSprite['id'], unitSprite);
 
@@ -208,6 +225,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: Drawing - > host tiles -> finished...');
             return tilesSprites.length > 0;
         },
+        releaseLockOnUnit = function (unit_id) {
+            var spriteRecord = USS.findRecord('unit_id', unit_id),
+                sprite = SPRITES.get(spriteRecord.getId()).getAt(0);
+
+            spriteHandlers.changeLockStatus(spriteRecord);
+        },
         privateListeners = {
             boardContextMenu   : function (event, target) {
                 console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event, '\ntarget=', target);
@@ -231,7 +254,40 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             }
         },
         spriteHandlers = {
-            selectSprite: function (sprite) {
+            changeLockStatus: function (spriteRecord) {
+                if (spriteRecord !== null && Ext.isDefined(spriteRecord)) {
+                    var group = SPRITES.get(spriteRecord.getId()),
+                        sprite = group.getAt(0),
+                        lock = group.get(2);
+
+                    if (spriteRecord.get('locked') === true) {
+                        sprite.setAttributes({
+                            scale: {
+                                x: 1.2,
+                                y: 1.2
+                            }
+                        });
+                        lock.setAttributes({
+                            fill: 'orange'
+                        });
+                        spriteRecord.set('locked', false);
+                    } else {
+                        sprite.setAttributes({
+                            scale: {
+                                x: 1,
+                                y: 1
+                            }
+                        }, true);
+                        lock.setAttributes({
+                            fill: 'black'
+                        });
+                        spriteRecord.set('locked', true);
+                    }
+
+                    group.redraw(true);
+                }
+            },
+            selectSprite    : function (sprite) {
                 console.log('CanvasProcessor :: SpriteHandler -> sprite -> click -> triggered...\nsprite=', sprite);
                 var record = USS.findBySprite(sprite),
                     markedRecord = USS.findRecord('marked', true),
@@ -266,13 +322,13 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             }
         };
     return {
-        requires   : [
+        requires     : [
             'WMS.model.sprite.Unit'
         ],
-        mixins     : {
+        mixins       : {
             observable: 'Ext.util.Observable'
         },
-        constructor: function (config) {
+        constructor  : function (config) {
             me = this;
 
             // init block
@@ -293,7 +349,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: init canvas=', board, ', sizes=', sizes);
             me.callParent(arguments)
         },
-        draw       : function (redraw) {
+        draw         : function (redraw) {
             console.log('CanvasProcessor :: drawing in progress...');
             redraw = (Ext.isDefined(redraw) ? redraw : false);
             if (redraw === true) {
@@ -302,6 +358,24 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             var result = drawCanvas();
             console.log('CanvasProcessor :: drawing finished...');
             return result;
+        },
+        releaseLockOn: function (unit_id) {
+            console.log('CanvasProcessor :: releasing lock on unit=', unit_id);
+            var status;
+            {
+                status = releaseLockOnUnit(unit_id);
+            }
+            console.log('CanvasProcessor :: released lock on unit=', unit_id);
+            return status;
+        },
+        lockOn       : function (unit_id) {
+            console.log('CanvasProcessor :: locking unit=', unit_id);
+            var status;
+            {
+                status = releaseLockOnUnit(unit_id);
+            }
+            console.log('CanvasProcessor :: locked unit=', unit_id);
+            return status;
         }
     }
 });
