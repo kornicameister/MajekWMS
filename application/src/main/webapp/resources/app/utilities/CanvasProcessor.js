@@ -12,7 +12,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         board = undefined,
         sizes = undefined,
         unitStore = undefined,
-        sprites = new Ext.util.MixedCollection(),
+        SPRITES = new Ext.util.MixedCollection(),
         USS = Ext.define('CanvasProcessorStorage', {
             extend      : 'Ext.data.Store',
             fields      : [
@@ -36,7 +36,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             findBySprite: function (sprite) {
                 var self = this,
                     matchedSprite,
-                    sprite_id = sprite['id'];
+                    sprite_id = (Ext.isDefined(sprite['id']) ? sprite['id'] : sprite);
 
                 if ((matchedSprite = self.findByRect(sprite_id)) !== null) {
                     return matchedSprite;
@@ -89,6 +89,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             }
 
             me.mon(surface, 'mousemove', privateListeners['surfaceMousemove'], me);
+            me.mon(board.getEl(), 'contextmenu', privateListeners['boardContextMenu'], me);
 
             return true;
         },
@@ -156,7 +157,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     unit_id: unitRecord.getId(),
                     marked : false
                 });
-                sprites.add(unitSprite['id'], unitSprite);
+                SPRITES.add(unitSprite['id'], unitSprite);
 
                 // 7. show them
                 unitSprite.show(true);
@@ -209,8 +210,16 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             return tilesSprites.length > 0;
         },
         privateListeners = {
+            boardContextMenu     : function (event, target) {
+                console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event, '\ntarget=', target);
+                var sprite_id = target['id'],
+                    sprite = USS.findBySprite(sprite_id);
+
+                event.preventDefault();
+                me.fireEvent('unitmenu', event['currentTarget'], event.getXY(), sprite.get('unit_id'));
+            },
             unitSpriteClick      : function (sprite) {
-                console.log('CanvasProcessor :: Lister -> sprite -> click -> triggered... sprite=', sprite);
+                console.log('CanvasProcessor :: Lister -> sprite -> click -> triggered...\nsprite=', sprite);
                 var record = USS.findBySprite(sprite),
                     markedRecord = USS.findRecord('marked', true),
                     markedSprite = null;
@@ -218,9 +227,9 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     console.log('CanvasProcessor :: Lister -> sprite -> click -> record not found');
                 }
 
-                sprite = sprites.get(record.getId()).getAt(0);
+                sprite = SPRITES.get(record.getId()).getAt(0);
                 if (markedRecord !== null) {
-                    markedSprite = sprites.get(markedRecord.getId()).getAt(0);
+                    markedSprite = SPRITES.get(markedRecord.getId()).getAt(0);
                 }
 
                 if (record.get('marked') === false) {
@@ -269,10 +278,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             sizes = config['sizes'];
             unitStore = config['unitStore'];
             USS = Ext.create('CanvasProcessorStorage');
+            board.center();
             // init block
 
             me.addEvents(
                 'unitclick',
+                'unitmenu',
                 'unitrelease'
             );
 
