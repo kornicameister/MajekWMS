@@ -8,11 +8,7 @@
 
 Ext.define('WMS.utilities.CanvasProcessor', function () {
     var me = this,
-        tilesSprites = [],
-        board = undefined,
-        sizes = undefined,
-        unitStore = undefined,
-        SPRITES = new Ext.util.MixedCollection(),
+    //MODULES
         SDU = Ext.define(null, function (SpriteDraggingUtility) {
             return {
 
@@ -55,13 +51,13 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 _spriteAnimators = {
                     setLockedOffSpriteView : function (spriteRecord) {
                         if (spriteRecord !== null && Ext.isDefined(spriteRecord)) {
-                            var group = SPRITES.get(spriteRecord.getId()),
+                            var group = UNITS.get(spriteRecord.getId()),
                                 lock = group.get(2);
                             lock.animate(_spriteAnimationsConfig.lockAnim);
                         }
                     },
                     disableSpritesExceptFor: function (spriteRecord) {
-                        var nonSelected = SPRITES.filter(new Ext.util.Filter({
+                        var nonSelected = UNITS.filter(new Ext.util.Filter({
                             filterFn: function (item) {
                                 return item['id'] !== spriteRecord.getId()
                             }
@@ -71,7 +67,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                         });
                     },
                     resetSpritesToBasicView: function () {
-                        SPRITES.eachKey(function (spriteId, sprite) {
+                        UNITS.eachKey(function (spriteId, sprite) {
                             sprite.animate(_spriteAnimationsConfig.enabledSpriteAnim);
                             sprite.getAt(2).animate(_spriteAnimationsConfig.unlockAnim);
                         });
@@ -79,6 +75,31 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 };
             return {
                 statics: {
+                    /**
+                     * Quite useful method that I use to programitically
+                     * handle the situtation where one of the dozen
+                     * of components need to be locked off, which means
+                     * that it can be easily manipulated across canvas.
+                     *
+                     * This method recognizes what do, upon current situtation
+                     *
+                     * @param unit_id
+                     * @return {boolean}
+                     */
+                    handleLockOnOff    : function (unit_id) {
+                        var spriteRecord = CPS.findRecord('unit_id', unit_id);
+                        console.log('CanvasProcessor :: Lock will be ', (spriteRecord.get('locked') === true ? 'disabled' : 'enabled'));
+
+                        if (spriteRecord.get('locked') === true) {
+                            SLU.lockOff(spriteRecord);
+                            spriteRecord.set('locked', false);
+                        } else {
+                            SLU.lockOn(spriteRecord);
+                            spriteRecord.set('locked', true);
+                        }
+
+                        return true;
+                    },
                     /**
                      * Quite cool method that wraps and utilise operation that results
                      * in masking all sprites except for the the one passed as argument.
@@ -116,11 +137,11 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     getUnlockedSpriteId: function () {
                         return _unlockedSpriteId;
                     },
-                    isLockOn           : function () {
+                    isLockOff          : function () {
                         return Ext.isDefined(_unlockedSpriteId);
                     },
-                    isLocked           : function (sprite) {
-                        var isDefined = SLU.isLockOn();
+                    isNotLocked        : function (sprite) {
+                        var isDefined = SLU.isLockOff();
                         if (isDefined === true) {
                             isDefined = sprite.getId() === _unlockedSpriteId;
                         }
@@ -132,7 +153,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         CPS = Ext.define('CanvasProcessorStorage', {
             extend      : 'Ext.data.Store',
             fields      : [
-                'id', 'rect_id', 'text_id', 'unit_id', 'lock_id',
+                'id', 'rect_id', 'text_id', 'unit_id', 'lock_id', 'tile_id',
                 { name: 'marked', type: 'boolean', defaultValue: false},
                 // locked = true, sprite can not be dragged
                 // locked = false => unlocked, sprite can be dragged
@@ -211,9 +232,11 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                 unitRecord.getId(),
                                 unitRecord.get('name')));
 
-                            var unitName = unitRecord.get('name'),
+                            var index = drawnUnitSprites.length,
+                                selectedTile = TILES.getAt(index),
+                                unitName = unitRecord.get('name'),
                                 unitSize = unitRecord.get('size'),
-                                tileBBox = tilesSprites[drawnUnitSprites.length].getBBox(),
+                                tileBBox = selectedTile.getBBox(),
                                 rectX = Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
                                 rectY = Math.floor(tileBBox['y'] + ((tileBBox['height'] - unitWidth) / 2)),
                             // 1. create rect shape
@@ -272,9 +295,10 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                 rect_id: rectPart['id'],
                                 text_id: textPart['id'],
                                 lock_id: lockPart['id'],
+                                tile_id: selectedTile['id'],
                                 unit_id: unitRecord.getId()
                             });
-                            SPRITES.add(unitSprite['id'], unitSprite);
+                            UNITS.add(unitSprite['id'], unitSprite);
 
                             // 7. show them
                             unitSprite.show(true);
@@ -320,26 +344,87 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                     opacity       : 0.2
                                 });
                                 tile.show(true);
-                                tilesSprites.push(tile);
+                                TILES.add(tile['id'], tile);
                             }
                         }
                         console.log('SpriteCanvasDrawer :: Drawing - > host tiles -> finished...');
-                        return tilesSprites.length > 0;
+                        return TILES.getCount() > 0;
                     }
                 }
             }
         }),
+//        TAM = Ext.define(null, function (TileAnimatorModule) {
+//            var _animConfigs = {
+//                    over: {
+//                        to      : {
+//                            fill: '#C0C0C0'
+//                        },
+//                        duration: 500
+//                    },
+//                    out : {
+//                        to      : {
+//                            fill: '#FFFFC0'
+//                        },
+//                        duration: 500
+//                    }
+//                },
+//                _animators = {
+//                    animateOverTile: function (sprite) {
+//                        sprite.animate(_animConfigs.over);
+//                    },
+//                    animateOutTile : function (sprite) {
+//                        sprite.animate(_animConfigs.out);
+//                    }
+//                },
+//                lightTile = undefined;
+//            return {
+//                statics: {
+//                    setOverTile : function (tile_id) {
+//                        console.log('TileAnimatorModule :: Over tile, tile_id=', tile_id);
+//                        _animators.animateOverTile(TILES.get(tile_id));
+//                        lightTile = tile_id;
+//                    },
+//                    setOutTile  : function (tile_id) {
+//                        console.log('TileAnimatorModule :: Out tile, tile_id=', tile_id);
+//                        _animators.animateOutTile(TILES.get(tile_id));
+//                        lightTile = undefined;
+//                    },
+//                    getLightTile: function () {
+//                        return lightTile;
+//                    },
+//                    isLitUp     : function () {
+//                        return Ext.isDefined(lightTile);
+//                    },
+//                    isTileLit   : function (sprite) {
+//                        var isDefined = TAM.isLitUp();
+//                        if (isDefined === true) {
+//                            isDefined = sprite.getId() === lightTile;
+//                        }
+//                        return isDefined
+//                    }
+//                }
+//            }
+//        }),
+    //MODULES
+        TILES = new Ext.util.MixedCollection(),
+        UNITS = new Ext.util.MixedCollection(),
+        board = undefined,
+        sizes = undefined,
+        unitStore = undefined,
+        clearCanvas = function () {
+            SLU.clearCanvas();
+        },
         drawCanvas = function () {
             var stepResult = SCD.drawHostTiles();
             if (stepResult === true) {
                 stepResult = SCD.drawUnitSprites();
             }
             if (stepResult === true) {
-                stepResult = setSurfaceListeners();
+                stepResult = setOtherListeners();
             }
             return stepResult;
         },
-        setSurfaceListeners = function () {
+        setOtherListeners = function () {
             var surface = board['surface'];
 
             if (!Ext.isDefined(surface)) {
@@ -349,33 +434,37 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
 
             me.mon(surface, 'mousemove', privateListeners['surfaceMousemove'], me);
             me.mon(board.getEl(), 'contextmenu', privateListeners['boardContextMenu'], me);
-
-            return true;
-        },
-        switchLockOnUnit = function (unit_id) {
-            var spriteRecord = CPS.findRecord('unit_id', unit_id);
-            console.log('CanvasProcessor :: Lock will be ', (spriteRecord.get('locked') === true ? 'disabled' : 'enabled'));
-
-            if (spriteRecord.get('locked') === true) {
-                SLU.lockOff(spriteRecord);
-                spriteRecord.set('locked', false);
-            } else {
-                SLU.lockOn(spriteRecord);
-                spriteRecord.set('locked', true);
-            }
+            TILES.eachKey(function (key, tile) {
+                me.mon(tile, 'mouseover', privateListeners['tileMouseOver'], me);
+                me.mon(tile, 'mouseout', privateListeners['tileMouseOut'], me);
+            });
 
             return true;
         },
         privateListeners = {
+            tileMouseOver      : function () {
+//                var spriteRecord = CPS.findRecord('tile_id', event['id']);
+//                if (SLU.isLockOff()) {
+//                    console.log('CanvasProcessor :: Lister -> tile -> mouseover -> triggered...\nevent=', event['type'], '\ntarget=', event['id']);
+//                    TAM.setOverTile((spriteRecord === null ? event['id'] : spriteRecord.get('tile_id')));
+//                }
+            },
+            tileMouseOut       : function () {
+//                var spriteRecord = CPS.findRecord('tile_id', event['id']);
+//                if (SLU.isLockOff()) {
+//                    console.log('CanvasProcessor :: Lister -> tile -> mouseout -> triggered...\nevent=', event['type'], '\ntarget=', event['id']);
+//                    TAM.setOutTile((spriteRecord === null ? event['id'] : spriteRecord.get('tile_id')));
+//                }
+            },
             boardContextMenu   : function (event, target) {
                 console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event['type'], '\ntarget=', target['id']);
                 var sprite_id = target['id'],
                     sprite = CPS.findBySprite(sprite_id);
 
                 event.preventDefault();
-                if (!SLU.isLockOn() || SLU.isLocked(sprite)) {
+                if (!SLU.isLockOff() || SLU.isNotLocked(sprite)) {
                     me.fireEvent('unitmenu', event['currentTarget'], event.getXY(), sprite.get('unit_id'));
-                } else if (!SLU.isLocked(sprite)) {
+                } else if (!SLU.isNotLocked(sprite)) {
                     me.fireEvent('unitlockedoff', sprite.get('unit_id'));
                 }
             },
@@ -422,7 +511,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: drawing in progress...');
             redraw = (Ext.isDefined(redraw) ? redraw : false);
             if (redraw === true) {
-                SDU.clearCanvas();
+                clearCanvas();
             }
             var result = drawCanvas();
             console.log('CanvasProcessor :: drawing finished...');
@@ -432,7 +521,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: switching lock on unit=', unit_id);
             var status;
             {
-                status = switchLockOnUnit(unit_id);
+                status = SLU.handleLockOnOff(unit_id);
             }
             console.log('CanvasProcessor :: switched lock on unit=', unit_id);
             return status;
