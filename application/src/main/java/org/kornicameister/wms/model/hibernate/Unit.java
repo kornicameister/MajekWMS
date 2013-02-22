@@ -1,19 +1,35 @@
 package org.kornicameister.wms.model.hibernate;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-
-@SuppressWarnings("deprecation")
 @Entity
-@Table(name = "unit")
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
+@Table(
+        name = "unit"
+)
 @AttributeOverrides(value = {
-        @AttributeOverride(name = "id", column = @Column(name = "idUnit", updatable = false, insertable = true, nullable = false)),
-        @AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = false))})
+        @AttributeOverride(
+                name = "id",
+                column = @Column(
+                        name = "idUnit",
+                        updatable = false,
+                        insertable = true,
+                        nullable = false)),
+        @AttributeOverride(
+                name = "name",
+                column = @Column(
+                        name = "name",
+                        insertable = true,
+                        updatable = true,
+                        nullable = false,
+                        length = 45,
+                        unique = false))
+})
 public class Unit extends NamedPersistenceObject {
     @Transient
     private static final long serialVersionUID = 2437063899438647082L;
@@ -39,7 +55,11 @@ public class Unit extends NamedPersistenceObject {
     @JoinColumn(name = "unittype_id", referencedColumnName = "idUnitType")
     private UnitType type;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Cache(
+            region = "product_in_unit_cache",
+            usage = CacheConcurrencyStrategy.READ_WRITE
+    )
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "unitProduct",
             joinColumns = {@JoinColumn(name = "unit_id", referencedColumnName = "idUnit")},

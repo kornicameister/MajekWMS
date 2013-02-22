@@ -1,16 +1,35 @@
 package org.kornicameister.wms.model.hibernate;
 
 import com.google.gson.annotations.SerializedName;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.kornicameister.wms.model.hibernate.embeddable.InvoiceProductPK;
 
 import javax.persistence.*;
 
 
 @Entity
-@Table(name = "invoiceProduct")
+@Table(
+        name = "invoiceProduct"
+)
+@org.hibernate.annotations.Cache(
+        region = "invoiceproduct_cache",
+        usage = CacheConcurrencyStrategy.READ_WRITE
+)
+@Cacheable(
+        value = true
+)
+@BatchSize(
+        size = 20
+)
 @AssociationOverrides({
-        @AssociationOverride(name = "pk.invoice", joinColumns = @JoinColumn(name = "invoice_id")),
-        @AssociationOverride(name = "pk.product", joinColumns = @JoinColumn(name = "product_id"))})
+        @AssociationOverride(
+                name = "pk.invoice",
+                joinColumns = @JoinColumn(name = "invoice_id")),
+        @AssociationOverride(
+                name = "pk.product",
+                joinColumns = @JoinColumn(name = "product_id"))
+})
 public class InvoiceProduct extends BasicPersistentObject {
     @Transient
     private static final long serialVersionUID = 1269575448414133565L;

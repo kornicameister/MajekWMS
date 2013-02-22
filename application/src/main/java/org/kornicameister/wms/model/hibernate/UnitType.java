@@ -1,14 +1,43 @@
 package org.kornicameister.wms.model.hibernate;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Immutable;
+
 import javax.persistence.*;
 
 
 @Entity
-@Table(name = "unitType", uniqueConstraints = {@UniqueConstraint(columnNames = {
-        "type", "abbreviation"})})
+@Immutable
+@Cache(
+        region = "unittype_cache",
+        usage = CacheConcurrencyStrategy.READ_ONLY
+)
+@Cacheable(
+        value = true
+)
+@Table(
+        name = "unitType",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "abbreviation"})}
+)
 @AttributeOverrides(value = {
-        @AttributeOverride(name = "id", column = @Column(name = "idUnitType", updatable = false, insertable = true, nullable = false)),
-        @AttributeOverride(name = "name", column = @Column(name = "type", insertable = true, updatable = false, nullable = false, length = 20, unique = true))})
+        @AttributeOverride(
+                name = "id",
+                column = @Column(
+                        name = "idUnitType",
+                        updatable = false,
+                        insertable = true,
+                        nullable = false)),
+        @AttributeOverride(
+                name = "name",
+                column = @Column(
+                        name = "type",
+                        insertable = true,
+                        updatable = false,
+                        nullable = false,
+                        length = 20,
+                        unique = true))
+})
 public class UnitType extends NamedPersistenceObject {
     @Transient
     private static final long serialVersionUID = -7479798313966564213L;
@@ -29,40 +58,13 @@ public class UnitType extends NamedPersistenceObject {
         super();
     }
 
-    public synchronized final String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public synchronized final void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
-    }
-
-    public synchronized final String getDescription() {
-        return description;
-    }
-
-    public synchronized final void setDescription(String description) {
-        this.description = description;
-    }
-
-    public synchronized final UnitType getParentType() {
-        return parentType;
-    }
-
-    public synchronized final void setParentType(UnitType parentType) {
-        this.parentType = parentType;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result
-                + ((abbreviation == null) ? 0 : abbreviation.hashCode());
-        result = prime * result
-                + ((description == null) ? 0 : description.hashCode());
-        result = prime * result
-                + ((parentType == null) ? 0 : parentType.hashCode());
+        result = prime * result + ((abbreviation == null) ? 0 : abbreviation.hashCode());
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + ((parentType == null) ? 0 : parentType.hashCode());
         return result;
     }
 

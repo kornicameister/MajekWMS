@@ -1,0 +1,37 @@
+<ehcache
+        updateCheck="true"
+        monitoring="autodetect"
+        dynamicConfig="true">
+
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+            maxElementsInMemory="666"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+            />
+
+    <!-- idle and live silently ignored-->
+    <cache name="unittype_cache"
+           maxElementsInMemory="20"
+           eternal="true"
+           overflowToDisk="false"
+            />
+    <cache name="invoiceproduct_cache"
+           maxElementsInMemory="60"
+           eternal="false"
+           timeToIdleSeconds="40"
+           timeToLiveSeconds="40"
+           overflowToDisk="false"
+            />
+    <cache name="product_in_unit_cache"
+           maxElementsInMemory="120"
+           eternal="false"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="300"
+           overflowToDisk="false"
+            />
+
+</ehcache>

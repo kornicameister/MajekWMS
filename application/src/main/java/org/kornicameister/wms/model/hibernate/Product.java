@@ -4,14 +4,29 @@ import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 
-
-@SuppressWarnings("deprecation")
 @Entity
-@Table(name = "product")
-@org.hibernate.annotations.Entity(dynamicUpdate = true)
+@Table(
+        name = "product"
+)
 @AttributeOverrides(value = {
-        @AttributeOverride(name = "id", column = @Column(name = "idProduct", updatable = false, insertable = true, nullable = false)),
-        @AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = false))})
+        @AttributeOverride(
+                name = "id",
+                column = @Column(
+                        name = "idProduct",
+                        updatable = false,
+                        insertable = true,
+                        nullable = false)
+        ),
+        @AttributeOverride(
+                name = "name",
+                column = @Column(
+                        name = "name",
+                        insertable = true,
+                        updatable = true,
+                        nullable = false,
+                        length = 45,
+                        unique = false)
+        )})
 public class Product extends NamedPersistenceObject {
     @Transient
     private static final long serialVersionUID = 1246737308278979025L;
@@ -32,7 +47,7 @@ public class Product extends NamedPersistenceObject {
     private Float tax = null;
 
     @JoinColumn(name = "measure_id", referencedColumnName = "idMeasure")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Measure measure;
 
     public Product() {

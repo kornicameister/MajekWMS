@@ -1,13 +1,19 @@
 package org.kornicameister.wms.model.hibernate;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "client",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 @AttributeOverrides(value = {
-        @AttributeOverride(name = "id", column = @Column(name = "idClient", updatable = false, insertable = true, nullable = false)),
-        @AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = true))})
+        @AttributeOverride(
+                name = "id",
+                column = @Column(name = "idClient", updatable = false, insertable = true, nullable = false)),
+        @AttributeOverride(
+                name = "name",
+                column = @Column(name = "name", insertable = true, updatable = true, nullable = false, length = 45, unique = true))})
 public class Client extends NamedPersistenceObject {
     @Transient
     private static final long serialVersionUID = 1283426340575080285L;
@@ -21,6 +27,9 @@ public class Client extends NamedPersistenceObject {
     private String description = null;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "client")
+    @org.hibernate.annotations.Cache(
+            usage = CacheConcurrencyStrategy.READ_WRITE
+    )
     private ClientDetails details = null;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

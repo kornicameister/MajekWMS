@@ -7,8 +7,12 @@ import javax.persistence.*;
 @Table(name = "city",
         uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 @AttributeOverrides(value = {
-        @AttributeOverride(name = "id", column = @Column(name = "idCity", updatable = false, insertable = true, nullable = false)),
-        @AttributeOverride(name = "name", column = @Column(name = "name", insertable = true, updatable = true, length = 45, unique = true))
+        @AttributeOverride(
+                name = "id",
+                column = @Column(name = "idCity", updatable = false, insertable = true, nullable = false)),
+        @AttributeOverride(
+                name = "name",
+                column = @Column(name = "name", insertable = true, updatable = true, length = 45, unique = true))
 })
 public class City extends NamedPersistenceObject {
     @Transient

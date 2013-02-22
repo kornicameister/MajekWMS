@@ -16,6 +16,10 @@ import javax.persistence.*;
  */
 
 @MappedSuperclass
+@org.hibernate.annotations.Entity(
+        dynamicInsert = true,
+        dynamicUpdate = true
+)
 abstract public class PersistenceObject extends BasicPersistentObject {
     @Transient
     private static final long serialVersionUID = 8641451013192983600L;

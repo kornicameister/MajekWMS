@@ -27,10 +27,11 @@
         <tomcat.maven.version>2.0</tomcat.maven.version>
         <maven.compiler.version>3.0</maven.compiler.version>
         <junit.version>4.11</junit.version>
-        <hibernate-core.version>4.2.0.CR1</hibernate-core.version>
+        <hibernate.version>4.2.0.CR1</hibernate.version>
         <hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
         <hibernate-common-annotations.version>3.3.0.ga</hibernate-common-annotations.version>
         <gson.version>2.2.2</gson.version>
+        <slf4j-log4j12.version>1.7.2</slf4j-log4j12.version>
     </properties>
 
 
@@ -44,6 +45,11 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-log4j12.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -68,22 +74,27 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${hibernate-core.version}</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate-core.version}</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
-            <version>${hibernate-core.version}</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
             <version>${hibernate-annotations.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.persistence</groupId>

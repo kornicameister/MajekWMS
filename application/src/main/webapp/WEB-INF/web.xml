@@ -25,11 +25,15 @@
         <display-name>WMSDataAgent</display-name>
         <servlet-name>WMSDataAgent</servlet-name>
         <servlet-class>org.kornicameister.wms.server.servlet.WMSDataAgent</servlet-class>
+        <load-on-startup>4</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>WMSDataAgent-Extended</servlet-name>
+        <servlet-class>org.kornicameister.wms.server.servlet.WMSDataAgent2</servlet-class>
         <init-param>
             <param-name>serverMethods</param-name>
             <param-value>src/main/resources/server_methods.properties</param-value>
         </init-param>
-        <load-on-startup>4</load-on-startup>
     </servlet>
     <servlet>
         <description>Page controller</description>
@@ -47,6 +51,10 @@
     </servlet>
 
     <!-- mappings -->
+    <servlet-mapping>
+        <servlet-name>WMSDataAgent-Extended</servlet-name>
+        <url-pattern>/wms/data/*</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>WMSDataAgent</servlet-name>
         <url-pattern>/wms/agent/*</url-pattern>
