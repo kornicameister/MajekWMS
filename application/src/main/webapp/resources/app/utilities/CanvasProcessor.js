@@ -14,8 +14,13 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         unitStore = undefined,
         inSpriteDragging = false,
         SPRITES = new Ext.util.MixedCollection(),
-        SpriteDraggingModule = Ext.define(null, function (SDM) {
-            var _draggableSprite = undefined,
+        SDU = Ext.define(null, function (SpriteDraggingUtility) {
+            return {
+
+            }
+        }),
+        SLU = Ext.define(null, function (SpriteLockingUtility) {
+            var _unlockedSprite = undefined,
                 _spriteAnimationsConfig = {
                     lockAnim          : {
                         to      : {
@@ -75,31 +80,50 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 };
             return {
                 statics: {
-                    lockOff: function (spriteRecord) {
+                    /**
+                     * Quite cool method that wraps and utilise operation that results
+                     * in masking all sprites except for the the one passed as argument.
+                     *
+                     * @param spriteRecord that is to be locked off
+                     * @return the same record as begin passed
+                     */
+                    lockOff           : function (spriteRecord) {
                         if (spriteRecord.get('locked') === true) {
-                            console.log('SDM :: Locking [ OFF ] spriteRecord=', spriteRecord);
+                            console.log('SpriteLockingUtility :: Locking [ OFF ] spriteRecord=', spriteRecord);
                             _spriteAnimators.setLockedOffSpriteView(spriteRecord);
                             _spriteAnimators.disableSpritesExceptFor(spriteRecord);
-                            _draggableSprite = SPRITES.get(spriteRecord.getId()).getAt(0);
+                            _unlockedSprite = SPRITES.get(spriteRecord.getId()).getAt(0);
                         } else {
-                            console.log('SDM :: Could not [ DISABLE ] locking on spriteRecord=', spriteRecord);
+                            console.log('SpriteLockingUtility :: Could not [ DISABLE ] locking on spriteRecord=', spriteRecord);
                         }
                         return spriteRecord;
                     },
-                    lockOn : function (spriteRecord) {
+                    /**
+                     * Does the same as lockOff but in opposite way
+                     *
+                     * @param spriteRecord that is to be locked off
+                     * @return the same record as begin passed
+                     */
+                    lockOn            : function (spriteRecord) {
                         if (spriteRecord.get('locked') === false) {
-                            console.log('SDM :: Locking [ ON ] spriteRecord=', spriteRecord);
+                            console.log('SpriteLockingUtility :: Locking [ ON ] spriteRecord=', spriteRecord);
                             _spriteAnimators.resetSpritesToBasicView();
-                            _draggableSprite = undefined;
+                            _unlockedSprite = undefined;
                         } else {
-                            console.log('SDM :: Could not [ ENABLE ] locking on spriteRecord=', spriteRecord);
+                            console.log('SpriteLockingUtility :: Could not [ ENABLE ] locking on spriteRecord=', spriteRecord);
                         }
                         return spriteRecord;
+                    },
+                    getUnclockedSprite: function () {
+                        return _unlockedSprite;
+                    },
+                    isLocked          : function () {
+                        return Ext.isDefined(_unlockedSprite);
                     }
                 }
             }
         }),
-        USS = Ext.define('CanvasProcessorStorage', {
+        CPS = Ext.define('CanvasProcessorStorage', {
             extend      : 'Ext.data.Store',
             fields      : [
                 'id', 'rect_id', 'text_id', 'unit_id', 'lock_id',
@@ -161,13 +185,148 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 return record;
             }
         }),
-        clearCanvas = function () {
+        SCD = Ext.define(null, function (SpriteCanvasDrawer) {
+            return {
+                statics: {
+                    clearCanvas    : function () {
 
-        },
+                    },
+                    drawUnitSprites: function () {
+                        //@TODO add reading cached drawing from database
+                        console.log('SpriteCanvasDrawer :: Drawing - > unit sprites -> in progress...');
+                        var self = me,
+                            drawnUnitSprites = [],
+                            surface = board['surface'],
+                            unitWidth = sizes['unit']['width'],
+                            unitHeight = sizes['unit']['height'];
+
+                        unitStore.each(function (unitRecord) {
+                            console.log(Ext.String.format('CanvasProcessor :: Drawing - > unit sprites -> rect for [ {0}/{1} ] unit',
+                                unitRecord.getId(),
+                                unitRecord.get('name')));
+
+                            var unitName = unitRecord.get('name'),
+                                unitSize = unitRecord.get('size'),
+                                tileBBox = tilesSprites[drawnUnitSprites.length].getBBox(),
+                                rectX = Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
+                                rectY = Math.floor(tileBBox['y'] + ((tileBBox['height'] - unitWidth) / 2)),
+                            // 1. create rect shape
+                                rectPart = surface.add({
+                                    type  : 'rect',
+                                    width : unitWidth,
+                                    height: unitHeight,
+                                    x     : rectX,
+                                    y     : rectY,
+                                    radius: 12,
+                                    fill  : '#606060',
+                                    stroke: 'none'
+                                }),
+                                lockPart = surface.add({
+                                    type            : 'rect',
+                                    width           : unitWidth / 4,
+                                    height          : unitHeight / 4,
+                                    x               : rectX - 5,
+                                    y               : rectY - 5,
+                                    radius          : 36,
+                                    fill            : "#000000",
+                                    stroke          : "#000",
+                                    "stroke-width"  : 1,
+                                    "stroke-opacity": 1
+                                }),
+                            // 2. create text shape
+                                textPart = surface.add({
+                                    type  : 'text',
+                                    text  : unitName + '\n[' + unitSize + ']',
+                                    fill  : 'black',
+                                    font  : '10px monospace',
+                                    width : unitWidth,
+                                    height: unitHeight,
+                                    x     : Math.floor(rectX + (unitWidth / 3)),
+                                    y     : Math.floor(rectY + (unitHeight / 4))
+                                }),
+                            // 3. prepare placeholder for them
+                                unitSprite = Ext.create('Ext.draw.CompositeSprite', {
+                                    surface: surface,
+                                    zIndex : 2
+                                });
+
+                            // 4. save shapes onto the surface and into the group
+                            unitSprite.add(rectPart);
+                            unitSprite.add(textPart);
+                            unitSprite.add(lockPart);
+                            surface.add(unitSprite);
+
+                            // 5. attach listeners
+                            self.mon(unitSprite, 'mousedown', privateListeners.unitSpriteMousedown, self);
+                            self.mon(unitSprite, 'mouseup', privateListeners.unitSpriteMouseup, self);
+
+                            // 6. push them to array, fields ['id', 'rect_id', 'text_id', 'unit', 'marked']
+                            drawnUnitSprites.push({
+                                id     : unitSprite['id'],
+                                rect_id: rectPart['id'],
+                                text_id: textPart['id'],
+                                lock_id: lockPart['id'],
+                                unit_id: unitRecord.getId()
+                            });
+                            SPRITES.add(unitSprite['id'], unitSprite);
+
+                            // 7. show them
+                            unitSprite.show(true);
+                        }, self);
+
+                        // 8. save them to local storage
+                        CPS.add(drawnUnitSprites);
+
+                        console.log('SpriteCanvasDrawer :: Drawing - > unit sprites -> finished...');
+                        return true;
+                    },
+                    drawHostTiles  : function () {
+                        console.log('SpriteCanvasDrawer :: Drawing - > host tiles -> in progress...');
+                        var boardSize = board.getSize(),
+                            unitsCount = unitStore.getTotalCount(),
+                            xCount = Math.floor(boardSize['width'] / sizes['tile']['width']),
+                            yCount = Math.floor(boardSize['height'] / sizes['tile']['height']),
+                            tile = undefined;
+
+                        if (!Ext.isDefined(board['surface'])) {
+                            console.error('SpriteCanvasDrawer :: Surface not ready...');
+                            return false;
+                        }
+
+                        if (xCount >= yCount) {
+                            xCount = Math.max(xCount, unitsCount);
+                        } else {
+                            yCount = Math.max(yCount, unitsCount);
+                        }
+
+                        for (var y = 0; y < yCount; y++) {
+                            for (var x = 0; x < xCount; x++) {
+                                tile = board['surface'].add({
+                                    type          : 'rect',
+                                    width         : sizes['tile']['width'],
+                                    height        : sizes['tile']['height'],
+                                    radius        : 5,
+                                    fill          : '#C0C0C0',
+                                    stroke        : '#CCCCCC',
+                                    'stroke-width': 2,
+                                    x             : x * sizes['tile']['width'] + 5,
+                                    y             : y * sizes['tile']['height'] + 5,
+                                    opacity       : 0.2
+                                });
+                                tile.show(true);
+                                tilesSprites.push(tile);
+                            }
+                        }
+                        console.log('SpriteCanvasDrawer :: Drawing - > host tiles -> finished...');
+                        return tilesSprites.length > 0;
+                    }
+                }
+            }
+        }),
         drawCanvas = function () {
-            var stepResult = drawHostTiles();
+            var stepResult = SCD.drawHostTiles();
             if (stepResult === true) {
-                stepResult = drawUnitSprites();
+                stepResult = SCD.drawUnitSprites();
             }
             if (stepResult === true) {
                 stepResult = setSurfaceListeners();
@@ -187,144 +346,15 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
 
             return true;
         },
-        drawUnitSprites = function () {
-            //@TODO add reading cached drawing from database
-            console.log('CanvasProcessor :: Drawing - > unit sprites -> in progress...');
-            var self = me,
-                drawnUnitSprites = [],
-                surface = board['surface'],
-                unitWidth = sizes['unit']['width'],
-                unitHeight = sizes['unit']['height'];
-
-            unitStore.each(function (unitRecord) {
-                console.log(Ext.String.format('CanvasProcessor :: Drawing - > unit sprites -> rect for [ {0}/{1} ] unit',
-                    unitRecord.getId(),
-                    unitRecord.get('name')));
-
-                var unitName = unitRecord.get('name'),
-                    unitSize = unitRecord.get('size'),
-                    tileBBox = tilesSprites[drawnUnitSprites.length].getBBox(),
-                    rectX = Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
-                    rectY = Math.floor(tileBBox['y'] + ((tileBBox['height'] - unitWidth) / 2)),
-                // 1. create rect shape
-                    rectPart = surface.add({
-                        type  : 'rect',
-                        width : unitWidth,
-                        height: unitHeight,
-                        x     : rectX,
-                        y     : rectY,
-                        radius: 12,
-                        fill  : '#606060',
-                        stroke: 'none'
-                    }),
-                    lockPart = surface.add({
-                        type            : 'rect',
-                        width           : unitWidth / 4,
-                        height          : unitHeight / 4,
-                        x               : rectX - 5,
-                        y               : rectY - 5,
-                        radius          : 36,
-                        fill            : "#000000",
-                        stroke          : "#000",
-                        "stroke-width"  : 1,
-                        "stroke-opacity": 1
-                    }),
-                // 2. create text shape
-                    textPart = surface.add({
-                        type  : 'text',
-                        text  : unitName + '\n[' + unitSize + ']',
-                        fill  : 'black',
-                        font  : '10px monospace',
-                        width : unitWidth,
-                        height: unitHeight,
-                        x     : Math.floor(rectX + (unitWidth / 3)),
-                        y     : Math.floor(rectY + (unitHeight / 4))
-                    }),
-                // 3. prepare placeholder for them
-                    unitSprite = Ext.create('Ext.draw.CompositeSprite', {
-                        surface: surface,
-                        zIndex : 2
-                    });
-
-                // 4. save shapes onto the surface and into the group
-                unitSprite.add(rectPart);
-                unitSprite.add(textPart);
-                unitSprite.add(lockPart);
-                surface.add(unitSprite);
-
-                // 5. attach listeners
-                self.mon(unitSprite, 'mousedown', privateListeners.unitSpriteMousedown, self);
-                self.mon(unitSprite, 'mouseup', privateListeners.unitSpriteMouseup, self);
-
-                // 6. push them to array, fields ['id', 'rect_id', 'text_id', 'unit', 'marked']
-                drawnUnitSprites.push({
-                    id     : unitSprite['id'],
-                    rect_id: rectPart['id'],
-                    text_id: textPart['id'],
-                    lock_id: lockPart['id'],
-                    unit_id: unitRecord.getId()
-                });
-                SPRITES.add(unitSprite['id'], unitSprite);
-
-                // 7. show them
-                unitSprite.show(true);
-            }, self);
-
-            // 8. save them to local storage
-            USS.add(drawnUnitSprites);
-
-            console.log('CanvasProcessor :: Drawing - > unit sprites -> finished...');
-            return true;
-        },
-        drawHostTiles = function () {
-            console.log('CanvasProcessor :: Drawing - > host tiles -> in progress...');
-            var boardSize = board.getSize(),
-                unitsCount = unitStore.getTotalCount(),
-                xCount = Math.floor(boardSize['width'] / sizes['tile']['width']),
-                yCount = Math.floor(boardSize['height'] / sizes['tile']['height']),
-                tile = undefined;
-
-            if (!Ext.isDefined(board['surface'])) {
-                console.error('CanvasProcessor :: Surface not ready...');
-                return false;
-            }
-
-            if (xCount >= yCount) {
-                xCount = Math.max(xCount, unitsCount);
-            } else {
-                yCount = Math.max(yCount, unitsCount);
-            }
-
-            for (var y = 0; y < yCount; y++) {
-                for (var x = 0; x < xCount; x++) {
-                    tile = board['surface'].add({
-                        type          : 'rect',
-                        width         : sizes['tile']['width'],
-                        height        : sizes['tile']['height'],
-                        radius        : 5,
-                        fill          : '#C0C0C0',
-                        stroke        : '#CCCCCC',
-                        'stroke-width': 2,
-                        x             : x * sizes['tile']['width'] + 5,
-                        y             : y * sizes['tile']['height'] + 5,
-                        opacity       : 0.2
-                    });
-                    tile.show(true);
-                    tilesSprites.push(tile);
-                }
-            }
-            console.log('CanvasProcessor :: Drawing - > host tiles -> finished...');
-            return tilesSprites.length > 0;
-        },
         switchLockOnUnit = function (unit_id) {
-            var spriteRecord = USS.findRecord('unit_id', unit_id);
+            var spriteRecord = CPS.findRecord('unit_id', unit_id);
             console.log('CanvasProcessor :: Lock will be ', (spriteRecord.get('locked') === true ? 'disabled' : 'enabled'));
 
             if (spriteRecord.get('locked') === true) {
-                SpriteDraggingModule.lockOff(spriteRecord);
+                SLU.lockOff(spriteRecord);
                 spriteRecord.set('locked', false);
             } else {
-                SpriteDraggingModule.lockOn(spriteRecord);
+                SLU.lockOn(spriteRecord);
                 spriteRecord.set('locked', true);
             }
 
@@ -334,7 +364,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             boardContextMenu   : function (event, target) {
                 console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event['type'], '\ntarget=', target['id']);
                 var sprite_id = target['id'],
-                    sprite = USS.findBySprite(sprite_id);
+                    sprite = CPS.findBySprite(sprite_id);
 
                 event.preventDefault();
                 if (Ext.isDefined(sprite)) {
@@ -366,7 +396,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             board = config['board'];
             sizes = config['sizes'];
             unitStore = config['unitStore'];
-            USS = Ext.create('CanvasProcessorStorage');
+            CPS = Ext.create('CanvasProcessorStorage');
             board.center();
             // init block
 
