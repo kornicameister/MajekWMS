@@ -9,11 +9,6 @@
 Ext.define('WMS.utilities.CanvasProcessor', function () {
     var me = this,
     //MODULES
-        SDU = Ext.define(null, function (SpriteDraggingUtility) {
-            return {
-
-            }
-        }),
         SLU = Ext.define(null, function (SpriteLockingUtility) {
             var _unlockedSpriteId = undefined,
                 _spriteAnimationsConfig = {
@@ -287,7 +282,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
 
                             // 5. attach listeners
                             self.mon(unitSprite, 'mousedown', privateListeners.unitSpriteMousedown, self);
-                            self.mon(unitSprite, 'mouseup', privateListeners.unitSpriteMouseup, self);
+                            self.mon(board, 'mouseup', privateListeners.surfaceMouseUp, self);
 
                             // 6. push them to array, fields ['id', 'rect_id', 'text_id', 'unit', 'marked']
                             drawnUnitSprites.push({
@@ -353,58 +348,50 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 }
             }
         }),
-//        TAM = Ext.define(null, function (TileAnimatorModule) {
-//            var _animConfigs = {
-//                    over: {
-//                        to      : {
-//                            fill: '#C0C0C0'
-//                        },
-//                        duration: 500
-//                    },
-//                    out : {
-//                        to      : {
-//                            fill: '#FFFFC0'
-//                        },
-//                        duration: 500
-//                    }
-//                },
-//                _animators = {
-//                    animateOverTile: function (sprite) {
-//                        sprite.animate(_animConfigs.over);
-//                    },
-//                    animateOutTile : function (sprite) {
-//                        sprite.animate(_animConfigs.out);
-//                    }
-//                },
-//                lightTile = undefined;
-//            return {
-//                statics: {
-//                    setOverTile : function (tile_id) {
-//                        console.log('TileAnimatorModule :: Over tile, tile_id=', tile_id);
-//                        _animators.animateOverTile(TILES.get(tile_id));
-//                        lightTile = tile_id;
-//                    },
-//                    setOutTile  : function (tile_id) {
-//                        console.log('TileAnimatorModule :: Out tile, tile_id=', tile_id);
-//                        _animators.animateOutTile(TILES.get(tile_id));
-//                        lightTile = undefined;
-//                    },
-//                    getLightTile: function () {
-//                        return lightTile;
-//                    },
-//                    isLitUp     : function () {
-//                        return Ext.isDefined(lightTile);
-//                    },
-//                    isTileLit   : function (sprite) {
-//                        var isDefined = TAM.isLitUp();
-//                        if (isDefined === true) {
-//                            isDefined = sprite.getId() === lightTile;
-//                        }
-//                        return isDefined
-//                    }
-//                }
-//            }
-//        }),
+        SMM = Ext.define(null, function (SpriteMovingModule) {
+            var spriteNowInMove = undefined,
+                steps = {
+                    x: 1,
+                    y: 1
+                };
+            return {
+                statics: {
+                    configure: function (stepX, stepY) {
+                        steps['x'] = stepX;
+                        steps['y'] = stepY;
+                    },
+                    startMove: function (sprite_id) {
+                        if (Ext.isDefined(sprite_id) && !SpriteMovingModule.isMoving()) {
+                            spriteNowInMove = UNITS.get(sprite_id);
+                        }
+                    },
+                    overMove : function () {
+                        spriteNowInMove = undefined;
+                    },
+                    move     : function (eventXY) {
+                        if (SpriteMovingModule.isMoving()) {
+                            var bBox = spriteNowInMove.getBBox(),
+                                dx = eventXY[0],
+                                dy = eventXY[1];
+
+                            console.log('Sprite \nBBox=', bBox,
+                                '\nEventXY=', eventXY,
+                                '\nOffset=', [dx - bBox.x, dy - bBox.y]);
+
+                            spriteNowInMove.setAttributes({
+                                translate: {
+                                    x: (dx - bBox.x),
+                                    y: (dy - bBox.y)
+                                }
+                            }, true);
+                        }
+                    },
+                    isMoving : function () {
+                        return Ext.isDefined(spriteNowInMove);
+                    }
+                }
+            }
+        }),
     //MODULES
         TILES = new Ext.util.MixedCollection(),
         UNITS = new Ext.util.MixedCollection(),
@@ -432,30 +419,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 return false;
             }
 
-            me.mon(surface, 'mousemove', privateListeners['surfaceMousemove'], me);
+            me.mon(board['surface'], 'mousemove', privateListeners['surfaceMousemove'], me);
             me.mon(board.getEl(), 'contextmenu', privateListeners['boardContextMenu'], me);
-            TILES.eachKey(function (key, tile) {
-                me.mon(tile, 'mouseover', privateListeners['tileMouseOver'], me);
-                me.mon(tile, 'mouseout', privateListeners['tileMouseOut'], me);
-            });
 
             return true;
         },
         privateListeners = {
-            tileMouseOver      : function () {
-//                var spriteRecord = CPS.findRecord('tile_id', event['id']);
-//                if (SLU.isLockOff()) {
-//                    console.log('CanvasProcessor :: Lister -> tile -> mouseover -> triggered...\nevent=', event['type'], '\ntarget=', event['id']);
-//                    TAM.setOverTile((spriteRecord === null ? event['id'] : spriteRecord.get('tile_id')));
-//                }
-            },
-            tileMouseOut       : function () {
-//                var spriteRecord = CPS.findRecord('tile_id', event['id']);
-//                if (SLU.isLockOff()) {
-//                    console.log('CanvasProcessor :: Lister -> tile -> mouseout -> triggered...\nevent=', event['type'], '\ntarget=', event['id']);
-//                    TAM.setOutTile((spriteRecord === null ? event['id'] : spriteRecord.get('tile_id')));
-//                }
-            },
             boardContextMenu   : function (event, target) {
                 console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event['type'], '\ntarget=', target['id']);
                 var sprite_id = target['id'],
@@ -468,14 +437,25 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     me.fireEvent('unitlockedoff', sprite.get('unit_id'));
                 }
             },
-            unitSpriteMousedown: function (event, htmlTarget) {
-                console.log('CanvasProcessor :: Lister -> sprite -> mousedown -> triggered...');
+            unitSpriteMousedown: function (event, target) {
+                var sprite_id = event['id'],
+                    sprite = CPS.findBySprite(sprite_id);
+                if (SLU.isLockOff()) {
+                    console.log('CanvasProcessor :: Lister -> sprite -> mousedown -> triggered...,\nsprite=', event['id']);
+                    SMM.startMove(sprite.getId());
+                }
             },
-            unitSpriteMouseup  : function (event, htmlTarget) {
-                console.log('CanvasProcessor :: Lister -> sprite -> mouseup -> triggered...');
+            surfaceMouseUp     : function () {
+                if (SLU.isLockOff() && SMM.isMoving()) {
+                    console.log('CanvasProcessor :: Lister -> sprite -> mouseup -> triggered...');
+                    SMM.overMove();
+                }
             },
-            surfaceMousemove   : function (event, htmlTarget) {
-                console.log('CanvasProcessor :: Lister -> surface -> mousemove -> triggered...');
+            surfaceMousemove   : function (event, target) {
+                if (SLU.isLockOff() && SMM.isMoving()) {
+//                    console.log('CanvasProcessor :: Lister -> surface -> mousemove -> triggered..., XY=', event.getXY());
+                    SMM.move(event.getXY());
+                }
             }
         };
     return {
