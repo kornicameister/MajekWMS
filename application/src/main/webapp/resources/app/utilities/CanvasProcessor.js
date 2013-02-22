@@ -12,12 +12,100 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         board = undefined,
         sizes = undefined,
         unitStore = undefined,
+        inSpriteDragging = false,
         SPRITES = new Ext.util.MixedCollection(),
+        SpriteDraggingModule = Ext.define(null, function (SDM) {
+            var _draggableSprite = undefined,
+                _spriteAnimationsConfig = {
+                    lockAnim          : {
+                        to      : {
+                            fill            : "#FFFF00",
+                            "stroke-width"  : 4,
+                            "stroke-opacity": 0.5
+                        },
+                        duration: 2500
+                    },
+                    unlockAnim        : {
+                        to      : {
+                            fill            : "#000000",
+                            "stroke-width"  : 1,
+                            "stroke-opacity": 1
+                        },
+                        duration: 2500
+                    },
+                    disabledSpriteAnim: {
+                        to      : {
+                            zIndex : 1,
+                            opacity: 0.3
+                        },
+                        duration: 2500
+                    },
+                    enabledSpriteAnim : {
+                        to      : {
+                            zIndex : 2,
+                            opacity: 1
+                        },
+                        duration: 2500
+                    }
+                },
+                _spriteAnimators = {
+                    setLockedOffSpriteView : function (spriteRecord) {
+                        if (spriteRecord !== null && Ext.isDefined(spriteRecord)) {
+                            var group = SPRITES.get(spriteRecord.getId()),
+                                lock = group.get(2);
+                            lock.animate(_spriteAnimationsConfig.lockAnim);
+                        }
+                    },
+                    disableSpritesExceptFor: function (spriteRecord) {
+                        var nonSelected = SPRITES.filter(new Ext.util.Filter({
+                            filterFn: function (item) {
+                                return item['id'] !== spriteRecord.getId()
+                            }
+                        }), spriteRecord.getId());
+                        nonSelected.eachKey(function (spriteId, sprite) {
+                            sprite.animate(_spriteAnimationsConfig.disabledSpriteAnim);
+                        });
+                    },
+                    resetSpritesToBasicView: function () {
+                        SPRITES.eachKey(function (spriteId, sprite) {
+                            sprite.animate(_spriteAnimationsConfig.enabledSpriteAnim);
+                            sprite.getAt(2).animate(_spriteAnimationsConfig.unlockAnim);
+                        });
+                    }
+                };
+            return {
+                statics: {
+                    lockOff: function (spriteRecord) {
+                        if (spriteRecord.get('locked') === true) {
+                            console.log('SDM :: Locking [ OFF ] spriteRecord=', spriteRecord);
+                            _spriteAnimators.setLockedOffSpriteView(spriteRecord);
+                            _spriteAnimators.disableSpritesExceptFor(spriteRecord);
+                            _draggableSprite = SPRITES.get(spriteRecord.getId()).getAt(0);
+                        } else {
+                            console.log('SDM :: Could not [ DISABLE ] locking on spriteRecord=', spriteRecord);
+                        }
+                        return spriteRecord;
+                    },
+                    lockOn : function (spriteRecord) {
+                        if (spriteRecord.get('locked') === false) {
+                            console.log('SDM :: Locking [ ON ] spriteRecord=', spriteRecord);
+                            _spriteAnimators.resetSpritesToBasicView();
+                            _draggableSprite = undefined;
+                        } else {
+                            console.log('SDM :: Could not [ ENABLE ] locking on spriteRecord=', spriteRecord);
+                        }
+                        return spriteRecord;
+                    }
+                }
+            }
+        }),
         USS = Ext.define('CanvasProcessorStorage', {
             extend      : 'Ext.data.Store',
             fields      : [
                 'id', 'rect_id', 'text_id', 'unit_id', 'lock_id',
                 { name: 'marked', type: 'boolean', defaultValue: false},
+                // locked = true, sprite can not be dragged
+                // locked = false => unlocked, sprite can be dragged
                 { name: 'locked', type: 'boolean', defaultValue: true}
             ],
             sorters     : [
@@ -126,18 +214,20 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                         x     : rectX,
                         y     : rectY,
                         radius: 12,
-                        fill  : 'green',
-                        stroke: 'red'
+                        fill  : '#606060',
+                        stroke: 'none'
                     }),
                     lockPart = surface.add({
-                        type  : 'rect',
-                        width : unitWidth / 5,
-                        height: unitHeight / 5,
-                        x     : rectX - 3,
-                        y     : rectY - 3,
-                        radius: 36,
-                        stroke: 'red',
-                        fill  : 'black'
+                        type            : 'rect',
+                        width           : unitWidth / 4,
+                        height          : unitHeight / 4,
+                        x               : rectX - 5,
+                        y               : rectY - 5,
+                        radius          : 36,
+                        fill            : "#000000",
+                        stroke          : "#000",
+                        "stroke-width"  : 1,
+                        "stroke-opacity": 1
                     }),
                 // 2. create text shape
                     textPart = surface.add({
@@ -152,7 +242,8 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     }),
                 // 3. prepare placeholder for them
                     unitSprite = Ext.create('Ext.draw.CompositeSprite', {
-                        surface: surface
+                        surface: surface,
+                        zIndex : 2
                     });
 
                 // 4. save shapes onto the surface and into the group
@@ -225,21 +316,28 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: Drawing - > host tiles -> finished...');
             return tilesSprites.length > 0;
         },
-        releaseLockOnUnit = function (unit_id) {
-            var spriteRecord = USS.findRecord('unit_id', unit_id),
-                sprite = SPRITES.get(spriteRecord.getId()).getAt(0);
+        switchLockOnUnit = function (unit_id) {
+            var spriteRecord = USS.findRecord('unit_id', unit_id);
+            console.log('CanvasProcessor :: Lock will be ', (spriteRecord.get('locked') === true ? 'disabled' : 'enabled'));
 
-            spriteHandlers.changeLockStatus(spriteRecord);
+            if (spriteRecord.get('locked') === true) {
+                SpriteDraggingModule.lockOff(spriteRecord);
+                spriteRecord.set('locked', false);
+            } else {
+                SpriteDraggingModule.lockOn(spriteRecord);
+                spriteRecord.set('locked', true);
+            }
+
+            return true;
         },
         privateListeners = {
             boardContextMenu   : function (event, target) {
-                console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event, '\ntarget=', target);
+                console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event['type'], '\ntarget=', target['id']);
                 var sprite_id = target['id'],
                     sprite = USS.findBySprite(sprite_id);
 
                 event.preventDefault();
                 if (Ext.isDefined(sprite)) {
-                    spriteHandlers.selectSprite(sprite_id);
                     me.fireEvent('unitmenu', event['currentTarget'], event.getXY(), sprite.get('unit_id'));
                 }
             },
@@ -252,83 +350,15 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             surfaceMousemove   : function (event, htmlTarget) {
                 console.log('CanvasProcessor :: Lister -> surface -> mousemove -> triggered...');
             }
-        },
-        spriteHandlers = {
-            changeLockStatus: function (spriteRecord) {
-                if (spriteRecord !== null && Ext.isDefined(spriteRecord)) {
-                    var group = SPRITES.get(spriteRecord.getId()),
-                        sprite = group.getAt(0),
-                        lock = group.get(2);
-
-                    if (spriteRecord.get('locked') === true) {
-                        sprite.setAttributes({
-                            scale: {
-                                x: 1.2,
-                                y: 1.2
-                            }
-                        });
-                        lock.setAttributes({
-                            fill: 'orange'
-                        });
-                        spriteRecord.set('locked', false);
-                    } else {
-                        sprite.setAttributes({
-                            scale: {
-                                x: 1,
-                                y: 1
-                            }
-                        }, true);
-                        lock.setAttributes({
-                            fill: 'black'
-                        });
-                        spriteRecord.set('locked', true);
-                    }
-
-                    group.redraw(true);
-                }
-            },
-            selectSprite    : function (sprite) {
-                console.log('CanvasProcessor :: SpriteHandler -> sprite -> click -> triggered...\nsprite=', sprite);
-                var record = USS.findBySprite(sprite),
-                    markedRecord = USS.findRecord('marked', true),
-                    markedSprite = null;
-                if (!Ext.isDefined(record) || record === null) {
-                    console.log('CanvasProcessor :: SpriteHandler -> sprite -> click -> record not found');
-                }
-
-                sprite = SPRITES.get(record.getId()).getAt(0);
-                if (markedRecord !== null) {
-                    markedSprite = SPRITES.get(markedRecord.getId()).getAt(0);
-                }
-
-                if (record.get('marked') === false) {
-                    sprite.setAttributes({
-                        fill: 'yellow'
-                    }, true);
-                    record.set('marked', true);
-
-                    if (markedSprite !== null) {
-                        markedSprite.setAttributes({
-                            fill: 'green'
-                        }, true);
-                        markedRecord.set('marked', false);
-                    }
-                } else {
-                    sprite.setAttributes({
-                        fill: 'green'
-                    }, true);
-                    record.set('marked', false);
-                }
-            }
         };
     return {
-        requires     : [
+        requires   : [
             'WMS.model.sprite.Unit'
         ],
-        mixins       : {
+        mixins     : {
             observable: 'Ext.util.Observable'
         },
-        constructor  : function (config) {
+        constructor: function (config) {
             me = this;
 
             // init block
@@ -349,7 +379,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: init canvas=', board, ', sizes=', sizes);
             me.callParent(arguments)
         },
-        draw         : function (redraw) {
+        draw       : function (redraw) {
             console.log('CanvasProcessor :: drawing in progress...');
             redraw = (Ext.isDefined(redraw) ? redraw : false);
             if (redraw === true) {
@@ -359,22 +389,13 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: drawing finished...');
             return result;
         },
-        releaseLockOn: function (unit_id) {
-            console.log('CanvasProcessor :: releasing lock on unit=', unit_id);
+        switchLock : function (unit_id) {
+            console.log('CanvasProcessor :: switching lock on unit=', unit_id);
             var status;
             {
-                status = releaseLockOnUnit(unit_id);
+                status = switchLockOnUnit(unit_id);
             }
-            console.log('CanvasProcessor :: released lock on unit=', unit_id);
-            return status;
-        },
-        lockOn       : function (unit_id) {
-            console.log('CanvasProcessor :: locking unit=', unit_id);
-            var status;
-            {
-                status = releaseLockOnUnit(unit_id);
-            }
-            console.log('CanvasProcessor :: locked unit=', unit_id);
+            console.log('CanvasProcessor :: switched lock on unit=', unit_id);
             return status;
         }
     }

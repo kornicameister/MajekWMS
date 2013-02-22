@@ -36,7 +36,11 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
         config            : {
             canvasProcessor: undefined,
             contextMenu    : undefined,
-            cachedUnit     : undefined
+            cachedUnit     : undefined,
+            menuPosState   : {
+                1: 'Przenieś w inne miejsce',
+                2: 'Zakończ operacje'
+            }
         },
         init              : function () {
             console.init('WMS.controller.wms.unit.Canvas initializing... ');
@@ -52,21 +56,18 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                 animCollapse: true,
                 items       : [
                     {
-                        itemId: 1,
-                        text  : 'Edit'
+                        itemId  : 1,
+                        text    : 'Edycja',
+                        disabled: true
                     },
                     {
                         itemId : 2,
-                        text   : 'Products',
+                        text   : 'Lista produktów',
                         iconCls: 'view-wms-inventory'
                     },
                     {
                         itemId: 3,
-                        text  : 'Release'
-                    },
-                    {
-                        itemId: 4,
-                        text  : 'Lock'
+                        text  : me.getMenuPosState()[1]
                     }
                 ]
             }));
@@ -118,11 +119,9 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                     privateListeners.onUnitSelected(me.getCachedUnit());
                     break;
                 case 3:
-                    canvasProcessor.releaseLockOn(me.getCachedUnit());
-                    break;
-                case 4:
-                    canvasProcessor.lockOn(me.getCachedUnit());
-                    break;
+                    if (canvasProcessor.switchLock(me.getCachedUnit())) {
+                        item.setText((item['text'] === me.getMenuPosState()[1] ? me.getMenuPosState()[2] : me.getMenuPosState()[1]));
+                    }
                     break;
             }
         }
