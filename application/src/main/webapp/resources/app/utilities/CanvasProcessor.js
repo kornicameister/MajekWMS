@@ -12,7 +12,6 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         board = undefined,
         sizes = undefined,
         unitStore = undefined,
-        inSpriteDragging = false,
         SPRITES = new Ext.util.MixedCollection(),
         SDU = Ext.define(null, function (SpriteDraggingUtility) {
             return {
@@ -20,7 +19,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             }
         }),
         SLU = Ext.define(null, function (SpriteLockingUtility) {
-            var _unlockedSprite = undefined,
+            var _unlockedSpriteId = undefined,
                 _spriteAnimationsConfig = {
                     lockAnim          : {
                         to      : {
@@ -87,12 +86,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                      * @param spriteRecord that is to be locked off
                      * @return the same record as begin passed
                      */
-                    lockOff           : function (spriteRecord) {
+                    lockOff            : function (spriteRecord) {
                         if (spriteRecord.get('locked') === true) {
                             console.log('SpriteLockingUtility :: Locking [ OFF ] spriteRecord=', spriteRecord);
                             _spriteAnimators.setLockedOffSpriteView(spriteRecord);
                             _spriteAnimators.disableSpritesExceptFor(spriteRecord);
-                            _unlockedSprite = SPRITES.get(spriteRecord.getId()).getAt(0);
+                            _unlockedSpriteId = spriteRecord.getId();
                         } else {
                             console.log('SpriteLockingUtility :: Could not [ DISABLE ] locking on spriteRecord=', spriteRecord);
                         }
@@ -104,21 +103,28 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                      * @param spriteRecord that is to be locked off
                      * @return the same record as begin passed
                      */
-                    lockOn            : function (spriteRecord) {
+                    lockOn             : function (spriteRecord) {
                         if (spriteRecord.get('locked') === false) {
                             console.log('SpriteLockingUtility :: Locking [ ON ] spriteRecord=', spriteRecord);
                             _spriteAnimators.resetSpritesToBasicView();
-                            _unlockedSprite = undefined;
+                            _unlockedSpriteId = undefined;
                         } else {
                             console.log('SpriteLockingUtility :: Could not [ ENABLE ] locking on spriteRecord=', spriteRecord);
                         }
                         return spriteRecord;
                     },
-                    getUnclockedSprite: function () {
-                        return _unlockedSprite;
+                    getUnlockedSpriteId: function () {
+                        return _unlockedSpriteId;
                     },
-                    isLocked          : function () {
-                        return Ext.isDefined(_unlockedSprite);
+                    isLockOn           : function () {
+                        return Ext.isDefined(_unlockedSpriteId);
+                    },
+                    isLocked           : function (sprite) {
+                        var isDefined = SLU.isLockOn();
+                        if (isDefined === true) {
+                            isDefined = sprite.getId() === _unlockedSpriteId;
+                        }
+                        return isDefined
                     }
                 }
             }
@@ -367,8 +373,10 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     sprite = CPS.findBySprite(sprite_id);
 
                 event.preventDefault();
-                if (Ext.isDefined(sprite)) {
+                if (!SLU.isLockOn() || SLU.isLocked(sprite)) {
                     me.fireEvent('unitmenu', event['currentTarget'], event.getXY(), sprite.get('unit_id'));
+                } else if (!SLU.isLocked(sprite)) {
+                    me.fireEvent('unitlockedoff', sprite.get('unit_id'));
                 }
             },
             unitSpriteMousedown: function (event, htmlTarget) {
@@ -403,7 +411,8 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             me.addEvents(
                 'unitclick',
                 'unitmenu',
-                'unitrelease'
+                'unitrelease',
+                'unitlockedoff'
             );
 
             console.log('CanvasProcessor :: init canvas=', board, ', sizes=', sizes);
@@ -413,7 +422,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: drawing in progress...');
             redraw = (Ext.isDefined(redraw) ? redraw : false);
             if (redraw === true) {
-                clearCanvas();
+                SDU.clearCanvas();
             }
             var result = drawCanvas();
             console.log('CanvasProcessor :: drawing finished...');

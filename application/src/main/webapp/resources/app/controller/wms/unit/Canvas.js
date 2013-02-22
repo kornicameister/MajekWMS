@@ -97,6 +97,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             // listeners
             {
                 me.mon(canvasProcessor, 'unitmenu', me.onUnitMenu, me);
+                me.mon(canvasProcessor, 'unitlockedoff', me.onUnitLockedOff, me);
             }
             // listeners
 
@@ -124,6 +125,30 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                     }
                     break;
             }
+            Ext.getCmp('statusBar').setStatus({
+                text : Ext.String.format('Akcja na elemencie {0}: ', item['text']),
+                clear: {
+                    wait       : 10000,
+                    anim       : true,
+                    useDefaults: false
+                }
+            });
+        },
+        onUnitLockedOff   : function () {
+            Ext.Msg.show({
+                title  : 'Akcja niedozwolona',
+                msg    : 'Musisz zapisać zmiany, aby móc zmieniać położenia innych elementów.',
+                buttons: Ext.Msg.OK,
+                icon   : Ext.Msg.WARNING
+            });
+            Ext.getCmp('statusBar').setStatus({
+                text : 'Musisz zapisać zmiany, aby móc zmieniać położenia innych elementów.',
+                clear: {
+                    wait       : 10000,
+                    anim       : true,
+                    useDefaults: false
+                }
+            });
         }
     }
 });
