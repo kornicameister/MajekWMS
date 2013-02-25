@@ -11,8 +11,8 @@ import java.io.IOException;
  * @author kornicameister
  * @since 0.0.1
  */
-public class WMSDataAgent2 extends HttpServlet {
-    private final static Logger LOGGER = Logger.getLogger(WMSDataAgent2.class);
+public class WMSDataDispatcherAgent extends HttpServlet {
+    private final static Logger LOGGER = Logger.getLogger(WMSDataDispatcherAgent.class);
     private ServerMethod serverMethod;
 
     @Override

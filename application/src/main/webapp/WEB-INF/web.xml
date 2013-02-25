@@ -29,7 +29,7 @@
     </servlet>
     <servlet>
         <servlet-name>WMSDataAgent-Extended</servlet-name>
-        <servlet-class>org.kornicameister.wms.server.servlet.WMSDataAgent2</servlet-class>
+        <servlet-class>org.kornicameister.wms.server.servlet.WMSDataDispatcherAgent</servlet-class>
         <init-param>
             <param-name>serverMethods</param-name>
             <param-value>src/main/resources/server_methods.properties</param-value>

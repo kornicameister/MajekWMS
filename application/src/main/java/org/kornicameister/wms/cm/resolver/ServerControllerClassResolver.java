@@ -21,8 +21,15 @@ import java.util.Set;
 public class ServerControllerClassResolver {
     private final static Logger LOGGER = Logger.getLogger(ServerControllerClassResolver.class);
 
+    /**
+     * Method resolving and loading classes for controllers
+     *
+     * @param file
+     * @param controllersPackage
+     * @return
+     */
     public static Set<ServerControllerDescriptor> resolve(File file, String controllersPackage) {
-        Set<ServerControllerDescriptor> methods = new HashSet<ServerControllerDescriptor>();
+        Set<ServerControllerDescriptor> methods = new HashSet<>();
 
         ServerControllerClassResolver.resolveRecursively(file, controllersPackage, methods);
 
