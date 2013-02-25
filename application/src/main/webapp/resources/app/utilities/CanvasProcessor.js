@@ -10,7 +10,14 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
     var me = this,
         cachedTileId = undefined,
     //MODULES
-        _1_SLU = Ext.define(null, function (SpriteLockingUtility) {
+        /**
+         * SpriteLockingUtility provides functionality most recognizable in
+         * the context of UI. By calling method defined within it, whole
+         * surface along with defined sprites may be affected and the in the
+         * end user is presented with some custom outlook and knows which
+         * sprite is currently being affected.
+         */
+            _1_SLU = Ext.define(null, function (SpriteLockingUtility) {
             var _unlockedSpriteId = undefined,
                 _spriteAnimationsConfig = {
                     lockAnim          : {
@@ -152,7 +159,13 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 }
             }
         }),
-        _2_CPS = Ext.define('CanvasProcessorStorage', {
+        /**
+         * Internal storage of the WMS.utilities.CanvasProcessor. By having its type
+         * determined as memory, it is refreshed with every page refreshing. Holds
+         * all kinds of runtime-like metadata that are useful when establishing
+         * the information about current sprite location.
+         */
+            _2_CPS = Ext.define('CanvasProcessorStorage', {
             extend      : 'Ext.data.Store',
             fields      : [
                 'id',
@@ -243,7 +256,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 return record;
             }
         }),
-        _3_SCD = Ext.define(null, function (SpriteCanvasDrawer) {
+        /**
+         * Canvas drawer closes up the functionality responsible for drawing/redrawing the surface.
+         * It can either remove all the content and than ask the server for updated, draw all
+         * shapes in the result.
+         */
+            _3_SCD = Ext.define(null, function (SpriteCanvasDrawer) {
             var locateTile = function (it, unit_id, fromServer) {
                 var tile = TILES.getAt(it);
                 if (fromServer) {
@@ -405,7 +423,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 }
             }
         }),
-        _4_SMM = Ext.define(null, function () {
+        /**
+         * SpriteMovingModule has some useful methods that are to handle sprites' reallocating at the surface.
+         * If, for instance, whole sprite (group) is initially located on the tile at x=1,y=1, that this
+         * module will be able to grap this group and place on the tile at x=4,y=20
+         */
+            _4_SMM = Ext.define(null, function () {
             return {
                 statics: {
                     moveUnitToTile: function (unit_id, tile_id) {
@@ -482,7 +505,10 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 }
             }
         }),
-        _5_USS = undefined,
+        /**
+         * Placeholder for the server that interacts between client and the server directly.
+         */
+            _5_USS = undefined,
     //MODULES
         TILES = new Ext.util.MixedCollection(),
         UNITS = new Ext.util.MixedCollection(),
