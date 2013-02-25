@@ -36,7 +36,9 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
         config            : {
             canvasProcessor: undefined,
             contextMenu    : undefined,
+            tileContextMenu: undefined,
             cachedUnit     : undefined,
+            cachedTileId   : undefined,
             menuPosState   : {
                 1: 'Przenieś w inne miejsce',
                 2: 'Zakończ operacje'
@@ -50,7 +52,8 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                     boxready: me.onBoxReady
                 }
             }, me);
-            me.setContextMenu(new Ext.menu.Menu({
+            me.setContextMenu(Ext.create('Ext.menu.Menu', {
+                xtype       : 'menu',
                 plain       : true,
                 margin      : '0 0 10 0',
                 animCollapse: true,
@@ -69,9 +72,37 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                         itemId: 3,
                         text  : me.getMenuPosState()[1]
                     }
-                ]
+                ],
+                listeners   : {
+                    'click': {
+                        scope: me,
+                        fn   : me.onContextMenuClick
+                    }
+                }
             }));
-            me.mon(me.getContextMenu(), 'click', me.onContextMenuClick, me);
+
+            me.setTileContextMenu(Ext.create('Ext.menu.Menu', {
+                xtype       : 'menu',
+                plain       : true,
+                margin      : '0 0 10 0',
+                animCollapse: true,
+                items       : [
+                    {
+                        itemId: 4,
+                        text  : 'Przenieś tutaj'
+                    },
+                    {
+                        itemId: 5,
+                        text  : 'Anuluj'
+                    }
+                ],
+                listeners   : {
+                    'click': {
+                        scope: me,
+                        fn   : me.onContextMenuClick
+                    }
+                }
+            }));
         },
         onBoxReady        : function (board) {
             console.log('Canvas :: Drawing chart initialized, board=', board);
@@ -97,12 +128,19 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             // listeners
             {
                 me.mon(canvasProcessor, 'unitmenu', me.onUnitMenu, me);
+                me.mon(canvasProcessor, 'tilemenu', me.onTileMenu, me);
                 me.mon(canvasProcessor, 'unitlockedoff', me.onUnitLockedOff, me);
             }
             // listeners
 
             // drawing
             canvasProcessor.draw();
+        },
+        onTileMenu        : function (target, xy, tile_id) {
+            var me = this,
+                contextMenu = me.getTileContextMenu();
+            contextMenu.showAt(xy);
+            me.setCachedTileId(tile_id);
         },
         onUnitMenu        : function (target, xy, unit_id) {
             var me = this,
@@ -124,6 +162,11 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                         item.setText((item['text'] === me.getMenuPosState()[1] ? me.getMenuPosState()[2] : me.getMenuPosState()[1]));
                     }
                     break;
+                case 4:
+                    canvasProcessor.moveToTile(me.getCachedUnit(), me.getCachedTileId());
+                    break;
+                case 5:
+                    break;
             }
             Ext.getCmp('statusBar').setStatus({
                 text : Ext.String.format('Akcja na elemencie {0}: ', item['text']),
@@ -135,14 +178,15 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             });
         },
         onUnitLockedOff   : function () {
+            var msg = 'Musisz zapisać zmiany, aby móc zmieniać położenia innych elementów.';
             Ext.Msg.show({
                 title  : 'Akcja niedozwolona',
-                msg    : 'Musisz zapisać zmiany, aby móc zmieniać położenia innych elementów.',
+                msg    : msg,
                 buttons: Ext.Msg.OK,
                 icon   : Ext.Msg.WARNING
             });
             Ext.getCmp('statusBar').setStatus({
-                text : 'Musisz zapisać zmiany, aby móc zmieniać położenia innych elementów.',
+                text : msg,
                 clear: {
                     wait       : 10000,
                     anim       : true,

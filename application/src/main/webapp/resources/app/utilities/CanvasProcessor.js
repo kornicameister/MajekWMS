@@ -9,7 +9,7 @@
 Ext.define('WMS.utilities.CanvasProcessor', function () {
     var me = this,
     //MODULES
-        SLU = Ext.define(null, function (SpriteLockingUtility) {
+        _1_SLU = Ext.define(null, function (SpriteLockingUtility) {
             var _unlockedSpriteId = undefined,
                 _spriteAnimationsConfig = {
                     lockAnim          : {
@@ -82,14 +82,14 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                      * @return {boolean}
                      */
                     handleLockOnOff    : function (unit_id) {
-                        var spriteRecord = CPS.findRecord('unit_id', unit_id);
+                        var spriteRecord = _2_CPS.findRecord('unit_id', unit_id);
                         console.log('CanvasProcessor :: Lock will be ', (spriteRecord.get('locked') === true ? 'disabled' : 'enabled'));
 
                         if (spriteRecord.get('locked') === true) {
-                            SLU.lockOff(spriteRecord);
+                            _1_SLU.lockOff(spriteRecord);
                             spriteRecord.set('locked', false);
                         } else {
-                            SLU.lockOn(spriteRecord);
+                            _1_SLU.lockOn(spriteRecord);
                             spriteRecord.set('locked', true);
                         }
 
@@ -136,16 +136,16 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                         return Ext.isDefined(_unlockedSpriteId);
                     },
                     isNotLocked        : function (sprite) {
-                        var isDefined = SLU.isLockOff();
+                        var isDefined = _1_SLU.isLockOff();
                         if (isDefined === true) {
                             isDefined = sprite.getId() === _unlockedSpriteId;
                         }
-                        return isDefined
+                        return isDefined;
                     }
                 }
             }
         }),
-        CPS = Ext.define('CanvasProcessorStorage', {
+        _2_CPS = Ext.define('CanvasProcessorStorage', {
             extend      : 'Ext.data.Store',
             fields      : [
                 'id', 'rect_id', 'text_id', 'unit_id', 'lock_id', 'tile_id',
@@ -182,9 +182,33 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                     return matchedSprite;
                 } else if ((matchedSprite = self.findByText(sprite_id)) != null) {
                     return matchedSprite;
+                } else if ((matchedSprite = self.findByLock(sprite_id)) != null) {
+                    return matchedSprite;
+                } else if ((matchedSprite = self.findByTile(sprite_id)) != null) {
+                    return matchedSprite;
                 } else {
                     return undefined;
                 }
+            },
+            findByTile  : function (tile) {
+                var self = this,
+                    record = undefined;
+                if (tile.indexOf('ext-') >= 0) {
+                    record = self.findRecord('tile_id', tile);
+                } else {
+                    record = self.findRecord('tile_id', tile['id']);
+                }
+                return record;
+            },
+            findByLock  : function (lock) {
+                var self = this,
+                    record = undefined;
+                if (lock.indexOf('ext-') >= 0) {
+                    record = self.findRecord('lock_id', lock);
+                } else {
+                    record = self.findRecord('lock_id', lock['id']);
+                }
+                return record;
             },
             findByRect  : function (rect) {
                 var self = this,
@@ -207,7 +231,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 return record;
             }
         }),
-        SCD = Ext.define(null, function (SpriteCanvasDrawer) {
+        _3_SCD = Ext.define(null, function (SpriteCanvasDrawer) {
             return {
                 statics: {
                     clearCanvas    : function () {
@@ -246,12 +270,10 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                     stroke: 'none'
                                 }),
                                 lockPart = surface.add({
-                                    type            : 'rect',
-                                    width           : unitWidth / 4,
-                                    height          : unitHeight / 4,
-                                    x               : rectX - 5,
-                                    y               : rectY - 5,
-                                    radius          : 36,
+                                    type            : 'circle',
+                                    x               : rectX,
+                                    y               : rectY,
+                                    radius          : unitWidth / 8,
                                     fill            : "#000000",
                                     stroke          : "#000",
                                     "stroke-width"  : 1,
@@ -280,11 +302,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                             unitSprite.add(lockPart);
                             surface.add(unitSprite);
 
-                            // 5. attach listeners
-                            self.mon(unitSprite, 'mousedown', privateListeners.unitSpriteMousedown, self);
-                            self.mon(board, 'mouseup', privateListeners.surfaceMouseUp, self);
-
-                            // 6. push them to array, fields ['id', 'rect_id', 'text_id', 'unit', 'marked']
+                            // 5. push them to array, fields ['id', 'rect_id', 'text_id', 'unit', 'marked']
                             drawnUnitSprites.push({
                                 id     : unitSprite['id'],
                                 rect_id: rectPart['id'],
@@ -295,12 +313,15 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                             });
                             UNITS.add(unitSprite['id'], unitSprite);
 
-                            // 7. show them
+                            // 6. show them
+                            unitSprite.setAttributes({
+                                opacity: 0.8
+                            })
                             unitSprite.show(true);
                         }, self);
 
-                        // 8. save them to local storage
-                        CPS.add(drawnUnitSprites);
+                        // 7. save them to local storage
+                        _2_CPS.add(drawnUnitSprites);
 
                         console.log('SpriteCanvasDrawer :: Drawing - > unit sprites -> finished...');
                         return true;
@@ -348,46 +369,79 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 }
             }
         }),
-        SMM = Ext.define(null, function (SpriteMovingModule) {
-            var spriteNowInMove = undefined,
-                steps = {
-                    x: 1,
-                    y: 1
-                };
+        _4_SMM = Ext.define(null, function () {
             return {
                 statics: {
-                    configure: function (stepX, stepY) {
-                        steps['x'] = stepX;
-                        steps['y'] = stepY;
-                    },
-                    startMove: function (sprite_id) {
-                        if (Ext.isDefined(sprite_id) && !SpriteMovingModule.isMoving()) {
-                            spriteNowInMove = UNITS.get(sprite_id);
-                        }
-                    },
-                    overMove : function () {
-                        spriteNowInMove = undefined;
-                    },
-                    move     : function (eventXY) {
-                        if (SpriteMovingModule.isMoving()) {
-                            var bBox = spriteNowInMove.getBBox(),
-                                dx = eventXY[0],
-                                dy = eventXY[1];
+                    moveUnitToTile: function (unit_id, tile_id) {
+                        var tile = TILES.get(tile_id),
+                            unitRecord = _2_CPS.findRecord('unit_id', unit_id),
+                            originTile = TILES.get(unitRecord.get('tile_id')),
+                            unit = UNITS.get(unitRecord.getId());
 
-                            console.log('Sprite \nBBox=', bBox,
-                                '\nEventXY=', eventXY,
-                                '\nOffset=', [dx - bBox.x, dy - bBox.y]);
+                        if (Ext.isDefined(tile) && Ext.isDefined(unit)) {
 
-                            spriteNowInMove.setAttributes({
-                                translate: {
-                                    x: (dx - bBox.x),
-                                    y: (dy - bBox.y)
-                                }
-                            }, true);
+                            var tileBBox = tile.getBBox(),
+                                unitWidth = sizes['unit']['width'],
+                                rectX = Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
+                                rectY = Math.floor(tileBBox['y'] + ((tileBBox['height'] - unitWidth) / 2));
+
+                            function stepOne() {
+                                originTile.animate({
+                                    duration: 1000,
+                                    to      : {
+                                        fill: '#009900'
+                                    }
+                                });
+                                tile.animate({
+                                    duration: 1000,
+                                    to      : {
+                                        fill: '#009900'
+                                    }
+                                });
+                                stepTwo();
+                            }
+
+                            function stepTwo() {
+                                unit.animate({
+                                    keyframes: {
+                                        50 : {
+                                            x: rectX / 2,
+                                            y: rectY / 2
+                                        },
+                                        100: {
+                                            x: rectX,
+                                            y: rectY
+                                        }
+                                    },
+                                    duration : 1000,
+                                    listeners: {
+                                        'afteranimate': stepThree
+                                    }
+                                });
+                            }
+
+                            function stepThree() {
+                                tile.animate({
+                                    to      : {
+                                        fill: '#C0C0C0'
+                                    },
+                                    duration: 1000
+                                });
+                                originTile.animate({
+                                    to      : {
+                                        fill: '#C0C0C0'
+                                    },
+                                    duration: 1000
+                                });
+                                stepFour();
+                            }
+
+                            function stepFour() {
+                                unitRecord.set('tile_id', tile_id);
+                            }
+
+                            stepOne();
                         }
-                    },
-                    isMoving : function () {
-                        return Ext.isDefined(spriteNowInMove);
                     }
                 }
             }
@@ -399,12 +453,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         sizes = undefined,
         unitStore = undefined,
         clearCanvas = function () {
-            SLU.clearCanvas();
+            _1_SLU.clearCanvas();
         },
         drawCanvas = function () {
-            var stepResult = SCD.drawHostTiles();
+            var stepResult = _3_SCD.drawHostTiles();
             if (stepResult === true) {
-                stepResult = SCD.drawUnitSprites();
+                stepResult = _3_SCD.drawUnitSprites();
             }
             if (stepResult === true) {
                 stepResult = setOtherListeners();
@@ -419,42 +473,38 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 return false;
             }
 
-            me.mon(board['surface'], 'mousemove', privateListeners['surfaceMousemove'], me);
-            me.mon(board.getEl(), 'contextmenu', privateListeners['boardContextMenu'], me);
+            me.mon(board.getEl(), 'contextmenu', privateListeners['surfaceContextMenu'], me);
 
             return true;
         },
         privateListeners = {
-            boardContextMenu   : function (event, target) {
-                console.log('CanvasProcessor :: Lister -> board -> contextmenu -> triggered...\nevent=', event['type'], '\ntarget=', target['id']);
+            surfaceContextMenu: function (event, target) {
                 var sprite_id = target['id'],
-                    sprite = CPS.findBySprite(sprite_id);
+                    sprite = _2_CPS.findBySprite(sprite_id);
 
                 event.preventDefault();
-                if (!SLU.isLockOff() || SLU.isNotLocked(sprite)) {
-                    me.fireEvent('unitmenu', event['currentTarget'], event.getXY(), sprite.get('unit_id'));
-                } else if (!SLU.isNotLocked(sprite)) {
-                    me.fireEvent('unitlockedoff', sprite.get('unit_id'));
-                }
-            },
-            unitSpriteMousedown: function (event, target) {
-                var sprite_id = event['id'],
-                    sprite = CPS.findBySprite(sprite_id);
-                if (SLU.isLockOff()) {
-                    console.log('CanvasProcessor :: Lister -> sprite -> mousedown -> triggered...,\nsprite=', event['id']);
-                    SMM.startMove(sprite.getId());
-                }
-            },
-            surfaceMouseUp     : function () {
-                if (SLU.isLockOff() && SMM.isMoving()) {
-                    console.log('CanvasProcessor :: Lister -> sprite -> mouseup -> triggered...');
-                    SMM.overMove();
-                }
-            },
-            surfaceMousemove   : function (event, target) {
-                if (SLU.isLockOff() && SMM.isMoving()) {
-//                    console.log('CanvasProcessor :: Lister -> surface -> mousemove -> triggered..., XY=', event.getXY());
-                    SMM.move(event.getXY());
+                try {
+                    if (Ext.isDefined(sprite)) {
+                        console.log('CanvasProcessor :: contextMenu :: associated shape',
+                            '\nevent=', event['type'],
+                            '\ntarget=', target['id']);
+
+                        if (!_1_SLU.isLockOff() || _1_SLU.isNotLocked(sprite)) {
+                            console.log('CanvasProcessor :: contextMenu :: shape :: unit');
+                            me.fireEvent('unitmenu', event['currentTarget'], event.getXY(), sprite.get('unit_id'));
+                        } else if (!_1_SLU.isNotLocked(sprite)) {
+                            console.log('CanvasProcessor :: contextMenu :: shape :: unit :: locked off');
+                            me.fireEvent('unitlockedoff', sprite.get('unit_id'));
+                        }
+                    } else {
+                        console.log('CanvasProcessor :: contextMenu :: unassociated shape',
+                            '\nevent=', event['type'],
+                            '\ntarget=', target['id']);
+
+                        me.fireEvent('tilemenu', event['currentTarget'], event.getXY(), sprite_id);
+                    }
+                } catch (exception) {
+                    console.log('CanvasProcessor :: contextMenu :: exception - ', exception);
                 }
             }
         };
@@ -473,13 +523,22 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             board = config['board'];
             sizes = config['sizes'];
             unitStore = config['unitStore'];
-            CPS = Ext.create('CanvasProcessorStorage');
+            _2_CPS = Ext.create('CanvasProcessorStorage');
             board.center();
             // init block
 
             me.addEvents(
                 'unitclick',
                 'unitmenu',
+                /**
+                 * @event tileMenu This event is fired if context menu request
+                 * is detected upon hosting tile or any other object
+                 * different than unit sprite
+                 * @param currentTarget coming from event object
+                 * @param xy  where event occurred
+                 * @param tile_id
+                 */
+                'tilemenu',
                 'unitrelease',
                 'unitlockedoff'
             );
@@ -501,9 +560,23 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: switching lock on unit=', unit_id);
             var status;
             {
-                status = SLU.handleLockOnOff(unit_id);
+                status = _1_SLU.handleLockOnOff(unit_id);
             }
-            console.log('CanvasProcessor :: switched lock on unit=', unit_id);
+            if (status) {
+                console.log('CanvasProcessor :: switched lock on unit=', unit_id);
+            }
+            return status;
+        },
+        moveToTile : function (unit_id, tile_id) {
+            console.log('CanvasProcessor :: moving unit=', unit_id, ' to tile=', tile_id);
+
+            var status;
+            {
+                status = _4_SMM.moveUnitToTile(unit_id, tile_id);
+            }
+            if (status) {
+                console.log('CanvasProcessor :: moved unit=', unit_id, ' to tile=', tile_id);
+            }
             return status;
         }
     }
