@@ -72,7 +72,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 statics: {
                     /**
                      * Quite useful method that I use to programitically
-                     * handle the situtation where one of the dozen
+                     * handle the situation where one of the dozen
                      * of components need to be locked off, which means
                      * that it can be easily manipulated across canvas.
                      *
@@ -145,92 +145,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 }
             }
         }),
-        _2_CPS = Ext.define('CanvasProcessorStorage', {
-            extend      : 'Ext.data.Store',
-            fields      : [
-                'id', 'rect_id', 'text_id', 'unit_id', 'lock_id', 'tile_id',
-                { name: 'marked', type: 'boolean', defaultValue: false},
-                // locked = true, sprite can not be dragged
-                // locked = false => unlocked, sprite can be dragged
-                { name: 'locked', type: 'boolean', defaultValue: true}
-            ],
-            sorters     : [
-                {
-                    property : 'rect_id',
-                    direction: 'ASC'
-                },
-                {
-                    property : 'text_id',
-                    direction: 'ASC'
-                },
-                {
-                    property : 'unit_id',
-                    direction: 'ASC'
-                }
-            ],
-            autoSync    : true,
-            proxy       : {
-                type: 'memory',
-                id  : 'canvas_processor_storage'
-            },
-            findBySprite: function (sprite) {
-                var self = this,
-                    matchedSprite,
-                    sprite_id = (Ext.isDefined(sprite['id']) ? sprite['id'] : sprite);
-
-                if ((matchedSprite = self.findByRect(sprite_id)) !== null) {
-                    return matchedSprite;
-                } else if ((matchedSprite = self.findByText(sprite_id)) != null) {
-                    return matchedSprite;
-                } else if ((matchedSprite = self.findByLock(sprite_id)) != null) {
-                    return matchedSprite;
-                } else if ((matchedSprite = self.findByTile(sprite_id)) != null) {
-                    return matchedSprite;
-                } else {
-                    return undefined;
-                }
-            },
-            findByTile  : function (tile) {
-                var self = this,
-                    record = undefined;
-                if (tile.indexOf('ext-') >= 0) {
-                    record = self.findRecord('tile_id', tile);
-                } else {
-                    record = self.findRecord('tile_id', tile['id']);
-                }
-                return record;
-            },
-            findByLock  : function (lock) {
-                var self = this,
-                    record = undefined;
-                if (lock.indexOf('ext-') >= 0) {
-                    record = self.findRecord('lock_id', lock);
-                } else {
-                    record = self.findRecord('lock_id', lock['id']);
-                }
-                return record;
-            },
-            findByRect  : function (rect) {
-                var self = this,
-                    record = undefined;
-                if (rect.indexOf('ext-') >= 0) {
-                    record = self.findRecord('rect_id', rect);
-                } else {
-                    record = self.findRecord('rect_id', rect['id']);
-                }
-                return record;
-            },
-            findByText  : function (text) {
-                var self = this,
-                    record = undefined;
-                if (text.indexOf('ext-') >= 0) {
-                    record = self.findRecord('text_id', text);
-                } else {
-                    record = self.findRecord('text_id', text['id']);
-                }
-                return record;
-            }
-        }),
+        _2_CPS = undefined,
         _3_SCD = Ext.define(null, function (SpriteCanvasDrawer) {
             return {
                 statics: {
@@ -510,7 +425,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         };
     return {
         requires   : [
-            'WMS.model.sprite.Unit'
+            'WMS.store.UnitSprites'
         ],
         mixins     : {
             observable: 'Ext.util.Observable'
@@ -523,7 +438,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             board = config['board'];
             sizes = config['sizes'];
             unitStore = config['unitStore'];
-            _2_CPS = Ext.create('CanvasProcessorStorage');
+            _2_CPS = Ext.create('WMS.store.UnitSprites');
             board.center();
             // init block
 

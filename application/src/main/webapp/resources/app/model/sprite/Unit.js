@@ -8,13 +8,16 @@
 Ext.define('WMS.model.sprite.Unit', {
     extend: 'Ext.data.Model',
     fields: [
-        'id',
-        'sprite',
-        'unit_id',
-        'marked'
+        'id', 'rect_id', 'text_id', 'unit_id', 'lock_id', 'tile_id',
+        { name: 'marked', type: 'boolean', defaultValue: false},
+        // locked = true, sprite can not be dragged
+        // locked = false => unlocked, sprite can be dragged
+        { name: 'locked', type: 'boolean', defaultValue: true}
     ],
     proxy : {
         type: 'localstorage',
-        id  : 'unitsprites'
+        id  : 'blablablac'
+//        type: 'wms',
+//        url : 'wms/data/unit/sprite'
     }
 });
