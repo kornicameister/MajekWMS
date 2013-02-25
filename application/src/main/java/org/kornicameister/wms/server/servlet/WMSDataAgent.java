@@ -8,6 +8,7 @@ import org.kornicameister.wms.utilities.hibernate.HibernateBridge;
 import org.kornicameister.wms.utilities.hibernate.HibernateBridgeException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,14 @@ import java.io.PrintWriter;
  * This particular servlet must connect itself to database, select all required
  * information, transform them into valid JSON form and return to the client.
  */
+@WebServlet(
+        name = "WMS Data Agent",
+        description = "Dispatcher for all data related requests",
+        urlPatterns = {
+                "/wms/agent/*"
+        },
+        loadOnStartup = 1
+)
 public class WMSDataAgent extends HttpServlet {
     private static final long serialVersionUID = -217845239414591742L;
     private static Logger logger = Logger.getLogger(WMSDataAgent.class
@@ -60,11 +69,8 @@ public class WMSDataAgent extends HttpServlet {
         PrintWriter out = resp.getWriter();
         RequestController controller;
 
-        if ((controller = RequestController.pickController(RDExtractor.parse(
-                req, action))) == null) {
-            logger.warn(String.format(
-                    "Module not recognized, tried extract from URI=[%s]",
-                    req.getRequestURI()));
+        if ((controller = RequestController.pickController(RDExtractor.parse(req, action))) == null) {
+            logger.warn(String.format("Module not recognized, tried extract from URI=[%s]", req.getRequestURI()));
             out.write(RequestController.buildErrorResponse());
         } else {
             out.write(controller.process());

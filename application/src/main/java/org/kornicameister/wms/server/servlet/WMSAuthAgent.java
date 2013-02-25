@@ -4,17 +4,27 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.kornicameister.wms.server.responses.ResponseFormatBody;
 import org.kornicameister.wms.model.hibernate.User;
+import org.kornicameister.wms.server.responses.ResponseFormatBody;
 import org.kornicameister.wms.utilities.hibernate.HibernateBridge;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@WebServlet(
+        name = "WMS Authorization Agent",
+        description = "Dispatcher to handle only request related to login/logout actions",
+        urlPatterns = {
+                "/wms/auth",
+                "/wms/auth/logout"
+        },
+        loadOnStartup = 1
+)
 public class WMSAuthAgent extends HttpServlet {
     private static final long serialVersionUID = -6718574188511649132L;
     private static Logger logger = Logger.getLogger(WMSAuthAgent.class

@@ -18,64 +18,6 @@
         <param-name>webmaster</param-name>
         <param-value>kornicameister@gmail.com</param-value>
     </context-param>
-
-    <!-- servlet -->
-    <servlet>
-        <description>Middle man</description>
-        <display-name>WMSDataAgent</display-name>
-        <servlet-name>WMSDataAgent</servlet-name>
-        <servlet-class>org.kornicameister.wms.server.servlet.WMSDataAgent</servlet-class>
-        <load-on-startup>4</load-on-startup>
-    </servlet>
-    <servlet>
-        <servlet-name>WMSDataAgent-Extended</servlet-name>
-        <servlet-class>org.kornicameister.wms.server.servlet.WMSDataDispatcherAgent</servlet-class>
-        <init-param>
-            <param-name>serverMethods</param-name>
-            <param-value>src/main/resources/server_methods.properties</param-value>
-        </init-param>
-    </servlet>
-    <servlet>
-        <description>Page controller</description>
-        <display-name>WMSController</display-name>
-        <servlet-name>WMSController</servlet-name>
-        <servlet-class>org.kornicameister.wms.server.servlet.WMSController</servlet-class>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
-    <servlet>
-        <description>Authorization agent</description>
-        <display-name>WMSAuthAgent</display-name>
-        <servlet-name>WMSAuthAgent</servlet-name>
-        <servlet-class>org.kornicameister.wms.server.servlet.WMSAuthAgent</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <!-- mappings -->
-    <servlet-mapping>
-        <servlet-name>WMSDataAgent-Extended</servlet-name>
-        <url-pattern>/wms/data/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>WMSDataAgent</servlet-name>
-        <url-pattern>/wms/agent/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>WMSController</servlet-name>
-        <url-pattern>/wms</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>WMSAuthAgent</servlet-name>
-        <url-pattern>/wms/auth</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>WMSAuthAgent</servlet-name>
-        <url-pattern>/wms/auth/logout</url-pattern>
-    </servlet-mapping>
-    <!--mappings-->
-
-    <!--filters-->
-    <!--filters-->
-
     <session-config>
         <session-timeout>120</session-timeout>
         <tracking-mode>URL</tracking-mode>
