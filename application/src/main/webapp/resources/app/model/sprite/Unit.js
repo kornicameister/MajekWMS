@@ -6,18 +6,30 @@
  */
 
 Ext.define('WMS.model.sprite.Unit', {
-    extend: 'Ext.data.Model',
-    fields: [
-        'id', 'rect_id', 'text_id', 'unit_id', 'lock_id', 'tile_id',
-        { name: 'marked', type: 'boolean', defaultValue: false},
-        // locked = true, sprite can not be dragged
-        // locked = false => unlocked, sprite can be dragged
-        { name: 'locked', type: 'boolean', defaultValue: true}
+    extend      : 'Ext.data.Model',
+    fields      : [
+        {
+            name: 'tileId',
+            type: 'int'
+        },
+        {
+            name   : 'unit_id',
+            type   : 'int',
+            mapping: 'unit.id'
+        }
     ],
-    proxy : {
-        type: 'localstorage',
-        id  : 'blablablac'
-//        type: 'wms',
-//        url : 'wms/data/unit/sprite'
+    associations: [
+        {
+            type          : 'hasOne',
+            model         : 'WMS.model.entity.Unit',
+            associationKey: 'unit',
+            getterName    : 'getUnit',
+            setterName    : 'setUnit',
+            foreignKey    : 'unit_id'
+        }
+    ],
+    proxy       : {
+        type: 'wms',
+        url : 'wms/agent/unitsprite'
     }
 });

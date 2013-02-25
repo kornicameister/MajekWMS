@@ -41,6 +41,7 @@
         <property name="hibernate.order_updates">true</property>
         <property name="hibernate.connection.autocommit">true</property>
         <property name="transaction.flush_before_completion">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <property name="hibernate.connection.useUnicode">true</property>
         <property name="hibernate.connection.characterEncoding">UTF-8</property>
@@ -74,6 +75,7 @@
         <mapping class="org.kornicameister.wms.model.hibernate.UnitType"/>
         <mapping class="org.kornicameister.wms.model.hibernate.embeddable.UnitProductPK"/>
         <mapping class="org.kornicameister.wms.model.hibernate.UnitProduct"/>
+        <mapping class="org.kornicameister.wms.model.hibernate.UnitSprite"/>
 
         <mapping class="org.kornicameister.wms.model.hibernate.Warehouse"/>
         <mapping class="org.kornicameister.wms.model.hibernate.User"/>

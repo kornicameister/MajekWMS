@@ -8,6 +8,7 @@
 
 Ext.define('WMS.utilities.CanvasProcessor', function () {
     var me = this,
+        cachedTileId = undefined,
     //MODULES
         _1_SLU = Ext.define(null, function (SpriteLockingUtility) {
             var _unlockedSpriteId = undefined,
@@ -90,6 +91,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                             spriteRecord.set('locked', false);
                         } else {
                             _1_SLU.lockOn(spriteRecord);
+
+                            var ussRecord = _5_USS.findRecord('tileId', (function () {
+                                return TILES.indexOfKey(spriteRecord.get('tile_id'));
+                            }()));
+                            ussRecord.set('tileId', TILES.indexOfKey(cachedTileId));
+
                             spriteRecord.set('locked', true);
                         }
 
@@ -145,21 +152,121 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 }
             }
         }),
-        _2_CPS = undefined,
+        _2_CPS = Ext.define('CanvasProcessorStorage', {
+            extend      : 'Ext.data.Store',
+            fields      : [
+                'id',
+                'rect_id',
+                'text_id',
+                'unit_id',
+                'lock_id',
+                'tile_id',
+                { name: 'marked', type: 'boolean', defaultValue: false},
+                // locked = true, sprite can not be dragged
+                // locked = false => unlocked, sprite can be dragged
+                { name: 'locked', type: 'boolean', defaultValue: true}
+            ],
+            sorters     : [
+                {
+                    property : 'rect_id',
+                    direction: 'ASC'
+                },
+                {
+                    property : 'text_id',
+                    direction: 'ASC'
+                },
+                {
+                    property : 'unit_id',
+                    direction: 'ASC'
+                }
+            ],
+            autoSync    : true,
+            proxy       : {
+                type: 'memory',
+                id  : 'canvas_processor_storage'
+            },
+            findBySprite: function (sprite) {
+                var self = this,
+                    matchedSprite,
+                    sprite_id = (Ext.isDefined(sprite['id']) ? sprite['id'] : sprite);
+
+                if ((matchedSprite = self.findByRect(sprite_id)) !== null) {
+                    return matchedSprite;
+                } else if ((matchedSprite = self.findByText(sprite_id)) != null) {
+                    return matchedSprite;
+                } else if ((matchedSprite = self.findByLock(sprite_id)) != null) {
+                    return matchedSprite;
+                } else if ((matchedSprite = self.findByTile(sprite_id)) != null) {
+                    return matchedSprite;
+                } else {
+                    return undefined;
+                }
+            },
+            findByTile  : function (tile) {
+                var self = this,
+                    record = undefined;
+                if (tile.indexOf('ext-') >= 0) {
+                    record = self.findRecord('tile_id', tile);
+                } else {
+                    record = self.findRecord('tile_id', tile['id']);
+                }
+                return record;
+            },
+            findByLock  : function (lock) {
+                var self = this,
+                    record = undefined;
+                if (lock.indexOf('ext-') >= 0) {
+                    record = self.findRecord('lock_id', lock);
+                } else {
+                    record = self.findRecord('lock_id', lock['id']);
+                }
+                return record;
+            },
+            findByRect  : function (rect) {
+                var self = this,
+                    record = undefined;
+                if (rect.indexOf('ext-') >= 0) {
+                    record = self.findRecord('rect_id', rect);
+                } else {
+                    record = self.findRecord('rect_id', rect['id']);
+                }
+                return record;
+            },
+            findByText  : function (text) {
+                var self = this,
+                    record = undefined;
+                if (text.indexOf('ext-') >= 0) {
+                    record = self.findRecord('text_id', text);
+                } else {
+                    record = self.findRecord('text_id', text['id']);
+                }
+                return record;
+            }
+        }),
         _3_SCD = Ext.define(null, function (SpriteCanvasDrawer) {
+            var locateTile = function (it, unit_id, fromServer) {
+                var tile = TILES.getAt(it);
+                if (fromServer) {
+                    var tileIndex = _5_USS.findRecord('unit_id', unit_id).get('tileId');
+                    tile = TILES.getAt(tileIndex);
+                }
+                return tile;
+            };
             return {
                 statics: {
                     clearCanvas    : function () {
 
                     },
-                    drawUnitSprites: function () {
+                    drawUnitSprites: function (fromServer) {
                         //@TODO add reading cached drawing from database
                         console.log('SpriteCanvasDrawer :: Drawing - > unit sprites -> in progress...');
                         var self = me,
                             drawnUnitSprites = [],
+                            toBePersistedMetaSprites = [],
                             surface = board['surface'],
                             unitWidth = sizes['unit']['width'],
-                            unitHeight = sizes['unit']['height'];
+                            unitHeight = sizes['unit']['height'],
+                            it = 0;
 
                         unitStore.each(function (unitRecord) {
                             console.log(Ext.String.format('CanvasProcessor :: Drawing - > unit sprites -> rect for [ {0}/{1} ] unit',
@@ -167,7 +274,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                 unitRecord.get('name')));
 
                             var index = drawnUnitSprites.length,
-                                selectedTile = TILES.getAt(index),
+                                selectedTile = locateTile(index, unitRecord.getId(), fromServer),
                                 unitName = unitRecord.get('name'),
                                 unitSize = unitRecord.get('size'),
                                 tileBBox = selectedTile.getBBox(),
@@ -226,17 +333,26 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                 tile_id: selectedTile['id'],
                                 unit_id: unitRecord.getId()
                             });
+                            if (!fromServer) {
+                                toBePersistedMetaSprites.push({
+                                    tileId : it++,
+                                    unit_id: unitRecord.getId()
+                                });
+                            }
                             UNITS.add(unitSprite['id'], unitSprite);
 
                             // 6. show them
                             unitSprite.setAttributes({
                                 opacity: 0.8
-                            })
+                            });
                             unitSprite.show(true);
                         }, self);
 
                         // 7. save them to local storage
                         _2_CPS.add(drawnUnitSprites);
+
+                        // 8. persist them
+                        _5_USS.add(toBePersistedMetaSprites);
 
                         console.log('SpriteCanvasDrawer :: Drawing - > unit sprites -> finished...');
                         return true;
@@ -352,7 +468,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                             }
 
                             function stepFour() {
-                                unitRecord.set('tile_id', tile_id);
+                                cachedTileId = tile_id;
                             }
 
                             stepOne();
@@ -361,6 +477,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                 }
             }
         }),
+        _5_USS = undefined,
     //MODULES
         TILES = new Ext.util.MixedCollection(),
         UNITS = new Ext.util.MixedCollection(),
@@ -371,14 +488,18 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             _1_SLU.clearCanvas();
         },
         drawCanvas = function () {
-            var stepResult = _3_SCD.drawHostTiles();
-            if (stepResult === true) {
-                stepResult = _3_SCD.drawUnitSprites();
+            if (_5_USS.getTotalCount() === 0) {
+                _5_USS.load({
+                    scope   : me,
+                    callback: function (records) {
+                        console.log('CanvasProcessor :: unit sprites persistence :: records=', records);
+                        _3_SCD.drawHostTiles();
+                        _3_SCD.drawUnitSprites(records.length !== 0);
+                        setOtherListeners();
+                    }
+                })
             }
-            if (stepResult === true) {
-                stepResult = setOtherListeners();
-            }
-            return stepResult;
+            return true;
         },
         setOtherListeners = function () {
             var surface = board['surface'];
@@ -438,7 +559,8 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             board = config['board'];
             sizes = config['sizes'];
             unitStore = config['unitStore'];
-            _2_CPS = Ext.create('WMS.store.UnitSprites');
+            _2_CPS = Ext.create('CanvasProcessorStorage');
+            _5_USS = Ext.create('WMS.store.UnitSprites');
             board.center();
             // init block
 
@@ -459,7 +581,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             );
 
             console.log('CanvasProcessor :: init canvas=', board, ', sizes=', sizes);
-            me.callParent(arguments)
+            me.callParent(arguments);
         },
         draw       : function (redraw) {
             console.log('CanvasProcessor :: drawing in progress...');

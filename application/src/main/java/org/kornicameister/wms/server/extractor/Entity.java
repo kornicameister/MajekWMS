@@ -1,16 +1,8 @@
 package org.kornicameister.wms.server.extractor;
 
-import org.kornicameister.wms.model.hibernate.*;
 import org.kornicameister.wms.cm.impl.RequestController;
-import org.kornicameister.wms.model.logic.controllers.AddressController;
-import org.kornicameister.wms.model.logic.controllers.ClientController;
-import org.kornicameister.wms.model.logic.controllers.CompanyController;
-import org.kornicameister.wms.model.logic.controllers.InvoiceController;
-import org.kornicameister.wms.model.logic.controllers.InvoiceProductController;
-import org.kornicameister.wms.model.logic.controllers.MeasureController;
-import org.kornicameister.wms.model.logic.controllers.ProductController;
-import org.kornicameister.wms.model.logic.controllers.UnitController;
-import org.kornicameister.wms.model.logic.controllers.UnitTypeController;
+import org.kornicameister.wms.model.hibernate.*;
+import org.kornicameister.wms.model.logic.controllers.*;
 
 /**
  * This enum is used mainly when creating
@@ -27,6 +19,7 @@ public enum Entity {
     PRODUCT(ProductController.class, Product.class),
     CLIENT(ClientController.class, Client.class),
     BASIC(RequestController.class, BasicPersistentObject.class),
+    UNITSPRITE(UnitSpriteController.class, UnitSprite.class),
     ADDRESS(AddressController.class, Address.class);
 
     private Class<? extends BasicPersistentObject> entityClass;
