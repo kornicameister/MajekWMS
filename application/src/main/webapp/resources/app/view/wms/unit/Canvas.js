@@ -15,5 +15,12 @@ Ext.define('WMS.view.wms.unit.Canvas', {
     items  : {
         xtype : 'draw',
         itemId: 'unitsDrawingCmp'
-    }
+    },
+    tools  : [
+        {
+            itemId : 'refresh',
+            type   : 'refresh',
+            tooltip: 'Odśwież dane'
+        }
+    ]
 });

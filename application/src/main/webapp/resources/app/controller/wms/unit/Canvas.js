@@ -31,7 +31,10 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             'wms.unit.Canvas'
         ],
         refs              : [
-            { ref: 'unitBoard', selector: 'wmsunitcanvas unitsDrawingCmp' }
+            {
+                ref     : 'unitBoard',
+                selector: 'wmsunitcanvas unitsDrawingCmp'
+            }
         ],
         config            : {
             canvasProcessor: undefined,
@@ -48,8 +51,11 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             console.init('WMS.controller.wms.unit.Canvas initializing... ');
             me = this;
             me.control({
-                'wmsunitcanvas #unitsDrawingCmp': {
+                'wmsunitcanvas #unitsDrawingCmp'  : {
                     boxready: me.onBoxReady
+                },
+                'wmsunitcanvas tool[type=refresh]': {
+                    click: me.onRefreshAction
                 }
             }, me);
             me.setContextMenu(Ext.create('Ext.menu.Menu', {
@@ -103,6 +109,12 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                     }
                 }
             }));
+        },
+        onRefreshAction   : function () {
+            console.log('Canvas :: Refresh action called...');
+            var me = this,
+                canvasProcessor = me.getCanvasProcessor();
+            canvasProcessor.draw(true);
         },
         onBoxReady        : function (board) {
             console.log('Canvas :: Drawing chart initialized, board=', board);

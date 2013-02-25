@@ -255,7 +255,11 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             return {
                 statics: {
                     clearCanvas    : function () {
-
+                        board['surface'].removeAll(true);
+                        TILES.clear();
+                        UNITS.clear();
+                        _2_CPS.removeAll();
+                        _5_USS.removeAll();
                     },
                     drawUnitSprites: function (fromServer) {
                         //@TODO add reading cached drawing from database
@@ -277,6 +281,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                 selectedTile = locateTile(index, unitRecord.getId(), fromServer),
                                 unitName = unitRecord.get('name'),
                                 unitSize = unitRecord.get('size'),
+                                unitType = unitRecord.getType().get('name'),
                                 tileBBox = selectedTile.getBBox(),
                                 rectX = Math.floor(tileBBox['x'] + ((tileBBox['width'] - unitWidth) / 2)),
                                 rectY = Math.floor(tileBBox['y'] + ((tileBBox['height'] - unitWidth) / 2)),
@@ -304,7 +309,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                             // 2. create text shape
                                 textPart = surface.add({
                                     type  : 'text',
-                                    text  : unitName + '\n[' + unitSize + ']',
+                                    text  : unitName + '\n[' + unitType + ']' + '\n[' + unitSize + ']',
                                     fill  : 'black',
                                     font  : '10px monospace',
                                     width : unitWidth,
@@ -485,20 +490,18 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
         sizes = undefined,
         unitStore = undefined,
         clearCanvas = function () {
-            _1_SLU.clearCanvas();
+            _3_SCD.clearCanvas();
         },
         drawCanvas = function () {
-            if (_5_USS.getTotalCount() === 0) {
-                _5_USS.load({
-                    scope   : me,
-                    callback: function (records) {
-                        console.log('CanvasProcessor :: unit sprites persistence :: records=', records);
-                        _3_SCD.drawHostTiles();
-                        _3_SCD.drawUnitSprites(records.length !== 0);
-                        setOtherListeners();
-                    }
-                })
-            }
+            _5_USS.load({
+                scope   : me,
+                callback: function (records) {
+                    console.log('CanvasProcessor :: unit sprites persistence :: records=', records);
+                    _3_SCD.drawHostTiles();
+                    _3_SCD.drawUnitSprites(records.length !== 0);
+                    setOtherListeners();
+                }
+            })
             return true;
         },
         setOtherListeners = function () {
