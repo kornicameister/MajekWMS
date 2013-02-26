@@ -46,6 +46,9 @@ public class Product extends NamedPersistenceObject {
     @Column(name = "tax", nullable = false, insertable = true, updatable = true)
     private Float tax = null;
 
+    @Formula("(select sum(up.pallets) from unitProduct up where up.product_id = idProduct)")
+    private Double totalCount;
+
     @JoinColumn(name = "measure_id", referencedColumnName = "idMeasure")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Measure measure;
