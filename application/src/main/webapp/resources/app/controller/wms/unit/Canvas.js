@@ -53,14 +53,21 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             menuPosState   : {
                 1: 'Przenieś w inne miejsce',
                 2: 'Zakończ operacje'
-            }
+            },
+            drawn          : false
         },
         init              : function () {
             console.init('WMS.controller.wms.unit.Canvas initializing... ');
             me = this;
+
+            me.setDrawn(false);
+
             me.control({
                 'wmsunitcanvas #unitsDrawingCmp'             : {
                     boxready: me.onBoxReady
+                },
+                '#viewport masterview wmsunitcanvas'         : {
+                    'activate': me.redrawSurface
                 },
                 '#footerToolbar button[itemId=refreshButton]': {
                     'click': me.refreshCanvas
@@ -133,8 +140,18 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
         onRefreshAction   : function () {
             console.log('Canvas :: Refresh action called...');
             var me = this,
-                canvasProcessor = me.getCanvasProcessor();
-            canvasProcessor.draw(true);
+                canvasProcessor = me.getCanvasProcessor(),
+                mask = new Ext.LoadMask(me.getUnitCanvasTab(), {
+                    msg: 'Budowanie struktury magazynu'
+                }),
+                task = new Ext.util.DelayedTask(function () {
+                    canvasProcessor.draw(true, function () {
+                        mask.hide();
+                    });
+                });
+
+            mask.show();
+            task.delay(1500);
         },
         onBoxReady        : function (board) {
             console.log('Canvas :: Drawing chart initialized, board=', board);
@@ -166,7 +183,26 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             // listeners
 
             // drawing
-            canvasProcessor.draw();
+
+            var mask = new Ext.LoadMask(me.getUnitCanvasTab(), {
+                    msg: 'Budowanie struktury magazynu'
+                }),
+                task = new Ext.util.DelayedTask(function () {
+                    canvasProcessor.draw(false, function () {
+                        me.setDrawn(true);
+                        mask.hide();
+                    });
+                });
+            mask.show();
+            task.delay(1500);
+        },
+        redrawSurface     : function () {
+            var me = this,
+                ready = me.getDrawn();
+            if (ready) {
+                console.log('CanvasProcessor :: redrawing because tab activation');
+                me.onRefreshAction.apply(me, []);
+            }
         },
         onTileMenu        : function (target, xy, tile_id) {
             var me = this,

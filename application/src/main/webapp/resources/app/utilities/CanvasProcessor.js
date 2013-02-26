@@ -612,7 +612,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             console.log('CanvasProcessor :: init canvas=', board, ', sizes=', sizes);
             me.callParent(arguments);
         },
-        draw       : function (redraw) {
+        draw       : function (redraw, callback) {
             console.log('CanvasProcessor :: drawing in progress...');
             redraw = (Ext.isDefined(redraw) ? redraw : false);
             if (redraw === true) {
@@ -620,6 +620,7 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
             }
             var result = drawCanvas();
             console.log('CanvasProcessor :: drawing finished...');
+            callback.apply(this, []);
             return result;
         },
         switchLock : function (unit_id) {
