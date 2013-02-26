@@ -44,6 +44,9 @@ public class Unit extends NamedPersistenceObject {
     @Formula("(select sum(up.pallets) / size from unitProduct up where up.unit_id = idUnit)")
     private Double usage = 0.0;
 
+    @Formula("(select size / (select w.size from warehouse w))")
+    private Double sharedUsage = 0.0;
+
     @Formula("(select size - sum(up.pallets) from unitProduct up where up.unit_id = idUnit)")
     private Long leftSize = 0l;
 
@@ -98,6 +101,7 @@ public class Unit extends NamedPersistenceObject {
         return (this.usage == null ? 0l : this.usage);
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,10 +110,10 @@ public class Unit extends NamedPersistenceObject {
 
         Unit unit = (Unit) o;
 
-        if (description != null ? !description.equals(unit.description) : unit.description != null) return false;
-        if (size != null ? !size.equals(unit.size) : unit.size != null) return false;
-        return !(type != null ? !type.equals(unit.type) : unit.type != null) && !(usage != null ? !usage.equals(unit.usage) : unit.usage != null);
-
+        return !(description != null ? !description.equals(unit.description) : unit.description != null)
+                && !(size != null ? !size.equals(unit.size) : unit.size != null)
+                && !(type != null ? !type.equals(unit.type) : unit.type != null)
+                && !(usage != null ? !usage.equals(unit.usage) : unit.usage != null);
     }
 
     @Override
@@ -128,6 +132,7 @@ public class Unit extends NamedPersistenceObject {
         sb.append("Unit");
         sb.append("{type=").append(type);
         sb.append(", usage=").append(usage);
+        sb.append(", sharedUsage=").append(sharedUsage);
         sb.append(", size=").append(size);
         sb.append(", description='").append(description).append('\'');
         sb.append('}');

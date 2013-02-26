@@ -23,7 +23,8 @@ Ext.define('WMS.model.entity.Unit', {
         { name: 'warehouse_id', type: 'int', mapping: 'warehouse.id'},
         { name: 'unittype_id', type: 'int', mapping: 'type.id'},
         { name: 'size', type: 'int', defaultValue: 0},
-        { name: 'usage', type: 'float', persist: false}
+        { name: 'usage', type: 'float', persist: false},
+        { name: 'sharedUsage', type: 'float', persist: false}
     ],
     associations    : [
         {
