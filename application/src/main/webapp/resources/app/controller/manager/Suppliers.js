@@ -19,6 +19,9 @@ Ext.define('WMS.controller.manager.Suppliers', {
         'Suppliers',
         'Invoices'
     ],
+    config                    : {
+        invoicesWindow: undefined
+    },
     init                      : function () {
         console.init('WMS.controller.manager.Suppliers is initializing...');
         var me = this;
@@ -45,10 +48,84 @@ Ext.define('WMS.controller.manager.Suppliers', {
                 'itemdblclick': me.onDetailsClientClickGrid
             },
             'suppliermanager supplierinvoices'                    : {
-                'render': me.onInvoiceListRendered
+                'render'      : me.onInvoiceListRendered,
+                'itemdblclick': me.onProductsOnInvoiceClick
             }
         });
         me.callParent(arguments);
+
+        me.setInvoicesWindow(Ext.create('Ext.window.Window', {
+            title      : 'Produkty na fakturze',
+            layout     : 'fit',
+            closable   : true,
+            closeAction: 'hide',
+            movable    : true,
+            scrollable : true,
+            items      : {
+                xtype  : 'grid',
+                flex   : 2,
+                columns: [
+                    {
+                        xtype: 'rownumberer'
+                    },
+                    {
+                        header   : 'Produkt',
+                        dataIndex: 'product_id',
+                        width    : 130,
+                        renderer : function (product_id) {
+                            var product = me.getInvoicesStore().findByProduct(product_id);
+                            return product.get('name');
+                        }
+                    },
+                    {
+                        header     : 'Palet',
+                        dataIndex  : 'pallets',
+                        summaryType: 'sum',
+                        width      : 50
+                    },
+                    {
+                        header     : 'Cena',
+                        dataIndex  : 'price',
+                        summaryType: 'average',
+                        renderer   : function (val) {
+                            return val + ' zł'
+                        },
+                        width      : 50
+                    },
+                    {
+                        header   : 'Podatek',
+                        dataIndex: 'tax',
+                        renderer : function (value) {
+                            return value + ' %';
+                        }
+                    },
+                    {
+                        header   : 'Cena VAT',
+                        dataIndex: 'summaryPrice',
+                        width    : 70
+                    },
+                    {
+                        header   : 'Opis',
+                        dataIndex: 'comment',
+                        flex     : 3
+                    }
+                ]
+            }
+        }));
+    },
+    onProductsOnInvoiceClick  : function (grid, invoice) {
+        var me = this,
+            popup = me.getInvoicesWindow(),
+            invoicesStore = me.getInvoicesStore(),
+            gridInWindow = popup.down('grid');
+        gridInWindow.reconfigure((function () {
+            var data = invoicesStore.findInvoices(invoice.getId(), 'invoice');
+            return Ext.create('Ext.data.Store', {
+                model: 'WMS.model.entity.InvoiceProduct',
+                data : data
+            })
+        }()));
+        popup.show();
     },
     onInvoiceListRendered     : function () {
         var me = this,
@@ -91,7 +168,7 @@ Ext.define('WMS.controller.manager.Suppliers', {
             invoiceView.reconfigure((function () {
                 var client_id = client.getId(),
                     invoicesStore = me.getInvoicesStore(),
-                    invoices = invoicesStore.findInvoices(client_id);
+                    invoices = invoicesStore.findInvoices(client_id, 'client');
 
                 return Ext.create('Ext.data.Store', {
                     model: 'WMS.model.entity.Invoice',

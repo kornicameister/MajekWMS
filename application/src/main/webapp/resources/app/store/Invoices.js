@@ -12,21 +12,45 @@
  * facility to hold invoices.
  */
 Ext.define('WMS.store.Invoices', {
-    extend      : 'Ext.data.Store',
-    model       : 'WMS.model.entity.InvoiceProduct',
-    autoLoad    : true,
-    autoSync    : false,
-    findInvoices: function (c) {
+    extend       : 'Ext.data.Store',
+    model        : 'WMS.model.entity.InvoiceProduct',
+    autoLoad     : true,
+    autoSync     : false,
+    findInvoices : function (record_id, property) {
         var me = this,
-            client = (Ext.isDefined(c.isModel) ? c.getId : c),
-            invoices = [];
+            recId = (Ext.isDefined(record_id.isModel) ? record_id.getId() : record_id),
+            data = [];
+
+        switch (property) {
+            case 'client':
+                me.each(function (rec) {
+                    if (rec.getInvoiceProduct().getInvoice().getClient().getId() === recId) {
+                        data.push(rec.getInvoiceProduct().getInvoice());
+                    }
+                }, me);
+                break;
+            case 'invoice':
+                me.each(function (rec) {
+                    if (rec.getInvoiceProduct().getInvoice().getId() === recId) {
+                        data.push(rec);
+                    }
+                }, me);
+                break;
+        }
+
+        return data;
+    },
+    findByProduct: function (p) {
+        var me = this,
+            product = (Ext.isDefined(p.isModel) ? p.getId() : p),
+            product_found = undefined;
 
         me.each(function (rec) {
-            if (rec.getInvoiceProduct().getInvoice().getClient().getId() === client) {
-                invoices.push(rec.getInvoiceProduct().getInvoice());
+            if ((product_found = rec.getInvoiceProduct().getProduct()).getId() === product) {
+                return false;
             }
         }, me);
 
-        return invoices;
+        return product_found;
     }
 });
