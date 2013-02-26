@@ -34,6 +34,14 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             {
                 ref     : 'unitBoard',
                 selector: 'wmsunitcanvas unitsDrawingCmp'
+            },
+            {
+                ref     : 'tabPanel',
+                selector: '#viewport masterview'
+            },
+            {
+                ref     : 'unitCanvasTab',
+                selector: '#viewport masterview wmsunit'
             }
         ],
         config            : {
@@ -51,10 +59,13 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             console.init('WMS.controller.wms.unit.Canvas initializing... ');
             me = this;
             me.control({
-                'wmsunitcanvas #unitsDrawingCmp'  : {
+                'wmsunitcanvas #unitsDrawingCmp'             : {
                     boxready: me.onBoxReady
                 },
-                'wmsunitcanvas tool[type=refresh]': {
+                '#footerToolbar button[itemId=refreshButton]': {
+                    'click': me.refreshCanvas
+                },
+                'wmsunitcanvas tool[type=refresh]'           : {
                     click: me.onRefreshAction
                 }
             }, me);
@@ -109,6 +120,15 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                     }
                 }
             }));
+        },
+        refreshCanvas     : function () {
+            var me = this,
+                canvasTab = me.getUnitCanvasTab(),
+                activeTab = me.getTabPanel().getActiveTab();
+            if (activeTab.getItemId() === canvasTab.getItemId()) {
+                console.log('Canvas :: Refresh action called..., button way of the force');
+                me.onRefreshAction.apply(me, []);
+            }
         },
         onRefreshAction   : function () {
             console.log('Canvas :: Refresh action called...');
