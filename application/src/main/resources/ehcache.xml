@@ -20,11 +20,11 @@
            overflowToDisk="false"
             />
     <cache name="invoiceproduct_cache"
-           maxElementsInMemory="60"
+           maxElementsInMemory="250"
            eternal="false"
            timeToIdleSeconds="40"
            timeToLiveSeconds="40"
-           overflowToDisk="false"
+           overflowToDisk="true"
             />
     <cache name="product_in_unit_cache"
            maxElementsInMemory="120"

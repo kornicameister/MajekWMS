@@ -183,7 +183,7 @@ public class RequestController implements ServerControllable {
 
     private void buildResponse() {
         Gson g = new GsonBuilder()
-                .setDateFormat("m-D-y")
+                .setDateFormat("Y-M-d")
                 .setExclusionStrategies(HHExclusionStrategy)
                 .registerTypeHierarchyAdapter(HibernateProxy.class,
                         new HibernateProxySerializer()).create();

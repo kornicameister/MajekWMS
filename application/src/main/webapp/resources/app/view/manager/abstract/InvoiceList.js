@@ -31,6 +31,10 @@ Ext.define('WMS.view.manager.abstract.InvoiceList', {
             dataIndex: 'createdDate'
         },
         {
+            text     : 'Czas realizacji',
+            dataIndex: 'timeToRealize'
+        },
+        {
             text     : 'Data realizacji',
             dataIndex: 'dueDate'
         },

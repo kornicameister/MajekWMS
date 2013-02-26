@@ -51,16 +51,26 @@ Ext.define('WMS.controller.manager.Recipients', {
     },
     onInvoiceListRendered     : function () {
         var me = this,
-            grid = me.getInvoicesView();
+            grid = me.getInvoicesView(),
+            clientRenderer = function (client_id) {
+                if (!Ext.isDefined(client_id) || client_id === 0) {
+                    return '';
+                } else if (Ext.isString(client_id)) {
+                    client_id = parseInt(client_id);
+                }
+                return me.getRecipientsStore().getById(client_id).get('name');
+            },
+            dateRenderer = function (date) {
+                return Ext.Date.format(date, 'Y-n-j');
+            },
+            timeRenderer = function (days) {
+                return Ext.String.format('{0} dni', days);
+            };
 
-        grid.columns[1]['renderer'] = function (client_id) {
-            if (!Ext.isDefined(client_id) || client_id === 0) {
-                return '';
-            } else if (Ext.isString(client_id)) {
-                client_id = parseInt(client_id);
-            }
-            return me.getRecipientsStore().getById(client_id).get('name');
-        }
+        grid.columns[1]['renderer'] = clientRenderer;
+        grid.columns[2]['renderer'] = dateRenderer;
+        grid.columns[3]['renderer'] = timeRenderer;
+        grid.columns[4]['renderer'] = dateRenderer;
 
     },
     onNewInvoiceClick         : function () {
