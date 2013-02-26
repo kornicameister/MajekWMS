@@ -10,12 +10,14 @@ Ext.define('WMS.controller.manager.Recipients', {
     refs                      : [
         { ref: 'managerUI', selector: 'recipientmanager' },
         { ref: 'recipientList', selector: 'recipientmanager clientgrid'},
-        { ref: 'detailsView', selector: 'recipientmanager recipientdetails'}
+        { ref: 'detailsView', selector: 'recipientmanager recipientdetails'},
+        { ref: 'invoicesView', selector: 'recipientmanager recipientinvoices'}
     ],
     stores                    : [
         'Cities',
         'ClientTypes',
-        'Recipients'
+        'Recipients',
+        'Invoices'
     ],
     init                      : function () {
         console.init('WMS.controller.manager.Recipients is initializing...');
@@ -41,8 +43,25 @@ Ext.define('WMS.controller.manager.Recipients', {
             },
             'recipientmanager clientgrid'                          : {
                 'itemdblclick': me.onDetailsClientClickGrid
+            },
+            'recipientmanager recipientinvoices'                   : {
+                'render': me.onInvoiceListRendered
             }
-        });
+        }, me);
+    },
+    onInvoiceListRendered     : function () {
+        var me = this,
+            grid = me.getInvoicesView();
+
+        grid.columns[1]['renderer'] = function (client_id) {
+            if (!Ext.isDefined(client_id) || client_id === 0) {
+                return '';
+            } else if (Ext.isString(client_id)) {
+                client_id = parseInt(client_id);
+            }
+            return me.getRecipientsStore().getById(client_id).get('name');
+        }
+
     },
     onNewInvoiceClick         : function () {
         var me = this,
@@ -53,10 +72,22 @@ Ext.define('WMS.controller.manager.Recipients', {
     onDetailsClientRequest    : function (client) {
         var me = this,
             detailsView = me.getDetailsView(),
+            invoiceView = me.getInvoicesView(),
             data = client.getData(true);
 
         if (Ext.isDefined(client) && Ext.isDefined(detailsView)) {
             detailsView.update(data);
+            invoiceView.reconfigure((function () {
+                var client_id = client.getId(),
+                    invoicesStore = me.getInvoicesStore(),
+                    invoices = invoicesStore.findInvoices(client_id);
+
+                return Ext.create('Ext.data.Store', {
+                    model: 'WMS.model.entity.Invoice',
+                    data : invoices
+                });
+
+            }()));
             me.popupDetailsView();
 
             Ext.getCmp('statusBar').setStatus({

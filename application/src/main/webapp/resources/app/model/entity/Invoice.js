@@ -18,8 +18,8 @@ Ext.define('WMS.model.entity.Invoice', {
         'id',
         'invoiceNumber',
         'description',
-        { name: 'client_id', type: 'int'},
-        { name: 'type_id', type: 'int'},
+        { name: 'client_id', type: 'int', mapping: 'client.id'},
+        { name: 'type_id', type: 'int', mapping: 'type.id'},
         { name: 'createdDate', type: 'date'},
         { name: 'dueDate', type: 'date'}
     ],

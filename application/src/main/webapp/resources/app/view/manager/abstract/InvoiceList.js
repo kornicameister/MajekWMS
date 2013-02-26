@@ -8,35 +8,34 @@
 Ext.define('WMS.view.manager.abstract.InvoiceList', {
     extend : 'WMS.view.manager.abstract.Grid',
     uses   : [
-        'WMS.view.manager.abstract.Grid'
+        'WMS.view.manager.abstract.Grid',
+        'WMS.model.entity.Invoice'
     ],
+    store  : Ext.create('Ext.data.Store', {
+        model   : 'WMS.model.entity.Invoice',
+        autoLoad: false
+    }),
     columns: [
         {
-            header   : 'ID',
-            dataIndex: 'id',
-            width    : 20,
-            hidden   : true
+            text     : 'Numer',
+            dataIndex: 'invoiceNumber',
+            width    : 150
         },
         {
-            header   : 'Numer',
-            dataIndex: 'refNumber',
-            width    : 100
-        },
-        {
-            header   : 'Data wystawienia',
-            dataIndex: ' createdData'
-        },
-        {
-            header   : 'Data realizacji',
-            dataIndex: 'dueData'
-        },
-        {
-            header   : 'Odbiorca',
+            text     : 'Odbiorca',
             dataIndex: 'client_id',
-            width    : 200
+            width    : 150
         },
         {
-            header   : 'Opis',
+            text     : 'Data wystawienia',
+            dataIndex: 'createdDate'
+        },
+        {
+            text     : 'Data realizacji',
+            dataIndex: 'dueDate'
+        },
+        {
+            text     : 'Opis',
             dataIndex: 'description'
         }
     ]
