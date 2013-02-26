@@ -22,23 +22,19 @@ Ext.define('WMS.view.wms.Statistics', {
         xtype   : 'panel',
         layout  : 'fit',
         defaults: {
-            animate: true,
-            shadow : true
+            theme     : 'Blue',
+            animate   : true,
+            shadow    : true,
+            scrollable: true,
+            legend    : true
         }
     },
     items   : [
         {
             itemId: 'unitUsage',
             items : {
-                xtype     : 'chart',
-                scrollable: true,
-                defaults  : {
-                    anchor : '100%',
-                    style  : 'background:#fff',
-                    animate: true,
-                    shadow : true
-                },
-                store     : Ext.create('Ext.data.Store', {
+                xtype : 'chart',
+                store : Ext.create('Ext.data.Store', {
                         fields: [
                             'sharedUsage',
                             'name'
@@ -51,7 +47,7 @@ Ext.define('WMS.view.wms.Statistics', {
                         ]
                     }
                 ),
-                series    : [
+                series: [
                     {
                         type        : 'pie',
                         angleField  : 'sharedUsage',
@@ -91,13 +87,6 @@ Ext.define('WMS.view.wms.Statistics', {
             itemId: 'productsTotallyCool',
             items : {
                 xtype     : 'chart',
-                scrollable: true,
-                defaults  : {
-                    anchor : '100%',
-                    style  : 'background:#fff',
-                    animate: true,
-                    shadow : true
-                },
                 store     : Ext.create('Ext.data.Store', {
                         fields: [
                             'totalCount',
@@ -168,7 +157,7 @@ Ext.define('WMS.view.wms.Statistics', {
                         },
                         label    : {
                             display      : 'insideEnd',
-                            field        : 'data1',
+                            field        : 'name',
                             renderer     : Ext.util.Format.numberRenderer('0'),
                             orientation  : 'horizontal',
                             color        : '#333',
