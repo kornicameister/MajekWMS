@@ -6,89 +6,90 @@
  */
 
 Ext.define('WMS.controller.wms.Statistics', function () {
-    var translateUnitStore = function (pieChartStore, unitStore) {
-            pieChartStore.removeAll();
-            pieChartStore.loadData((
-                function () {
-                    var data = [];
-                    unitStore.each(function (record) {
-                        data.push({
-                            angle: record.get('sharedUsage'),
-                            name : Ext.String.format('Strefa {0}/{1}', record.get('name'), record.getType().get('name'))
-                        });
-                    });
-                    return data;
-                }()
-                ));
-            return pieChartStore;
-        },
-        translateProductStore = function (barChartStore, productStore) {
-            barChartStore.removeAll();
-            barChartStore.loadData((
-                function () {
-                    var data = [];
-                    productStore.each(function (record) {
-                        data.push({
-                            amount: record.get('totalCount'),
-                            name  : record.get('name')
-                        });
-                    });
-                    return data;
-                }()
-                ));
-            return barChartStore;
-        },
-        onStatisticsTabRender = function (statisticPanel) {
-            var me = this,
-                unitChart = statisticPanel.down('#unitUsage chart'),
-                productChart = statisticPanel.down('#productsTotallyCool chart');
+    var onStatisticsTabRender = function (statisticPanel) {
+        var me = this,
+            unitChart = statisticPanel.down('#unitUsage chart'),
+            productChart = statisticPanel.down('#productsTotallyCool chart'),
+            unitStore = me.getUnitStore(),
+            productStore = me.getProductsStore(),
+            warehouseId = me.getWarehousesStore().getActive().getId(),
+            unitStoreMask = new Ext.LoadMask(unitChart, {
+                msg: 'Ładowanie statystyk dla stref w toku...'
+            }),
+            productStoreMask = new Ext.LoadMask(productChart, {
+                msg: 'Ładowanie statystyk dla produktów w toku...'
+            }),
+            sharedSortes = [
+                new Ext.util.Sorter({
+                    property : 'name',
+                    direction: 'desc'
+                })
+            ];
 
-            me.setUnitUsageChart.apply(me, [unitChart]);
-            me.setProductAmountChart.apply(me, [productChart]);
-        };
+        var task = new Ext.util.DelayedTask(function () {
+            unitStore.load({
+                scope   : me,
+                filters : [
+                    new Ext.util.Filter({
+                        property: 'warehouse_id',
+                        value   : warehouseId
+                    })
+                ],
+                sorters : sharedSortes,
+                callback: function () {
+                    unitChart.bindStore(unitStore);
+                    unitStoreMask.hide();
+                }
+            });
+            productStore.load({
+                scope   : me,
+                sorters : sharedSortes,
+                callback: function () {
+                    productChart.bindStore(productStore);
+                    productStoreMask.hide();
+                }
+            })
+        });
+
+        unitStoreMask.show();
+        productStoreMask.show();
+
+        task.delay(1250);
+    };
     return {
-        extend               : 'Ext.app.Controller',
-        views                : [
+        extend  : 'Ext.app.Controller',
+        views   : [
             'WMS.view.wms.Statistics'
         ],
-        requires             : [
-            'WMS.model.entity.Product'
+        requires: [
+            'WMS.model.entity.Product',
+            'WMS.model.entity.Unit'
         ],
-        stores               : [
+        stores  : [
             'Warehouses'
         ],
-        config               : {
-            productsStore: undefined
+        config  : {
+            productsStore: undefined,
+            unitStore    : undefined
         },
-        init                 : function () {
+        init    : function () {
             console.init('WMS.controller.wms.Statistics initializing...');
             var me = this;
 
             me.setProductsStore(Ext.create('Ext.data.Store', {
                 model   : 'WMS.model.entity.Product',
-                autoSync: false,
-                autoLoad: true
+                autoSync: false
+            }));
+            me.setUnitStore(Ext.create('Ext.data.Store', {
+                model   : 'WMS.model.entity.Unit',
+                autoSync: false
             }));
 
             me.control({
                 '#viewport masterview wmsstatistics': {
-                    'afterrender': onStatisticsTabRender
+                    'activate': onStatisticsTabRender
                 }
             }, me);
-        },
-        setUnitUsageChart    : function (unitPieChart) {
-            var me = this,
-                pieChartStore = unitPieChart.getStore(),
-                unitStore = me.getWarehousesStore().getActive().units();
-
-            unitPieChart.bindStore(translateUnitStore(pieChartStore, unitStore));
-        },
-        setProductAmountChart: function (productBarChart) {
-            var me = this,
-                store = productBarChart.getStore(),
-                productsStore = me.getProductsStore();
-
-            productBarChart.bindStore(translateProductStore(store, productsStore));
         }
     }
 });

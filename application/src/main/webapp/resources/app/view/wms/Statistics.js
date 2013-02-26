@@ -20,7 +20,6 @@ Ext.define('WMS.view.wms.Statistics', {
     defaults: {
         flex    : 1,
         xtype   : 'panel',
-        margins : '35 5 5 0',
         layout  : 'fit',
         defaults: {
             animate: true,
@@ -41,29 +40,41 @@ Ext.define('WMS.view.wms.Statistics', {
                 },
                 store     : Ext.create('Ext.data.Store', {
                         fields: [
-                            'angle',
+                            'sharedUsage',
                             'name'
                         ],
                         data  : [
                             {
-                                angle: 1,
-                                name : ''
+                                sharedUsage: 1,
+                                name       : ''
                             }
-                        ],
-                        proxy : {
-                            type: 'memory',
-                            id  : 'translate-unit-pie-chart-store'
-                        }
+                        ]
                     }
                 ),
                 series    : [
                     {
                         type        : 'pie',
-                        angleField  : 'angle',
+                        angleField  : 'sharedUsage',
                         showInLegend: true,
                         highlight   : {
                             segment: {
                                 margin: 20
+                            }
+                        },
+                        tips        : {
+                            trackMouse: true,
+                            width     : 200,
+                            height    : 40,
+                            renderer  : function (storeItem) {
+                                this.setTitle(
+                                    Ext.String.format('Strefa {0}[{1} %]',
+                                        storeItem.get('name'),
+                                        Ext.util.Format.number(
+                                            parseFloat(storeItem.get('sharedUsage') * 100.0),
+                                            '0.00'
+                                        )
+                                    )
+                                );
                             }
                         },
                         label       : {
@@ -88,21 +99,16 @@ Ext.define('WMS.view.wms.Statistics', {
                     shadow : true
                 },
                 store     : Ext.create('Ext.data.Store', {
-                        fields  : [
-                            'amount',
+                        fields: [
+                            'totalCount',
                             'name'
                         ],
-                        data    : [
+                        data  : [
                             {
-                                amount: 1,
-                                name  : 'test'
+                                totalCount: 1,
+                                name      : 'test'
                             }
-                        ],
-                        autoSync: true,
-                        proxy   : {
-                            type: 'memory',
-                            id  : 'translate-product-bar-chart'
-                        }
+                        ]
                     }
                 ),
                 axes      : [
@@ -110,7 +116,7 @@ Ext.define('WMS.view.wms.Statistics', {
                         type    : 'Numeric',
                         position: 'bottom',
                         fields  : [
-                            'amount'
+                            'totalCount'
                         ],
                         label   : {
                             renderer: Ext.util.Format.numberRenderer('0,0')
@@ -155,7 +161,7 @@ Ext.define('WMS.view.wms.Statistics', {
                                 this.setTitle(
                                     Ext.String.format('Product {0}, palet={1}',
                                         storeItem.get('name'),
-                                        storeItem.get('amount')
+                                        storeItem.get('totalCount')
                                     )
                                 );
                             }
@@ -170,7 +176,7 @@ Ext.define('WMS.view.wms.Statistics', {
                         },
                         xField   : 'name',
                         yField   : [
-                            'amount'
+                            'totalCount'
                         ]
                     }
                 ]
