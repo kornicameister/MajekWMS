@@ -10,12 +10,14 @@ Ext.define('WMS.controller.manager.Suppliers', {
     refs                      : [
         { ref: 'managerUI', selector: 'suppliermanager' },
         { ref: 'supplierList', selector: 'suppliermanager clientgrid'},
-        { ref: 'detailsView', selector: 'suppliermanager supplierdetails'}
+        { ref: 'detailsView', selector: 'suppliermanager supplierdetails'},
+        { ref: 'invoicesView', selector: 'suppliermanager supplierinvoices'}
     ],
     stores                    : [
         'Cities',
         'ClientTypes',
-        'Suppliers'
+        'Suppliers',
+        'Invoices'
     ],
     init                      : function () {
         console.init('WMS.controller.manager.Suppliers is initializing...');
@@ -41,9 +43,36 @@ Ext.define('WMS.controller.manager.Suppliers', {
             },
             'suppliermanager clientgrid'                          : {
                 'itemdblclick': me.onDetailsClientClickGrid
+            },
+            'suppliermanager supplierinvoices'                    : {
+                'render': me.onInvoiceListRendered
             }
         });
         me.callParent(arguments);
+    },
+    onInvoiceListRendered     : function () {
+        var me = this,
+            grid = me.getInvoicesView(),
+            clientRenderer = function (client_id) {
+                if (!Ext.isDefined(client_id) || client_id === 0) {
+                    return '';
+                } else if (Ext.isString(client_id)) {
+                    client_id = parseInt(client_id);
+                }
+                return me.getSuppliersStore().getById(client_id).get('name');
+            },
+            dateRenderer = function (date) {
+                return Ext.Date.format(date, 'Y-n-j');
+            },
+            timeRenderer = function (days) {
+                return Ext.String.format('{0} dni', days);
+            };
+
+        grid.columns[1]['renderer'] = clientRenderer;
+        grid.columns[2]['renderer'] = dateRenderer;
+        grid.columns[3]['renderer'] = timeRenderer;
+        grid.columns[4]['renderer'] = dateRenderer;
+
     },
     onNewInvoiceClick         : function () {
         var me = this,
@@ -54,10 +83,22 @@ Ext.define('WMS.controller.manager.Suppliers', {
     onDetailsClientRequest    : function (client) {
         var me = this,
             detailsView = me.getDetailsView(),
+            invoiceView = me.getInvoicesView(),
             data = client.getData(true);
 
         if (Ext.isDefined(client) && Ext.isDefined(detailsView)) {
             detailsView.update(data);
+            invoiceView.reconfigure((function () {
+                var client_id = client.getId(),
+                    invoicesStore = me.getInvoicesStore(),
+                    invoices = invoicesStore.findInvoices(client_id);
+
+                return Ext.create('Ext.data.Store', {
+                    model: 'WMS.model.entity.Invoice',
+                    data : invoices
+                });
+
+            }()));
             me.popupDetailsView();
 
             Ext.getCmp('statusBar').setStatus({
