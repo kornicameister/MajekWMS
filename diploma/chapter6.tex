@@ -34,7 +34,13 @@
 		Aplikacja realizuje postulaty funkcjonalności WMS w obszarach wspomagania gospodarki magazynowej,
 		ewidencji towarów, podziału magazyny na logiczne jednostki oraz utrzymania informacji
 		o wydaniach / przyjęciach produktów. Odpowiednio wydanie towaru implikuje zmniejszenie stanów
-		magazynowych, a przyjęcie zmniejszenie oraz alokację w strefach odkładczych.
+		magazynowych, a przyjęcie zwiększenie oraz alokację w strefach odkładczych. 
+		Program daje dodatkowo możliwość modelowania struktury logicznej. Schemat, nawet jeśli odzwierciedla
+		fizyczną powierzchnią magazynów, w sposób powierzchowny, jest cennym dodatkiem, dającym
+		poglądową wiedzą na temat budowy powierzchni odkładczych. 
+		Ostatecznie warto wspomnieć o dodatkowym module, który zajmuje się generowaniem statystyk.
+		Statystyki są bardzo ważną częścią, które pozwala na analizą operacji i procesów zachodzących
+		w czasie.
 	\subsection{Aplikacja widziana oczami programisty}
 		Aplikacja wspomagająca zarządzanie magazynem została zaprojektowana i zbudowana jako aplikacja
 		dostępna przez przeglądarkę. W założeniu istniało przygotowanie programu, którego będzie można
@@ -159,7 +165,7 @@
 		o własne rozwiązanie zaimplementowane po stronie serwera, a wymagające podanie jedynie hasła oraz 
 		nazwy użytkownika.\\ Można to łatwo zmienić, ponieważ operacja autoryzacji została wyodrębniona
 		do samodzielnej \textbf{klasy servlet}. Korzyścią tego, a zarazem wytłumaczeniem prostoty rozszerzenia
-		operacji autentyfikacji, jest zawsze występująca operacja:
+		operacji autoryzacji, jest zawsze występująca operacja:
 		\begin{listing}[H]
 			\inputminted[
 				linenos=true,
@@ -192,15 +198,43 @@
 			\caption[Aplikacja - Zarządzania strukturą magazynu]{Zrzut ekranu z widokiem na strukturę magazynu}
 			\label{c7:fig:app:unit_preview}
 		\end{figure}
+		W systemie klasy WMS należy się spodziewać elementów odzwierciedlających fizyczną strukturę magazynu,
+		to jak rozmieszczone są strefy i w kontekście całej dostępnej powierzchni. W aplikacji pojawia się taka
+		funkcjonalność, które mimo prosty, daje możliwość dowolnego modelowania wzajemnego ułożenia stref
+		magazynu. Niemniej w produkcyjnej wersji, należy się spodziewać predefiniowanej struktury, zgodnej z
+		preferencjami oraz oczekiwania klienta, która dostosowana jest do specyfiki jego działalności. Często
+		zdarza się również, że schemat w takim ujęciu nie może być zmieniony, stanowiąc bazę, ułatwiającą
+		operatorom logistycznym poruszania się bez znajomości niejednokrotnie skomplikowanych struktur metadanych, których
+		aplikacja używa do modelowania danych właściwych. 
+		\begin{figure}[H]
+			\centering  
+			\begin{subfigure}[b]{0.4\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/app/unit_before_move}
+                \caption{Przed zmianą lokalizacji}
+			\label{c7:fig:app:unit_before_move}
+       		\end{subfigure}
+			\begin{subfigure}[b]{0.4\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/app/unit_after_move}
+                \caption{Po zmianie lokalizacji}
+			\label{c7:fig:app:unit_after_move}
+       		\end{subfigure}
+       		\caption[Modelowanie struktury magazynu]{Model strefy przed i po zmianie lokalizacji}
+			\label{c7:fig:app:unit_modelling}
+		\end{figure} 
+		Rysunek \textbf{\ref{c7:fig:app:unit_modelling}} przedstawia wizualny model jednej ze stref, 
+		w tym wypadku \textit{U3}. Można zauważyć, że strefa początkowo nie będąca w sąsiedztwie z
+		żadną inną, w wyniku działania użytkownika, została umiejscowiona tuż obok strefy \textit{U4}
 		
 	\subsection{Zarządzanie klientami - dodawanie, usuwaniu, edycja oraz podgląd}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/supplier_preview}
 			\caption[Aplikacja - Dostęp do danych klientów]{Zrzut ekranu z widokiem na dostępnych dostawców}
 			\label{c7:fig:app:supplier_preview}
 		\end{figure}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.6\textwidth]{images/app/new_receipient_dialog}
 			\caption[Aplikacja - Dodawania nowego klienta - odbiorcy]{Zrzut ekranu z widokiem na okno dialogowe dla tworzenia nowego odbiorcy}
@@ -262,9 +296,42 @@
 			\item naliczony podatek;
 			\item opcjonalny opis.
 		\end{itemize}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{images/app/unit_products_preview}
 			\caption[Aplikacja - Ewidencja towarów w poszczególnych strefach]{Zrzut ekranu z widokiem listy produktów w wybranej strefie}
 			\label{c7:fig:app:unit_products_preview}
+		\end{figure}
+		
+	\subsection{Statystyki wykorzystania powierzchni magazynowych}
+		W programie zawarto również prosty moduł generujący statystyki użytkowe dla wybranego i używanego magazynu.
+		Można więc, w dowolnym momencie, sprawdzić w jakim procencie powierzchnia magazynu, jest wykorzystywana przez
+		poszczególne strefy. Inną z dostarczonych informacji, mającej charakter danych statystycznych, jest 
+		wykorzystania powierzchni odkładczych przez poszczególne produkty. 
+		\begin{figure}[H]
+			\centering  
+			\begin{subfigure}[b]{0.75\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/app/stat_pie}
+                \caption{przez strefy}
+			\label{c7:fig:app:stat_unit_pie}
+       		\end{subfigure}
+			\begin{subfigure}[b]{0.75\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/app/stat_bar}
+                \caption{przez produkty}
+			\label{c7:fig:app:stat_product_bar}
+       		\end{subfigure}
+       		\caption[Aplikacja - Statystyki wykorzystania powierzchni]{Wykorzystanie powierzchni magazynowych przez ...}
+			\label{c7:fig:app:stat_charts}
+		\end{figure} 		
+		Wykresy widoczne na rysunku \textbf{\ref{c7:fig:app:stat_charts}} zostały wzbogacone o
+		o element interaktywności. Dzięki temu, po najechaniu kursorem myszki na dowolny element, na 
+		przykład wykresu słupkowego, przedstawiającego dane dotyczące liczności produktów w magazynie, 
+		uzyskana zostaje wspomniana informacja w odniesieniu do konkretnego produktu. 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{images/app/stat_bar_detail}
+			\caption[Aplikacja - Szczegółowe informacje z wykresu]{Szczegółowe informacje na temat liczności konkretnego produktu}
+			\label{c7:fig:app:stat_product_bar_detail}
 		\end{figure}

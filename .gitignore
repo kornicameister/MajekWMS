@@ -1,3 +1,5 @@
+/application/logs/*
+/application/target/*
 /diploma/thesis.pyg
 /diploma/settings/listinings.tex.bak
 /diploma/settings/settings.tex.bak
