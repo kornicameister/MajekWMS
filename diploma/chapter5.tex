@@ -227,7 +227,7 @@
 		udostępnienia interfejsu opartego o schematyczną mapę powierzchni magazynowej lub opartej o drzewo. 
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=0.8\textwidth]{images/warehouse_tree}
+			\includegraphics[width=\textwidth]{images/warehouse_tree}
 			\caption[Przykładowe drzewo eksploracji magazynu]{
 				Drzewo struktury magazynu,\\
 				źródło: opracowanie własne
@@ -251,11 +251,48 @@
 		do planowania strategicznego / operacyjnego. Najważniejszą być może, ale nie jedyną, grupę dokumentów
 		stanowią te, opisujące wydania, przyjęcia, przesunięcia odpowiednio z, do, między / wewnątrz magazynu.
 	\subsubsection{Obsługa zamówień oraz zleceń}
-		brak
-	\subsubsection{Zamówienia dla dostawców}
-		brak
-	\subsubsection{Zlecenia od klientów}
-		break
+		W kontekście tematu zamówień oraz zleceń, będących integralną częścią procesów dotyczących fizycznego
+		przemieszczania towarów, materiałów lub produktów w magazynie. Dokumentem właściwym dla zamówień są
+		\textbf{wydania magazynowe}, a same dokumenty skierowane są do odbiorcy towarów firmy, będącej właścicielem
+		wykupionych powierzchni magazynowych lub całego obiektu. Z drugiej strony działanie obiektu magazynowego
+		nie opiera się wyłącznie na wydaniach. Na drugiej stronie szali znaleźć można \textbf{przyjęcia magazynowego},
+		dla których dokumentem właściwym są zamówienia skierowane dla dostawców. Jeśli spojrzeć na magazyn ponownie jako
+		na element buforujący, równoważący podaż i popyt na rynku, to można spojrzeć na wydania magazynowego jako
+		elementy lub synonim popyt, a przyjęcia magazynowe odpowiadają podaży. 
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\textwidth]{images/warehouse_buffer}
+			\caption[Magazyn jako bufor]{
+				Magazyn jako element buforujący podaż i popyt\\
+				źródło: opracowanie własne
+			}
+		\end{figure}
+		
+		\paragraph{Zamówienia dla dostawców - dokument  - przyjęcie magazynowe} - tworzony jest na podstawie
+		aktualnych stanów magazynowych. Czynność, którą jest tutaj zamówienia, może być zautomatyzowana lub wykonana
+		przez operatora logistycznego. W obu wypadkach wykorzystuje się raporty generowane przez system WMS i 
+		na ich podstawie podejmuje decyzje o zamówieniu \textit{k pozycji} w odpowiednich ilościach. Moduł, obsługujący
+		wektor wejścia, jest w wielu przypadkach powiązany lub wykorzystuje algorytmy właściwe dla \textbf{MRP I}. 
+		Korzyścią jest więc składaniach zamówień tylko na te produkty i tylko w takich ilościach, jakie są faktycznie wymagane.
+		Co ważniejsze moment, w których dokument jest generowany i wysyłany do dostawców, jest wybrany precyzyjnie na
+		podstawie dynamiki i struktury zamówień od klientów.
+			\subparagraph{Potwierdzenie dokumentów wydania} jest czynnością skojarzoną z \textbf{rezerwacją towarów},
+			jednakże to właśnie zastrzeżenie odpowiednich pozycji (we właściwych ilościach) ma pierwszeństwo. 
+			Rezerwacja towarów stanowi formalne zabezpieczenie, które uniemożliwia omyłkowe wydania 
+			pozycji przeznaczonych dla danego klienta. Zarezerwowane towary zostają zablokowane i nie mogą 
+			zostać wykorzystane.
+			Potwierdzenie dokumentów wydania jest jedną z form zwolnienia tej blokady. Pozycje, które zostały
+			wcześniej zarezerwowane, zostają usunięte ze stanów magazynowych i opuszczają magazyn, zarówno
+			system jak i fizyczny budynek. Drugą z opcji, jest sytuacja, kiedy należy wycofać pewne 
+			pozycje, ponieważ klient odmówił ich przyjęcia.  
+		\paragraph{Zamówienia od klientów -  dokument  - wydania magazynowe} - tworzony jest na podstawie zapotrzebowania
+		zgłoszonego przez klienta oraz jego danych. Obie informacja są wystarczającą podstawą do skompletowania
+		i fizycznej wysyłki. 
+		
+		W obu wypadkach ważne jest, że każdy wygenerowany dokument, każde zgłoszone żądania kompletacji, alokacji
+		jest rejestrowane i stanowi podstawę do optymalizacji i lepszego zarządzania wektorami wejścia i wyjścia. 
+	
 	\subsection{Rezerwacja towarów}
 		Działanie, które polega na wczesnym zarezerwowaniu grupy towarów, niekoniecznie jeszcze skompletowanych,
 		do wysyłki do konkretnego odbiorcy. Rezerwacja jest w tym wypadku \textbf{wyłączna}, a wykorzystane
@@ -273,9 +310,7 @@
 		Niemniej problem rezerwacji towarów nie jest tak oczywisty, jak się wydaje. Nie można nadużywać tego rozwiązania,
 		aby promować odbiorców, charakteryzujących się częstymi zamówienia i lepszą strukturą płatności. Dla przedsiębiorstwa
 		jutra ważne jest nie tyle sprostanie wymaganiom kilku, ale sukcesywne budowanie swojej marki w szerokim gronie
-		odbiorców.  
-	\subsection{Potwierdzanie dokumentów wydania}
-		brak
+		odbiorców. 
 	\subsection{Automatyczne planowania fizycznych wysyłek}
 		Ten moduł oprogramowania WMS ma jeden cel - \emph{dokonać automatycznego utworzenia jednej fizycznej wysyłki}.
 		Planowanie takiej dostawy odbywa się na z góry określonych warunkach. Określona zostaje jednostka ładunkowa, na
@@ -302,20 +337,61 @@
 			wystąpienia pomyłek i strat magazynowych.		
 		
 	\subsection{Dostawy do magazynu}
-		break		
-		\subsubsection{Ewidencjonowanie dostaw zewnętrznych}
-			brak
-		\subsubsection{Ewidencjonowanie dostaw wewnętrznych}
-			brak
-						
+		Dostawy do magazynu są zbiorem operacji związanych z czynnościami fizycznymi oraz systemowymi
+		przyjęcia zamówienia na stan magazynowy. Od strony fizycznej obejmują kontrole jakościowe
+		oraz ilościowe, a od strony systemu WMS automatyczne przydzielenie miejsc odkładczych,
+		zgodnie z przyjętymi regułami oraz wprowadzenie danych do systemu. 	
+			\paragraph{Dostawy zewnętrzne} stanowią podzbiór dostaw i odnoszą się do wszystkich operacji,
+			gdzie zamówione towary pochodzą z zewnątrz. Obsługa tego typu sytuacji obejmuje kontrole
+			ilościowe i jakościowe oraz rozłożenie towaru w magazynie. Alokacja odbywa się automatycznie
+			na podstawie przyjętej strategii. Warto w tym miejscu wspomnieć, że dostawa zewnętrzna może,
+			ale nie musi, wymagać przepakowania dostarczonych towarów lub umieszczenia ich na nośniku,
+			którego składowania jest możliwe w danym magazynie. Oczekiwanym wynikiem tej operacji jest:
+			\begin{enumerate}
+				\item uaktualnienie stanów magazynowych;
+				\item zarejestrowania dostawy.
+			\end{enumerate}			
+			\paragraph{Dostawy wewnętrzne} odnoszą się do przesunięć wewnątrz magazynowych oraz w większym
+			stopniu do dostaw z produkcji. Nie występuje problem z nośnikiem produktów, ponieważ 
+			opuszczają one linie produkcyjną w stanie, w którym można je bezproblemowo składować. Jednostki
+			logistyczne są etykietowane, co umożliwia ich późniejszą identyfikacją. Oczekiwanym wynikiem tej 
+			dostawy wewnętrznej jest:
+			\begin{enumerate}
+				\item zwiększenie stanów magazynowych;
+				\item umieszczenie odpowiednich etykiet.
+			\end{enumerate}		 						
 	\subsection{Wysyłki z magazynu}
-		break
-		\subsubsection{Ręczne planowanie wysyłek}
-			brak		
-		\subsubsection{Automatyzacja planowania wysyłek}
-			brak
-			
-	\subsection{Problem operacji magazynowych}
-		brak
-	\subsection{Wsparcia dla planowania transportu i/lub spedycji}
-		brak
+		Wszystkie operacja odnoszące się do opuszczania przez produktu systemu magazynowego odnoszą się do zjawiska
+		przeciwnego do podaży - popytu. W odniesieniu do klasy systemów WMS, najczęściej mówi się o automatycznym
+		planowaniu wysyłki, jako reakcji na zamówienie klienta. Odpowiednie algorytmy wiedzą, gdzie znajdują
+		się konkretne pozycje i są w stanie przekierować je do strefy kompletacji, dla danego zamówienia, w ilości
+		zgodnej z podaną na dokumencie. Dodatkowym autem takiego podejścia, jest to, że systemy wspomagające
+		zarządzania magazynem bardzo często posiadają wsparcia dla planowania tras. Taka możliwość wpływa dodatnio
+		na operacje planowania kompletacji, gdyż algorytm obsługujący tę operację, jest w stanie tak rozłożyć
+		zamówione produkty, aby odpowiadały trasom dostaw, w sposób najbardziej optymalny. 		
+			\paragraph{Realizacja kompletacji} polega na wygenerowaniu nośników do kompletacji, o typie zgodnym z profilem
+			zamówionych produktów, oraz pobraniu odpowiednich materiałów lub produktów z wyznaczonych miejsc
+			składowania. W tym momencie ważna staje się charakterystyka działalności przedsiębiorstwa, które jest 
+			właścicielem powierzchni magazynowych. Zawartość nośnika może być bowiem jednorodna (firma produkująca
+			papier), jak i niejednorodna. Niemniej po zebraniu wszystkich wskazanych produktów, następuje kontrola
+			ilościowa.			
+	\subsection{Autonomiczność systemów klasy WMS}
+		Bardzo często dzieje się tak, że system wspomagający magazynowanie nie jest jednostką samodzielną, ale 
+		stanowi część większego \textbf{ZSI} - \textit{Zintegrowanego systemu Informatycznego}. Między tymi
+		dwoma rozwiązaniami istnieje istotna różnica, która jest równocześnie powodem ich koegzystencji.
+			\paragraph{Zarządzanie zapasami} przez ZSI odnosi się do ich ilościowej, jak i jakościowej natury. Z
+			drugiej strony WMS zarządza nimi w kontekście ich fizycznej lokalizacji i stanów magazynowych. Co
+			ważniejsze te dwa podejście uzupełniają się dając pełny obraz koordynatorom logistycznym na temat
+			struktury zapasów itp. 
+			\paragraph{Autonomiczne operacje} systemu WMS odnoszą się do jego możliwości monitorowania ruchów
+			jednostek logistycznych w całym systemie już do momentu, kiedy się w nim znalazły, aż do momentu,
+			kiedy opuszczają magazyn. Operatorzy logistyczni są więc wyposażeni w funkcje, które pozwalają
+			im przenieść określoną ilość wybranych materiałów z jednego miejsca w drugie, ale nie tylko.
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=\textwidth]{images/transport_ops}
+				\caption[Operacja transportowe w magazynach]{
+					4 typy operacji transportowych w magazynach\\
+					źródło: opracowanie własne na podstawie \cite{IDL}
+				}
+			\end{figure}

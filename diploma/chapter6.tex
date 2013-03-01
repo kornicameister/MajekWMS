@@ -64,13 +64,13 @@
 			Dostępny na licencji \href{http://www.gnu.org/licenses/old-licenses/gpl-2.0.html}{GPLv2}
 		}
 			serwer \textbf{MySQL}. Było to rozwiązanie podyktowane szerokim użyciem tego silnika w 
-			na wielu serwisach, które umożliwiają hosting strong, czyniąc warstwę modelu danych możliwą
+			na wielu serwisach, które umożliwiają hosting stron, czyniąc warstwę modelu danych możliwą
 			do ponownego wykorzystania, bez konieczności, często problematycznego, migrowania danych do
 			nowego silnika. \\
 			Warto w tym miejscu wspomnieć o kolejnym narzędziu, które mimo, że działa na poziomie serwera, 
 			odpowiada za dostarczenie odpowiedniej abstrakcji dla warstwy modelu danych i ułatwienia
 			operacji nań. Wspomnianym narzędziem jest ogólnodostępne i otwarto źródłowy projekt Hibernate. 
-			Konfiguracja jest oparta na co najmniej jednym pliku, tak jak na załączniku \ref{ca:hibernatecfg},
+			Konfiguracja jest oparta na co najmniej jednym pliku, podobnym do tego z załącznika \ref{ca:hibernatecfg},
 			który jest bezwzględnie wymagany. Niemniej można dodatkowo dodać wiele plików, również XML, z których
 			każdy będzie opisem translacji danej klasy na odpowiadającą jej tabelę w systemie bazy danych. 
 		\paragraph{Serwer} został napisany w całości w języku Java i oparty o kontener aplikacji webowych 
@@ -220,7 +220,7 @@
                 \caption{Po zmianie lokalizacji}
 			\label{c7:fig:app:unit_after_move}
        		\end{subfigure}
-       		\caption[Modelowanie struktury magazynu]{Model strefy przed i po zmianie lokalizacji}
+       		\caption[Aplikacja - Modelowanie struktury magazynu]{Model strefy przed i po zmianie lokalizacji}
 			\label{c7:fig:app:unit_modelling}
 		\end{figure} 
 		Rysunek \textbf{\ref{c7:fig:app:unit_modelling}} przedstawia wizualny model jednej ze stref, 
