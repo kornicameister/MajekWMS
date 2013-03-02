@@ -16,10 +16,10 @@
 	Wyodrębnienie aspektów logistyki magazynowej było konieczne, ponieważ \textbf{systemy ERP}
 	logistykę magazynową obsługują w zbyt wąskim zakresie, który kończy się na ustaleniu:
 	\begin{itemize}
-		\item stany magazynowe w ujęciu \textbf{ilościowym};
-		\item stany magazynowe w ujęciu \textbf{jakościowym}.
+		\item stanów magazynowych w ujęciu \textbf{ilościowym};
+		\item stanów magazynowych w ujęciu \textbf{jakościowym}.
 	\end{itemize}
-	Niestety wciąż pozostaje problem ujęcia fizycznej struktury zapasów, czyli cech takich jak
+	Niestety wciąż pozostaje problem ujęcia fizycznej struktury zapasów, czyli cech takich jak:
 	\begin{itemize}
 		\item logistyczne parametry opakowań;
 		\item klasy miejsc składowania;
@@ -31,13 +31,13 @@
 	\end{itemize}
 	Tak więc z praktycznego punktu widzenia system klasy WMS jest rozbudowanym narzędziem
 	wspierającym łańcuch dostaw na etapie magazynowanie i umożliwiającym monitorowanie
-	oraz zarządzania składowanymi dobrami w sposób nie tylko jakościowy / ilościowy, ale i
+	oraz zarządzania składowanymi dobrami w sposób nie tylko jakościowy lub ilościowy, ale i
 	automatyczny dzięki utrzymaniu danych o fizycznej strukturze opakowań itp. 	
 	
 \section{Potrzeba korzystania z systemu WMS}
 	Kompleksowość świadczenia usług logistycznych wymaga racjonalnego i szczegółowego podejścia
 	do organizacji procesów magazynowych przy jednoczesnym zachowaniu możliwości zarządzaniami
-	nimi w podejściu dającym pole do późniejszej rozbudowy i / lub re-definicji istniejącego
+	nimi w podejściu dającym pole do późniejszej rozbudowy lub re-definicji istniejącego
 	rozwiązania. Argumentem przemawiającym za takim podejściem jest szerokie spektrum 
 	produktów, materiałów jakie można znaleźć w strefach składowania dzisiejszych magazynów.
 	Często dzieje się tak, że przykładowe przedsiębiorstwo produkcyjne posiada więcej niż jeden
@@ -58,7 +58,7 @@
 	\end{itemize}
 	Okazuje się, że dobrze skonfigurowany oraz gotowy na modyfikacje system wspomagający gospodarkę magazynową
 	jest odpowiedzią na te wymagania. Ważne jest tutaj, że zarówno podejście autorskie, jak i uniwersalne są
-	odpowiednio zbyt czasochłonne i zbyt sztywne. Dobry WMS charakteryzuję się wypośrodkowaniem oby tych 
+	odpowiednio zbyt czasochłonne i zbyt sztywne. Dobry WMS charakteryzuje się wypośrodkowaniem obu tych 
 	cech, w zależności od potrzeb klienta. \\
 	
 	\subsection{System WMS szyty na miarę}
@@ -88,13 +88,13 @@
 			bardziej lub mniej dokładnym dwie proste czynności: \textbf{zdefiniowania potrzeb i problemów} 
 			danego przedsiębiorstwa. W tym procesie powinny aktywnie uczestniczyć obie zainteresowane strony, 
 			zarówno ta chcąca uzyskać działający i gotowy do użytku system, jak i firma dostarczająca
-			rozwiązania. Ważne jest aby zdefiniować jak najwięcej zachować oraz cech magazynowania, jako całości,
+			rozwiązania. Ważne jest, aby zdefiniować jak najwięcej zachowań oraz cech magazynowania, jako całości
 			i uzgodnić je między stronami. Etap ten jet etapem \textbf{przygotowania specyfikacji 
 			funkcjonalnej systemu WMS}. \\
 			
 			Kolejnym problem są wymiary produktów. Systemy wspomagające gospodarkę magazynową wymagają danych
 			tego rodzaju, aby móc dokonywać alokacji na miejscach odkładczych w sposób zbliżony do doskonałości.
-			Należy więc przewidzieć, ile może zająć ewentualna konfiguracja systemy, aby był w stanie pracować
+			Należy więc przewidzieć, ile może zająć ewentualna konfiguracja systemu, aby był w stanie pracować
 			z różnymi wariacjami pakowania tego samego produktu.
 		\subparagraph{[Etap 2] - \textbf{Zdefiniowania obszaru technicznego}} 	
 		\label{c5:introducing_wms_stage_2}
@@ -134,15 +134,16 @@
 	komputerowy musi wiedzieć, skąd, jak i gdzie poprowadzić jednostki ładunkowe, aby stan
 	końcowy był zgodny ze stanem oczekiwanym. Wspomniane urządzenia peryferyjne mają tutaj jeszcze jedno
 	dodatkowe zastosowanie. Pozwalają śledzić, jak zamówienia jest kompletowane i jak poszczególne
-	jego pozycje przesuwają się ku strefie kompletacji / wydań \cite{LAJ_ZZ_KWMS}.
+	jego pozycje przesuwają się ku strefie kompletacji oraz wydań \cite{LAJ_ZZ_KWMS}.
 	
 \section{Funkcje systemu WMS}
 	\begin{figure}[H]
 		\begin{center}
-			\includegraphics[width=0.95\textwidth]{images/wms_functionality}
+			\includegraphics[width=0.95\textwidth]{images/wms_functionality_2}
 		\end{center}
 		\caption[Funkcjonalność systemu WMS]{
-			Funkcje systemu WMS, źródło: opracowanie własne na podstawie \cite{logistyka_w_przedsiebiorstwie}
+			Funkcje systemu WMS\\
+			źródło: opracowanie własne na podstawie \cite{logistyka_w_przedsiebiorstwie}
 		}
 		\label{fig:c5:wms_basic_functionality}
 	\end{figure}
@@ -185,7 +186,7 @@
 		Magazyn nie muszę się jednakże dzielić na obszary funkcjonalne. Możliwy jest podział także ze względu
 		na charakter składowanych artykułów. Przykładowo w przypadku branży spożywczej niedopuszczalne będzie
 		umieszczenie owoców cytrusów w tym samym obszarze składowania, który przeznaczony jest dla 
-		warzyw z rodziny czosnkowatych\footnote{Jednym z takim warzyw jest popularna w Polsce cebula zwyczajna.}.
+		warzyw z rodziny czosnkowatych.
 	\subsection{Miejsca magazynowy - kolejny poziom układu}
 		\begin{figure}[h]
 			\centering
@@ -204,7 +205,7 @@
 		oraz parametrów nie-fizycznych, które odwołują się sposobów identyfikacji danego miejsca 
 		w systemie oraz określenia poziomu jego wypełnienia. 
 	\subsection{Zawartość magazynu - sposoby eksploracji}
-		Systemy klasy WMS pozwalają, co jest rzeczą oczywiste, na prowadzenie ewidencji ilościowej i wartościowej całego
+		Systemy klasy WMS pozwalają oczywiście na prowadzenie ewidencji ilościowej i wartościowej całego
 		składowanego asortymentu. Prócz tego dostarczają również ważnej funkcjonalności odnoszącej się do cech asortymentu,
 		daleko wykraczających poza podstawowe funkcje. Możliwe jest więc uzyskanie w czasie rzeczywistym informacji na temat
 		dokładnego położenia konkretnej, \textbf{jednostkowej} pozycji asortymentu w obszarze składowanie. Można 
@@ -216,7 +217,33 @@
 		te dobra, których \textbf{współczynnik rotacji} jest wysoki znajdują się w miejscach magazynowych, zlokalizowanych
 		najbliżej strefy kompletacji, a za co tym idzie wydań. Dzięki temu wydanie takiego towaru okazuje się być
 		zadaniem łatwiejszy o znacznie skróconym czasie realizacji, co jest zjawiskiem pożądanym z punktu widzenia przedsiębiorstwa,
-		mającego w swojej misji punkt traktujący o \textit{terminowości dostaw}. \\ 
+		mającego w swojej misji punkt traktujący o \textit{terminowości dostaw}. 
+			\paragraph{Algorytm ABC} jest metoda wywodzi się od \textit{reguły Pareto}, 
+			która odwołuje się do zależności 80\%-20\%. W kontekście składowania towarów 
+			w magazynach, można powiedzieć, że 20\% pozycji stanowi 80\% wartości
+			wszystkich produktów. Używając analizy ABC można więc dokonać przypisania 
+			poszczególnych towarów do poszczególnych grup:
+			\begin{itemize}
+				\item \textbf{Grupa A} - są to towary najbardziej cenne, których liczebność
+				dochodzi do 20\%, ale mające znaczenie większy udział w wartości sięgające
+				do 80\%;
+				\item \textbf{Grupa B} - grupa środkowa, do której przypisane są te zapasy, których
+				udział procentowy w kontekście ilościowym oraz wartościowym waha się między 15\% a 20\%;
+				\item \textbf{Grupa C} - grupa o najmniejszym udziale wartościowym, ale o największym udziale
+				ilościowym, dochodzącym do 80\%.
+			\end{itemize}
+			
+			\paragraph{Algorytm XYZ} - stanowi odwrotność metody ABC, ponieważ nie odwołuje się
+			do struktury zapasów opartej o podejście ilość-wartość. Celem metody XYZ jest podzielenie
+			zapasów na grupy, które oddaję strukturę oraz częstość z jaką są one użytkowane. Wyróżnione
+			są więc następuje kategorie (grupy):
+			\begin{itemize}
+				\item \textbf{Grupa X} - materiały o najbardziej regularnym zapotrzebowaniu;
+				\item \textbf{Grupa Y} - materiały, na które zapotrzebowanie ma charakter sezony, rosnący
+				np. w okresie letnim;
+				\item \textbf{Grupa Z} - materiały, na które zapotrzebowanie jest wysoce nieregularne.
+			\end{itemize}			 
+			
 	\subsection{Eksploracja struktury magazynu}
 		Nie warto chyba przypominać jak ważne jest wiedzieć, gdzie w danej chwili znajduje się dana pozycja asortymentowa.
 		Co ważniejsza, wiedza taka jest tym bardziej wartościowa, im większy jest stopień szczegółowości położenia towaru. 
@@ -227,7 +254,7 @@
 		udostępnienia interfejsu opartego o schematyczną mapę powierzchni magazynowej lub opartej o drzewo. 
 		\begin{figure}[h]
 			\centering
-			\includegraphics[width=\textwidth]{images/warehouse_tree}
+			\includegraphics[width=1.1\textwidth]{images/warehouse_tree}
 			\caption[Przykładowe drzewo eksploracji magazynu]{
 				Drzewo struktury magazynu,\\
 				źródło: opracowanie własne
@@ -242,11 +269,8 @@
 		wyników do: zawierania konkretnych słów kluczowych lub szukania w określonym zakresie witryn. W odniesieniu
 		do omawianej klasy systemów, zapytanie mogłoby przyjąć postać: \emph{Pokaż wszystkie paletowe jednostki
 		ładunkowe o masie większej niż 2t, znajdujące się w obszarach od 1 do 3}. 
-%
-%	problems from here to the end
-%
 	\subsection{Dokumenty logistyczne - jako element niezbędny w zarządzaniu}
-		Dokumenty logistyczne albo bardziej dobitnie dokumentacja jest podstawową do prowadzenia odpowiedniej
+		Dokumenty logistyczne albo bardziej dobitnie dokumentacja jest podstawową do prowa\-dzenia odpowiedniej
 		ewidencji dynamiki magazynu, do dostępu do danych historycznych, które często stosuje się
 		do planowania strategicznego / operacyjnego. Najważniejszą być może, ale nie jedyną, grupę dokumentów
 		stanowią te, opisujące wydania, przyjęcia, przesunięcia odpowiednio z, do, między / wewnątrz magazynu.
@@ -292,7 +316,6 @@
 		
 		W obu wypadkach ważne jest, że każdy wygenerowany dokument, każde zgłoszone żądania kompletacji, alokacji
 		jest rejestrowane i stanowi podstawę do optymalizacji i lepszego zarządzania wektorami wejścia i wyjścia. 
-	
 	\subsection{Rezerwacja towarów}
 		Działanie, które polega na wczesnym zarezerwowaniu grupy towarów, niekoniecznie jeszcze skompletowanych,
 		do wysyłki do konkretnego odbiorcy. Rezerwacja jest w tym wypadku \textbf{wyłączna}, a wykorzystane
@@ -311,7 +334,7 @@
 		aby promować odbiorców, charakteryzujących się częstymi zamówienia i lepszą strukturą płatności. Dla przedsiębiorstwa
 		jutra ważne jest nie tyle sprostanie wymaganiom kilku, ale sukcesywne budowanie swojej marki w szerokim gronie
 		odbiorców. 
-	\subsection{Automatyczne planowania fizycznych wysyłek}
+	\subsection{Automatyczne planowanie fizycznych wysyłek}
 		Ten moduł oprogramowania WMS ma jeden cel - \emph{dokonać automatycznego utworzenia jednej fizycznej wysyłki}.
 		Planowanie takiej dostawy odbywa się na z góry określonych warunkach. Określona zostaje jednostka ładunkowa, na
 		której mają zostać umieszczone produkty, a także nadrzędne kryterium grupowania. I tak na samochodzie dostawczym
@@ -319,11 +342,11 @@
 		
 		Podczas planowania przesyłka może znaleźć się w trzech stanach:
 		\begin{enumerate}
-			\item[Edycja] przesyłki, czyli w danym momencie przesyłka znajduje się wciąż na etapie planowania, dokładane
+			\item \textbf{Edycja przesyłki} - w danym momencie przesyłka znajduje się wciąż na etapie planowania, dokładane
 			są kolejne pozycje asortymentowe;
-			\item[Realizacja] wysyłki, następuje bezpośrednio po zakończeniu poprzedniego etapu. W tym punkcie nacisk
+			\item \textbf{Edycja przesyłki} - następuje bezpośrednio po zakończeniu poprzedniego etapu. W tym punkcie nacisk
 			nastąpiło już wystosowanie żądania rozpoczęcia kompletacji;
-			\item[Dostarczona], ten stan wysyłka otrzymuje, jeśli została ona zrealizowana.
+			\item \textbf{Dostarczona} - ten stan wysyłka otrzymuje, jeśli została ona zrealizowana.
 		\end{enumerate}
 
 		\subsubsection{Problem efektywnej realizacji kompletacji}
@@ -345,7 +368,7 @@
 			gdzie zamówione towary pochodzą z zewnątrz. Obsługa tego typu sytuacji obejmuje kontrole
 			ilościowe i jakościowe oraz rozłożenie towaru w magazynie. Alokacja odbywa się automatycznie
 			na podstawie przyjętej strategii. Warto w tym miejscu wspomnieć, że dostawa zewnętrzna może,
-			ale nie musi, wymagać przepakowania dostarczonych towarów lub umieszczenia ich na nośniku,
+			ale nie musi, wymagać przepakowania dostarczonych towarów lub umiesz\-czenia ich na nośniku,
 			którego składowania jest możliwe w danym magazynie. Oczekiwanym wynikiem tej operacji jest:
 			\begin{enumerate}
 				\item uaktualnienie stanów magazynowych;
@@ -385,7 +408,7 @@
 			struktury zapasów itp. 
 			\paragraph{Autonomiczne operacje} systemu WMS odnoszą się do jego możliwości monitorowania ruchów
 			jednostek logistycznych w całym systemie już do momentu, kiedy się w nim znalazły, aż do momentu,
-			kiedy opuszczają magazyn. Operatorzy logistyczni są więc wyposażeni w funkcje, które pozwalają
+			kiedy opuszczają magazyn. Operatorzy logistyczni są więc wypo\-sażeni w funkcje, które pozwalają
 			im przenieść określoną ilość wybranych materiałów z jednego miejsca w drugie, ale nie tylko.
 			\begin{figure}[H]
 				\centering

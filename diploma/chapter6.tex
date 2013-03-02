@@ -3,7 +3,7 @@
 
 \section{Opis aplikacji wspomagającej zarządzanie magazynem}
 	\subsection{Założenia, wymagania oraz ich realizacja}
-		Aplikacja przygotowana jako część praktyczna pracy dyplomowej miała za zadanie
+		Aplikacja przygotowana jako część praktyczna pracy dyplomowej ma za zadanie
 		zobrazować niektóre z funkcji, które powinien spełniać system wspomagający
 		zarządzanie gospodarką magazynową. Podstawowym wymaganiem stało się więc
 		dostarczenie aplikacji dostępnej z każdego miejsca, posiadającej dostęp
@@ -33,7 +33,7 @@
 	\subsection{Realizacja postulatów aplikacji WMS}
 		Aplikacja realizuje postulaty funkcjonalności WMS w obszarach wspomagania gospodarki magazynowej,
 		ewidencji towarów, podziału magazyny na logiczne jednostki oraz utrzymania informacji
-		o wydaniach / przyjęciach produktów. Odpowiednio wydanie towaru implikuje zmniejszenie stanów
+		o wydaniach lub przyjęciach produktów. Odpowiednio wydanie towaru implikuje zmniejszenie stanów
 		magazynowych, a przyjęcie zwiększenie oraz alokację w strefach odkładczych. 
 		Program daje dodatkowo możliwość modelowania struktury logicznej. Schemat, nawet jeśli odzwierciedla
 		fizyczną powierzchnią magazynów, w sposób powierzchowny, jest cennym dodatkiem, dającym
@@ -81,13 +81,18 @@
 			}, a sama podstawową zasadą przy jego tworzeniu było oparcie centralny punkt wejściowy - fasadę, która dawała
 			dostęp do całej funkcjonalności aplikacji przez zwarty interfejs, decydujący o wyborze konkretnego rozwiązania.
 			\begin{table}[H]
-				\begin{tabular}[c]{l*{2}{c}}
-					Żądanie HTTP	& 	wartość zmiennej typu CRUD	\\
+				\begin{tabular}[c]{|l|l|}
 					\hline
-					POST			&	CREATE						\\
-					PUT				& 	UPDATE						\\
-					DELETE			&	DELETE						\\
-					GET				& 	READ						\\
+					\textbf{Żądanie HTTP}	& 	\textbf{wartość zmiennej typu CRUD}	\\
+					\hline
+					POST					&	CREATE						\\
+					\hline
+					PUT						& 	UPDATE						\\
+					\hline
+					DELETE					&	DELETE						\\
+					\hline
+					GET						& 	READ						\\
+					\hline
 				\end{tabular}
 				\label{c6:tab:CRUD_matches}
 				\caption[Żądania HTTP a typ wyliczeniowy CRUD]{Odpowiednie wartości typu wyliczeniowego \textit{CRUD}, a żądania HTTP}
@@ -101,10 +106,10 @@
 			\begin{listing}[H]
 				\inputminted[
 					linenos=true,
-					fontsize=\tiny,
-					firstline=57, 
-					lastline=75,
-		            numbersep=15pt
+					fontsize=\small,
+					firstline=65, 
+					lastline=83,
+		            numbersep=2pt
 				]{java}{../application/src/main/java/org/kornicameister/wms/server/servlet/WMSDataAgent.java}	
 				\label{c6:listing:WMSDataAgent}
 				\caption[WMSDataAgent - \textbf{processRequest}]{\textit{WMSDataAgent-processRequest} - 
@@ -113,10 +118,10 @@
 			\begin{listing}[H]
 				\inputminted[
 					linenos=true,
-					fontsize=\tiny,
+					fontsize=\small,
 					firstline=32, 
 					lastline=45,
-		            numbersep=15pt
+		            numbersep=2pt
 				]{java}{../application/src/main/java/org/kornicameister/wms/server/extractor/RDExtractor.java}	
 				\label{c6:listing:WMSDataAgent}
 				\caption[RDExtractor - \textbf{parse}]{\textit{RDExtractor-parse} - metoda parsująca żądania HTTP i zwracające 
@@ -142,9 +147,9 @@
 		\begin{listing}[H]
 			\inputminted[
 				linenos=true,
-				fontsize=\tiny,
-				firstline=94, 
-				lastline=97,
+				fontsize=\small,
+				firstline=95, 
+				lastline=98,
 	            numbersep=10pt
 			]{java}{../application/src/main/webapp/resources/app/model/entity/Unit.js}	
 			\label{c6:listing:Unit.js}
@@ -165,22 +170,9 @@
 		o własne rozwiązanie zaimplementowane po stronie serwera, a wymagające podanie jedynie hasła oraz 
 		nazwy użytkownika.\\ Można to łatwo zmienić, ponieważ operacja autoryzacji została wyodrębniona
 		do samodzielnej \textbf{klasy servlet}. Korzyścią tego, a zarazem wytłumaczeniem prostoty rozszerzenia
-		operacji autoryzacji, jest zawsze występująca operacja:
-		\begin{listing}[H]
-			\inputminted[
-				linenos=true,
-				fontsize=\tiny,
-				firstline=46, 
-				lastline=97,
-	            numbersep=10pt
-			]{java}{../application/src/main/java/org/kornicameister/wms/server/servlet/WMSAuthAgent.java}	
-			\label{c6:listing:WMSAuthAgent}
-			\caption[WMSAuthAgent - \textbf{doPost}]{\textit{WMSAuthAgent-doPost} - metoda parsująca żądania POST, dokonująca
-			autentyfikacji użytkownika na podstawie przekazanego loginu i hasła}
-		\end{listing}
-		W tym momencie uzyskujemy praktyczne wykorzystanie wzorca projektowego, znanego jako \textbf{fasada} lub bardziej
-		w tym miejscu adekwatnego \textbf{mostu}. W oby wypadkach chodzi o dostarczenie zwartego i raczej 
-		niezmiennego \textbf{API} - interfejsu programistycznego, gdzie tutaj, ten termin odnosi się
+		operacji autoryzacji, jest zawsze występująca operacja obsługująca żądanie \textbf{HTPP:POST}.
+		W tym momencie uzyskujemy praktyczne wykorzystanie wzorca projektowego, znanego jako \textbf{fasada}.
+		Chodzi o dostarczenie zwartego i niezmiennego \textbf{API} - interfejsu programistycznego, gdzie tutaj, ten termin odnosi się
 		do niezmiennej postaci funkcji obsługujących konkretne żądania HTTP.
 		Istotnym więc jest jedynie aby wartość zwracana do klienta, była
 		z nim kompatybilna i aplikacja kliencka była w stanie poprawnie ją odczytać, podczas gdy warstwa
@@ -230,18 +222,12 @@
 	\subsection{Zarządzanie klientami - dodawanie, usuwaniu, edycja oraz podgląd}
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.99\textwidth]{images/app/supplier_preview}
+			\includegraphics[width=1.1\textwidth]{images/app/supplier_preview}
 			\caption[Aplikacja - Dostęp do danych klientów]{Zrzut ekranu z widokiem na dostępnych dostawców}
 			\label{c7:fig:app:supplier_preview}
 		\end{figure}
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=0.6\textwidth]{images/app/new_receipient_dialog}
-			\caption[Aplikacja - Dodawania nowego klienta - odbiorcy]{Zrzut ekranu z widokiem na okno dialogowe dla tworzenia nowego odbiorcy}
-			\label{c7:fig:app:new_receipient_dialog}
-		\end{figure}
-		
-		\paragraph{Zarządzanie klientami} odbywa się z wydzielonych zakładek, z których jedna przeznaczona jest
+	
+		Zarządzanie klientami odbywa się z wydzielonych zakładek, z których jedna przeznaczona jest
 		dla \textbf{dostawców}, a druga dla \textbf{odbiorców}. Podejście takie pozwoliło na zobrazowanie problemu,
 		kiedy jedna instytucja istnieje w systemie jednocześnie jako dostawca i klient. Podstawowa funkcjonalność tego
 		modułu obejmuje:
@@ -251,10 +237,17 @@
 			\item podgląd na dokumenty wydań/przyjęć dla wybranej pozycji.
 		\end{itemize}
 		Podzielenie widoku na listy zarejestrowanych klientów zwiększa czytelność, a także daje możliwość edycji dowolnej pozycji,
-		niezależnie od tego czy jest to kontrahent, czy też jedna z przypisanych doń pozycji w dokumentach.		
+		niezależnie od tego czy jest to kontrahent, czy też jedna z przypisanych doń pozycji w dokumentach.	
+	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.6\textwidth]{images/app/new_receipient_dialog}
+			\caption[Aplikacja - Dodawania nowego klienta - odbiorcy]{Zrzut ekranu z widokiem na okno dialogowe dla tworzenia nowego odbiorcy}
+			\label{c7:fig:app:new_receipient_dialog}
+		\end{figure}	
 		
 	\subsection{Wydanie, przyjęcia oraz ewidencja produktów}
-		\begin{figure}[h]
+		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/new_supply_preview}
 			\caption[Aplikacja - Dodanie nowego dokumentu wydania]{Zrzut ekranu z widokiem na kreator nowego wydania magazynowego}

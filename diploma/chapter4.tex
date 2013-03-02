@@ -24,13 +24,13 @@
 	\end{itemize}		
 	 
 \section{Rola magazynu w łańcuchu dostaw}
-	Systemy wspomagające zarządzania magazynem dotyczą, jak sama nazwa wskazuje, magazynów.
+	Systemy wspomagające zarządzania magazynem dotyczą magazynów.
 	Czym jest magazynem w tym wypadku ?
 	\begin{quotation}
-		Magazyn jest jednostką funkcjonalno-organizacyjną, przeznaczoną do magazynowania
+		\textit{``Magazyn jest jednostką funkcjonalno-organizacyjną, przeznaczoną do magazynowania
 		dóbr materialnych (zapasów) w wyodrębnionej przestrzeni, budowli magazynowej, według ustalonej
 		technologii, wyposażoną w odpowiednie urządzenia i środki techniczne, zarządzaną i obsługiwaną
-		przez zespół ludzi, wyposażonych w odpowiednia umiejętności \footnote{PN-N-01800:1984 \cite{norm_warehouse_defintion}}.
+		przez zespół ludzi, wyposażonych w odpowiednia umiejętności \footnote{PN-N-01800:1984 \cite{norm_warehouse_defintion}}.''}
 	\end{quotation}
 	
 	Wobec tego magazyn nie jest jedynie statycznym bytem łańcuchów logistycznych, ale jego integralną
@@ -48,14 +48,18 @@
 	\end{itemize}
 	
 	\subsection{Magazynowania jako proces}
-		\paragraph{Przyjęcie} jest wydarzeniem zewnętrznym, które rozpoczyna cały ciąg czynności związanych z przetwarzaniem go.
-		Warto w tym miejscu zaznaczyć, że faza przyjęcia nie jest równoważna z wprowadzaniem danych o przyjmowanych
-		dobrach do magazynu i uaktualnieniu stanów. Zanim to nastąpi należy rozładować produkty oraz poddać je kontroli
-		zarówno jakościowej i ilościowej.
-			\subparagraph{Kontrola ilościowa} czyli sprawdzeniu stanu faktycznego z oczekiwanym, zgodnie ze stanem np. dokumentu przewozowego. 
-			Sprawdzenie to przyjmuje różne formy, które są najczęściej uzależnione od rodzaju artykułu. Różnicę łatwo wskazać
-			poprzez porównanie produktów takich jak zboża (\textit{produkt sypki}) czy bele papieru. W pierwszym przypadku 
-			kontrola ilościowa prawdopodobnie przebiegnie z użyciem wagi samochodowej, a w drugim przypadku zostanie zliczona
+		\paragraph{Przyjęcie} jest wydarzeniem zewnętrznym, które rozpoczyna cały ciąg czynności 
+		związany\-ch z przetwarzaniem go. Warto w tym miejscu zaznaczyć, że faza przyjęcia nie jest 
+		równoważna z wprowadzaniem danych o przyjmowanych dobrach do magazynu i uaktualnieniu stanów. 
+		Zanim to nastąpi należy rozładować produkty oraz poddać je kontroli zarówno jakościowej i ilościowej.
+			\subparagraph{Kontrola ilościowa} czyli sprawdzeniu stanu faktycznego z oczekiwanym, 
+			zgodnie ze \-stanem np. dokumentu przewozowego. 
+			Sprawdzenie to przyjmuje różne formy, które są najczęściej uzależnione od rodzaju artykułu. 
+			Różnicę łatwo wskazać
+			poprzez porównanie produktów takich jak zboża (\textit{produkt sypki}) czy bele papieru. 
+			W pierwszym przypadku 
+			kontrola ilościowa prawdopodobnie przebiegnie z użyciem wagi samochodowej, a w drugim przypadku 
+			zostanie zliczona
 			ilość sztuk beli.  
 			\subparagraph{Kontrola jakościowa} wykazuje z drugiej strony bezpośrednie i silne powiązanie z wymaganiami prawnymi bądź
 			różnorodnymi normami odnoszącymi się do danego rodzaju dóbr. Dla większości produktów jest to kontrola
@@ -96,7 +100,7 @@
 	Uznaje się, że to jest zdecydowanie najtrudniejsza faza, gdzie jej trudność wynika z błędu człowieka, który zajmuje się
 	procesem kompletacji. Dlatego coraz częściej spotyka się systemy automatycznej kompletacji współpracujące z magazynami
 	wysokiego składu (które również często pracują w trybie automatycznym), aby to one dokonały kompletacji. W tym rozwiązaniu
-	magazynier potrzebny jest jedynie, aby zeskanować / wprowadzić informacje o aktualnie ładowanej jednostce ładunkowej, aby
+	magazynier potrzebny jest jedynie, aby zeskanować lub wprowadzić informacje o aktualnie ładowanej jednostce ładunkowej, aby
 	poinformować system, że zdjął ją ze strefy postojowej i umieścił w wyznaczonym miejscu (np. na podstawionym samochodzie
 	dostawczym). 	
 	\paragraph{Wydawanie} dóbr materialnych jest finalną fazę całego procesu magazynowania. 
@@ -108,8 +112,9 @@
 	przekłada się na mniejsze prawdopodobieństwo uszkodzenia towaru. Odbiorcy, i nie jest to wcale zdarzenie jednostkowe,
 	mogą często wybrać formę transportu produktu, czyli innymi słowy dobra muszą zostać odpowiednio zabezpieczone i zapakowane,
 	aby można je było wysłać to klienta. 
-		\subparagraph{Kontrola} jest tutaj koniecznością. Osoba wyznaczona ma obowiązek zweryfikować poprawność załadunku pod kątem
-		bezpieczeństwa zarówno ładunku, jak i sposobu jego zabezpieczenia. Dopiero pozytywna weryfikacja oznacza możliwość umieszczenia
+		\subparagraph{Kontrola} jest tutaj koniecznością. Osoba wyznaczona ma obowiązek zweryfikować 
+		popra\-wność załadunku pod kątem bezpieczeństwa zarówno ładunku, jak i sposobu jego 
+		zabezpieczenia. Dopiero pozytywna weryfikacja oznacza możliwość umieszczenia
 		towarów na podstawionym samochodzie transportowym \cite{PL_FM}.
 		
 	\subsection{Podział magazynu na strefy - cele i korzyści}
@@ -193,16 +198,23 @@
 	dóbr i jednocześnie utrzymać pożądanych poziom kosztów.
 	\begin{figure}[h]
 		\begin{center}
-			\includegraphics[width=0.95\textwidth]{images/warehouse_management_algorithm}
+			\includegraphics[width=0.95\textwidth]{images/warehouse_management_algorithm_2}
 		\end{center}
-		\caption[Algorytm zarządzania magazynem]{
-			Algorytm zarządzania magazynem w oparciu o teorię systemów \\
+		\caption[Cykl operacji zarządzania magazynem]{
+			Cykl operacji zarządzania magazynem w oparciu o teorię systemów \\
 			źródło: opracowanie własne na podstawie \cite{PZMW}
 		}
 		\label{fig:warehouse_management_algorithm}
 	\end{figure}
-	Realizacja tego celu jest możliwa jeśli \textbf{zarządzanie magazynem} odbywa się zgodnie z następującym algorytmem,
-	przedstawionym na schemacie \ref{fig:warehouse_management_algorithm}.\\
+	Realizacja tego celu jest możliwa jeśli \textbf{zarządzanie magazynem} odbywa się zgodnie z cyklem
+	przedstawionym na schemacie \ref{fig:warehouse_management_algorithm}, który z kolei jest odpowiedzią na
+	następujące pytania, pochodzące z teorii i inżynierii systemów:
+	\begin{itemize}
+		\item Gdzie jesteśmy ?
+		\item Dokąd zmierzamy ?
+		\item Jak zamierzamy się tam dostać ?
+		\item Skąd wiemy, że dotarliśmy ?
+	\end{itemize}
 	
 	Samo działanie magazynu opiera się na realizacji czynności czysto fizycznych, związanych z zadaniami transportowymi, 
 	i towarzyszących im informacji \cite{PZMW}. Organizacja faz procesów magazynowania jest ukierunkowana głównie na
