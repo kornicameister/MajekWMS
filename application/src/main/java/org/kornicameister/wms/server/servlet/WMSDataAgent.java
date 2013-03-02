@@ -63,19 +63,23 @@ public class WMSDataAgent extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req,
-                                HttpServletResponse resp, CRUD action) throws IOException {
+                                HttpServletResponse resp, CRUD action) 
+                                throws IOException {
         logger.info(String.format("Processing request %s", action));
         resp.setCharacterEncoding("UTF-8");
         PrintWriter out = resp.getWriter();
         RequestController controller;
 
-        if ((controller = RequestController.pickController(RDExtractor.parse(req, action))) == null) {
-            logger.warn(String.format("Module not recognized, tried extract from URI=[%s]", req.getRequestURI()));
+        if ((controller = RequestController.pickController(
+				RDExtractor.parse(req, action))
+			) == null) {
+            logger.warn(String.format("Module not recognized, tried extract from URI=[%s]", 
+				req.getRequestURI())
+            );
             out.write(RequestController.buildErrorResponse());
         } else {
             out.write(controller.process());
         }
-
     }
 
     @Override
