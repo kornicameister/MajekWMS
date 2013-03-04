@@ -113,40 +113,44 @@ public class InvoiceProductController extends RequestController {
                          * @param productPallets how many pallets should be allocated
                          * @param product product which we allocate
                          */
-                        void supply(Long productPallets, final Product product) {
-                            Long unitSize = this.availableUnits.element().getSize();
+void supply(Long productPallets, final Product product) {
+	Long unitSize = this.availableUnits.element().getSize();
 
-                            if (productPallets > 0 && unitSize > 0) {
-                                boolean fullLoad = ((unitSize - productPallets) >= 0);
-                                UnitProduct unitProduct = new UnitProduct();
+	if (productPallets > 0 && unitSize > 0) {
+		boolean fullLoad = ((unitSize - productPallets) >= 0);
+		UnitProduct unitProduct = new UnitProduct();
 
-                                unitProduct.setProduct(product);
+		unitProduct.setProduct(product);
 
-                                if (fullLoad) {
-                                    unitProduct.setPallets(productPallets);
-                                    unitProduct.setUnit(this.availableUnits.element().getUnit());
+		if (fullLoad) {
+			unitProduct.setPallets(productPallets);
+			unitProduct.setUnit(this.availableUnits.element().getUnit());
 
-                                    unitSize = this.availableUnits.element().getSize() - productPallets;
-                                    this.availableUnits.element().setSize(unitSize);
+			unitSize = this.availableUnits.element().getSize() - productPallets;
+			this.availableUnits.element().setSize(unitSize);
 
-                                    productPallets = 0l;
-                                } else {
-                                    unitProduct.setPallets(this.availableUnits.peek().getSize());
-                                    unitProduct.setUnit(this.availableUnits.remove().getUnit());
+			productPallets = 0l;
+		} else {
+			unitProduct.setPallets(this.availableUnits.peek().getSize());
+			unitProduct.setUnit(this.availableUnits.remove().getUnit());
 
-                                    productPallets -= unitProduct.getUnit().getLeftSize();
-                                }
+			productPallets -= unitProduct.getUnit().getLeftSize();
+		}
 
-                                logger.info(String.format("Updated stocks at %s", fullLoad ? "full load" : "partial load"));
-                                this.results.add(unitProduct);
+		logger.info(String.format("Updated stocks at %s", fullLoad 
+			? "full load" : "partial load")
+		);
+		this.results.add(unitProduct);
 
-                                this.supply(productPallets, product);
-                            } else if (unitSize == 0l) {
-                                logger.info(String.format("%d has no left stocks available...", this.availableUnits.remove().getUnit().getId()));
-                            } else {
-                                logger.info(String.format("Finished allocating [ %d ]", product.getId()));
-                            }
-                        }
+		this.supply(productPallets, product);
+	} else if (unitSize == 0l) {
+		logger.info(String.format("%d has no left stocks available...", 
+			this.availableUnits.remove().getUnit().getId())
+			);
+	} else {
+		logger.info(String.format("Finished allocating [ %d ]", product.getId()));
+	}
+}
 
                         @Override
                         public Set<UnitProduct> getResult() {

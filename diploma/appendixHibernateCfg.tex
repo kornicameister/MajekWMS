@@ -1,22 +1,27 @@
 \chapter{Konfiguracja Hibernate na podstawie pliku XML}
 \label{ca:hibernatecfg}
-
-Plik konfiguracyjny dla Hibernate, tj. najczęściej plik XML \textit{hibernate.cfg.xml}
-jest nieodłącznym elementem, bez którego nie można by w ogóle uruchomić narzędzia. 
-Istnieje oczywiście możliwość ustawienia odpowiednich opcji programowo, ale 
-nie jest to rozwiązania uniwersalne i ograniczone koniecznością podmiany
-skompilowanych plików Javy\footnote{pliki o rozszerzeniu *.jar}. \\
-Plik konfiguracyjny powinien zawierać:
-\begin{itemize}
-	\item dane do ustanowienia połączenia z silnikiem bazy danych;
-	\item dane do zarządzania wykonaniem kwerend;
-	\item dane o mapowanych klasach, każda taka klasa musi znaleźć się w omawianym pliku.
-\end{itemize}
-
-\begin{listing}[h]
-	\inputminted[
-		linenos=true,
-		fontsize=\tiny,
-        numbersep=15pt
-	]{xml}{../application/src/main/resources/hibernate.cfg.xml}
-\end{listing}	
+	
+	\section{Opis konfiguracji}
+		Plik konfiguracyjny dla Hibernate, tj. najczęściej plik XML \textit{hibernate.cfg.xml}
+		jest nieodłącznym elementem, bez którego nie można by w ogóle uruchomić narzędzia. 
+		Istnieje oczywiście możliwość ustawienia odpowiednich opcji programowo, ale 
+		nie jest to rozwiązania uniwersalne i ograniczone koniecznością podmiany
+		skompilowanych plików Javy\footnote{pliki o rozszerzeniu *.jar}. \\
+		Plik konfiguracyjny powinien zawierać:
+		\begin{itemize}
+			\item dane do ustanowienia połączenia z silnikiem bazy danych;
+			\item dane do zarządzania wykonaniem kwerend;
+			\item dane o mapowanych klasach, każda taka klasa musi znaleźć się w omawianym pliku.
+		\end{itemize}
+	
+	\section{Plik konfiguracyjny hibernate.cfg.xml}
+		\begin{code}
+			\inputminted[
+				linenos=true,
+				fontsize=\small,
+				obeytabs=true,
+				tabsize=1,
+				resetmargins=true,
+		        numbersep=2pt
+			]{xml}{../application/src/main/resources/hibernate.cfg.xml}
+		\end{code}	

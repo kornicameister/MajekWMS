@@ -1,6 +1,39 @@
 \chapter{Algorytmy alokacji produktów}
 \label{ca:allocationAlgorithms}
 
-\section{Algorytm alokacji przez maksymalny/minimalny dostępny rozmiar}
-	
-\section{Algorytm analizy ABC}
+	\section{Opis algorytmu}
+		Zastosowany w aplikacji algorytm alokacji produktów opiera się na prostym 
+		przypisaniu największej ilości palet do największego dostępnego miejsca. 
+		Jest to algorytm, który został oparty o rozwiązania znane jako 
+		\textbf{strategia przydziału pierwszego dopasowania}.
+		
+		\textbf{Strategia przydziału pierwszego dopasowania} jest metodą ciągłą,
+		stosowaną na przykład przy przydziale wolnych zasobów dyskowych. Nadrzędną zasadą
+		jest sekwencyjne przeszukanie zasobów i sprawdzeniu, czy odpowiadają one 
+		potrzebom.
+		
+		\textbf{Algorytm alokacji zasobów} opiera się na tej samej zasadzie. Pobiera
+		on listę wszystkich dostępnych stref, które są posortowane malejąco po dostępnej
+		ilości pól odkładczych. Z drugiej strony produkty, które mają zostać
+		rozlokowane w magazynie posortowane są malejąca po ilości palet, każdej z pozycji.
+		Możliwe są dwie sytuacje:
+		\begin{itemize}
+			\item \textbf{dopasowanie pełne} - ilość palet danego produktu jest mniejsza lub
+			równa dostępnemu rozmiarowi danej strefy;
+			\item \textbf{dopasowanie częściowe} - ilość palet danego produktu jest większa od ilości
+			dostępnych miejsc odkładczych. W tym wypadku alokowane jest możliwie, jak najwięcej palet
+			danej pozycji, a reszta zostaje przekierowana do kolejnej ze stref;
+		\end{itemize}
+
+	\section{Kod źródłowy algorytmy alokującego}
+		\begin{code}
+			\inputminted[
+				linenos=true,
+				obeytabs=true,
+				tabsize=2,
+				fontsize=\small,
+				firstline=116, 
+				lastline=153,
+		        numbersep=2pt
+			]{java}{../application/src/main/java/org/kornicameister/wms/model/logic/controllers/InvoiceProductController.java}
+		\end{code}	
