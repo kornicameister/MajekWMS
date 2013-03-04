@@ -80,30 +80,53 @@
 				jaką oferuje serwer przez standardowy protokół \textit{HTTP} i żądania \textit{CRUD}		
 			}, a sama podstawową zasadą przy jego tworzeniu było oparcie centralny punkt wejściowy - fasadę, która dawała
 			dostęp do całej funkcjonalności aplikacji przez zwarty interfejs, decydujący o wyborze konkretnego rozwiązania.
-			\begin{table}[H]
-				\begin{tabular}[c]{|l|l|}
-					\hline
-					\textbf{Żądanie HTTP}	& 	\textbf{wartość zmiennej typu CRUD}	\\
-					\hline
-					POST					&	CREATE						\\
-					\hline
-					PUT						& 	UPDATE						\\
-					\hline
-					DELETE					&	DELETE						\\
-					\hline
-					GET						& 	READ						\\
-					\hline
-				\end{tabular}
+			
+			\begin{center}			
+				\begin{longtable}{|l|l|}
+			
+						\hline
+							\multicolumn{1}{|c|}{\textbf{Żądanie HTTP}}	& 
+							\multicolumn{1}{|c|}{\textbf{wartość zmiennej typu CRUD}} \\
+						\hline
+						\endfirsthead
+						
+						\multicolumn{2}{c}
+						{{\bfseries \tablename\ \thetable{} -- kontynuacja...}} \\
+						\hline 
+							\multicolumn{1}{|c|}{\textbf{Żądanie HTTP}}	& 
+							\multicolumn{1}{|c|}{\textbf{wartość zmiennej typu CRUD}} \\
+						\hline 
+						\endhead	
+						
+						\hline
+							\multicolumn{2}{|r|}{{Następna strona...}} \\ \hline
+						\endfoot
+		
+						\hline \hline
+						\endlastfoot
+					
+						POST					&	CREATE						\\
+						\hline
+						PUT						& 	UPDATE						\\
+						\hline
+						DELETE					&	DELETE						\\
+						\hline
+						GET						& 	READ						\\
+						\hline
+						
+					\caption[Żądania HTTP a typ wyliczeniowy CRUD]{Odpowiednie wartości typu wyliczeniowego \textit{CRUD}, a żądania HTTP}
+				\end{longtable}
 				\label{c6:tab:CRUD_matches}
-				\caption[Żądania HTTP a typ wyliczeniowy CRUD]{Odpowiednie wartości typu wyliczeniowego \textit{CRUD}, a żądania HTTP}
-			\end{table}
+			\end{center}
+			
 			Parametr typu \textbf{CRUD} przyjmuje jedną z 4 wartości:
 			\textit{Create, Read, Update, Delete} zależnie od metody żądania HTTP, która go wywoła. Jest to najprostsza rzecz
 			do ustalenia, ale prawdopodobnie jedna z najważniejszych. Znając jej wartość algorytm jest w stanie wywołać
 			odpowiednie metody odpowiedzialne za obsługę zgłoszenia. Przykładowo, sytuacją oczekiwaną na żądania 
 			\textit{GET} byłoby wystosowanie zgłoszenia do warstwy modelu danych, aby ta zwróciła zbiór wartości odpowiadających
-			warunkom, jakie serwer odebrał od aplikacji klienckiej. 
-			\begin{listing}[H]
+			warunkom, jakie serwer odebrał od aplikacji klienckiej.
+			 
+			\begin{code}
 				\inputminted[
 					linenos=true,
 					fontsize=\small,
@@ -113,9 +136,10 @@
 				]{java}{../application/src/main/java/org/kornicameister/wms/server/servlet/WMSDataAgent.java}	
 				\label{c6:listing:WMSDataAgent}
 				\caption[WMSDataAgent - \textbf{processRequest}]{\textit{WMSDataAgent-processRequest} - 
-				metoda rozdzielająca zadania na podstawie adresu oraz metody CRUD}
-			\end{listing}
-			\begin{listing}[H]
+				metoda rozdzielająca zadania na podstawie adresu oraz metody CRUD} 
+			\end{code}
+			
+			\begin{code}
 				\inputminted[
 					linenos=true,
 					fontsize=\small,
@@ -126,7 +150,8 @@
 				\label{c6:listing:WMSDataAgent}
 				\caption[RDExtractor - \textbf{parse}]{\textit{RDExtractor-parse} - metoda parsująca żądania HTTP i zwracające 
 				potrzebne opcje jako obiekt}
-			\end{listing}
+			\end{code}
+			
 		\paragraph{Klient} jest warstwą reprezentują funkcjonalność serwera. Część ta dostępna jest przez praktycznie
 		dowolną przeglądarkę internetową, więc działa jako tak zwana \emph{aplikacja internetowa}. Bardzo
 		dużą zaletą takiego rozwiązania jest możliwość uruchomienia aplikacji na dowolnym urządzeniu klasy PC z zainstalowaną
@@ -144,7 +169,8 @@
 		przy budowaniu adresów zapytań i ich obsłudze. W obecnej formie, zapytania różnią się, ta poziomie
 		wskazania jaki rodzaj encji z bazy danych, klient chce obsłużyć. W efekcie, konfiguracja modeli ExtJS
 		sprowadzała się do następujących 2 linijek:
-		\begin{listing}[H]
+		
+		\begin{code}
 			\inputminted[
 				linenos=true,
 				fontsize=\small,
@@ -155,7 +181,8 @@
 			\label{c6:listing:Unit.js}
 			\caption[Unit.js - \textbf{model danych}]{\textit{Unit.js} - konfiguracja proxy
 			modelu danych odpowiadającego podejściu REST}
-		\end{listing} 
+		\end{code} 
+		
 \section{Diagramy, zrzuty ekranowe oraz funkcje}
 	\subsection{Logowanie do aplikacji przy pierwszym uruchomieniu}
 		\begin{figure}[H]
