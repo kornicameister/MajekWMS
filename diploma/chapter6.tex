@@ -14,20 +14,20 @@
 	\subsection{Dostępna funkcjonalność aplikacji}
 		Istniejąca funkcjonalność zapewnia:
 		\begin{itemize}
-			\item Dostęp do funkcji aplikacji jedynie dla osób upoważnionych
+			\item dostęp do funkcji aplikacji jedynie dla osób upoważnionych;
 			\begin{itemize}
-				\item aplikacja rozpoznaje czy użytkownik jest już zalogowany
-				\item użytkownik może w każdej chwili zakończyć pracę
-				\item użytkownik jest automatycznie wylogowywane po 30 minutach 
+				\item aplikacja rozpoznaje czy użytkownik jest już zalogowany;
+				\item użytkownik może w każdej chwili zakończyć pracę;
+				\item użytkownik jest automatycznie wylogowywane po 30 minutach ;
 			\end{itemize}
-			\item Rejestracja nowego przedsiębiorstwa oraz pojedynczego magazynu;
-			\item Rejestracje dowolnej ilości stref wydzielonych w magazynie, a także organizowania
+			\item rejestracja nowego przedsiębiorstwa oraz pojedynczego magazynu;
+			\item rejestracje dowolnej ilości stref wydzielonych w magazynie, a także organizowania
 			stref w strukturę drzew. Takie rozwiązanie jest elastycznym podejściem, które
 			pozwala na przenoszenie ładunków między różnymi strefami, jeśli istnieje taka możliwość, tj.
-			gdy strefa C jest, nie koniecznie bezpośrednim, potomkiem strefy A.
-			\item Rejestracja nowych klientów: \textbf{dostawców oraz odbiorców}, którzy traktowani są
+			gdy strefa C jest, nie koniecznie bezpośrednim, potomkiem strefy A;
+			\item rejestracja nowych klientów: \textbf{dostawców oraz odbiorców}, którzy traktowani są
 			zgodnie ze swoją funkcją w misji przedsiębiorstwa, czyli dostawca odpowiedzialny jest
-			jedynie za dostawy. Niewykluczona jest sytuacja, gdy ten sam klient, jest zarówno dostawcą, jak
+			jedynie za dostawy. Niewykluczona jest sytuacja, gdy ten sam klient, jest zarówno dosta\-wcą, jak
 			i odbiorcą. 
 		\end{itemize}
 	\subsection{Realizacja postulatów aplikacji WMS}
@@ -188,12 +188,15 @@
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/login}
-			\caption[Aplikacja - Logowanie do programu]{Zrzut ekranu pokazują aplikację w stanie tuż po uruchomieniu}
+			\caption[Aplikacja - Logowanie do programu]{
+				Zrzut ekranu pokazują aplikację tuż po uruchomieniu \\
+				źródło: opracowanie własne
+			}
 			\label{c7:fig:app:login}
 		\end{figure}
 		Aplikacja wspiera identyfikacje oraz autoryzacje użytkownik, jeszcze przed uruchomieniem programu. Praktycznie
 		na każdym kroku, system sprawdza, czy użytkownik jest wciąż zalogowany, czy też nie. W drugim wypadku
-		wystosowywane jest okno, takie jak na rysunku \label{c7:fig:app::login}. Mechanizm logowania został oparty
+		wystosowywane jest okno, takie jak na \textbf{Rysunku 15}. Mechanizm logowania został oparty
 		o własne rozwiązanie zaimplementowane po stronie serwera, a wymagające podanie jedynie hasła oraz 
 		nazwy użytkownika.\\ Można to łatwo zmienić, ponieważ operacja autoryzacji została wyodrębniona
 		do samodzielnej \textbf{klasy servlet}. Korzyścią tego, a zarazem wytłumaczeniem prostoty rozszerzenia
@@ -201,7 +204,7 @@
 		W tym momencie uzyskujemy praktyczne wykorzystanie wzorca projektowego, znanego jako \textbf{fasada}.
 		Chodzi o dostarczenie zwartego i niezmiennego \textbf{API} - interfejsu programistycznego, gdzie tutaj, ten termin odnosi się
 		do niezmiennej postaci funkcji obsługujących konkretne żądania HTTP.
-		Istotnym więc jest jedynie aby wartość zwracana do klienta, była
+		Istotnym więc jest jedynie, aby wartość zwracana do klienta, była
 		z nim kompatybilna i aplikacja kliencka była w stanie poprawnie ją odczytać, podczas gdy warstwa
 		implementacji, dzięki której uzyskujemy pożądaną funkcjonalność,
 		może zostać zmieniona w sposób transparenty dla części klienta. \\
@@ -211,12 +214,6 @@
 		wylogowania.
 		
 	\subsection{Zarządzanie strukturą magazynu}
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width=0.99\textwidth]{images/app/unit_preview}
-			\caption[Aplikacja - Zarządzania strukturą magazynu]{Zrzut ekranu z widokiem na strukturę magazynu}
-			\label{c7:fig:app:unit_preview}
-		\end{figure}
 		W systemie klasy WMS należy się spodziewać elementów odzwierciedlających fizyczną strukturę magazynu,
 		to jak rozmieszczone są strefy i w kontekście całej dostępnej powierzchni. W aplikacji pojawia się taka
 		funkcjonalność, które mimo prosty, daje możliwość dowolnego modelowania wzajemnego ułożenia stref
@@ -224,33 +221,53 @@
 		preferencjami oraz oczekiwania klienta, która dostosowana jest do specyfiki jego działalności. Często
 		zdarza się również, że schemat w takim ujęciu nie może być zmieniony, stanowiąc bazę, ułatwiającą
 		operatorom logistycznym poruszania się bez znajomości niejednokrotnie skomplikowanych struktur metadanych, których
-		aplikacja używa do modelowania danych właściwych. 
+		aplikacja używa do modelowania danych właściwych.
+		\vspace{-15pt}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.99\textwidth]{images/app/unit_preview}
+			\caption[Aplikacja - Zarządzania strukturą magazynu]{
+				Zrzut ekranu z widokiem na strukturę magazynu \\
+				źródło: opracowanie własne
+			}
+			\label{c7:fig:app:unit_preview}
+		\end{figure}
 		\begin{figure}[H]
 			\centering  
 			\begin{subfigure}[b]{0.4\textwidth}
                 \centering
                 \includegraphics[width=\textwidth]{images/app/unit_before_move}
-                \caption{Przed zmianą lokalizacji}
+                \caption{
+                	Przed zmianą lokalizacji
+				}
 			\label{c7:fig:app:unit_before_move}
        		\end{subfigure}
 			\begin{subfigure}[b]{0.4\textwidth}
                 \centering
                 \includegraphics[width=\textwidth]{images/app/unit_after_move}
-                \caption{Po zmianie lokalizacji}
+                \caption{
+               		Po zmianie lokalizacji
+                }
 			\label{c7:fig:app:unit_after_move}
        		\end{subfigure}
-       		\caption[Aplikacja - Modelowanie struktury magazynu]{Model strefy przed i po zmianie lokalizacji}
+       		\caption[Aplikacja - Modelowanie struktury magazynu]{
+       			Model strefy przed i po zmianie lokalizacji \\
+					źródło: opracowanie własne
+				}
 			\label{c7:fig:app:unit_modelling}
 		\end{figure} 
 		Rysunek \textbf{\ref{c7:fig:app:unit_modelling}} przedstawia wizualny model jednej ze stref, 
 		w tym wypadku \textit{U3}. Można zauważyć, że strefa początkowo nie będąca w sąsiedztwie z
-		żadną inną, w wyniku działania użytkownika, została umiejscowiona tuż obok strefy \textit{U4}
+		żadną inną, w wyniku działania użytkownika, została umiejscowiona tuż obok strefy \textit{U4}.
 		
 	\subsection{Zarządzanie klientami - dodawanie, usuwaniu, edycja oraz podgląd}
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=1.1\textwidth]{images/app/supplier_preview}
-			\caption[Aplikacja - Dostęp do danych klientów]{Zrzut ekranu z widokiem na dostępnych dostawców}
+			\caption[Aplikacja - Dostęp do danych klientów]{
+				Zrzut ekranu z widokiem na dostępnych dostawców \\
+				źródło: opracowanie własne
+			}
 			\label{c7:fig:app:supplier_preview}
 		\end{figure}
 	
@@ -269,15 +286,25 @@
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.6\textwidth]{images/app/new_receipient_dialog}
-			\caption[Aplikacja - Dodawania nowego klienta - odbiorcy]{Zrzut ekranu z widokiem na okno dialogowe dla tworzenia nowego odbiorcy}
+			\caption[Aplikacja - Dodawania nowego klienta - odbiorcy]{
+				Zrzut ekranu z widokiem na okno dialogowe dla tworzenia nowego odbiorcy \\
+				źródło: opracowanie własne
+			}
 			\label{c7:fig:app:new_receipient_dialog}
 		\end{figure}	
-		
+	
+	\pagebreak
 	\subsection{Wydanie, przyjęcia oraz ewidencja produktów}
+		W aplikacji został również zaimplementowany moduł, którego zadaniem jest
+		obsługa definiowania wydań, przyjęć oraz ewidencjonowania produktów.	
+	
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/new_supply_preview}
-			\caption[Aplikacja - Dodanie nowego dokumentu wydania]{Zrzut ekranu z widokiem na kreator nowego wydania magazynowego}
+			\caption[Aplikacja - Dodanie nowego dokumentu wydania]{
+				Zrzut ekranu z widokiem na kreator nowego wydania magazynowego \\
+				źródło: opracowanie własne
+				}
 			\label{c7:fig:app:new_supply_preview}
 		\end{figure}
 		
@@ -319,7 +346,10 @@
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{images/app/unit_products_preview}
-			\caption[Aplikacja - Ewidencja towarów w poszczególnych strefach]{Zrzut ekranu z widokiem listy produktów w wybranej strefie}
+			\caption[Aplikacja - Ewidencja towarów w poszczególnych strefach]{
+				Zrzut ekranu z widokiem listy produktów w wybranej strefie \\
+				źródło: opracowanie własne
+			}
 			\label{c7:fig:app:unit_products_preview}
 		\end{figure}
 		
@@ -342,7 +372,10 @@
                 \caption{przez produkty}
 			\label{c7:fig:app:stat_product_bar}
        		\end{subfigure}
-       		\caption[Aplikacja - Statystyki wykorzystania powierzchni]{Wykorzystanie powierzchni magazynowych przez ...}
+       		\caption[Aplikacja - Statystyki wykorzystania powierzchni]{
+       			Wykorzystanie powierzchni magazynowych przez ...\\
+				źródło: opracowanie własne
+			}
 			\label{c7:fig:app:stat_charts}
 		\end{figure} 		
 		Wykresy widoczne na rysunku \textbf{\ref{c7:fig:app:stat_charts}} zostały wzbogacone o
@@ -352,6 +385,9 @@
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{images/app/stat_bar_detail}
-			\caption[Aplikacja - Szczegółowe informacje z wykresu]{Szczegółowe informacje na temat liczności konkretnego produktu}
+			\caption[Aplikacja - Szczegółowe informacje z wykresu]{
+				Szczegółowe informacje na temat liczności konkretnego produktu\\
+				źródło: opracowanie własne
+			}
 			\label{c7:fig:app:stat_product_bar_detail}
 		\end{figure}
