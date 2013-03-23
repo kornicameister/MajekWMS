@@ -147,7 +147,7 @@
 					lastline=45,
 		            numbersep=2pt
 				]{java}{../application/src/main/java/org/kornicameister/wms/server/extractor/RDExtractor.java}	
-				\label{c6:listing:WMSDataAgent}
+				\label{c6:listing:RDExtractor}
 				\caption[RDExtractor - \textbf{parse}]{\textit{RDExtractor-parse} - metoda parsująca żądania HTTP i zwracające 
 				potrzebne opcje jako obiekt}
 			\end{code}
@@ -155,7 +155,7 @@
 		\paragraph{Klient} jest warstwą reprezentują funkcjonalność serwera. Część ta dostępna jest przez praktycznie
 		dowolną przeglądarkę internetową, więc działa jako tak zwana \emph{aplikacja internetowa}. Bardzo
 		dużą zaletą takiego rozwiązania jest możliwość uruchomienia aplikacji na dowolnym urządzeniu klasy PC z zainstalowaną
-		odpowiednią przeglądarką. Jako inne zalety można z pewnością wymienić: 
+		aplikacją, umożliwiającą otwieranie stron WWW. Jako inne zalety można z pewnością wymienić: 
 		\begin{itemize}
 			\item większe możliwości rozbudowy, napraw i aktualizacji;
 			\item aktualizacje dokonywane są w sposób transparentny dla użytkownika.
@@ -166,7 +166,7 @@
 		framework'a ExtJS w wersji 4.1.3. AJAX jest technologią, która pozwala na wykonywania asynchronicznych
 		zapytań pod wskazany adres i uaktualnianie stron internetowych bez konieczności ich przeładowania. 
 		Z drugiej strony REST wprowadził dużo przejrzystości, potrzebnej przy budowanie tak rozbudowanej aplikacji,
-		przy budowaniu adresów zapytań i ich obsłudze. W obecnej formie, zapytania różnią się, ta poziomie
+		przy budowaniu adresów zapytań i ich obsłudze. W obecnej formie, zapytania różnią się, na poziomie
 		wskazania jaki rodzaj encji z bazy danych, klient chce obsłużyć. W efekcie, konfiguracja modeli ExtJS
 		sprowadzała się do następujących 2 linijek:
 		
@@ -216,13 +216,9 @@
 	\subsection{Zarządzanie strukturą magazynu}
 		W systemie klasy WMS należy się spodziewać elementów odzwierciedlających fizyczną strukturę magazynu,
 		to jak rozmieszczone są strefy i w kontekście całej dostępnej powierzchni. W aplikacji pojawia się taka
-		funkcjonalność, które mimo prosty, daje możliwość dowolnego modelowania wzajemnego ułożenia stref
+		funkcjonalność, która mimo swojej prostoty, daje możliwość dowolnego modelowania wzajemnego ułożenia stref
 		magazynu. Niemniej w produkcyjnej wersji, należy się spodziewać predefiniowanej struktury, zgodnej z
-		preferencjami oraz oczekiwania klienta, która dostosowana jest do specyfiki jego działalności. Często
-		zdarza się również, że schemat w takim ujęciu nie może być zmieniony, stanowiąc bazę, ułatwiającą
-		operatorom logistycznym poruszania się bez znajomości niejednokrotnie skomplikowanych struktur metadanych, których
-		aplikacja używa do modelowania danych właściwych.
-		\vspace{-15pt}
+		preferencjami oraz oczekiwania klienta, która dostosowana jest do specyfiki jego działalności. 
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.99\textwidth]{images/app/unit_preview}
@@ -231,7 +227,10 @@
 				źródło: opracowanie własne
 			}
 			\label{c7:fig:app:unit_preview}
-		\end{figure}
+		\end{figure}		
+		Często zdarza się również, że schemat w takim ujęciu nie może być zmieniony, stanowiąc bazę, ułatwiającą
+		operatorom logistycznym poruszania się bez znajomości niejednokrotnie skomplikowanych struktur metadanych, których
+		aplikacja używa do modelowania danych właściwych.
 		\begin{figure}[H]
 			\centering  
 			\begin{subfigure}[b]{0.4\textwidth}
@@ -256,7 +255,7 @@
 				}
 			\label{c7:fig:app:unit_modelling}
 		\end{figure} 
-		Rysunek \textbf{\ref{c7:fig:app:unit_modelling}} przedstawia wizualny model jednej ze stref, 
+		\textbf{Rysunek \ref{c7:fig:app:unit_modelling}} przedstawia wizualny model jednej ze stref, 
 		w tym wypadku \textit{U3}. Można zauważyć, że strefa początkowo nie będąca w sąsiedztwie z
 		żadną inną, w wyniku działania użytkownika, została umiejscowiona tuż obok strefy \textit{U4}.
 		
@@ -352,21 +351,24 @@
 			}
 			\label{c7:fig:app:unit_products_preview}
 		\end{figure}
-		
 	\subsection{Statystyki wykorzystania powierzchni magazynowych}
 		W programie zawarto również prosty moduł generujący statystyki użytkowe dla wybranego i używanego magazynu.
 		Można więc, w dowolnym momencie, sprawdzić w jakim procencie powierzchnia magazynu, jest wykorzystywana przez
 		poszczególne strefy. Inną z dostarczonych informacji, mającej charakter danych statystycznych, jest 
-		wykorzystania powierzchni odkładczych przez poszczególne produkty. 
+		wykorzystania powierzchni odkładczych przez poszczególne produkty. 		
+		Wykresy widoczne na rysunku \textbf{\ref{c7:fig:app:stat_charts}} zostały wzbogacone o
+		o element interaktywności. Dzięki temu, po najechaniu kursorem myszki na dowolny element, na 
+		przykład wykresu słupkowego, przedstawiającego dane dotyczące liczności produktów w magazynie, 
+		uzyskana zostaje wspomniana informacja w odniesieniu do konkretnego produktu. 
 		\begin{figure}[H]
 			\centering  
-			\begin{subfigure}[b]{0.75\textwidth}
+			\begin{subfigure}[b]{0.6\textwidth}
                 \centering
                 \includegraphics[width=\textwidth]{images/app/stat_pie}
                 \caption{przez strefy}
 			\label{c7:fig:app:stat_unit_pie}
        		\end{subfigure}
-			\begin{subfigure}[b]{0.75\textwidth}
+			\begin{subfigure}[b]{0.6\textwidth}
                 \centering
                 \includegraphics[width=\textwidth]{images/app/stat_bar}
                 \caption{przez produkty}
@@ -377,11 +379,7 @@
 				źródło: opracowanie własne
 			}
 			\label{c7:fig:app:stat_charts}
-		\end{figure} 		
-		Wykresy widoczne na rysunku \textbf{\ref{c7:fig:app:stat_charts}} zostały wzbogacone o
-		o element interaktywności. Dzięki temu, po najechaniu kursorem myszki na dowolny element, na 
-		przykład wykresu słupkowego, przedstawiającego dane dotyczące liczności produktów w magazynie, 
-		uzyskana zostaje wspomniana informacja w odniesieniu do konkretnego produktu. 
+		\end{figure} 
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{images/app/stat_bar_detail}
