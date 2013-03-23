@@ -1,35 +1,38 @@
 \chapter{Podsumowanie}
 \label{c7:c7}
-	Zrealizowana została następująca funkcjonalność:
-	\begin{itemize}
-		\item możliwość definiowania nowej firmy oraz magazynu doń przypisanego;
-		\item możliwość utworzenia oraz modyfikowania logicznej struktury magazynu;
-		\item możliwość tworzenia nowych klientów, zarówno dostawców oraz odbiorców;
-		\item możliwość tworzenia wydań oraz przyjęć magazynowych, które można było przypisać do
-		dowolnego klienta, z zastrzeżeniem, że wydania odnoszą się jedynie do odbiorców, a przyjęcia
-		do dostawców;
-		\item uproszczony system statystyk oraz tabel opisujących aktualny stan magazynu;
-	\end{itemize}
+	Celem pracy było stworzenie aplikacji, która demonstrowałaby część z funkcji, którymi charakteryzuje
+	się system wspomagający zarządzanie gospodarką magazynową oraz rozpoznanie problemów, a także
+	cech takiego systemu. Praktycznie każde przedsiębiorstwo, które obecnie działa na rynku, opiera swoje funkcjonowanie o
+	różnego rodzaju narzędzia informatyczne wspomagające procesy wytwórcze, zaopatrzeniowe, dystrybucyjne
+	bądź magazynowe. Jest więc rzeczą oczywistą, że potrzebują one aplikacji, z jednej strony na tyle kompleksowych, a
+	z drugiej skoncentrowanych na pojedynczym celu, które usprawniłyby realizację procesów logistycznych.
 	
-	Projekt, będący praktyczną częścią pracy inżynierskiej, okazał się być trudniejszy do zrealizowania,
-	niż początkowo było to przewidywane. Pojawiające się trudności można zaklasyfikować i przypisać 
-	do następujących grup:
-	\begin{itemize}
-		\item związane z wymianą danych serwer - klient;
-		\item związane z dostarczenie funkcji systemu WMS; 
-	\end{itemize}		
-	
-	\paragraph{Wymiana danych serwer - klient} okazała się być kluczowym elementem całego programu, 
-	od którego zależały wszystkie inne komponenty. Podstawowym problemem okazało się więc stworzenie
-	takiego modelu danych, których charakteryzowałby się spójnością między częścią kliencką oraz serwerową,
-	przy jednoczesnym dostarczeniu uniwersalnego interfejsu zdolnego do obsługi czterech rodzajów
-	zadań: \textbf{Dodaj, Usuń, Zmień, Pobierz}. 
-	
-	\paragraph{Funkcje systemu WMS} mając znaczenie fundamentalne dla działania programu okazały
-	się być niemniej wymagające. Dobry system wspomagający zarządzanie gospodarką magazynową powinien
-	cechować się automatyzacją pewnych procesów oraz powinien dawać możliwość wykonania
+	W kontekście aplikacji zrealizowana została następująca funkcjonalność: 
+	możliwość defi\-niowania nowej firmy oraz magazynu doń przypisanego,
+	możliwość utworzenia oraz modyfikowania logicznej struktury magazynu,
+	możliwość tworzenia nowych klientów, zarówno dostawców oraz odbiorców,
+	możliwość tworzenia wydań oraz przyjęć magazynowych, które dają przypisać się do dowolnego klienta,
+	z zastrzeżeniem, że wydania odnoszą się jedynie do odbiorców, a przyjęcia do dostawców,
+	uproszczony system statystyk oraz tabel opisujących aktualny stan magazynu. 	
+
+	Dobry system wspomagający zarządzanie gospodarką magazynową powinien
+	cechować się automatyzacją pewnych procesów oraz dawać możliwość wykonania
 	podstawowych operacji, których celem oraz wynikiem byłaby zmiana fizycznej oraz logicznej struktury
-	opisującej rozmieszczenie materiałów, produktów lub towarów w magazynach.
-	Niemniej jednak udało się dostarczyć metod, które implementowały by taką funkcjonalność, co spowodowało,
-	że przygotowana aplikacja mogłaby służyć jako system wspomagający gospodarkę magazynową, w 
+	opisującej rozmieszczenie materiałów, produktów lub towarów w magazynie.
+	Niemniej jednak udało się dostarczyć metod, które implementowałyby taką funkcjonalność, co spowodowało,
+	że przygotowana aplikacja mogłaby służyć jako system wspomagający gospodarkę magazynową w 
 	małym przedsiębiorstwie.
+	
+	Aplikacja, przygotowana w ramach projektu inżynierskiego, dostarcza ułamka funkcjonalności
+	programów wspierających gospodarkę magazynową, wykorzystywanych w przedsiębiorstwach. 
+	Narzędzia funkcjonujące w firmach dostarczają zdecydowanie większych możliwości, co przekłada się na poziom
+	ich skomplikowania. Tego typu aplikacje budowane są wtedy pod kątem danego przedsiębiorstwa, gdzie brana jest
+	pod uwagę specyfika i preferencje organizacji.
+	
+	Oczywiście mimo, że aplikacja porusza część z funkcji systemu WMS, możliwy jest jej rozwój. Przede wszystkim
+	wykonalne jest wprowadzenie ewentualnego usprawnienia dotyczącego uogólnienia sposobu modelowanie fizycznej 
+	struktury magazynu o osobiste prefe\-rencje klienta, tak aby odpowiadała ona jego wymaganiom. 
+	Kolejnym elementem byłoby rozszerzenie obecnych	możliwości zarządzania fizycznymi przepływami towarów o dodanie sposobu, który pozwoliłby
+	na wprowadzenie do systemu produktów, materiałów, które jeszcze nie były na stanie magazynowym (przyjęcia nowego towaru).
+	Ostatecznie można by zająć się usprawnieniem modułu odpowiedzialnego za statystyki magazynowe o dodanie funkcji pozwalających
+	na generowanie podsumowań zależnych od informacji, jakie będzie chciał uzyskać użytkownik systemu. 
