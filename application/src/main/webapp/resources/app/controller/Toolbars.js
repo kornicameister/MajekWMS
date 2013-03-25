@@ -9,41 +9,38 @@
  */
 
 Ext.define('WMS.controller.Toolbars', {
-    extend                    : 'Ext.app.Controller',
-    views                     : [
+    extend: 'Ext.app.Controller',
+    views: [
         'toolbar.Header',
         'toolbar.Footer',
         'wizard.client.Dialog'
     ],
-    refs                      : [
+    refs: [
         { ref: 'tBar', selector: 'headbar' },
         { ref: 'fBar', selector: 'footbar' },
         { ref: 'unitMenu', selector: 'headbar storemenu' },
         { ref: 'loggedUserTF', selector: 'headbar textfield' }
     ],
-    init                      : function () {
+    init: function () {
         console.init('WMS.controller.Toolbars initializing...');
         var me = this;
         me.control({
-            '#headerToolbar storemenu'                   : {
+            '#headerToolbar storemenu': {
                 'iclick': me.onUnitSelected
             },
             '#headerToolbar button[itemId=clientsButton]': {
                 'click': me.onRecipientsManagerClick
             },
-            '#headerToolbar button[itemId=suppliers]'    : {
+            '#headerToolbar button[itemId=suppliers]': {
                 'click': me.onSuppliersManagerClick
             },
-            '#headerToolbar button[itemId=logoutButton]' : {
-                'click': me.onLogoutClick
-            },
-            '#headerToolbar menu[itemId=clientsMenu]'    : {
+            '#headerToolbar menu[itemId=clientsMenu]': {
                 'click': me.onClientMenuClick
             },
-            '#headerToolbar menu[itemId=suppliersMenu]'  : {
+            '#headerToolbar menu[itemId=suppliersMenu]': {
                 'click': me.onClientMenuClick
             },
-            '#footerToolbar button[itemId=saveButton]'   : {
+            '#footerToolbar button[itemId=saveButton]': {
                 'click': me.onSaveAction
             },
             '#footerToolbar button[itemId=refreshButton]': {
@@ -51,13 +48,7 @@ Ext.define('WMS.controller.Toolbars', {
             }
         });
     },
-    onLogoutClick             : function () {
-        var me = this,
-            loginController = me.getController('WMS.controller.Login');
-
-        loginController.logout();
-    },
-    onClientMenuClick         : function (menu, item) {
+    onClientMenuClick: function (menu, item) {
         var itemId = item['itemId'],
             me = this,
             clientWizardManager = me.getController('WMS.controller.wizard.Client'),
@@ -77,40 +68,34 @@ Ext.define('WMS.controller.Toolbars', {
             console.log('Toolbars :: ' + Ext.String.format('{0} button has not ben recognized...', itemId))
         }
     },
-    onSuppliersManagerClick   : function () {
+    onSuppliersManagerClick: function () {
         var me = this,
             masterCtrl = me.getController('WMS.controller.Master');
         masterCtrl.openSupplierManager();
     },
-    onRecipientsManagerClick  : function () {
+    onRecipientsManagerClick: function () {
         var me = this,
             masterCtrl = me.getController('WMS.controller.Master');
         masterCtrl.openRecipientManager();
     },
-    onUnitSelected            : function (storemenu, item, storeItem) {
+    onUnitSelected: function (storemenu, item, storeItem) {
 
     },
-    onSaveAction              : function () {
+    onSaveAction: function () {
         Ext.StoreManager.each(function (store) {
             if (store['autoSync'] !== true) {
                 store.sync();
             }
         });
     },
-    onRefreshAction           : function () {
+    onRefreshAction: function () {
         console.log('Refresh action called, revert changes, reload from server');
     },
-    setLoggedUserInformation  : function (user) {
+    setLoggedUserInformation: function (user) {
         console.log('TOOLBARS :: Setting logged user information...');
         var me = this,
             loggedTF = me.getLoggedUserTF();
 
         loggedTF.setValue(user['login']);
-    },
-    clearLoggerUserInformation: function () {
-        console.log('TOOLBARS :: Removing logged user information...');
-        var me = this,
-            loggedTF = me.getLoggedUserTF();
-        loggedTF.setValue('');
     }
 });

@@ -8,52 +8,68 @@
  * Created: 28-09-2012
  */
 
-Ext.define('WMS.controller.Master', function(){
+Ext.define('WMS.controller.Master', function () {
     var mask = undefined,
-        setLoadMask     = function (mask){
+        setLoadMask = function (mask) {
             this.mask = mask;
         },
-        getLoadMask     = function(){
+        getLoadMask = function () {
             return this.mask;
         },
-        maskViewport    = function (view) {
-             if (Ext.isDefined(view)) {
-                 setLoadMask(new Ext.LoadMask(view.el, {
-                     id : 'viewportMask',
-                     msg: 'Loading content...'
-                 }));
-                 getLoadMask().show();
-                 console.log('Master :: Batman mode...');
-             } else {
-                 console.log('Master :: Can not mask viewport, view undefined');
-             }
+        maskViewport = function (view) {
+            if (Ext.isDefined(view)) {
+                setLoadMask(new Ext.LoadMask(view.el, {
+                    id: 'viewportMask',
+                    msg: 'Loading content...'
+                }));
+                getLoadMask().show();
+                console.log('Master :: Batman mode...');
+            } else {
+                console.log('Master :: Can not mask viewport, view undefined');
+            }
         },
-        unmaskViewport  = function (scope) {
-             var mask = getLoadMask();
+        unmaskViewport = function () {
+            var mask = getLoadMask();
 
-             if (!Ext.isDefined(mask)) {
-                 console.log('Master :: Looking mask via id property');
-                 mask = Ext.getCmp('viewportMask');
-             }
+            if (!Ext.isDefined(mask)) {
+                console.log('Master :: Looking mask via id property');
+                mask = Ext.getCmp('viewportMask');
+            }
 
-             console.log('Master :: Took off the mask');
-             mask.hide();
-       };
+            console.log('Master :: Took off the mask');
+            mask.hide();
+        },
+        retrievePrincipal = function (callback, scope) {
+            Ext.Ajax.request({
+                url: 'wms/principal/retrieve',
+                timeout: 2000,
+                method: 'GET',
+                success: function (response) {
+                    var obj = Ext.decode(response.responseText),
+                        user = obj['data'][0];
+                    console.dir(user);
+                    callback.apply(scope, [user]);
+                },
+                failure: function (response) {
+                    console.log('server-side failure with status code ' + response.status);
+                }
+            });
+        };
     return {
-        extend              : 'Ext.app.Controller',
-        uses                : [
+        extend: 'Ext.app.Controller',
+        uses: [
             'WMS.view.manager.recipient.Manager', 'WMS.view.manager.supplier.Manager'
         ],
-        refs                : [
+        refs: [
             {  ref: 'masterView', selector: 'masterview' }
         ],
-        stores:               [
-          'Companies'
+        stores: [
+            'Companies'
         ],
-        config              : {
-            tabs    : []
+        config: {
+            tabs: []
         },
-        init                : function () {
+        init: function () {
             console.init('WMS.controller.Master initializing...');
             var me = this;
             me.control({
@@ -63,38 +79,40 @@ Ext.define('WMS.controller.Master', function(){
             });
             me.setTabs([]);
         },
-        loadContent      : function (view) {
-                var me = this,
-                    companies = me.getCompaniesStore();
+        loadContent: function (view) {
+            var me = this,
+                companies = me.getCompaniesStore(),
+                toolbarCtrl = me.getController('WMS.controller.Toolbars')
 
-                console.log('Master:: Pre-loading content...');
+            console.log('Master:: Pre-loading content...');
 
-                maskViewport(view);
+            maskViewport(view);
 
-                companies.load({
-                    callback: function (data) {
-                        if (Ext.isArray(data) && data.length >= 1) {
-                            console.log('Master:: ' + Ext.String.format('Located {0} compan{1}', data.length, (data.length === 1
-                                ? 'y' : 'ies')));
-                        } else {
-                            console.log('Login :: No suitable company found, commencing wizard');
-                            me.openCompanyWizard();
-                        }
-                       unmaskViewport();
+            companies.load({
+                callback: function (data) {
+                    if (Ext.isArray(data) && data.length >= 1) {
+                        console.log('Master:: ' + Ext.String.format('Located {0} compan{1}', data.length, (data.length === 1
+                            ? 'y' : 'ies')));
+                    } else {
+                        console.log('Login :: No suitable company found, commencing wizard');
+                        me.openCompanyWizard();
                     }
-                });
-            },
+                    retrievePrincipal(toolbarCtrl.setLoggedUserInformation, toolbarCtrl);
+                    unmaskViewport();
+                }
+            });
+        },
         openRecipientManager: function () {
             console.log('Master :: Opening recipients manager');
             var me = this;
             me.openManager('WMS.view.manager.recipient.Manager');
         },
-        openSupplierManager : function () {
+        openSupplierManager: function () {
             console.log('Master :: Opening suppliers manager');
             var me = this;
             me.openManager('WMS.view.manager.supplier.Manager');
         },
-        openCompanyWizard   : function () {
+        openCompanyWizard: function () {
             var me = this,
                 companyWizardCtrl = me.getController('WMS.controller.wizard.Company');
 
@@ -108,7 +126,7 @@ Ext.define('WMS.controller.Master', function(){
          * @description Open desired manager
          * @param view
          */
-        openManager         : function (view) {
+        openManager: function (view) {
             var me = this,
                 masterView = me.getMasterView(),
                 manager = undefined,
@@ -125,7 +143,7 @@ Ext.define('WMS.controller.Master', function(){
                 manager.show();
             }
         },
-        onTabClose          : function (panel) {
+        onTabClose: function (panel) {
             var me = this, tabs = me.getTabs(), className = Ext.ClassManager.getName(panel), index = Ext.Array.indexOf(tabs, className);
 
             if (index >= 0) {
