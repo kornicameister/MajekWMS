@@ -194,24 +194,18 @@
 			}
 			\label{c7:fig:app:login}
 		\end{figure}
-		Aplikacja wspiera identyfikacje oraz autoryzacje użytkownik, jeszcze przed uruchomieniem programu. Praktycznie
-		na każdym kroku, system sprawdza, czy użytkownik jest wciąż zalogowany, czy też nie. W drugim wypadku
-		wystosowywane jest okno, takie jak na \textbf{Rysunku 15}. Mechanizm logowania został oparty
-		o własne rozwiązanie zaimplementowane po stronie serwera, a wymagające podanie jedynie hasła oraz 
-		nazwy użytkownika.\\ Można to łatwo zmienić, ponieważ operacja autoryzacji została wyodrębniona
-		do samodzielnej \textbf{klasy servlet}. Korzyścią tego, a zarazem wytłumaczeniem prostoty rozszerzenia
-		operacji autoryzacji, jest zawsze występująca operacja obsługująca żądanie \textbf{HTPP:POST}.
-		W tym momencie uzyskujemy praktyczne wykorzystanie wzorca projektowego, znanego jako \textbf{fasada}.
-		Chodzi o dostarczenie zwartego i niezmiennego \textbf{API} - interfejsu programistycznego, gdzie tutaj, ten termin odnosi się
-		do niezmiennej postaci funkcji obsługujących konkretne żądania HTTP.
-		Istotnym więc jest jedynie, aby wartość zwracana do klienta, była
-		z nim kompatybilna i aplikacja kliencka była w stanie poprawnie ją odczytać, podczas gdy warstwa
-		implementacji, dzięki której uzyskujemy pożądaną funkcjonalność,
-		może zostać zmieniona w sposób transparenty dla części klienta. \\
-		Ostatecznie aplikacja wymaga jednorazowego podania danych identyfikujących użytkownika oraz
-		jest ona w stanie zapamiętać tę informację pomiędzy odświeżeniami aplikacji, jednocześnie
-		dając możliwość zakończenia korzystania z programu w dowolnym momencie, poprzez operację
-		wylogowania.
+		Autoryzacja użytkowników została oparta o \textbf{JDBCRealm}\cite{REALM}, które jest zaimplementowane
+		w kontenerze aplikacji Tomcat. \textbf{Realm} odpowiedzialny jest za wsparcie logowania,
+		w sposób, który nie byłby możliwy bez relacyjnej bazy danych. Z uwagi na specyfikę
+		działania, w bazie danych aplikacji muszą znaleźć się co najmniej 2 tabele, z których
+		jedna opisuje użytkowników, a druga powiązane z nimi role. Role są tym, co faktycznie
+		definiuje poziom uprawnień danego użytkownika.
+		
+		Dużą zaletą takiego podejścia jest odciążenie zarówno serwera, jak i klienta, od konieczności
+		zaimplementowania odpowiedniej logiki, będącej w stanie obsłużyć wszelkie możliwe
+		przypadki użycie, związane z problem autoryzacji użytkowników. Dodatkowym autem jest
+		posiadanie narzędzia, które jest w stanie uwzględnić nowych użytkowników aplikacji,
+		zaraz po dodaniu ich do bazy danych.
 		
 	\subsection{Zarządzanie strukturą magazynu}
 		W systemie klasy WMS należy się spodziewać elementów odzwierciedlających fizyczną strukturę magazynu,
@@ -259,7 +253,7 @@
 		w tym wypadku \textit{U3}. Można zauważyć, że strefa początkowo nie będąca w sąsiedztwie z
 		żadną inną, w wyniku działania użytkownika, została umiejscowiona tuż obok strefy \textit{U4}.
 		
-	\subsection{Zarządzanie klientami - dodawanie, usuwaniu, edycja oraz podgląd}
+	\subsection{Zarządzanie klientami - dodawanie, usuwanie, edycja oraz podgląd}
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=1.1\textwidth]{images/app/supplier_preview}
