@@ -16,6 +16,9 @@ Ext.define('WMS.controller.Master', {
     refs                : [
         {  ref: 'masterView', selector: 'masterview' }
     ],
+    stores:               [
+      'Companies'
+    ],
     config              : {
         tabs    : [],
         loadMask: undefined
@@ -25,46 +28,22 @@ Ext.define('WMS.controller.Master', {
         var me = this;
         me.control({
             '#viewport': {
-                'afterrender': me.onMasterRender
+                'afterrender': me.loadContent
             }
         });
-        me.tabs = [];
+        me.setTabs([]);
     },
-    onMasterRender      : function (view) {
-        console.log('Master :: Opening login.Dialog...');
-        var me = this,
-            loginController = me.getController('WMS.controller.Login'),
-            toolbarController = me.getController('WMS.controller.Toolbars');
-
-        function handleResponseFromSession(user) {
-            if (user === false) {
-                loginController.openLoginDialog();
-            } else {
-                toolbarController.setLoggedUserInformation(user);
-                loginController.checkCompanies();
-                me.unmaskViewport();
-            }
-        }
-
-        me.maskViewport(view);
-        loginController.getUserFromSession(handleResponseFromSession, me);
-    },
-    checkCompanies      : function () {
+    loadContent      : function () {
             var me = this,
                 companies = me.getCompaniesStore();
+
+            console.log('Master:: Pre-loading content...');
 
             companies.load({
                 callback: function (data) {
                     if (Ext.isArray(data) && data.length >= 1) {
                         console.log('Login :: ' + Ext.String.format('Located {0} compan{1}', data.length, (data.length === 1
                             ? 'y' : 'ies')));
-                        Ext.MessageBox.show({
-                            title  : 'Zalogowany',
-                            msg    : Ext.String.format('Rozpoczynam pracę, firma {0}', data[0].get('longName')),
-                            width  : 200,
-                            buttons: Ext.Msg.OK,
-                            icon   : Ext.window.MessageBox.INFO
-                        });
                     } else {
                         console.log('Login :: No suitable company found, commencing wizard');
                         me.openCompanyWizard();
@@ -81,6 +60,14 @@ Ext.define('WMS.controller.Master', {
         console.log('Master :: Opening suppliers manager');
         var me = this;
         me.openManager('WMS.view.manager.supplier.Manager');
+    },
+    openCompanyWizard   : function () {
+        var me = this,
+            companyWizardCtrl = me.getController('WMS.controller.wizard.Company');
+
+        if (Ext.isDefined(companyWizardCtrl)) {
+            companyWizardCtrl.openWizard();
+        }
     },
     //  --- private --- ... //
     /**

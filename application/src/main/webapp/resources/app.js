@@ -197,7 +197,6 @@
                     'wizard.Company',
 
                     'Toolbars',
-                    'Login',
                     'Master'
                 ],
                 launch            : function () {
