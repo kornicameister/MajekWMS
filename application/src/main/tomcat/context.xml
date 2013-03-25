@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context
+        className="org.apache.catalina.core.StandardContext"
+        reloadable="true"
+        antiJARLocking="true"
+        swallowOutput="true">
+    <Realm connectionName="auth_user"
+           connectionPassword="auth_user"
+           connectionURL="jdbc:mysql://localhost:3306/majekwms?useUnicode=true&amp;characterEncoding=utf8"
+           roleNameCol="role"
+           userCredCol="secPassword"
+           userNameCol="login"
+           userRoleTable="userRole"
+           userTable="user"
+           driverName="com.mysql.jdbc.Driver"
+           digest="md5"
+           className="org.apache.catalina.realm.JDBCRealm"/>
+</Context>
