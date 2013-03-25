@@ -29,12 +29,16 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Wildcard means whole app requires authentication</web-resource-name>
+            <web-resource-name>MajekWMS-Auth</web-resource-name>
+            <description>Accessible by authenticated users of the tomcat role</description>
             <url-pattern>/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
         </web-resource-collection>
         <auth-constraint>
+            <description>These roles are allowed access</description>
             <role-name>admin</role-name>
         </auth-constraint>
 
@@ -46,6 +50,7 @@
 
     <login-config>
         <auth-method>BASIC</auth-method>
-        <realm-name>MajekWMS Authenticated</realm-name>
+        <realm-name>MajekWMS Authentication is required</realm-name>
     </login-config>
+
 </web-app>

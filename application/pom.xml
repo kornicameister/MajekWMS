@@ -150,7 +150,16 @@
                     <url>http://localhost:8080/MajekWMS/</url>
                     <mode>both</mode>
                     <path>/MajekWMS</path>
+                    <contextReloadable>true</contextReloadable>
+                    <contextFile>src/main/tomcat/context.xml</contextFile>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

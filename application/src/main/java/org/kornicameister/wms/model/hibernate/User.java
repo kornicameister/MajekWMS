@@ -20,27 +20,19 @@ public class User extends PersistenceObject {
     private String login;
 
     @Basic
-    @Column(name = "password", nullable = false, unique = false, length = 45, updatable = true)
+    @Column(name = "secPassword", nullable = false, unique = false, length = 66, updatable = true)
     private String password;
 
     public User() {
         super();
     }
 
-    public synchronized final String getLogin() {
+    public final String getLogin() {
         return login;
     }
 
-    public synchronized final void setLogin(String login) {
+    public final void setLogin(String login) {
         this.login = login;
-    }
-
-    public synchronized final String getPassword() {
-        return password;
-    }
-
-    public synchronized final void setPassword(String password) {
-        this.password = password;
     }
 
     @Override
