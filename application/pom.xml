@@ -142,21 +142,13 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-war-plugin</artifactId>-->
-            <!--<version>2.1</version>-->
-            <!--<configuration>-->
-            <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-            <!--</configuration>-->
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${tomcat.maven.version}</version>
                 <configuration>
                     <url>http://localhost:8080/MajekWMS/</url>
-                    <server>TomcatServer</server>
+                    <mode>both</mode>
                     <path>/MajekWMS</path>
                 </configuration>
             </plugin>

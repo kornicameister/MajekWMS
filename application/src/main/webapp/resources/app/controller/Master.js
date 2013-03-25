@@ -49,31 +49,29 @@ Ext.define('WMS.controller.Master', {
         me.maskViewport(view);
         loginController.getUserFromSession(handleResponseFromSession, me);
     },
-    maskViewport        : function (view) {
-        if (Ext.isDefined(view)) {
-            var me = this;
-            me.setLoadMask(new Ext.LoadMask(view.el, {
-                id : 'viewportMask',
-                msg: 'Loading content...'
-            }));
-            me.getLoadMask().show();
-            console.log('Master :: Batman mode...');
-        } else {
-            console.log('Master :: Can not mask viewport, view undefined');
-        }
-    },
-    unmaskViewport      : function (scope) {
-        var me = (scope === undefined ? this : scope),
-            mask = me.getLoadMask();
+    checkCompanies      : function () {
+            var me = this,
+                companies = me.getCompaniesStore();
 
-        if (!Ext.isDefined(mask)) {
-            console.log('Master :: Looking mask via id property');
-            mask = Ext.getCmp('viewportMask');
-        }
-
-        console.log('Master :: Took off the mask');
-        mask.hide();
-    },
+            companies.load({
+                callback: function (data) {
+                    if (Ext.isArray(data) && data.length >= 1) {
+                        console.log('Login :: ' + Ext.String.format('Located {0} compan{1}', data.length, (data.length === 1
+                            ? 'y' : 'ies')));
+                        Ext.MessageBox.show({
+                            title  : 'Zalogowany',
+                            msg    : Ext.String.format('Rozpoczynam pracę, firma {0}', data[0].get('longName')),
+                            width  : 200,
+                            buttons: Ext.Msg.OK,
+                            icon   : Ext.window.MessageBox.INFO
+                        });
+                    } else {
+                        console.log('Login :: No suitable company found, commencing wizard');
+                        me.openCompanyWizard();
+                    }
+                }
+            });
+        },
     openRecipientManager: function () {
         console.log('Master :: Opening recipients manager');
         var me = this;
