@@ -28,24 +28,12 @@ Ext.define('WMS.view.toolbar.Header', {
     },
     items      : [
         {
-            xtype   : 'textfield',
-            itemId  : 'loggedInUserTextField',
-            editable: false,
-            disabled: true,
-            width   : 140
-        },
-        '-',
-        {
-            xtype  : 'button',
-            itemId : 'receiptButton',
-            text   : 'Przyjęcia',
-            iconCls: 'view-toolbar-receiptButton'
-        },
-        {
-            xtype  : 'button',
-            itemId : 'releaseButton',
-            text   : 'Wydania',
-            iconCls: 'view-toolbar-releaseButton'
+            xtype     : 'textfield',
+            itemId    : 'loggedInUserTextField',
+            fieldLabel: 'Zalogowany jako',
+            editable  : false,
+            disabled  : true,
+            width     : 240
         },
         '-',
         {
@@ -72,16 +60,7 @@ Ext.define('WMS.view.toolbar.Header', {
                 ]
             }
         },
-        {
-            itemId : 'unitsButton',
-            iconCls: 'view-toolbar-unitsButton',
-            text   : 'Strefy',
-            menu   : {
-                xtype      : 'storemenu',
-                defaultType: 'button',
-                itemId     : 'unitMenu'
-            }
-        },
+        '-',
         {
             itemId : 'clientsButton',
             iconCls: 'view-toolbar-clientsButton',
@@ -125,14 +104,7 @@ Ext.define('WMS.view.toolbar.Header', {
                     }
                 ]
             }
-        },
-        '-',
-        '->',
-        {
-            xtype  : 'button',
-            itemId : 'settingsButton',
-            text   : 'Ustawienia',
-            iconCls: 'view-toolbar-settingsButton'
-        }
+        } ,
+        '-'
     ]
 });

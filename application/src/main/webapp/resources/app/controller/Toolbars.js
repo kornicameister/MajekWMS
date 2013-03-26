@@ -25,9 +25,6 @@ Ext.define('WMS.controller.Toolbars', {
         console.init('WMS.controller.Toolbars initializing...');
         var me = this;
         me.control({
-            '#headerToolbar storemenu'                   : {
-                'iclick': me.onUnitSelected
-            },
             '#headerToolbar button[itemId=clientsButton]': {
                 'click': me.onRecipientsManagerClick
             },
@@ -97,9 +94,6 @@ Ext.define('WMS.controller.Toolbars', {
         var me = this,
             masterCtrl = me.getController('WMS.controller.Master');
         masterCtrl.openRecipientManager();
-    },
-    onUnitSelected          : function (storemenu, item, storeItem) {
-
     },
     onSaveAction            : function () {
         Ext.StoreManager.each(function (store) {
