@@ -151,14 +151,49 @@
     font-weight: normal;
 }
 
-.wizard-company-summary {
-    margin: 2px 2px 2px 2px;
-    padding: 6px;
+.wizard-company-summary,
+.warehouse-details,
+.manager-client-details {
+    background: url('../images/Background_whole.jpg') !important;
+    background-repeat: repeat;
+    background-size: contain;
+    height: 100%;
+}
+
+body {
+    background: url('../images/Background_whole.jpg') !important;
+}
+
+.x-grid-dirty-cell {
+    background: #ffa url('../images/red_bullet.png') no-repeat right center;
+    color: #090;
+}
+
+#viewport {
+    margin: 5px 5px 5px 5px;
+    padding: 1px;
+}
+
+.wizard-company-summary,
+.warehouse-details {
     background-color: #ABCDEC;
     border-radius: 10px;
-    height: 120px;
     font-size: larger;
     overflow: hidden;
+}
+
+.warehouse-details {
+    padding-top: 20px;
+}
+
+.warehouse-details > .image-placeholder {
+    margin-left: 25%;
+    margin-top: 25%;
+    width: 128px;
+    height: 128px;
+    background-clip: content-box;
+    background-origin: border-box;
+    background-image: url('../images/view/wms/warehousing-icon.png');
 }
 
 .wizard-company-summary > .company {
@@ -193,19 +228,20 @@
 
 /**********************************************/
 
-.manager-client-details > div {
+.manager-client-details > div,
+.warehouse-details > div {
     text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
     border-radius: 20px;
 }
 
-.manager-client-details > .basic {
+.manager-client-details > .basic,
+.warehouse-details > .basic {
     border-bottom: 2px solid blue;
     font-size: larger;
 }
 
-.manager-client-details > .extended {
+.manager-client-details > .extended,
+.warehouse-details > .extended {
     border-top: 4px solid #444444;
     margin-top: 5px;
 }

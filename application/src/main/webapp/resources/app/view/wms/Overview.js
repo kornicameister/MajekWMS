@@ -23,11 +23,10 @@ Ext.define('WMS.view.wms.Overview', {
     },
     items  : [
         {
-            xtype : 'propertygrid',
+            xtype : 'panel',
             flex  : 1,
             itemId: 'description',
-            title : 'Warehouse',
-            source: {}
+            title : 'Warehouse'
         },
         {
             xtype    : 'egrid',
