@@ -55,10 +55,15 @@ Ext.define('WMS.view.toolbar.Header', {
             menu   : {
                 xtype      : 'menu',
                 defaultType: 'button',
+                itemId     : 'warehouseMenu',
                 items      : [
                     {
                         itemId: 'warehouseOverview',
                         text  : 'Podgląd'
+                    },
+                    {
+                        itemId: 'warehouseUnits',
+                        text  : 'Strefy'
                     },
                     {
                         itemId: 'warehouseStatistics',
