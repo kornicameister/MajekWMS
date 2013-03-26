@@ -8,114 +8,114 @@
  */
 
 Ext.define('WMS.view.toolbar.Header', {
-    extend: 'Ext.toolbar.Toolbar',
-    requires: [
+    extend     : 'Ext.toolbar.Toolbar',
+    requires   : [
         'Ext.ux.menu.StoreMenu'
     ],
-    itemId: 'headerToolbar',
-    alias: 'widget.headbar',
+    itemId     : 'headerToolbar',
+    alias      : 'widget.headbar',
     defaultType: 'splitbutton',
-    defaults: {
-        margin: {
-            top: 1,
-            left: 5,
-            right: 0,
+    defaults   : {
+        margin    : {
+            top   : 1,
+            left  : 5,
+            right : 0,
             bottom: 1
         },
-        iconAlign: 'left',
-        scale: 'large',
+        iconAlign : 'left',
+        scale     : 'large',
         arrowAlign: 'bottom'
     },
-    items: [
+    items      : [
         {
-            xtype: 'textfield',
-            itemId: 'loggedInUserTextField',
+            xtype   : 'textfield',
+            itemId  : 'loggedInUserTextField',
             editable: false,
             disabled: true,
-            width: 140
+            width   : 140
         },
         '-',
         {
-            xtype: 'button',
-            itemId: 'receiptButton',
-            text: 'Przyjęcia',
+            xtype  : 'button',
+            itemId : 'receiptButton',
+            text   : 'Przyjęcia',
             iconCls: 'view-toolbar-receiptButton'
         },
         {
-            xtype: 'button',
-            itemId: 'releaseButton',
-            text: 'Wydania',
+            xtype  : 'button',
+            itemId : 'releaseButton',
+            text   : 'Wydania',
             iconCls: 'view-toolbar-releaseButton'
         },
         '-',
         {
-            itemId: 'warehouseButton',
+            itemId : 'warehouseButton',
             iconCls: 'view-toolbar-warehouseButton',
-            text: 'Magazyn',
-            menu: {
-                xtype: 'menu',
+            text   : 'Magazyn',
+            menu   : {
+                xtype      : 'menu',
                 defaultType: 'button',
-                items: [
+                items      : [
                     {
                         itemId: 'warehouseOverview',
-                        text: 'Podgląd'
+                        text  : 'Podgląd'
                     },
                     {
                         itemId: 'warehouseStatistics',
-                        text: 'Statystyki'
+                        text  : 'Statystyki'
                     }
                 ]
             }
         },
         {
-            itemId: 'unitsButton',
+            itemId : 'unitsButton',
             iconCls: 'view-toolbar-unitsButton',
-            text: 'Strefy',
-            menu: {
-                xtype: 'storemenu',
+            text   : 'Strefy',
+            menu   : {
+                xtype      : 'storemenu',
                 defaultType: 'button',
-                itemId: 'unitMenu'
+                itemId     : 'unitMenu'
             }
         },
         {
-            itemId: 'clientsButton',
+            itemId : 'clientsButton',
             iconCls: 'view-toolbar-clientsButton',
-            text: 'Odbiorcy',
-            menu: {
-                xtype: 'menu',
+            text   : 'Odbiorcy',
+            menu   : {
+                xtype      : 'menu',
                 defaultType: 'button',
-                itemId: 'clientsMenu',
-                items: [
+                itemId     : 'clientsMenu',
+                items      : [
                     {
-                        itemId: 'addRecipient',
-                        text: 'Nowy odbiorca',
+                        itemId : 'addRecipient',
+                        text   : 'Nowy odbiorca',
                         iconCls: 'icon-add'
                     },
                     {
-                        itemId: 'addReceiptInvoice',
-                        text: 'Nowe wydanie magazynowe',
+                        itemId : 'addReceiptInvoice',
+                        text   : 'Nowe wydanie magazynowe',
                         iconCls: 'icon-add'
                     }
                 ]
             }
         },
         {
-            itemId: 'suppliers',
+            itemId : 'suppliers',
             iconCls: 'view-toolbar-suppliersButton',
-            text: 'Dostawcy',
-            menu: {
-                xtype: 'menu',
+            text   : 'Dostawcy',
+            menu   : {
+                xtype      : 'menu',
                 defaultType: 'button',
-                itemId: 'suppliersMenu',
-                items: [
+                itemId     : 'suppliersMenu',
+                items      : [
                     {
-                        itemId: 'addSupplier',
-                        text: 'Nowy dostawca',
+                        itemId : 'addSupplier',
+                        text   : 'Nowy dostawca',
                         iconCls: 'icon-add'
                     },
                     {
-                        itemId: 'addSupplyInvoice',
-                        text: 'Nowa przyjęcie magazynowe',
+                        itemId : 'addSupplyInvoice',
+                        text   : 'Nowa przyjęcie magazynowe',
                         iconCls: 'icon-add'
                     }
                 ]
@@ -124,9 +124,9 @@ Ext.define('WMS.view.toolbar.Header', {
         '-',
         '->',
         {
-            xtype: 'button',
-            itemId: 'settingsButton',
-            text: 'Ustawienia',
+            xtype  : 'button',
+            itemId : 'settingsButton',
+            text   : 'Ustawienia',
             iconCls: 'view-toolbar-settingsButton'
         }
     ]

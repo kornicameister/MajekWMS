@@ -6060,3 +6060,115 @@
 2013-03-25 22:01:32 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 0 ms ]
 2013-03-25 22:01:34 INFO  RequestController:100 - process :: Session [ SessionImpl(<closed>) ] finished with success...
 2013-03-25 22:01:34 INFO  RequestController:104 - Processing [ READ ][ String ] request, finished took [ 2 ms ]
+2013-03-25 23:56:27 INFO  SessionFactoryRegistry:118 - HHH000097: Unbound factory from JNDI name: majekwms
+2013-03-25 23:56:27 INFO  WMSDataAgent:58 - Closed Hibernate connection
+2013-03-25 23:56:35 INFO  Version:37 - HCANN000001: Hibernate Commons Annotations {4.0.1.Final}
+2013-03-25 23:56:35 INFO  Version:41 - HHH000412: Hibernate Core {4.2.0.CR1}
+2013-03-25 23:56:35 INFO  Environment:239 - HHH000206: hibernate.properties not found
+2013-03-25 23:56:35 INFO  Environment:342 - HHH000021: Bytecode provider name : javassist
+2013-03-25 23:56:36 INFO  Configuration:1925 - HHH000043: Configuring from resource: /hibernate.cfg.xml
+2013-03-25 23:56:36 INFO  Configuration:1944 - HHH000040: Configuration resource: /hibernate.cfg.xml
+2013-03-25 23:56:36 INFO  Configuration:2066 - HHH000041: Configured SessionFactory: majekwms
+2013-03-25 23:56:37 INFO  ConnectionProviderInitiator:188 - HHH000130: Instantiating explicit connection provider: org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider
+2013-03-25 23:56:37 INFO  C3P0ConnectionProvider:128 - HHH010002: C3P0 using driver: com.mysql.jdbc.Driver at URL: jdbc:mysql://localhost:3306/majekwms
+2013-03-25 23:56:37 INFO  C3P0ConnectionProvider:129 - HHH000046: Connection properties: {useUnicode=true, user=majekWMS, password=****, autocommit=true, characterEncoding=UTF-8}
+2013-03-25 23:56:37 INFO  C3P0ConnectionProvider:132 - HHH000006: Autocommit mode: true
+2013-03-25 23:56:37 INFO  MLog:80 - MLog clients using log4j logging.
+2013-03-25 23:56:38 INFO  C3P0Registry:204 - Initializing c3p0-0.9.1 [built 16-January-2007 14:46:42; debug? true; trace: 10]
+2013-03-25 23:56:38 WARN  ActiveManagementCoordinator:56 - A C3P0Registry mbean is already registered. This probably means that an application using c3p0 was undeployed, but not all PooledDataSources were closed prior to undeployment. This may lead to resource leaks over time. Please take care to close all PooledDataSources.
+2013-03-25 23:56:38 INFO  AbstractPoolBackedDataSource:462 - Initializing c3p0 pool... com.mchange.v2.c3p0.PoolBackedDataSource@fbd8f176 [ connectionPoolDataSource -> com.mchange.v2.c3p0.WrapperConnectionPoolDataSource@e6fd064b [ acquireIncrement -> 1, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, debugUnreturnedConnectionStackTraces -> false, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, identityToken -> z8kfsx8t19ftuv9rl3cq1|1f7132ea, idleConnectionTestPeriod -> 300, initialPoolSize -> 3, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 5000, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 10, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 1, nestedDataSource -> com.mchange.v2.c3p0.DriverManagerDataSource@e70793b8 [ description -> null, driverClass -> null, factoryClassLocation -> null, identityToken -> z8kfsx8t19ftuv9rl3cq1|6a6c8d81, jdbcUrl -> jdbc:mysql://localhost:3306/majekwms, properties -> {useUnicode=true, user=******, password=******, autocommit=true, characterEncoding=UTF-8} ], preferredTestQuery -> null, propertyCycle -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, usesTraditionalReflectiveProxies -> false; userOverrides: {} ], dataSourceName -> null, factoryClassLocation -> null, identityToken -> z8kfsx8t19ftuv9rl3cq1|288f758e, numHelperThreads -> 3 ]
+2013-03-25 23:56:38 INFO  Dialect:128 - HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2013-03-25 23:56:38 INFO  LobCreatorBuilder:94 - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+2013-03-25 23:56:39 INFO  TransactionFactoryInitiator:68 - HHH000399: Using default transaction strategy (direct JDBC transactions)
+2013-03-25 23:56:39 INFO  ASTQueryTranslatorFactory:48 - HHH000397: Using ASTQueryTranslatorFactory
+2013-03-25 23:56:40 INFO  SessionFactoryRegistry:90 - HHH000094: Bound factory to JNDI name: majekwms
+2013-03-25 23:56:40 INFO  SchemaUpdate:182 - HHH000228: Running hbm2ddl schema update
+2013-03-25 23:56:40 INFO  SchemaUpdate:193 - HHH000102: Fetching database metadata
+2013-03-25 23:56:40 INFO  SchemaUpdate:205 - HHH000396: Updating schema
+2013-03-25 23:56:40 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.address
+2013-03-25 23:56:40 INFO  TableMetadata:66 - HHH000037: Columns: [city_id, updatedon, street, idaddress, postcode, version]
+2013-03-25 23:56:40 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_address_1]
+2013-03-25 23:56:40 INFO  TableMetadata:69 - HHH000126: Indexes: [street, primary, postcode, fk_address_1]
+2013-03-25 23:56:40 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.city
+2013-03-25 23:56:40 INFO  TableMetadata:66 - HHH000037: Columns: [updatedon, name, idcity, version]
+2013-03-25 23:56:40 INFO  TableMetadata:68 - HHH000108: Foreign keys: []
+2013-03-25 23:56:40 INFO  TableMetadata:69 - HHH000126: Indexes: [name_2, name, primary]
+2013-03-25 23:56:40 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.client
+2013-03-25 23:56:40 INFO  TableMetadata:66 - HHH000037: Columns: [address_id, updatedon, description, company, name, clienttype_id, idclient, version]
+2013-03-25 23:56:40 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_client_2, fk_client_1]
+2013-03-25 23:56:40 INFO  TableMetadata:69 - HHH000126: Indexes: [fk_client_2, name_2, name, primary, fk_client_1]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.clientDetails
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [phone, updatedon, account, nip, idclient, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_clientdetails_1]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [primary, fk_clientdetails_1]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.clientType
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [idclienttype, updatedon, type, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: []
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [primary, type]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.company
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [longname, updatedon, name, idcompany, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: []
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [name, primary]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.invoice
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [refnumber, updatedon, description, idinvoice, duedate, createddate, client_id, invoicetype_id, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_invoice_1, fk_invoice_2]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [fk_invoice_1, refnumber, fk_invoice_2, idinvoice_unique, primary]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.invoiceProduct
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [price, tax, product_id, updatedon, pallets, invoice_id, comment, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_invoiceproduct_1, fk_invoiceproduct_2]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [primary, fk1083a5026cf510e4, fk_invoiceproduct_1, fk_invoiceproduct_2]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.invoiceType
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [updatedon, idinvoicetype, type, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: []
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [name_2, name, primary]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.measure
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [updatedon, name, abbreviation, idmeasure, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: []
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [primary]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.product
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [price, tax, measure_id, updatedon, description, name, idproduct, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_product_1]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [fk_product_1, primary]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.unit
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [unittype_id, warehouse_id, updatedon, description, name, idunit, version, size]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_unit_1, fk_unit_2]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [primary, fk_unit_1, fk_unit_2]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.unitProduct
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [product_id, updatedon, unit_id, pallets, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_unitproduct_2, fk_unitproduct_1]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [primary, fk_unitproduct_2, fk36f48ecb2b6bfd30, fk_unitproduct_1]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.unitType
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [parenttype, updatedon, description, abbreviation, type, idunittype, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_unittype_1]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [primary, fk_unittype_1, abbreviation]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.unit_sprites
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [updatedon, idsprite, unit_id, tileid, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_unit_sprites_1]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [fk_unit_sprites_1, primary]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.user
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [iduser, secpassword, updatedon, login, password, version]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: []
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [primary, login, login_2]
+2013-03-25 23:56:41 INFO  TableMetadata:65 - HHH000261: Table found: majekwms.warehouse
+2013-03-25 23:56:41 INFO  TableMetadata:66 - HHH000037: Columns: [updatedon, description, name, createddate, idwarehouse, version, size]
+2013-03-25 23:56:41 INFO  TableMetadata:68 - HHH000108: Foreign keys: [fk_warehouse_1]
+2013-03-25 23:56:41 INFO  TableMetadata:69 - HHH000126: Indexes: [name_2, name, primary, fk_warehouse_1]
+2013-03-25 23:56:41 INFO  SchemaUpdate:240 - HHH000232: Schema update complete
+2013-03-25 23:56:41 INFO  WMSDataAgent:43 - Hibernate connection is up and running, status = true
+2013-03-25 23:56:41 INFO  WMSDataDispatcherAgent:39 - Configuring from src/main/resources/server_methods.properties
+2013-03-25 23:56:41 INFO  ServerMethod:40 - Loading properties from path [ src/main/resources/server_methods.properties ]
+2013-03-25 23:56:41 INFO  ServerMethod:47 - Resolving initiated, entry path point [ src/main/java/org/kornicameister/wms/model/logic/controllers ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.AddressController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ClientController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.CompanyController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:70 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/invoice', mappedClazz=class org.kornicameister.wms.model.hibernate.Invoice, controller=org.kornicameister.wms.model.logic.controllers.InvoiceController@3b911789} ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.InvoiceProductController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.MeasureController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.ProductController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitSpriteController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:51 - Resolving server controller for [ org.kornicameister.wms.model.logic.controllers.UnitTypeController ]
+2013-03-25 23:56:41 INFO  ServerControllerClassResolver:70 - Created new MappedServerMethod object [ MappedServerMethod{uriMapping='wms/agent/unittype', mappedClazz=class org.kornicameister.wms.model.hibernate.UnitType, controller=org.kornicameister.wms.model.logic.controllers.UnitTypeController@32a041ec} ]
+2013-03-25 23:56:41 INFO  ServerMethod:68 - Resolving initiated, finished with [ 0 ms ][ 2 controllers ]
+2013-03-25 23:56:41 INFO  UpdateChecker:98 - New update(s) found: 2.4.7 [http://www.terracotta.org/confluence/display/release/Release+Notes+Ehcache+Core+2.4]. Please check http://ehcache.org for the latest version.

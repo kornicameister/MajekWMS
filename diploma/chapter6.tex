@@ -183,7 +183,13 @@
 			modelu danych odpowiadającego podejściu REST}
 		\end{code} 
 		
-\section{Diagramy, zrzuty ekranowe oraz funkcje}
+	\clearpage
+\section{Zrzuty ekranowe jako przedstawienia zrealizowanej funkcjonalności}
+	W tym rozdziale przedstawiona została zrealizowana funkcjonalność aplikacji.
+	Wszystkie funkcje zostały zilustrowane odpowiednimi zrzutami ekranowymi,
+	które pokazują elementy graficznego interfejsu użytkownika, pozwalające
+	na uruchomienie metod i w dalszej kolejności procesów realizujących
+	zlecone zadanie.
 	\subsection{Logowanie do aplikacji przy pierwszym uruchomieniu}
 		\begin{figure}[H]
 			\centering
@@ -201,7 +207,7 @@
 		jedna opisuje użytkowników, a druga powiązane z nimi role. Role są tym, co faktycznie
 		definiuje poziom uprawnień danego użytkownika.
 		
-		Dużą zaletą takiego podejścia jest odciążenie zarówno serwera, jak i klienta, od konieczności
+		Dużą zaletą takiego podejścia jest odciążenie zarówno serwera, jak i klienta, od konie\-czności
 		zaimplementowania odpowiedniej logiki, będącej w stanie obsłużyć wszelkie możliwe
 		przypadki użycie, związane z problem autoryzacji użytkowników. Dodatkowym autem jest
 		posiadanie narzędzia, które jest w stanie uwzględnić nowych użytkowników aplikacji,
@@ -253,17 +259,19 @@
 		w tym wypadku \textit{U3}. Można zauważyć, że strefa początkowo nie będąca w sąsiedztwie z
 		żadną inną, w wyniku działania użytkownika, została umiejscowiona tuż obok strefy \textit{U4}.
 		
+	\clearpage
 	\subsection{Zarządzanie klientami - dodawanie, usuwanie, edycja oraz podgląd}
-		\begin{figure}[H]
+		\begin{figure}[h]
 			\centering
-			\includegraphics[width=1.1\textwidth]{images/app/supplier_preview}
+			\hspace{-10pt}
+			\includegraphics[width=1.0\textwidth]{images/app/supplier_preview}
 			\caption[Aplikacja - Dostęp do danych klientów]{
 				Zrzut ekranu z widokiem na dostępnych dostawców \\
 				źródło: opracowanie własne
 			}
 			\label{c7:fig:app:supplier_preview}
 		\end{figure}
-	
+		
 		Zarządzanie klientami odbywa się z wydzielonych zakładek, z których jedna przeznaczona jest
 		dla \textbf{dostawców}, a druga dla \textbf{odbiorców}. Podejście takie pozwoliło na zobrazowanie problemu,
 		kiedy jedna instytucja istnieje w systemie jednocześnie jako dostawca i klient. Podstawowa funkcjonalność tego
@@ -276,9 +284,10 @@
 		Podzielenie widoku na listy zarejestrowanych klientów zwiększa czytelność, a także daje możliwość edycji dowolnej pozycji,
 		niezależnie od tego czy jest to kontrahent, czy też jedna z przypisanych doń pozycji w dokumentach.	
 	
-		\begin{figure}[H]
+		\clearpage	
+		\begin{figure}[h]
 			\centering
-			\includegraphics[width=0.6\textwidth]{images/app/new_receipient_dialog}
+			\includegraphics[width=0.7\textwidth]{images/app/new_receipient_dialog}
 			\caption[Aplikacja - Dodawania nowego klienta - odbiorcy]{
 				Zrzut ekranu z widokiem na okno dialogowe dla tworzenia nowego odbiorcy \\
 				źródło: opracowanie własne
@@ -286,7 +295,7 @@
 			\label{c7:fig:app:new_receipient_dialog}
 		\end{figure}	
 	
-	\pagebreak
+	\clearpage	
 	\subsection{Wydanie, przyjęcia oraz ewidencja produktów}
 		W aplikacji został również zaimplementowany moduł, którego zadaniem jest
 		obsługa definiowania wydań, przyjęć oraz ewidencjonowania produktów.	
@@ -345,6 +354,7 @@
 			}
 			\label{c7:fig:app:unit_products_preview}
 		\end{figure}
+		
 	\subsection{Statystyki wykorzystania powierzchni magazynowych}
 		W programie zawarto również prosty moduł generujący statystyki użytkowe dla wybranego i używanego magazynu.
 		Można więc, w dowolnym momencie, sprawdzić w jakim procencie powierzchnia magazynu, jest wykorzystywana przez
