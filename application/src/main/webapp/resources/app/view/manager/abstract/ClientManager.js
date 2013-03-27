@@ -40,26 +40,20 @@ Ext.define('WMS.view.manager.abstract.ClientManager', {
                     iconCls: 'icon-add'
                 },
                 {
-                    itemId : 'editClient',
-                    text   : 'Edytuj',
-                    iconCls: 'icon-edit'
-                },
-                '->',
-                {
                     itemId : 'newInvoice',
                     text   : 'Nowa faktura',
                     iconCls: 'invoice-add'
                 },
                 {
                     itemId : 'removeClient',
-                    text   : 'Usuń',
+                    text   : 'Usuń odbiorcę',
                     iconCls: 'icon-delete'
                 },
-                '-',
                 {
                     itemId : 'detailsClient',
-                    text   : 'Szczegóły',
-                    iconCls: 'icon-details'
+                    text   : 'Szczegóły dla odbiorcy',
+                    iconCls: 'icon-details',
+                    width  : 200
                 }
             ]
         }
