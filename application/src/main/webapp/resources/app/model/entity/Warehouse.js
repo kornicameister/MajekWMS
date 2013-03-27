@@ -64,26 +64,6 @@ Ext.define('WMS.model.entity.Warehouse', {
 
                     return me.getById(unit_id).products();
                 },
-                /**
-                 * @override Ext.data.Store.sync
-                 * @description Overridden version of old sync method that is extend for unit's store
-                 * to call for sync method for each underlying product's store
-                 */
-                sync       : function () {
-                    var me = this,
-                        products = undefined;
-
-                    console.log(Ext.String.format('{0} nested sync called', me['storeId']));
-
-                    me.each(function (unit) {
-                        if (Ext.isDefined(unit.products)) {
-                            products = unit.products();
-                            products.sync();
-                        }
-                    });
-
-                    me.superclass.sync.call(me);
-                },
                 listeners  : {
                     'update': function (store, unit, ops, modifiedFields) {
                         if (ops !== Ext.data.Model.EDIT) {

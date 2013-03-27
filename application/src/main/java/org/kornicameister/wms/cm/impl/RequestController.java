@@ -17,14 +17,10 @@ import org.kornicameister.wms.model.hibernate.Warehouse;
 import org.kornicameister.wms.server.extractor.RData;
 import org.kornicameister.wms.server.responses.ResponseFormatBody;
 import org.kornicameister.wms.utilities.Pair;
-import org.kornicameister.wms.utilities.StringUtils;
 import org.kornicameister.wms.utilities.hibernate.HibernateBridge;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -167,6 +163,10 @@ public class RequestController implements ServerControllable {
     public void update() {
         for (Object entity : this.parsePayload()) {
             this.session.update(entity);
+            if (entity instanceof PersistenceObject) {
+                PersistenceObject persistenceObject = (PersistenceObject) entity;
+                entity = this.session.byId(entity.getClass()).load(persistenceObject.getId());
+            }
             this.affected.add((BasicPersistentObject) entity);
         }
     }
@@ -282,79 +282,43 @@ public class RequestController implements ServerControllable {
         logger.info(String.format(
                 "Update via reflection, payload data = [ %s ]",
                 jData.toJSONString()));
-        BasicPersistentObject b = (BasicPersistentObject) this.session.get(this.rdata
+        BasicPersistentObject entity = (BasicPersistentObject) this.session.get(this.rdata
                 .getModule().getEntityClass(), (Serializable) jData.get("id"));
 
-        // this method is called many times still, setters are extracted only
-        // once !
-        this.extractSetters(b);
+        boolean updated = false;
+        String property = null;
+        try {
+            for (Object key : jData.keySet()) {
+                if (key instanceof String) {
+                    property = (String) key;
+                    if (!property.equals("id")) {
+                        final Object value = this.adjustValueType(jData.get(property), property);
+                        final Field field = entity.getClass().getDeclaredField(property);
 
-        for (Method m : this.setters) {
-            String methodName = m.getName(), propertyName;
-            String type[] = methodName.split("^(set)");
-            if (methodName.contains("set")) {
-                propertyName = StringUtils
-                        .decapitalizeFirstLetter(type[type.length - 1]);
-                Object value = jData.get(propertyName);
-                if (value != null && !propertyName.equals("id")) {
-                    try {
-                        m.invoke(b, this.adjustValueType(value, propertyName));
-                    } catch (IllegalAccessException | IllegalArgumentException
-                            | InvocationTargetException e) {
-                        e.printStackTrace();
+                        field.setAccessible(true);
+                        field.set(entity, value);
+                        field.setAccessible(false);
+
+                        if (logger.isDebugEnabled()) {
+                            logger.debug(String.format("Updated field %s with value %s",
+                                    property, value));
+                        }
+
                     }
-                } else if (!propertyName.equals("id")) {
-                    logger.warn(String.format(
-                            "Unrecognized property [ %s ]", propertyName));
                 }
             }
+            updated = true;
+        } catch (NoSuchFieldException e) {
+            logger.warn(String.format("Failed to locate field %s", property), e);
+        } catch (IllegalAccessException e) {
+            logger.warn(String.format("Failed to update field %s", property), e);
         }
-        return this.preUpdateNonPrimitives(b, jData);
-    }
-
-    /**
-     * Method goes through methods declared in {@link org.kornicameister.wms.model.hibernate.BasicPersistentObject}(persistentObject) and
-     * cuts off all but setters.
-     *
-     * @param persistentObject object from which setters will be exported
-     */
-    private void extractSetters(BasicPersistentObject persistentObject) {
-
-        if (this.setters != null && this.setters.size() > 0) {
-            return;
+        if (updated) {
+            logger.info(String.format("Updated %d properties via field based reflection...", jData.size()));
+        } else {
+            logger.fatal("Failed to update via field based reflection...");
         }
-
-        Method methods[] = persistentObject.getClass().getMethods();
-        Arrays.sort(methods, new Comparator<Method>() {
-
-            @Override
-            public int compare(Method o1, Method o2) {
-                String o1Name = o1.getName(), o2Name = o2.getName();
-
-                boolean isO1Setter = o1Name.contains("set"), isO2Setter = o2Name
-                        .contains("set");
-
-                if (isO1Setter && isO2Setter) {
-                    return o1Name.compareTo(o2Name);
-                } else if (isO1Setter) {
-                    return -1;
-                } else if (isO2Setter) {
-                    return 1;
-                }
-                return 0;
-            }
-        });
-
-        Set<Method> setters = new HashSet<>();
-        for (Method method : methods) {
-            if (method.getName().contains("set")) {
-                setters.add(method);
-            }
-        }
-
-        logger.info(String.format("Extracted [ %d ] setter from [ %s ]",
-                setters.size(), persistentObject.getClass().getSimpleName()));
-        this.setters = setters;
+        return this.preUpdateNonPrimitives(entity, jData);
     }
 
     /**

@@ -43,17 +43,14 @@ Ext.define('WMS.controller.wms.Overview', function () {
                 warehouses = me.getWarehousesStore();
 
             me.control({
-                'wmsoverviews #add'                            : {
+                'wmsoverviews #add'      : {
                     click: me.onNewUnit
                 },
-                'wmsoverviews #delete'                         : {
+                'wmsoverviews #delete'   : {
                     click: me.onUnitDelete
                 },
-                'wmsoverviews #unitsGrid'                      : {
+                'wmsoverviews #unitsGrid': {
                     selectionchange: me.onUnitSelectionChanged
-                },
-                'wmsoverviews propertygrid[itemId=description]': {
-                    edit: me.onWarehousePropertyEdit
                 }
             });
 
@@ -64,13 +61,6 @@ Ext.define('WMS.controller.wms.Overview', function () {
             var me = this,
                 warehouses = me.getWarehousesStore();
             warehouses.load();
-        },
-        onWarehousePropertyEdit: function (editor, event) {
-            var me = this,
-                value = event['value'],
-                field = event['record'].get('name');
-
-            console.log(value);
         },
         onActiveWarehouseChange: function (store, activeWarehouse) {
             var me = this,
