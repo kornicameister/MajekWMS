@@ -36,6 +36,7 @@ Ext.define('WMS.model.entity.Warehouse', {
                 storeId    : 'Units',
                 groupField : 'unittype_id',
                 autoLoad   : true,
+                autoSync   : true,
                 activeUnit : undefined,
                 /**
                  * Method returns unit that is set as active. In other

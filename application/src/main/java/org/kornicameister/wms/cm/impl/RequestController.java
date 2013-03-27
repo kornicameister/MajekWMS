@@ -291,25 +291,35 @@ public class RequestController implements ServerControllable {
             for (Object key : jData.keySet()) {
                 if (key instanceof String) {
                     property = (String) key;
-                    if (!property.equals("id")) {
+                    if (!property.contains("id")) {
                         final Object value = this.adjustValueType(jData.get(property), property);
-                        final Field field = entity.getClass().getDeclaredField(property);
+                        Field field = null;
+                        try {
+                            field = entity.getClass().getDeclaredField(property);
+                        } catch (NoSuchFieldException e) {
+                            if (logger.isDebugEnabled()) {
+                                logger.debug(String.format("Field %s is not primitive based in class %s",
+                                        property,
+                                        entity.getClass().getName())
+                                );
+                            }
+                        }
 
-                        field.setAccessible(true);
-                        field.set(entity, value);
-                        field.setAccessible(false);
+                        if (field != null) {
+                            field.setAccessible(true);
+                            field.set(entity, value);
+                            field.setAccessible(false);
 
-                        if (logger.isDebugEnabled()) {
-                            logger.debug(String.format("Updated field %s with value %s",
-                                    property, value));
+                            if (logger.isDebugEnabled()) {
+                                logger.debug(String.format("Updated field %s with value %s",
+                                        property, value));
+                            }
                         }
 
                     }
                 }
             }
             updated = true;
-        } catch (NoSuchFieldException e) {
-            logger.warn(String.format("Failed to locate field %s", property), e);
         } catch (IllegalAccessException e) {
             logger.warn(String.format("Failed to update field %s", property), e);
         }
