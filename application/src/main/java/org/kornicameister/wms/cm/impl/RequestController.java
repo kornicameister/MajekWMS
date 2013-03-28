@@ -16,6 +16,7 @@ import org.kornicameister.wms.model.hibernate.PersistenceObject;
 import org.kornicameister.wms.model.hibernate.Warehouse;
 import org.kornicameister.wms.server.extractor.RData;
 import org.kornicameister.wms.server.responses.ResponseFormatBody;
+import org.kornicameister.wms.utilities.FieldRetriever;
 import org.kornicameister.wms.utilities.Pair;
 import org.kornicameister.wms.utilities.hibernate.HibernateBridge;
 
@@ -293,19 +294,10 @@ public class RequestController implements ServerControllable {
                     property = (String) key;
                     if (!property.contains("id")) {
                         final Object value = this.adjustValueType(jData.get(property), property);
-                        Field field = null;
-                        try {
-                            field = entity.getClass().getDeclaredField(property);
-                        } catch (NoSuchFieldException e) {
-                            if (logger.isDebugEnabled()) {
-                                logger.debug(String.format("Field %s is not primitive based in class %s",
-                                        property,
-                                        entity.getClass().getName())
-                                );
-                            }
-                        }
+                        Field field = FieldRetriever.findField(entity, property);
 
                         if (field != null) {
+                            updated = true;
                             field.setAccessible(true);
                             field.set(entity, value);
                             field.setAccessible(false);
@@ -319,7 +311,6 @@ public class RequestController implements ServerControllable {
                     }
                 }
             }
-            updated = true;
         } catch (IllegalAccessException e) {
             logger.warn(String.format("Failed to update field %s", property), e);
         }
