@@ -25,6 +25,15 @@ import java.lang.reflect.Field;
 public class FieldRetriever {
     private final static Logger LOGGER = Logger.getLogger(FieldRetriever.class);
 
+    /**
+     * Recursive called that look for fieldName in passed source.getClass().
+     * If property is not there, which means that method reached the stage
+     * where type.getClass()==Object.class.
+     *
+     * @param source    reference to the one class object, where to look property
+     * @param fieldName property which is looked for
+     * @return valid {@link Field} or null
+     */
     public static Field findField(Object source, String fieldName) {
         return FieldRetrieverMethods.findField(source.getClass(), fieldName, 0);
     }
