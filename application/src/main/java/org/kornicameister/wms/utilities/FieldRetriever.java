@@ -33,6 +33,10 @@ public class FieldRetriever {
         public static Field findField(Class clazz, final String fieldName, int depth) {
             Field field = null;
             final String simpleName = clazz.getSimpleName();
+            if (clazz == Object.class) {
+                LOGGER.warn(String.format("Object reached in traversing through inheritance tree,\nproperty=%s", fieldName));
+                return null;
+            }
             try {
                 field = clazz.getDeclaredField(fieldName);
             } catch (NoSuchFieldException e) {
