@@ -11,5 +11,11 @@ Ext.define('WMS.store.UnitSprites', {
         'WMS.model.sprite.Unit'
     ],
     model   : 'WMS.model.sprite.Unit',
+    sorters : [
+        {
+            property : 'tileId',
+            direction: 'DESC'
+        }
+    ],
     autoSync: true
 });

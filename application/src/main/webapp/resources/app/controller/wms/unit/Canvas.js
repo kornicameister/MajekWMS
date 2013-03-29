@@ -64,7 +64,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
                 'wmsunitcanvas #unitsDrawingCmp'             : {
                     boxready: me.onBoxReady
                 },
-                '#viewport masterview wmsunitcanvas'         : {
+                '#viewport masterview wmsunit'               : {
                     'activate': me.redrawSurface
                 },
                 '#footerToolbar button[itemId=refreshButton]': {

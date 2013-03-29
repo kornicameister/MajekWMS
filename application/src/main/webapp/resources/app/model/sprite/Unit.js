@@ -9,8 +9,9 @@ Ext.define('WMS.model.sprite.Unit', {
     extend      : 'Ext.data.Model',
     fields      : [
         {
-            name: 'tileId',
-            type: 'int'
+            name        : 'tileId',
+            type        : 'int',
+            defaultValue: '-1'
         },
         {
             name   : 'unit_id',

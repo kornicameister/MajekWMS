@@ -1,5 +1,4 @@
 /**
- * Created with IntelliJ IDEA.
  * User: kornicameister
  * Date: 20.02.13
  * Time: 18:06
@@ -262,14 +261,27 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
          * shapes in the result.
          */
             _3_SCD = Ext.define(null, function (SpriteCanvasDrawer) {
-            var locateTile = function (it, unit_id, fromServer) {
-                var tile = TILES.getAt(it);
-                if (fromServer) {
-                    var tileIndex = _5_USS.findRecord('unit_id', unit_id).get('tileId');
-                    tile = TILES.getAt(tileIndex);
-                }
-                return tile;
-            };
+            var toBePersisted = false,
+                locateTile = function (it, unit_id, fromServer) {
+                    var tile = TILES.getAt(it);
+                    if (fromServer) {
+                        var tileIndex = _5_USS.findRecord('unit_id', unit_id);
+                        if (tileIndex === null || !Ext.isDefined(tileIndex)) {
+                            TILES.each(function (_tile, index) {
+                                var __tile = _2_CPS.findByTile(_tile['id']);
+                                if (__tile === null || !Ext.isDefined(__tile)) {
+                                    tileIndex = index;
+                                    return false;
+                                }
+                            });
+                            tile = TILES.getAt(tileIndex);
+                            toBePersisted = true;
+                        } else {
+                            tile = TILES.getAt(tileIndex.get('tileId'));
+                        }
+                    }
+                    return tile;
+                };
             return {
                 statics: {
                     clearCanvas    : function () {
@@ -356,11 +368,12 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                 tile_id: selectedTile['id'],
                                 unit_id: unitRecord.getId()
                             });
-                            if (!fromServer) {
+                            if (toBePersisted) {
                                 toBePersistedMetaSprites.push({
                                     tileId : it++,
                                     unit_id: unitRecord.getId()
                                 });
+                                toBePersisted = false;
                             }
                             UNITS.add(unitSprite['id'], unitSprite);
 
@@ -369,10 +382,10 @@ Ext.define('WMS.utilities.CanvasProcessor', function () {
                                 opacity: 0.8
                             });
                             unitSprite.show(true);
-                        }, self);
 
-                        // 7. save them to local storage
-                        _2_CPS.add(drawnUnitSprites);
+                            // 7. save them to local storage
+                            _2_CPS.add(drawnUnitSprites);
+                        }, self);
 
                         // 8. persist them
                         _5_USS.add(toBePersistedMetaSprites);
