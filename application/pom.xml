@@ -150,6 +150,7 @@
                     <url>http://localhost:8080/MajekWMS/</url>
                     <mode>both</mode>
                     <path>/MajekWMS</path>
+                    <uriEncoding>UTF-8</uriEncoding>
                     <contextReloadable>true</contextReloadable>
                     <contextFile>src/main/tomcat/context.xml</contextFile>
                 </configuration>

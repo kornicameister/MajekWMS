@@ -14,8 +14,6 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
 
                 var unit = unitStore.getById(unit_id),
                     controller = self.getController('wms.unit.Inventory');
-
-                unitStore.setActive(unit);
                 controller.loadProductsFromUnit(unit);
             }
         };
@@ -25,7 +23,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
             'WMS.utilities.CanvasProcessor'
         ],
         stores            : [
-            'Warehouses'
+            'Units'
         ],
         views             : [
             'wms.unit.Canvas'
@@ -160,7 +158,7 @@ Ext.define('WMS.controller.wms.unit.Canvas', function () {
 
             me.setCanvasProcessor(Ext.create('WMS.utilities.CanvasProcessor', {
                 board    : board,
-                unitStore: me.getWarehousesStore().getActive().units(),
+                unitStore: me.getUnitsStore(),
                 sizes    : {
                     tile: {
                         width : 120,

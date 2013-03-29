@@ -35,7 +35,7 @@ Ext.define('WMS.controller.Master', function () {
         },
         maskViewport = function (view) {
             if (Ext.isDefined(view)) {
-                setLoadMask(new Ext.LoadMask(view.el, {
+                setLoadMask(new Ext.LoadMask(view, {
                     id : 'viewportMask',
                     msg: 'Loading content...'
                 }));

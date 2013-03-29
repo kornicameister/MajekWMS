@@ -1,17 +1,16 @@
 package org.kornicameister.wms.model.logic.controllers;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
 import org.json.simple.JSONObject;
 import org.kornicameister.wms.cm.annotations.ServerController;
 import org.kornicameister.wms.cm.impl.RequestController;
 import org.kornicameister.wms.model.hibernate.*;
 import org.kornicameister.wms.server.extractor.RData;
+import org.kornicameister.wms.utilities.Pair;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 @ServerController(mapping = "wms/agent/product", model = Product.class)
 public class ProductController extends RequestController {
@@ -41,6 +40,33 @@ public class ProductController extends RequestController {
     public ProductController(RData data) {
         super(data);
         this.unitProduct = new HashMap<>();
+    }
+
+    @Override
+    public void read() {
+        Pair<String, Integer> queryKey = this.rdata.getQueryKey();
+        if (queryKey == null) {
+            super.read();
+        } else {
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Searching with where, condition=%s", queryKey));
+            }
+            Query query = this.session.getNamedQuery("findUnitProductByUnitId");
+            query.setLong("unit_id", queryKey.getSecond());
+
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("NamedQuery, query=%s", query));
+            }
+
+            List<?> data = query.list();
+
+            for (Object entity : data) {
+                if (entity instanceof UnitProduct) {
+                    UnitProduct up = (UnitProduct) entity;
+                    this.affected.add(up.getProduct());
+                }
+            }
+        }
     }
 
     /**

@@ -30,6 +30,12 @@ import javax.persistence.*;
 @AssociationOverrides({
         @AssociationOverride(name = "pk.unit", joinColumns = @JoinColumn(name = "unit_id")),
         @AssociationOverride(name = "pk.product", joinColumns = @JoinColumn(name = "product_id"))})
+@NamedQueries(value = {
+        @NamedQuery(
+                name = "findUnitProductByUnitId",
+                query = "from UnitProduct where pk.unit.id = :unit_id"
+        )
+})
 public class UnitProduct extends BasicPersistentObject {
 
     @EmbeddedId
